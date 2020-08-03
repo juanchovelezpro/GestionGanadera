@@ -101,6 +101,7 @@ public class ReportePanel extends JPanel{
 
 			
 			
+			
 			JLabel lblNewLabel_9 = new JLabel("     ");
 			panelinformacion.add(lblNewLabel_9);
 			
