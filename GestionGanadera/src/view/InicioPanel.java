@@ -20,6 +20,9 @@ public class InicioPanel extends JPanel {
 	
 	private JTextField txtnombreDueno;
 	private JTextField txtubicacion;
+	private JLabel nombreFinca;
+	private JLabel numeroDepotreros;
+	private JLabel numeroDevacas;
 	private VentanaPrincipal ventana;
 	private JComboBox comboBoxPotreros;
 	private JButton btnAgregar;
@@ -27,6 +30,8 @@ public class InicioPanel extends JPanel {
 	private JButton btnBuscar;
 	private JButton btnGuardar;
 	private JButton btnEditar;
+	private JButton btnreporteDestete;
+	private JButton btnreportePartos;
 	
 
 	
@@ -45,6 +50,9 @@ public class InicioPanel extends JPanel {
 		
 		private void setComponents() {
 			
+			//panel derecho
+			
+			
 			JPanel panelderecho = new JPanel();
 			panelderecho.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			add(panelderecho, BorderLayout.EAST);
@@ -56,9 +64,10 @@ public class InicioPanel extends JPanel {
 			JLabel derechoespacio2 = new JLabel("    ");
 			panelderecho.add(derechoespacio2, BorderLayout.EAST);
 			
+			
 			JPanel panelDerechoinfo = new JPanel();
 			panelderecho.add(panelDerechoinfo, BorderLayout.CENTER);
-			panelDerechoinfo.setLayout(new GridLayout(9,1));
+			panelDerechoinfo.setLayout(new GridLayout(13,1));
 			
 			
 			JLabel lblNewLabel_5 = new JLabel("                                                          ");
@@ -92,6 +101,27 @@ public class InicioPanel extends JPanel {
 			JLabel lblNewLabel_8 = new JLabel("     ");
 			lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 			panelDerechoinfo.add(lblNewLabel_8);
+			
+			
+			btnreporteDestete = new JButton(" Reporte Destete ");
+			
+			panelDerechoinfo.add(btnreporteDestete);
+			
+			
+			JLabel lblNewLabel_9 = new JLabel("     ");
+			lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+			panelDerechoinfo.add(lblNewLabel_9);
+			
+			
+			btnreportePartos = new JButton(" Reporte Partos ");
+			panelDerechoinfo.add(btnreportePartos);
+			
+			
+			JLabel lblNewLabel_10 = new JLabel("     ");
+			lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+			panelDerechoinfo.add(lblNewLabel_10);
+			
+			
 			
 			
 			JPanel panelprincipal = new JPanel();
@@ -141,13 +171,15 @@ public class InicioPanel extends JPanel {
 			JLabel label1 = new JLabel("");
 			panel.add(label1);
 			
-			JLabel labelnombreFinca = new JLabel("Nombre de la finca");
-			labelnombreFinca.setHorizontalAlignment(SwingConstants.CENTER);
-			labelnombreFinca.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			panel.add(labelnombreFinca);
+			nombreFinca = new JLabel("Nombre de la finca");
+		    nombreFinca.setHorizontalAlignment(SwingConstants.CENTER);
+			nombreFinca.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+			panel.add(nombreFinca);
 			
 			JLabel label2 = new JLabel("");
 			panel.add(label2);
+			
+			
 			
 			//PANEL PRINCIPAL - INFORMACION
 			
@@ -204,7 +236,7 @@ public class InicioPanel extends JPanel {
 			numeroPotreros.setHorizontalAlignment(SwingConstants.CENTER);
 			panelinformacion.add(numeroPotreros);
 			
-			JLabel numeroDepotreros = new JLabel("10 potreros ");
+			numeroDepotreros = new JLabel("10 potreros ");
 			numeroDepotreros.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 			numeroDepotreros.setHorizontalAlignment(SwingConstants.CENTER);
 			panelinformacion.add(numeroDepotreros);
@@ -214,10 +246,10 @@ public class InicioPanel extends JPanel {
 			numeroVacas.setHorizontalAlignment(SwingConstants.CENTER);
 			panelinformacion.add(numeroVacas);
 			
-			JLabel numeroDeVacas = new JLabel(" 1500 vacas ");
-			numeroDeVacas.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-			numeroDeVacas.setHorizontalAlignment(SwingConstants.CENTER);
-			panelinformacion.add(numeroDeVacas);
+			numeroDevacas = new JLabel(" 1500 vacas ");
+			numeroDevacas.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+			numeroDevacas.setHorizontalAlignment(SwingConstants.CENTER);
+			panelinformacion.add(numeroDevacas);
 			
 			
 			
@@ -261,10 +293,169 @@ public class InicioPanel extends JPanel {
 
 			});
 			
+			btnreporteDestete.addActionListener(e -> {
+				
+
+				ventana.remove(this);
+				ventana.add(ventana.getReportes());
+				ventana.setSize(450,300);
+				ventana.setResizable(false);
+				ventana.setLocationRelativeTo(null);
+				ventana.refresh();
+
+			});
+			
+			btnreportePartos.addActionListener(e -> {
+
+			});
+			
 			
 			
 
 		}
+
+
+		public JTextField getTxtnombreDueno() {
+			return txtnombreDueno;
+		}
+
+
+		public void setTxtnombreDueno(JTextField txtnombreDueno) {
+			this.txtnombreDueno = txtnombreDueno;
+		}
+
+
+		public JTextField getTxtubicacion() {
+			return txtubicacion;
+		}
+
+
+		public void setTxtubicacion(JTextField txtubicacion) {
+			this.txtubicacion = txtubicacion;
+		}
+
+
+		public JLabel getNombreFinca() {
+			return nombreFinca;
+		}
+
+
+		public void setNombreFinca(JLabel nombreFinca) {
+			this.nombreFinca = nombreFinca;
+		}
+
+
+		public JLabel getNumeroDepotreros() {
+			return numeroDepotreros;
+		}
+
+
+		public void setNumeroDepotreros(JLabel numeroDepotreros) {
+			this.numeroDepotreros = numeroDepotreros;
+		}
+
+
+		public JLabel getNumeroDevacas() {
+			return numeroDevacas;
+		}
+
+
+		public void setNumeroDevacas(JLabel numeroDevacas) {
+			this.numeroDevacas = numeroDevacas;
+		}
+
+
+		public VentanaPrincipal getVentana() {
+			return ventana;
+		}
+
+
+		public void setVentana(VentanaPrincipal ventana) {
+			this.ventana = ventana;
+		}
+
+
+		public JComboBox getComboBoxPotreros() {
+			return comboBoxPotreros;
+		}
+
+
+		public void setComboBoxPotreros(JComboBox comboBoxPotreros) {
+			this.comboBoxPotreros = comboBoxPotreros;
+		}
+
+
+		public JButton getBtnAgregar() {
+			return btnAgregar;
+		}
+
+
+		public void setBtnAgregar(JButton btnAgregar) {
+			this.btnAgregar = btnAgregar;
+		}
+
+
+		public JButton getBtnEliminar() {
+			return btnEliminar;
+		}
+
+
+		public void setBtnEliminar(JButton btnEliminar) {
+			this.btnEliminar = btnEliminar;
+		}
+
+
+		public JButton getBtnBuscar() {
+			return btnBuscar;
+		}
+
+
+		public void setBtnBuscar(JButton btnBuscar) {
+			this.btnBuscar = btnBuscar;
+		}
+
+
+		public JButton getBtnGuardar() {
+			return btnGuardar;
+		}
+
+
+		public void setBtnGuardar(JButton btnGuardar) {
+			this.btnGuardar = btnGuardar;
+		}
+
+
+		public JButton getBtnEditar() {
+			return btnEditar;
+		}
+
+
+		public void setBtnEditar(JButton btnEditar) {
+			this.btnEditar = btnEditar;
+		}
+
+
+		public JButton getBtnreporteDestete() {
+			return btnreporteDestete;
+		}
+
+
+		public void setBtnreporteDestete(JButton btnreporteDestete) {
+			this.btnreporteDestete = btnreporteDestete;
+		}
+
+
+		public JButton getBtnreportePartos() {
+			return btnreportePartos;
+		}
+
+
+		public void setBtnreportePartos(JButton btnreportePartos) {
+			this.btnreportePartos = btnreportePartos;
+		}
+		
+		
+		
 		
 		
 		

@@ -17,6 +17,7 @@ public class VentanaPrincipal extends JFrame {
 	private RegistroPanel registro;
 	private InicioPanel inicio;
 	private PotrerosPanel potreros;
+	private ReportePanel reportes;
 
 	public VentanaPrincipal() {
 
@@ -40,10 +41,25 @@ public class VentanaPrincipal extends JFrame {
 		registro = new RegistroPanel(this);
 		inicio = new InicioPanel(this);
 		potreros = new PotrerosPanel(this);
+		reportes = new ReportePanel(this);
 
 		add(registro, BorderLayout.CENTER);
 
 	}
+	
+	
+
+	public ReportePanel getReportes() {
+		return reportes;
+	}
+
+
+
+	public void setReportes(ReportePanel reportes) {
+		this.reportes = reportes;
+	}
+
+
 
 	public RegistroPanel getRegistro() {
 		return registro;
