@@ -33,15 +33,24 @@ public class AgregarEditarVaca extends JDialog {
 	private JTextField txtNumero;
 	private JComboBox comboDiaNac;
 	private JLabel lblFoto;
-	private JLabel lblNumero;
+	private JButton btnRegistroPeso;
 	private JTextArea txtObservaciones;
+	private JTextField txtMadre;
+	private JTextField txtUltimoPeso;
+	private JButton btnCrias;
+	private JButton btnRegistroVacuna;
+	private JComboBox comboPurgado;
+	private JComboBox comboAnioPurgado;
+	private JComboBox comboMesPurgado;
+	private JComboBox comboDiaPurgado;
 
 	public AgregarEditarVaca() {
 		getContentPane().setLayout(new GridLayout(1, 2));
-		setSize(800, 600);
+		setSize(1000, 700);
 		setLocationRelativeTo(null);
 		setComponents();
 		listeners();
+		setVisible(true);
 
 	}
 
@@ -72,12 +81,6 @@ public class AgregarEditarVaca extends JDialog {
 
 		JPanel panelAux = new JPanel();
 		panelAux.setLayout(new GridLayout(10, 2));
-
-		JLabel lblNewLabel_22_3 = new JLabel("");
-		panelAux.add(lblNewLabel_22_3);
-
-		JLabel lblNewLabel_22_4 = new JLabel("");
-		panelAux.add(lblNewLabel_22_4);
 
 		JLabel lblNewLabel_22_7 = new JLabel("Numero");
 		lblNewLabel_22_7.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -131,11 +134,13 @@ public class AgregarEditarVaca extends JDialog {
 		comboAnioNac = new JComboBox();
 		lblNewLabel_22_15.add(comboAnioNac);
 
-		JLabel lblNewLabel_22_16 = new JLabel("");
+		JLabel lblNewLabel_22_16 = new JLabel("\u00DAltimo Peso");
+		lblNewLabel_22_16.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_22_16.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(lblNewLabel_22_16);
 
-		JLabel lblNewLabel_22_17 = new JLabel("");
-		panelAux.add(lblNewLabel_22_17);
+		txtUltimoPeso = new JTextField("");
+		panelAux.add(txtUltimoPeso);
 
 		JLabel lblNewLabel_22_18 = new JLabel("\u00BFEmbarazada?");
 		lblNewLabel_22_18.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -169,19 +174,76 @@ public class AgregarEditarVaca extends JDialog {
 		comboAnioEmbarazo = new JComboBox();
 		comboAnioEmbarazo.setEnabled(false);
 		lblNewLabel_22_21.add(comboAnioEmbarazo);
+		
+		JLabel lblNewLabel_4 = new JLabel("Madre");
+		lblNewLabel_4.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+		panelAux.add(lblNewLabel_4);
+		
+		txtMadre = new JTextField("");
+		txtMadre.setHorizontalAlignment(SwingConstants.CENTER);
+		panelAux.add(txtMadre);
+		
+		JLabel lblNewLabel_18 = new JLabel("Crias");
+		lblNewLabel_18.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_18.setHorizontalAlignment(SwingConstants.CENTER);
+		panelAux.add(lblNewLabel_18);
+		
+		btnCrias = new JButton("Ver Crias");
+		panelAux.add(btnCrias);
 
 		JPanel panelObservaciones = new JPanel();
 		panel_3.add(panelObservaciones);
 		panelObservaciones.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblNewLabel_23 = new JLabel("Observaciones");
-		lblNewLabel_23.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblNewLabel_23.setHorizontalAlignment(SwingConstants.CENTER);
-		panelObservaciones.add(lblNewLabel_23, BorderLayout.NORTH);
-
 		JPanel panel_7 = new JPanel();
 		panelObservaciones.add(panel_7, BorderLayout.CENTER);
 		panel_7.setLayout(new GridLayout(2, 1));
+		
+		JPanel lblNewLabel_15 = new JPanel();
+		panel_7.add(lblNewLabel_15);
+		lblNewLabel_15.setLayout(new GridLayout(4,2));
+		
+		JLabel lblNewLabel_23_5 = new JLabel("\u00BFPurgado?");
+		lblNewLabel_23_5.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_23_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_15.add(lblNewLabel_23_5);
+		
+		comboPurgado = new JComboBox();
+		comboPurgado.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar", "NO", "EN PROCESO", "SI"}));
+		lblNewLabel_15.add(comboPurgado);
+		
+		JLabel lblNewLabel_16 = new JLabel("Fecha Purgado");
+		lblNewLabel_16.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_16.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_15.add(lblNewLabel_16);
+		
+		JPanel lblNewLabel_22 = new JPanel();
+		lblNewLabel_15.add(lblNewLabel_22);
+		lblNewLabel_22.setLayout(new GridLayout(1,3));
+		
+		comboDiaPurgado = new JComboBox();
+		lblNewLabel_22.add(comboDiaPurgado);
+		
+		comboMesPurgado = new JComboBox();
+		lblNewLabel_22.add(comboMesPurgado);
+		
+		comboAnioPurgado = new JComboBox();
+		lblNewLabel_22.add(comboAnioPurgado);
+		
+		JLabel lblNewLabel_22_1 = new JLabel("");
+		lblNewLabel_15.add(lblNewLabel_22_1);
+		
+		JLabel lblNewLabel_22_2 = new JLabel("");
+		lblNewLabel_15.add(lblNewLabel_22_2);
+		
+		JLabel lblNewLabel_22_3 = new JLabel("Observaciones");
+		lblNewLabel_22_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_22_3.setFont(new Font("SansSerif", Font.BOLD, 18));
+		lblNewLabel_15.add(lblNewLabel_22_3);
+		
+		JLabel lblNewLabel_22_4 = new JLabel("");
+		lblNewLabel_15.add(lblNewLabel_22_4);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -249,20 +311,24 @@ public class AgregarEditarVaca extends JDialog {
 		JLabel lblNewLabel_12 = new JLabel("");
 		panel_5.add(lblNewLabel_12);
 
-		JLabel lblNewLabel_13 = new JLabel("");
+		JLabel lblNewLabel_13 = new JLabel("Registro Vacuna");
+		lblNewLabel_13.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_13.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_5.add(lblNewLabel_13);
 
-		JLabel lblNewLabel_14 = new JLabel("");
-		panel_5.add(lblNewLabel_14);
+		btnRegistroVacuna = new JButton("Ver registro vacuna");
+		btnRegistroVacuna.setFont(new Font("SansSerif", Font.BOLD, 12));
+		panel_5.add(btnRegistroVacuna);
 
-		JLabel lblNewLabel_15 = new JLabel("#");
-		lblNewLabel_15.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblNewLabel_15.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_5.add(lblNewLabel_15);
+		JLabel lblRegistro = new JLabel("Registro Peso");
+		lblRegistro.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblRegistro.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_5.add(lblRegistro);
 
-		lblNumero = new JLabel("1234");
-		lblNumero.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_5.add(lblNumero);
+		btnRegistroPeso = new JButton("Ver registro peso");
+		btnRegistroPeso.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnRegistroPeso.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_5.add(btnRegistroPeso);
 
 		JLabel lblNewLabel_17 = new JLabel("Potrero");
 		lblNewLabel_17.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -372,11 +438,35 @@ public class AgregarEditarVaca extends JDialog {
 		return lblFoto;
 	}
 
-	public JLabel getLblNumero() {
-		return lblNumero;
+	public JButton getBtnRegistroPeso() {
+		return btnRegistroPeso;
 	}
 
 	public JTextArea getTxtObservaciones() {
 		return txtObservaciones;
+	}
+	public JTextField getTxtMadre() {
+		return txtMadre;
+	}
+	public JTextField getTxtUltimoPeso() {
+		return txtUltimoPeso;
+	}
+	public JButton getBtnCrias() {
+		return btnCrias;
+	}
+	public JButton getBtnRegistroVacuna() {
+		return btnRegistroVacuna;
+	}
+	public JComboBox getComboPurgado() {
+		return comboPurgado;
+	}
+	public JComboBox getComboAnioPurgado() {
+		return comboAnioPurgado;
+	}
+	public JComboBox getComboMesPurgado() {
+		return comboMesPurgado;
+	}
+	public JComboBox getComboDiaPurgado() {
+		return comboDiaPurgado;
 	}
 }

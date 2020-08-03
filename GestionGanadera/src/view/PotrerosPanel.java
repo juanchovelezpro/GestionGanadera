@@ -104,6 +104,9 @@ public class PotrerosPanel extends JPanel {
 
 		btnAgregar.addActionListener(e -> {
 
+			AgregarEditarVaca dialog = new AgregarEditarVaca();
+			
+			
 		});
 
 		btnNotificaciones.addActionListener(e -> {
