@@ -11,6 +11,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import db.SQLConnection;
+
 public class RegistroPanel extends JPanel {
 
 	private JTextField txtNombreUsuario;
@@ -126,8 +128,10 @@ public class RegistroPanel extends JPanel {
 
 		btnCrearUsuario.addActionListener(e -> {
 
+			SQLConnection database = SQLConnection.getInstance();
 			
-
+			database.createDatabase();
+			
 		});
 
 	}
