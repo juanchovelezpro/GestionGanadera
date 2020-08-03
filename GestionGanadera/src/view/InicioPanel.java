@@ -14,7 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
 
 public class InicioPanel extends JPanel {
-	private JTextField txtnombreDueño;
+	private JTextField txtnombreDueno;
 	private JTextField txtubicacion;
 	
 	
@@ -148,18 +148,18 @@ public class InicioPanel extends JPanel {
 		JLabel lblNewLabel_2 = new JLabel("     ");
 		panelinformacion.add(lblNewLabel_2);
 		
-		JLabel nombreDueño = new JLabel(" Dueño de la Finca: ");
-		nombreDueño.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		nombreDueño.setHorizontalAlignment(SwingConstants.CENTER);
-		panelinformacion.add(nombreDueño);
+		JLabel nombreDueno = new JLabel(" Dueño de la Finca: ");
+		nombreDueno.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		nombreDueno.setHorizontalAlignment(SwingConstants.CENTER);
+		panelinformacion.add(nombreDueno);
 		
 		
-		txtnombreDueño = new JTextField();
-		txtnombreDueño.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		txtnombreDueño.setHorizontalAlignment(SwingConstants.CENTER);
-		txtnombreDueño.setText(" Juan Camilo Velez ");
-		panelinformacion.add(txtnombreDueño);
-		txtnombreDueño.setColumns(10);
+		txtnombreDueno = new JTextField();
+		txtnombreDueno.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		txtnombreDueno.setHorizontalAlignment(SwingConstants.CENTER);
+		txtnombreDueno.setText(" Juan Camilo Velez ");
+		panelinformacion.add(txtnombreDueno);
+		txtnombreDueno.setColumns(10);
 		
 		JLabel nombreUbicacion = new JLabel(" Ubicación: ");
 		nombreUbicacion.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
