@@ -37,6 +37,9 @@ public class InicioPanel extends JPanel {
 		
 		setLayout(new BorderLayout(0, 0));
 		
+		setComponents();
+		listeners();
+		
 	}
 		
 		
