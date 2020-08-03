@@ -10,6 +10,7 @@ public class Launcher {
 	
 		ventana.setVisible(true);
 		
+		
 	}
 	
 }
