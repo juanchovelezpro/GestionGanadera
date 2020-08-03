@@ -19,8 +19,12 @@ public class PotrerosPanel extends JPanel {
 	private JButton btnReportePartos;
 	private JButton btnNotificaciones;
 	private JLabel lblNombrePotrero;
+	private VentanaPrincipal ventana;
 
-	public PotrerosPanel() {
+	public PotrerosPanel(VentanaPrincipal ventana) {
+		
+		this.ventana = ventana;
+		
 		setLayout(new BorderLayout(0, 0));
 
 		setComponents();

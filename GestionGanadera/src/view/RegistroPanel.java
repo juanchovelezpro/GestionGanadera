@@ -17,14 +17,25 @@ public class RegistroPanel extends JPanel {
 	private JPasswordField txtPassword;
 	private JButton btnEntrar;
 	private JButton btnCrearUsuario;
+	private VentanaPrincipal ventana;
 
-	public RegistroPanel() {
+	public RegistroPanel(VentanaPrincipal ventana) {
+		
+		this.ventana = ventana;
+		
 		setLayout(new BorderLayout());
 
 		setComponents();
 		listeners();
 
 	}
+	
+	public VentanaPrincipal getVentana() {
+		
+		return ventana;
+		
+	}
+	
 
 	public void setComponents() {
 
@@ -104,13 +115,15 @@ public class RegistroPanel extends JPanel {
 
 		btnEntrar.addActionListener(e -> {
 
-			System.out.println("Hola");
+			ventana.remove(this);
+			ventana.add(ventana.getInicio());
+			ventana.refresh();
 
 		});
 
 		btnCrearUsuario.addActionListener(e -> {
 
-			System.out.println("Bye");
+			
 
 		});
 

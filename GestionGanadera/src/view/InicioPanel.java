@@ -14,12 +14,20 @@ import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
 
 public class InicioPanel extends JPanel {
+	
+	
 	private JTextField txtnombreDueno;
 	private JTextField txtubicacion;
+	private VentanaPrincipal ventana;
+
 	
 	
-	public InicioPanel() {
+	public InicioPanel(VentanaPrincipal ventana) {
+		
+		this.ventana = ventana;
+		
 		setLayout(new BorderLayout(0, 0));
+		
 		
 		JPanel panelderecho = new JPanel();
 		panelderecho.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -37,7 +45,7 @@ public class InicioPanel extends JPanel {
 		panelDerechoinfo.setLayout(new GridLayout(9,1));
 		
 		
-		JLabel lblNewLabel_5 = new JLabel("          ");
+		JLabel lblNewLabel_5 = new JLabel("                                                          ");
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_5);
 		
@@ -117,7 +125,8 @@ public class InicioPanel extends JPanel {
 		JLabel label1 = new JLabel("");
 		panel.add(label1);
 		
-		JLabel labelnombreFinca = new JLabel("                Nombre de la finca");
+		JLabel labelnombreFinca = new JLabel("Nombre de la finca");
+		labelnombreFinca.setHorizontalAlignment(SwingConstants.CENTER);
 		labelnombreFinca.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		panel.add(labelnombreFinca);
 		
@@ -148,7 +157,7 @@ public class InicioPanel extends JPanel {
 		JLabel lblNewLabel_2 = new JLabel("     ");
 		panelinformacion.add(lblNewLabel_2);
 		
-		JLabel nombreDueno = new JLabel(" Dueño de la Finca: ");
+		JLabel nombreDueno = new JLabel("Due\u00F1o de la finca:");
 		nombreDueno.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		nombreDueno.setHorizontalAlignment(SwingConstants.CENTER);
 		panelinformacion.add(nombreDueno);
@@ -161,7 +170,7 @@ public class InicioPanel extends JPanel {
 		panelinformacion.add(txtnombreDueno);
 		txtnombreDueno.setColumns(10);
 		
-		JLabel nombreUbicacion = new JLabel(" Ubicación: ");
+		JLabel nombreUbicacion = new JLabel("Ubicaci\u00F3n:");
 		nombreUbicacion.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		nombreUbicacion.setHorizontalAlignment(SwingConstants.CENTER);
 		panelinformacion.add(nombreUbicacion);
