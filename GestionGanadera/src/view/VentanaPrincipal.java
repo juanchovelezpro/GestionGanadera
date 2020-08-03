@@ -21,10 +21,10 @@ public class VentanaPrincipal extends JFrame {
 	public VentanaPrincipal() {
 
 		setTitle("Gestion Ganadera");
-		setPreferredSize(new Dimension(1280, 768));
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setExtendedState(MAXIMIZED_BOTH);
+		setSize(800,600);
+		setResizable(false);
 		setLocationRelativeTo(null);
 
 		try {

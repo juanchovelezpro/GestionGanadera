@@ -117,6 +117,9 @@ public class RegistroPanel extends JPanel {
 
 			ventana.remove(this);
 			ventana.add(ventana.getInicio());
+			ventana.setSize(800,400);
+			ventana.setResizable(false);
+			ventana.setLocationRelativeTo(null);
 			ventana.refresh();
 
 		});
