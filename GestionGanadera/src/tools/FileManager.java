@@ -9,10 +9,8 @@ import java.nio.file.StandardCopyOption;
 
 public class FileManager {
 
-	public static final String PATH = System.getProperty("user.home")+"/AppGG/db/";
-	
-	
-	
+	public static final String PATH = System.getProperty("user.home") + "/App Ganado/db/";
+
 	public static void saveFile(File selectedFile, String target) {
 
 		Path from = Paths.get(selectedFile.toURI());

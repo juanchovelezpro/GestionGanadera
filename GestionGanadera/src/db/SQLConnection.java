@@ -1,15 +1,12 @@
 package db;
 
-import java.awt.GridLayout;
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
 
 import tools.FileManager;
@@ -24,13 +21,11 @@ public class SQLConnection {
 		Connection connection = null;
 		try {
 		
-			FileManager.createDirectoryProject();			
+			FileManager.createDirectoryProject();
 			connection = DriverManager.getConnection("jdbc:sqlite:" + FileManager.PATH + "database.db");
 			statement = connection.createStatement();
-			statement.setQueryTimeout(30); // set timeout to 30 sec.
 		} catch (SQLException e) {
-			// if the error message is "out of memory",
-			// it probably means no database file is found
+
 			System.err.println(e.getMessage());
 		}
 
@@ -49,7 +44,7 @@ public class SQLConnection {
 			statement.executeUpdate("CREATE TABLE \"usuarios\" ( \"nombre\" TEXT, \"password\" TEXT, \"ubicacion\" TEXT, \"nombreFinca\" TEXT )");
 			statement.executeUpdate("CREATE TABLE \"vacunas\" ( \"id\" INTEGER, \"nombre\" TEXT NOT NULL, PRIMARY KEY(\"id\" AUTOINCREMENT) )");
 			statement.executeUpdate("CREATE TABLE \"potreros\" ( \"nombre\" TEXT NOT NULL UNIQUE, PRIMARY KEY(\"nombre\") )");		
-			statement.executeUpdate("CREATE TABLE \"purgante\" ( \"id\" INTEGER, \"nombre\" TEXT NOT NULL, PRIMARY KEY(\"id\" AUTOINCREMENT) )");
+			statement.executeUpdate("CREATE TABLE \"purgantes\" ( \"id\" INTEGER, \"nombre\" TEXT NOT NULL, PRIMARY KEY(\"id\" AUTOINCREMENT) )");
 			statement.executeUpdate("CREATE TABLE \"res\" ( \"numero\" INTEGER NOT NULL UNIQUE, \"genero\" TEXT NOT NULL, \"color\" TEXT NOT NULL, \"fecha_nacimiento\" TEXT, \"observaciones\" TEXT, \"vivo\" INTEGER NOT NULL, \"embarazada\" INTEGER NOT NULL, \"fecha_embarazo\" INTEGER, \"fecha_ultima_purgado\" TEXT, \"fecha_ultima_vacunado\" TEXT, \"madreID\" INTEGER, PRIMARY KEY(\"numero\") )");
 			statement.executeUpdate("CREATE TABLE \"potreros_tiene_res\" ( \"id\" INTEGER UNIQUE, \"potreroNombre\" TEXT, \"resID\" INTEGER, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\"), FOREIGN KEY(\"potreroNombre\") REFERENCES \"potreros\"(\"nombre\") )");
 			statement.executeUpdate("CREATE TABLE \"res_tiene_pesos\" ( \"id\" INTEGER, \"resID\" INTEGER NOT NULL, \"peso\" REAL NOT NULL, \"fecha\" TEXT NOT NULL, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\") )");

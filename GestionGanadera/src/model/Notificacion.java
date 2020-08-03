@@ -15,6 +15,5 @@ public class Notificacion {
 	public void setInfo(String info) {
 		this.info = info;
 	}
-	
-	
+
 }

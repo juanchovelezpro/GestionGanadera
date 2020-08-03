@@ -6,12 +6,12 @@ public class Gestion {
 
 	private ArrayList<Potrero> potreros;
 	private ArrayList<Notificacion> notificaciones;
-	
-	
 
-	public Gestion(ArrayList<Potrero> potreros, ArrayList<Notificacion> notificaciones) {
-		this.potreros = potreros;
-		this.notificaciones =notificaciones;
+	public Gestion() {
+
+		potreros = new ArrayList<>();
+		notificaciones = new ArrayList<>();
+
 	}
 
 	public ArrayList<Potrero> getPotreros() {
@@ -21,9 +21,7 @@ public class Gestion {
 	public void setPotreros(ArrayList<Potrero> potreros) {
 		this.potreros = potreros;
 	}
-	
-	
-	
+
 	public ArrayList<Notificacion> getNotificaciones() {
 		return notificaciones;
 	}
@@ -33,13 +31,11 @@ public class Gestion {
 	}
 
 	public void mostrarEmbarazada() {
-		
-		
+
 	}
-	
+
 	public void moverVaca() {
-		
+
 	}
-	
-	
+
 }
