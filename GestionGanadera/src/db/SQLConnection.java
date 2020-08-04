@@ -37,6 +37,12 @@ public class SQLConnection {
 		}
 		return instance;
 	}
+	
+	public Statement getStatement() {
+		
+		return statement;
+		
+	}	
 
 	public void createDatabase() {
 
