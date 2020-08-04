@@ -93,37 +93,17 @@ public class ResCRUD {
 
 	}
 
+	// Elimina una res de la base de datos.
 	public static void delete(String id) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			sql.getStatement().executeUpdate("");
+			sql.getStatement().executeUpdate("DELETE FROM res WHERE numero=" + id);
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-
-	}
-
-	public static void main(String[] args) {
-
-		ArrayList<Res> vacas = ResCRUD.select();
-
-		Res res = vacas.get(0);
-		System.out.println(res);
-		String id = res.getResID();
-		System.out.println(id);
-
-		res.setResID("5");
-		res.setColor("NEGRO");
-		res.setObservaciones(null);
-
-		ResCRUD.update(id, res);
-
-		ArrayList<Res> vacas2 = ResCRUD.select();
-
-		System.out.println(vacas2.get(0));
 
 	}
 
