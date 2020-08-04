@@ -1,13 +1,11 @@
 package model;
 
-import java.util.Date;
-
 public class Peso {
 
 	private double peso;
-	private Date fecha;
+	private String fecha;
 
-	public Peso(double peso, Date fecha) {
+	public Peso(double peso, String fecha) {
 
 		this.peso = peso;
 		this.fecha = fecha;
@@ -21,11 +19,11 @@ public class Peso {
 		this.peso = peso;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 

@@ -1,21 +1,19 @@
 package model;
 
-import java.util.Date;
-
 public class Purgante {
 
-	private Date fecha;
+	private String fecha;
 
-	public Purgante(Date fecha) {
+	public Purgante(String fecha) {
 
 		this.fecha = fecha;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 

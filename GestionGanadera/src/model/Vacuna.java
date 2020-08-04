@@ -1,13 +1,11 @@
 package model;
 
-import java.util.Date;
-
 public class Vacuna {
 
 	private String nombre;
-	private Date fecha;
+	private String fecha;
 
-	public Vacuna(String nombre, Date fecha) {
+	public Vacuna(String nombre, String fecha) {
 		this.nombre = nombre;
 		this.fecha = fecha;
 	}
@@ -20,11 +18,11 @@ public class Vacuna {
 		this.nombre = nombre;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
