@@ -59,10 +59,10 @@ public class SQLConnection {
 			statement.executeUpdate("CREATE TABLE \"vacunas\" ( \"id\" INTEGER, \"nombre\" TEXT NOT NULL, PRIMARY KEY(\"id\" AUTOINCREMENT) )");
 			statement.executeUpdate("CREATE TABLE \"purgantes\" ( \"id\" INTEGER, \"nombre\" TEXT NOT NULL, PRIMARY KEY(\"id\" AUTOINCREMENT) )");
 			statement.executeUpdate("CREATE TABLE \"potreros_tiene_res\" ( \"id\" INTEGER UNIQUE, \"potreroNombre\" TEXT, \"resID\" TEXT, FOREIGN KEY(\"potreroNombre\") REFERENCES \"potreros\"(\"nombre\"), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\"), PRIMARY KEY(\"id\" AUTOINCREMENT) )");
-			statement.executeUpdate("CREATE TABLE \"res_tiene_crias\" ( \"id\" INTEGER, \"madreID\" TEXT, \"criaID\" TEXT, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"madreID\") REFERENCES \"res\"(\"numero\"), FOREIGN KEY(\"criaID\") REFERENCES \"res\"(\"numero\") )");
-			statement.executeUpdate("CREATE TABLE \"res_tiene_pesos\" ( \"id\" INTEGER, \"resID\" TEXT NOT NULL, \"peso\" REAL NOT NULL, \"fecha\" TEXT NOT NULL, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\") )");
-			statement.executeUpdate("CREATE TABLE \"res_tiene_purgantes\" ( \"id\" INTEGER, \"resID\" TEXT NOT NULL, \"purganteNombre\" TEXT NOT NULL, \"fecha\" TEXT NOT NULL, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\"), FOREIGN KEY(\"purganteNombre\") REFERENCES \"purgante\"(\"id\") )");
-			statement.executeUpdate("CREATE TABLE \"res_tiene_vacunas\" ( \"id\" INTEGER, \"resID\" TEXT NOT NULL, \"vacunaNombre\" TEXT NOT NULL, \"fecha\" TEXT NOT NULL, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\"), FOREIGN KEY(\"vacunaNombre\") REFERENCES \"vacunas\"(\"id\") )");
+			statement.executeUpdate("CREATE TABLE \"res_tiene_crias\" ( \"id\" INTEGER UNIQUE, \"madreID\" TEXT, \"criaID\" TEXT, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"madreID\") REFERENCES \"res\"(\"numero\"), FOREIGN KEY(\"criaID\") REFERENCES \"res\"(\"numero\") )");
+			statement.executeUpdate("CREATE TABLE \"res_tiene_pesos\" ( \"id\" INTEGER UNIQUE, \"resID\" TEXT, \"peso\" REAL, \"fecha\" TEXT, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\") )");
+			statement.executeUpdate("CREATE TABLE \"res_tiene_purgantes\" ( \"id\" INTEGER UNIQUE, \"resID\" TEXT, \"purganteNombre\" TEXT, \"fecha\" TEXT, FOREIGN KEY(\"purganteNombre\") REFERENCES \"purgantes\"(\"nombre\"), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\"), PRIMARY KEY(\"id\" AUTOINCREMENT) )");
+			statement.executeUpdate("CREATE TABLE \"res_tiene_vacunas\" ( \"id\" INTEGER UNIQUE, \"resID\" TEXT, \"vacunaNombre\" TEXT, \"fecha\" TEXT, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"vacunaNombre\") REFERENCES \"vacunas\"(\"id\"), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\") )");
 			
 			
 		} catch (SQLException e) {

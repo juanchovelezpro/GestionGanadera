@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Potrero;
+import model.Res;
 
 public class PotreroCRUD {
 
@@ -72,5 +73,47 @@ public class PotreroCRUD {
 		}
 
 	}
+
+	public static void insertRes(String potreroNombre, String numero, String genero, String color,
+			String fecha_nacimiento, String observaciones, int vivo, int embarazada, String fecha_embarazo,
+			String fecha_ultima_purgado, String fecha_ultima_vacunado, String madreID) {
+
+		ResCRUD.insert(numero, genero, color, fecha_nacimiento, observaciones, vivo, embarazada, fecha_embarazo,
+				fecha_ultima_purgado, fecha_ultima_vacunado, madreID);
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+			sql.getStatement().executeUpdate("INSERT INTO potreros_tiene_res (potreroNombre,resID) VALUES ('"
+					+ potreroNombre + "','" + numero + "'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public static void deleteRes(String resID) {
+		
+		SQLConnection sql = SQLConnection.getInstance();
+		
+		try {
+			sql.getStatement().executeUpdate("DELETE FROM potreros_tiene_res WHERE resID='"+resID+"'");
+			ResCRUD.delete(resID);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void updateRes(String resID, Res res) {
+		
+		SQLConnection sql = SQLConnection.getInstance();
+		
+		
+		
+		
+	}
+	
 
 }
