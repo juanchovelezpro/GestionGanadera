@@ -5,9 +5,9 @@ public class Vacuna {
 	private String nombre;
 	private String fecha;
 
-	public Vacuna(String nombre, String fecha) {
+	public Vacuna(String nombre) {
 		this.nombre = nombre;
-		this.fecha = fecha;
+		
 	}
 
 	public String getNombre() {
@@ -26,4 +26,11 @@ public class Vacuna {
 		this.fecha = fecha;
 	}
 
+	@Override
+	public String toString() {
+		return "Vacuna [nombre=" + nombre + "]";
+	}
+
+	
+	
 }
