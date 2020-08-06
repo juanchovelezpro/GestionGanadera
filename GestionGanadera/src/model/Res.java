@@ -188,7 +188,10 @@ public class Res {
 				+ ", fecha_nacimiento=" + fecha_nacimiento + ", observaciones=" + observaciones + ", embarazada="
 				+ embarazada + ", fecha_embarazo=" + fecha_embarazo + ", madreID=" + madreID + ", crias=" + crias
 				+ ", vacunas=" + vacunas + ", purgantes=" + purgantes + ", pesos=" + pesos + ", fecha_ultimo_purgado="
-				+ fecha_ultimo_purgado + ", fecha_ultimo_vacunado=" + fecha_ultimo_vacunado + "]";
+				+ fecha_ultimo_purgado + ", fecha_ultimo_vacunado=" + fecha_ultimo_vacunado + ", potreroNombre="
+				+ potreroNombre + "]";
 	}
+
+	
 
 }

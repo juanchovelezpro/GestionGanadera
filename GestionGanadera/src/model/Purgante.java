@@ -18,10 +18,21 @@ public class Purgante {
 		this.nombre = nombre;
 	}
 
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
 	@Override
 	public String toString() {
-		return "Purgante [nombre=" + nombre + "]";
+		return "Purgante [nombre=" + nombre + ", fecha=" + fecha + "]";
 	}
+
+	
+	
 
 
 	

@@ -14,7 +14,7 @@ public class PotreroCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			sql.getStatement().executeUpdate("INSERT INTO potreros (nombre) VALUES (" + nombre + ")");
+			sql.getStatement().executeUpdate("INSERT INTO potreros (nombre) VALUES ('" + nombre + "')");
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class PotreroCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			sql.getStatement().executeUpdate("INSERT INTO potreros (nombre) VALUES ('" + nombreNuevo + "'");
+			sql.getStatement().executeUpdate("INSERT INTO potreros (nombre) VALUES ('" + nombreNuevo + "')");
 			sql.getStatement().executeUpdate(
 					"UPDATE res SET potreroNombre='" + nombreNuevo + "' WHERE potreroNombre='" + nombreViejo + "'");
 			sql.getStatement().executeUpdate("DELETE FROM potreros WHERE nombre='" + nombreViejo + "'");
@@ -117,5 +117,19 @@ public class PotreroCRUD {
 		return vacas;
 
 	}
+	
+	
+//	public static void main(String[] args) {
+		
+		
+		//insert("potreritopaz");
+
+	//	System.out.println(select());
+		
+	//	update("potreritopaz", "otropotreritopaz");
+		
+		//System.out.println(selectRes("potreritovelez"));
+		
+	//}
 
 }

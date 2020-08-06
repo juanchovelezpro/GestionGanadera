@@ -46,4 +46,11 @@ public class Potrero {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Potrero [nombre=" + nombre + ", vacas=" + vacas + "]";
+	}
+	
+	
+
 }
