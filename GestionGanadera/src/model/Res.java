@@ -20,10 +20,11 @@ public class Res {
 	private ArrayList<Peso> pesos;
 	private String fecha_ultimo_purgado;
 	private String fecha_ultimo_vacunado;
+	private String potreroNombre;
 
 	public Res(String resID, String genero, String tipo, String color, int vivo, String fecha_nacimiento,
 			String observaciones, int embarazada, String fecha_embarazo, String madreID, String fecha_ultimo_purgado,
-			String fecha_ultimo_vacunado) {
+			String fecha_ultimo_vacunado, String potreroNombre) {
 		super();
 		this.resID = resID;
 		this.genero = genero;
@@ -37,11 +38,20 @@ public class Res {
 		this.madreID = madreID;
 		this.fecha_ultimo_purgado = fecha_ultimo_purgado;
 		this.fecha_ultimo_vacunado = fecha_ultimo_vacunado;
+		this.potreroNombre = potreroNombre;
 
 		crias = new ArrayList<>();
 		vacunas = new ArrayList<>();
 		purgantes = new ArrayList<>();
 		pesos = new ArrayList<>();
+	}
+
+	public String getPotreroNombre() {
+		return potreroNombre;
+	}
+
+	public void setPotreroNombre(String potreroNombre) {
+		this.potreroNombre = potreroNombre;
 	}
 
 	public String getResID() {

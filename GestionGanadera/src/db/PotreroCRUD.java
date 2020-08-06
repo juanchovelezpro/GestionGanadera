@@ -50,8 +50,8 @@ public class PotreroCRUD {
 
 		try {
 			sql.getStatement().executeUpdate("INSERT INTO potreros (nombre) VALUES ('" + nombreNuevo + "'");
-			sql.getStatement().executeUpdate("UPDATE potreros_tiene_res SET potreroNombre='" + nombreNuevo
-					+ "' WHERE potreroNombre='" + nombreViejo + "'");
+			sql.getStatement().executeUpdate(
+					"UPDATE res SET potreroNombre='" + nombreNuevo + "' WHERE potreroNombre='" + nombreViejo + "'");
 			sql.getStatement().executeUpdate("DELETE FROM potreros WHERE nombre='" + nombreViejo + "'");
 		} catch (SQLException e) {
 
@@ -65,7 +65,7 @@ public class PotreroCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			sql.getStatement().executeUpdate("DELETE FROM potreros_tiene_res WHERE potreroNombre='" + nombre + "'");
+			sql.getStatement().executeUpdate("DELETE FROM res WHERE potreroNombre='" + nombre + "'");
 			sql.getStatement().executeUpdate("DELETE FROM potreros WHERE nombre='" + nombre + "'");
 		} catch (SQLException e) {
 
@@ -74,57 +74,47 @@ public class PotreroCRUD {
 
 	}
 
-	public static void insertRes(String potreroNombre, String numero, String genero, String color,
-			String fecha_nacimiento, String observaciones, int vivo, int embarazada, String fecha_embarazo,
-			String fecha_ultima_purgado, String fecha_ultima_vacunado, String madreID) {
-
-		ResCRUD.insert(numero, genero, color, fecha_nacimiento, observaciones, vivo, embarazada, fecha_embarazo,
-				fecha_ultima_purgado, fecha_ultima_vacunado, madreID);
-
-		SQLConnection sql = SQLConnection.getInstance();
-
-		try {
-			sql.getStatement().executeUpdate("INSERT INTO potreros_tiene_res (potreroNombre,resID) VALUES ('"
-					+ potreroNombre + "','" + numero + "'");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	public static ArrayList<Res> selectRes(String potreroNombre) {
 
 		SQLConnection sql = SQLConnection.getInstance();
+		ArrayList<Res> vacas = new ArrayList<Res>();
 
 		try {
-			sql.getStatement().executeQuery("SELECT * FROM potreros_tiene_res WHERE potreroNombre='"+potreroNombre+"'");
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT * FROM res WHERE potreroNombre='" + potreroNombre + "'");
+
+			while (result.next()) {
+
+				while (result.next()) {
+
+					String resID = result.getString(1);
+					String tipo = result.getString(2);
+					String genero = result.getString(3);
+					String color = result.getString(4);
+					String fecha_nacimiento = result.getString(5);
+					String observaciones = result.getString(6);
+					int vivo = result.getInt(7);
+					int embarazada = result.getInt(8);
+					String fecha_embarazo = result.getString(9);
+					String fecha_ultimo_purgado = result.getString(10);
+					String fecha_ultimo_vacunado = result.getString(11);
+					String madreID = result.getString(12);
+					String potrero_Nombre = result.getString(13);
+
+					Res res = new Res(resID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
+							fecha_embarazo, madreID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potrero_Nombre);
+					vacas.add(res);
+
+				}
+
+			}
 
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 
-		return null;
-		
-	}
-
-	public static void deleteRes(String resID) {
-
-		SQLConnection sql = SQLConnection.getInstance();
-
-		try {
-			sql.getStatement().executeUpdate("DELETE FROM potreros_tiene_res WHERE resID='" + resID + "'");
-			ResCRUD.delete(resID);
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void updateRes(String resID, Res res) {
-
-		SQLConnection sql = SQLConnection.getInstance();
+		return vacas;
 
 	}
 
