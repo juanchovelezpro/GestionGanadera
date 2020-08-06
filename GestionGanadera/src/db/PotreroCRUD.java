@@ -91,29 +91,41 @@ public class PotreroCRUD {
 		}
 
 	}
-	
-	public static void deleteRes(String resID) {
-		
+
+	public static ArrayList<Res> selectRes(String potreroNombre) {
+
 		SQLConnection sql = SQLConnection.getInstance();
-		
+
 		try {
-			sql.getStatement().executeUpdate("DELETE FROM potreros_tiene_res WHERE resID='"+resID+"'");
+			sql.getStatement().executeQuery("SELECT * FROM potreros_tiene_res WHERE potreroNombre='"+potreroNombre+"'");
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return null;
+		
+	}
+
+	public static void deleteRes(String resID) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+			sql.getStatement().executeUpdate("DELETE FROM potreros_tiene_res WHERE resID='" + resID + "'");
 			ResCRUD.delete(resID);
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public static void updateRes(String resID, Res res) {
-		
+
 		SQLConnection sql = SQLConnection.getInstance();
-		
-		
-		
-		
+
 	}
-	
 
 }
