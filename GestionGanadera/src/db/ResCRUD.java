@@ -372,7 +372,7 @@ public class ResCRUD {
 
 	 //System.out.println(selectPesos("102").size());	
 		
-		updatePeso("102", "12/12/2012", new Peso(160, "13/12/2012"));
+	//	updatePeso("102", "12/12/2012", new Peso(160, "13/12/2012"));
 		
      //  PurganteCRUD.insert("purgantebueno2");	
     //   VacunaCRUD.insert("vacunabuena");	
@@ -389,19 +389,21 @@ public class ResCRUD {
 	//	System.out.println(selectPurgantes("103").size());
 	//	System.out.println(selectVacunas("103").size());
 		
-		Purgante purgan =new Purgante("purgantemalo");
-				purgan.setFecha("21/12/2020");
+		//Purgante purgan =new Purgante("purgantemalo");
+		//		purgan.setFecha("21/12/2020");
 				
-				Vacuna vacun =new Vacuna("vacunamalo");
-				vacun.setFecha("22/12/2020");
+		//		Vacuna vacun =new Vacuna("vacunamalo");
+		//¡		vacun.setFecha("22/12/2020");
 				
 				//  PurganteCRUD.insert("purgantemalo");	
 			      //VacunaCRUD.insert("vacunamalo");	
 				
 	//	updatePurgante("103", "15/01/2010", purgan);
-		updateVacuna("103", "01/01/2000", vacun);
+	//	updateVacuna("103", "01/01/2000", vacun);
 
 
+		
+	//	System.out.println(select().size());
 		
 	}
 	

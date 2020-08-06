@@ -83,7 +83,6 @@ public class PotreroCRUD {
 			ResultSet result = sql.getStatement()
 					.executeQuery("SELECT * FROM res WHERE potreroNombre='" + potreroNombre + "'");
 
-			while (result.next()) {
 
 				while (result.next()) {
 
@@ -103,11 +102,12 @@ public class PotreroCRUD {
 
 					Res res = new Res(resID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
 							fecha_embarazo, madreID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potrero_Nombre);
+					
 					vacas.add(res);
 
 				}
 
-			}
+			
 
 		} catch (SQLException e) {
 
@@ -118,8 +118,7 @@ public class PotreroCRUD {
 
 	}
 	
-	
-//	public static void main(String[] args) {
+		public static void main(String[] args) {
 		
 		
 		//insert("potreritopaz");
@@ -128,8 +127,16 @@ public class PotreroCRUD {
 		
 	//	update("potreritopaz", "otropotreritopaz");
 		
-		//System.out.println(selectRes("potreritovelez"));
+			//seleccionar vacas de un potrero
+			
+	//	System.out.println(selectRes("otropotreritopaz").size());
 		
-	//}
+	//	System.out.println(selectRes("potreritovelez").size());
+
+		//	delete("potreritovelez");
+			
+			
+		
+	}
 
 }
