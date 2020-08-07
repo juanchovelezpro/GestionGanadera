@@ -65,6 +65,38 @@ public class VacunaCRUD {
 	}
 	
 
+  public static void deleteVacunaRes (String idRes) {
+		
+		
+		SQLConnection sql =SQLConnection.getInstance();
+		
+		try {
+			
+			sql.getStatement().executeUpdate("DELETE FROM res_tiene_vacunas WHERE resID= '"+idRes+"'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+  
+  
 	
+	public static void updateVacunaRes(String resIdViejo, String resIdNuevo) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+			sql.getStatement().executeUpdate("UPDATE res_tiene_vacunas SET resID='" + resIdNuevo
+					+ "' WHERE resID='" + resIdViejo + "'");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+
 	
 }

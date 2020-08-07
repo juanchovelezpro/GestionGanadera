@@ -64,4 +64,38 @@ public class PurganteCRUD {
 	}
 	
 	
+	public static void deletePurganteRes (String idRes) {
+		
+		
+		SQLConnection sql =SQLConnection.getInstance();
+		
+		try {
+			
+			sql.getStatement().executeUpdate("DELETE FROM res_tiene_purgantes WHERE resID= '"+idRes+"'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+	public static void updatePurganteRes(String resIdViejo, String resIdNuevo) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+			sql.getStatement().executeUpdate("UPDATE res_tiene_purgantes SET resID='" + resIdNuevo
+					+ "' WHERE resID='" + resIdViejo + "'");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
 }

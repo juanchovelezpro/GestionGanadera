@@ -91,7 +91,11 @@ public class ResCRUD {
 					+ res.getFecha_ultimo_purgado() + "', fecha_ultima_vacunado='" + res.getFecha_ultimo_vacunado()
 					+ "', potreroNombre='" + res.getPotreroNombre() + "' WHERE numero=" + id);
 			
+			updatePesosRes(id, res.getResID());
+			PurganteCRUD.updatePurganteRes(id, res.getResID());
+			VacunaCRUD.updateVacunaRes(id, res.getResID());
 			updateMadreaCria(id, res.getResID());
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -124,12 +128,18 @@ public class ResCRUD {
 
 		try {
 			sql.getStatement().executeUpdate("DELETE FROM res WHERE numero=" + id);
+			deletePesosRes(id);
+			PurganteCRUD.deletePurganteRes(id);
+			VacunaCRUD.deleteVacunaRes(id);
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 
 	}
+	
+	
 
 	//seleccion una cria
 	public static ArrayList<Res> selectCria(String madreID) {
@@ -350,60 +360,117 @@ public class ResCRUD {
 		}
 		
 		
+		public static void deletePesosRes (String idRes) {
+			
+			
+			SQLConnection sql =SQLConnection.getInstance();
+			
+			try {
+				
+				sql.getStatement().executeUpdate("DELETE FROM res_tiene_pesos WHERE resID= '"+idRes+"'");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		
+		
+		public static void updatePesosRes(String resIdViejo, String resIdNuevo) {
+
+			SQLConnection sql = SQLConnection.getInstance();
+
+			try {
+				sql.getStatement().executeUpdate("UPDATE res_tiene_pesos SET resID='" + resIdNuevo
+						+ "' WHERE resID='" + resIdViejo + "'");
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+		
+		
 	
 	public static void main(String[] args) {
 		
-		//insert("103", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", "100", "otropotreritopaz");
-		//insert("104", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", "100", "otropotreritopaz");
+//	insert("101","VH", "H", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "povelez");
+//		insert("102","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "povelez");
+//		insert("103","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", "101", "povelez");
+	//	insert("104","VH", "H", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "popaz");
+	//	insert("105","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "popaz");
+	//	insert("106","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", "104", "popaz");
 
-		//System.out.println(select().size());
+		///System.out.println(select().size());
 		
-		//Res resita = select().get(1);
-		//resita.setTipo("VH");
-		//update("105", resita);
+	//	Res resita = select().get(1);
+	//	resita.setColor("BLANCO");
+		
+	//	Res resita2 = select().get(4);
+	//	resita2.setColor("BLANCO");
+		
+		
+	//	update("102", resita);
+	//	update("105", resita2);
+
+		
 		
 		//delete("105");
 		
-	//	System.out.println(selectCria("110").size());
+	//	System.out.println(selectCria("101"));
 		
-	//	insertPeso("102", 150.6, "12/12/2012");
-	//	insertPeso("102", 200.6, "12/06/2013");
-	//	insertPeso("102", 250.6, "12/12/2013");
+	//	insertPeso("104", 150.6, "12/12/2012");
+	//	insertPeso("105", 200.6, "12/06/2013");
+	//	insertPeso("106", 200.7, "12/12/2013");
+
+	//	insertPeso("106", 250.6, "12/12/2013");
 
 	 //System.out.println(selectPesos("102").size());	
 		
-	//	updatePeso("102", "12/12/2012", new Peso(160, "13/12/2012"));
+	//	updatePeso("102", "12/12/2013", new Peso(300, "13/12/2015"));
 		
-     //  PurganteCRUD.insert("purgantebueno2");	
-    //   VacunaCRUD.insert("vacunabuena");	
+    //   PurganteCRUD.insert("purgantebueno");	
+      // VacunaCRUD.insert("vacunabuena");	
 
        
-	//	insertPurgante("103", "purgantebueno", "15/01/2010");
-	//	insertPurgante("104", "purgantebueno", "15/07/2010");
+	//	insertPurgante("101", "purgantebueno", "15/01/2010");
+	//	insertPurgante("102", "purgantebueno", "15/07/2010");
 		
-	//	insertVacuna("103", "vacunabuena", "01/01/2000");
-	//	insertVacuna("104", "vacunabuena", "01/07/2000");
+	//	insertVacuna("101", "vacunabuena", "01/01/2000");
+	//	insertVacuna("102", "vacunabuena", "01/07/2000");
+		
+	//	insertPurgante("104", "purgantebueno", "15/01/2010");
+	//	insertPurgante("105", "purgantebueno", "15/07/2010");
+		
+	//	insertVacuna("104", "vacunabuena", "01/01/2000");
+	//	insertVacuna("105", "vacunabuena", "01/07/2000");
 
 
-	//	System.out.println(selectPurgantes("102").size());
+	//	System.out.println(selectPurgantes("104").size());
 	//	System.out.println(selectPurgantes("103").size());
-	//	System.out.println(selectVacunas("103").size());
+	//	System.out.println(selectVacunas("104").size());
 		
-		//Purgante purgan =new Purgante("purgantemalo");
-		//		purgan.setFecha("21/12/2020");
+	//Purgante purgan =new Purgante("purgantemalo");
+	//			purgan.setFecha("21/12/2020");
 				
-		//		Vacuna vacun =new Vacuna("vacunamalo");
-		//¡		vacun.setFecha("22/12/2020");
+	//			Vacuna vacun =new Vacuna("vacunamalo");
+	//			vacun.setFecha("22/12/2020");
 				
-				//  PurganteCRUD.insert("purgantemalo");	
-			      //VacunaCRUD.insert("vacunamalo");	
+		//		  PurganteCRUD.insert("purgantemalo");	
+		//	      VacunaCRUD.insert("vacunamalo");	
 				
-	//	updatePurgante("103", "15/01/2010", purgan);
-	//	updateVacuna("103", "01/01/2000", vacun);
+	//	updatePurgante("104", "15/01/2010", purgan);
+	//	updateVacuna("104", "01/01/2000", vacun);
 
 
 		
 	//	System.out.println(select().size());
+		
+	//	delete("104");
+		//delete("102");
+		
 		
 	}
 	

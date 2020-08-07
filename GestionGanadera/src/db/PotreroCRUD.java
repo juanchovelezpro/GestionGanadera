@@ -65,8 +65,18 @@ public class PotreroCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
+			
+		
+			
+			sql.getStatement().executeUpdate("DELETE FROM res_tiene_pesos WHERE resID IN(SELECT numero FROM res WHERE potreroNombre= '"+nombre+"')");
+			sql.getStatement().executeUpdate("DELETE FROM res_tiene_purgantes WHERE resID IN(SELECT numero FROM res WHERE potreroNombre= '"+nombre+"')");
+			sql.getStatement().executeUpdate("DELETE FROM res_tiene_vacunas WHERE resID IN(SELECT numero FROM res WHERE potreroNombre= '"+nombre+"')");
+
+
 			sql.getStatement().executeUpdate("DELETE FROM res WHERE potreroNombre='" + nombre + "'");
 			sql.getStatement().executeUpdate("DELETE FROM potreros WHERE nombre='" + nombre + "'");
+			
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -121,19 +131,27 @@ public class PotreroCRUD {
 		public static void main(String[] args) {
 		
 		
-		//insert("potreritopaz");
+	//insert("popaz");
+	//	insert("povelez");
+		
+		
 
 	//	System.out.println(select());
 		
-	//	update("potreritopaz", "otropotreritopaz");
+	//	update("povelez", "povelez2");
+			
+			
+		
+			
+		//	select
 		
 			//seleccionar vacas de un potrero
 			
-	//	System.out.println(selectRes("otropotreritopaz").size());
+	//	System.out.println(selectRes("popaz").size());
 		
 	//	System.out.println(selectRes("potreritovelez").size());
 
-		//	delete("potreritovelez");
+		//	delete("povelez");
 			
 			
 		
