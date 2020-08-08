@@ -73,6 +73,44 @@ public class ResCRUD {
 		return vacas;
 
 	}
+	
+	public static Res selectResByID(String resID) {
+		
+		SQLConnection sql = SQLConnection.getInstance();
+		Res res = null;
+		
+		try {
+			ResultSet result = sql.getStatement().executeQuery("SELECT * FROM res WHERE numero='"+resID+"'");
+			
+			while(result.next()) {
+				
+				String res_ID = result.getString(1);
+				String tipo = result.getString(2);
+				String genero = result.getString(3);
+				String color = result.getString(4);
+				String fecha_nacimiento = result.getString(5);
+				String observaciones = result.getString(6);
+				int vivo = result.getInt(7);
+				int embarazada = result.getInt(8);
+				String fecha_embarazo = result.getString(9);
+				String fecha_ultimo_purgado = result.getString(10);
+				String fecha_ultimo_vacunado = result.getString(11);
+				String madreID = result.getString(12);
+				String potreroNombre = result.getString(13);
+
+				res = new Res(res_ID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
+						fecha_embarazo, madreID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potreroNombre);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 
 	// Actualiza los datos de una res especificada con su id, el id es de la res sin
 	// modificar y la res debe ser la modificada.
