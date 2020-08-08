@@ -146,7 +146,7 @@ public class AgregarUsuario extends JDialog{
 
 			
 
-			Usuario user = new Usuario(txtusuario.getText(), null, nombrefinca.getText(), pass );
+			Usuario user = new Usuario(txtusuario.getText(), "", nombrefinca.getText(), pass );
 				UsuarioCRUD.insert(user);	
 				
                   dispose();	

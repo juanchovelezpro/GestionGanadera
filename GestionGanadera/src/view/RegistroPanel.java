@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import db.SQLConnection;
 import db.UsuarioCRUD;
 import model.Usuario;
+import tools.FileManager;
 
 public class RegistroPanel extends JPanel {
 
@@ -131,10 +132,11 @@ public class RegistroPanel extends JPanel {
 
 	public void listeners() {
 
+		
 		btnEntrar.addActionListener(e -> {
 
+			Usuario usuarioActual = null;
 			
-			Usuario usuarioActual = UsuarioCRUD.select().get(0);
 			
 			char[] letrass =txtPassword.getPassword();
 			String passActual = "";
@@ -144,24 +146,50 @@ public class RegistroPanel extends JPanel {
 				passActual += letrass[i];
 				
 			}
+
+	
+	if (UsuarioCRUD.select().size() ==0) {
+		
+      	 JOptionPane.showMessageDialog(null, "Cree un usuario por favor");
+
+		
+	}
 	
 	
-			if(txtNombreUsuario.getText().equals(usuarioActual.getNombre()) && passActual.equals(usuarioActual.getPassword())) {
-				
-				ventana.remove(this);
-				InicioPanel inicio = new InicioPanel(ventana);
-				ventana.add(inicio);
-				ventana.setSize(800,400);
-				ventana.setResizable(false);
-				ventana.setLocationRelativeTo(null);
-				ventana.refresh();
-				
-				
-			}
-		     else {
-				
-		    	 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas");
-			}
+	if(UsuarioCRUD.select().size() !=0) {
+		
+        usuarioActual = UsuarioCRUD.select().get(0);
+        
+        
+    	
+    	if (txtNombreUsuario.getText().equals("") || passActual.equals("")) {
+    		
+       	 JOptionPane.showMessageDialog(null, "Ingrese un usuario y contraseña");
+
+    		
+    	}
+        
+    	if(txtNombreUsuario.getText().equals(usuarioActual.getNombre()) && passActual.equals(usuarioActual.getPassword())) {
+			
+			ventana.remove(this);
+			InicioPanel inicio = new InicioPanel(ventana);
+			ventana.add(inicio);
+			ventana.setSize(800,400);
+			ventana.setResizable(false);
+			ventana.setLocationRelativeTo(null);
+			ventana.refresh();
+			
+			
+		}
+	     else if ((!txtNombreUsuario.getText().equals("") || !passActual.equals("")) && !txtNombreUsuario.getText().equals(usuarioActual.getNombre()) && !passActual.equals(usuarioActual.getPassword())) {
+			
+	    	 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas");
+		}
+
+	}
+	
+
+		
 			
 		
 
