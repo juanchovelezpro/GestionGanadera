@@ -46,6 +46,15 @@ public class Res {
 		pesos = new ArrayList<>();
 	}
 
+	public Res() {
+
+		crias = new ArrayList<>();
+		vacunas = new ArrayList<>();
+		purgantes = new ArrayList<>();
+		pesos = new ArrayList<>();
+
+	}
+
 	public String getPotreroNombre() {
 		return potreroNombre;
 	}
@@ -191,7 +200,5 @@ public class Res {
 				+ fecha_ultimo_purgado + ", fecha_ultimo_vacunado=" + fecha_ultimo_vacunado + ", potreroNombre="
 				+ potreroNombre + "]";
 	}
-
-	
 
 }

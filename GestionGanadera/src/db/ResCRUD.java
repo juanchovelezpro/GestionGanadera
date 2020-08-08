@@ -12,15 +12,13 @@ import model.Vacuna;
 public class ResCRUD {
 
 	// Agrega una res a la tabla res de la base de datos.
-	public static void insert(String numero, String tipo, String genero, String color, String fecha_nacimiento, String observaciones,
-			int vivo, int embarazada, String fecha_embarazo, String fecha_ultima_purgado, String fecha_ultima_vacunado,
-			String madreID, String potreroNombre) {
+	public static void insert(Res res) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
-		String values = "'" + numero + "','" + tipo + "','" + genero + "','" + color + "','" + fecha_nacimiento + "','" + observaciones
-				+ "'," + vivo + "," + embarazada + ",'" + fecha_embarazo + "','" + fecha_ultima_purgado + "','"
-				+ fecha_ultima_vacunado + "','" + madreID + "','" + potreroNombre + "'";
+		String values = "'" + res.getResID() + "','" + res.getTipo() + "','" + res.getGenero() + "','" + res.getColor() + "','" + res.getFecha_nacimiento()+ "','" + res.getObservaciones()
+				+ "'," + res.getVivo() + "," + res.getEmbarazada() + ",'" + res.getFecha_embarazo() + "','" + res.getFecha_ultimo_purgado() + "','"
+				+ res.getFecha_ultimo_vacunado() + "','" + res.getMadreID()+ "','" + res.getPotreroNombre() + "'";
 
 		try {
 			sql.getStatement().executeUpdate(

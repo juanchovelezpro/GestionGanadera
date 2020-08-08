@@ -65,17 +65,12 @@ public class PotreroCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			
-		
-			
+
 			sql.getStatement().executeUpdate("DELETE FROM res_tiene_pesos WHERE resID IN(SELECT numero FROM res WHERE potreroNombre= '"+nombre+"')");
 			sql.getStatement().executeUpdate("DELETE FROM res_tiene_purgantes WHERE resID IN(SELECT numero FROM res WHERE potreroNombre= '"+nombre+"')");
 			sql.getStatement().executeUpdate("DELETE FROM res_tiene_vacunas WHERE resID IN(SELECT numero FROM res WHERE potreroNombre= '"+nombre+"')");
-
-
 			sql.getStatement().executeUpdate("DELETE FROM res WHERE potreroNombre='" + nombre + "'");
 			sql.getStatement().executeUpdate("DELETE FROM potreros WHERE nombre='" + nombre + "'");
-			
 			
 		} catch (SQLException e) {
 
