@@ -29,6 +29,7 @@ public class RegistroPanel extends JPanel {
 		this.ventana = ventana;
 		
 		ventana.setSize(800,600);
+		ventana.setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 
 		setComponents();

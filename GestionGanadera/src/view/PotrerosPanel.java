@@ -3,16 +3,25 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+
+import db.PotreroCRUD;
+import model.Res;
+import java.awt.event.MouseAdapter;
 
 public class PotrerosPanel extends JPanel {
+
 	private JComboBox comboHembraMacho;
 	private JButton btnAgregar;
 	private JButton btnReporteVitamina;
@@ -20,11 +29,14 @@ public class PotrerosPanel extends JPanel {
 	private JButton btnNotificaciones;
 	private JLabel lblNombrePotrero;
 	private VentanaPrincipal ventana;
+	private JPanel panelResTable;
+	private JTable tablaRes;
+	private JScrollPane scroller;
 
 	public PotrerosPanel(VentanaPrincipal ventana) {
-		
+
 		this.ventana = ventana;
-		
+
 		setLayout(new BorderLayout(0, 0));
 
 		setComponents();
@@ -37,14 +49,14 @@ public class PotrerosPanel extends JPanel {
 		JPanel panelSuperior = new JPanel();
 		add(panelSuperior, BorderLayout.NORTH);
 		panelSuperior.setLayout(new GridLayout(1, 5));
-		
+
 		JPanel panel_2 = new JPanel();
 		panelSuperior.add(panel_2);
-		panel_2.setLayout(new GridLayout(1,10));
-		
+		panel_2.setLayout(new GridLayout(1, 10));
+
 		JButton btnRegresar = new JButton("");
 		panel_2.add(btnRegresar);
-		
+
 		JLabel lblNewLabel_4 = new JLabel("");
 		panel_2.add(lblNewLabel_4);
 
@@ -90,13 +102,69 @@ public class PotrerosPanel extends JPanel {
 		btnReportePartos = new JButton("Reporte Desparasitar");
 		panelInferior.add(btnReportePartos);
 
-		JPanel panel = new JPanel();
-		add(panel, BorderLayout.CENTER);
-		panel.setLayout(new BorderLayout(0, 0));
+		panelResTable = new JPanel();
+		crearTablaRes();
+		add(panelResTable, BorderLayout.CENTER);
+		panelResTable.setLayout(new GridLayout(1, 1));
 
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1, BorderLayout.NORTH);
-		panel_1.setLayout(new GridLayout(1, 12));
+	}
+
+	public void crearTablaRes() {
+
+		String[] columns = { "ID", "TIPO", "GENERO", "COLOR", "FECHA NACIMIENTO", "VIVO", "MADRE", "OBSERVACIONES" };
+		ArrayList<Res> ganado = PotreroCRUD.selectRes("YERBABUENA JULIO");
+		Object[][] data = new Object[ganado.size()][columns.length];
+
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[0].length; j++) {
+
+				if (j == 0)
+					data[i][j] = ganado.get(i).getResID();
+
+				if (j == 1)
+					data[i][j] = ganado.get(i).getTipo();
+
+				if (j == 2)
+					data[i][j] = ganado.get(i).getGenero();
+
+				if (j == 3)
+					data[i][j] = ganado.get(i).getColor();
+
+				if (j == 4)
+					data[i][j] = ganado.get(i).getFecha_nacimiento();
+
+				if (j == 5) {
+
+					int vivo = ganado.get(i).getVivo();
+
+					String is = vivo == 0 ? "MUERTO" : "VIVO";
+
+					data[i][j] = is;
+
+				}
+
+				if (j == 6)
+					data[i][j] = ganado.get(i).getMadreID();
+
+				if (j == 7)
+					data[i][j] = ganado.get(i).getObservaciones();
+
+			}
+
+		}
+
+		ModelResTable modelRes = new ModelResTable();
+		modelRes.setColumns(columns);
+		modelRes.setData(data);
+		tablaRes = new JTable(modelRes);
+		tablaRes.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tablaRes.setShowHorizontalLines(true);
+		tablaRes.setShowVerticalLines(true);
+		tablaRes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+
+		scroller = new JScrollPane(tablaRes);
+		tablaRes.setFillsViewportHeight(true);
+		panelResTable.add(scroller);
 
 	}
 
@@ -105,8 +173,7 @@ public class PotrerosPanel extends JPanel {
 		btnAgregar.addActionListener(e -> {
 
 			AgregarEditarVaca dialog = new AgregarEditarVaca();
-			
-			
+
 		});
 
 		btnNotificaciones.addActionListener(e -> {
@@ -119,6 +186,20 @@ public class PotrerosPanel extends JPanel {
 
 		btnReporteVitamina.addActionListener(e -> {
 
+		});
+		
+		tablaRes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (e.getClickCount() == 2) {
+
+					int row = tablaRes.getSelectedRow();
+					System.out.println(row);
+
+				}
+
+			}
 		});
 
 	}
@@ -142,7 +223,13 @@ public class PotrerosPanel extends JPanel {
 	public JButton getBtnNotificaciones() {
 		return btnNotificaciones;
 	}
+
 	public JLabel getLblNombrePotrero() {
 		return lblNombrePotrero;
 	}
+
+	public JPanel getPanelResTable() {
+		return panelResTable;
+	}
+
 }
