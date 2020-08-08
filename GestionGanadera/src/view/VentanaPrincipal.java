@@ -25,6 +25,7 @@ public class VentanaPrincipal extends JFrame {
 
 	public VentanaPrincipal() {
 
+		FileManager.cargarRecursos();
 		setTitle("Gestion Ganadera");
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
