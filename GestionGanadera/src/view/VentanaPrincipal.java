@@ -7,6 +7,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import db.SQLConnection;
 import db.UsuarioCRUD;
 import model.Gestion;
 import tools.FileManager;
@@ -52,10 +53,16 @@ public class VentanaPrincipal extends JFrame {
 				inicio = new InicioPanel(this);
 				add(inicio, BorderLayout.CENTER);
 
+			} else {
+
+				registro = new RegistroPanel(this);
+				add(registro, BorderLayout.CENTER);
+
 			}
 
 		} else {
-			// CREAR BASE DE DATOS
+
+			SQLConnection.getInstance().createDatabase();
 			registro = new RegistroPanel(this);
 			add(registro, BorderLayout.CENTER);
 

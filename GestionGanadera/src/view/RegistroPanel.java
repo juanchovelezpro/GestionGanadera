@@ -26,26 +26,25 @@ public class RegistroPanel extends JPanel {
 	private VentanaPrincipal ventana;
 
 	public RegistroPanel(VentanaPrincipal ventana) {
-		
+
 		this.ventana = ventana;
-		
-		ventana.setSize(800,600);
+
+		ventana.setSize(800, 600);
 		ventana.setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 
 		setComponents();
 		listeners();
-		
+
 		compruebaUser();
 
 	}
-	
+
 	public VentanaPrincipal getVentana() {
-		
+
 		return ventana;
-		
+
 	}
-	
 
 	public void setComponents() {
 
@@ -120,90 +119,72 @@ public class RegistroPanel extends JPanel {
 		add(lblApp, BorderLayout.NORTH);
 
 	}
-	
+
 	public static void compruebaUser() {
-		
-		
-		if (UsuarioCRUD.select().size()==1) {
-			
+
+		if (UsuarioCRUD.select().size() == 1) {
+
 			btnCrearUsuario.setEnabled(false);
 		}
 	}
 
 	public void listeners() {
 
-		
 		btnEntrar.addActionListener(e -> {
 
 			Usuario usuarioActual = null;
-			
-			
-			char[] letrass =txtPassword.getPassword();
+
+			char[] letrass = txtPassword.getPassword();
 			String passActual = "";
-			
-	for (int i = 0; i < letrass.length; i++) {
-				
+
+			for (int i = 0; i < letrass.length; i++) {
+
 				passActual += letrass[i];
-				
+
 			}
 
-	
-	if (UsuarioCRUD.select().size() ==0) {
-		
-      	 JOptionPane.showMessageDialog(null, "Cree un usuario por favor");
+			if (UsuarioCRUD.select().size() == 0) {
 
-		
-	}
-	
-	
-	if(UsuarioCRUD.select().size() !=0) {
-		
-        usuarioActual = UsuarioCRUD.select().get(0);
-        
-        
-    	
-    	if (txtNombreUsuario.getText().equals("") || passActual.equals("")) {
-    		
-       	 JOptionPane.showMessageDialog(null, "Ingrese un usuario y contraseña");
+				JOptionPane.showMessageDialog(null, "Cree un usuario por favor");
 
-    		
-    	}
-        
-    	if(txtNombreUsuario.getText().equals(usuarioActual.getNombre()) && passActual.equals(usuarioActual.getPassword())) {
-			
-			ventana.remove(this);
-			InicioPanel inicio = new InicioPanel(ventana);
-			ventana.add(inicio);
-			ventana.setSize(800,400);
-			ventana.setResizable(false);
-			ventana.setLocationRelativeTo(null);
-			ventana.refresh();
-			
-			
-		}
-	     else if ((!txtNombreUsuario.getText().equals("") || !passActual.equals("")) && (!txtNombreUsuario.getText().equals(usuarioActual.getNombre()) || !passActual.equals(usuarioActual.getPassword()))) {
-			
-	    	 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas");
-		}
+			}
 
-	}
-	
+			if (UsuarioCRUD.select().size() != 0) {
 
-		
-			
-		
+				usuarioActual = UsuarioCRUD.select().get(0);
+
+				if (txtNombreUsuario.getText().equals("") || passActual.equals("")) {
+
+					JOptionPane.showMessageDialog(null, "Ingrese un usuario y contraseña");
+
+				}
+
+				if (txtNombreUsuario.getText().equals(usuarioActual.getNombre())
+						&& passActual.equals(usuarioActual.getPassword())) {
+
+					ventana.remove(this);
+					InicioPanel inicio = new InicioPanel(ventana);
+					ventana.add(inicio);
+					ventana.setSize(800, 400);
+					ventana.setResizable(false);
+					ventana.setLocationRelativeTo(null);
+					ventana.refresh();
+
+				} else if ((!txtNombreUsuario.getText().equals("") || !passActual.equals(""))
+						&& (!txtNombreUsuario.getText().equals(usuarioActual.getNombre())
+								|| !passActual.equals(usuarioActual.getPassword()))) {
+
+					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas");
+				}
+
+			}
 
 		});
 
 		btnCrearUsuario.addActionListener(e -> {
 
-		//	SQLConnection database = SQLConnection.getInstance();
-			
-		//	database.createDatabase();
-			
 			AgregarUsuario agregar = new AgregarUsuario();
-			
-			
+
 		});
 
 	}
