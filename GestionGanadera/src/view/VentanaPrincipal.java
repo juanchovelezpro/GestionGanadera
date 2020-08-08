@@ -7,6 +7,9 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import db.UsuarioCRUD;
+import tools.FileManager;
+
 public class VentanaPrincipal extends JFrame {
 
 	public static final int WIDTH = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
@@ -24,7 +27,7 @@ public class VentanaPrincipal extends JFrame {
 		setTitle("Gestion Ganadera");
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(800,600);
+	//	setSize(800,600);
 		setResizable(false);
 		setLocationRelativeTo(null);
 
@@ -39,12 +42,35 @@ public class VentanaPrincipal extends JFrame {
 		}
 
 		registro = new RegistroPanel(this);
-		inicio = new InicioPanel(this);
 		potreros = new PotrerosPanel(this);
 		reportes = new ReportePanel(this);
 
-		add(registro, BorderLayout.CENTER);
+		
+		add(registro,BorderLayout.CENTER);
 
+		comprobarpanel();
+
+	}
+	
+	
+	public void comprobarpanel() {
+		
+		if(FileManager.directoryProjectExists() ) {
+			
+			if (UsuarioCRUD.select().size()==1) {
+				inicio = new InicioPanel(this);
+				add(inicio, BorderLayout.CENTER);
+
+			}
+
+			
+		}else {
+			//CREAR BASE DE DATOS
+
+			add(registro,BorderLayout.CENTER);
+
+
+		}
 	}
 	
 	

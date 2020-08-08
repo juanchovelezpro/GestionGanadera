@@ -14,7 +14,12 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 
+import db.PotreroCRUD;
+import db.ResCRUD;
+import db.UsuarioCRUD;
 import javafx.scene.control.ComboBox;
+import model.Potrero;
+import model.Usuario;
 
 public class InicioPanel extends JPanel {
 
@@ -37,11 +42,15 @@ public class InicioPanel extends JPanel {
 
 		this.ventana = ventana;
 
+		ventana.setSize(800,400);
+		
 		setLayout(new BorderLayout(0, 0));
-
+       
+		ventana.setLocationRelativeTo(null);
 		setComponents();
 		listeners();
 
+		cargarInfo();
 	}
 
 	private void setComponents() {
@@ -148,18 +157,15 @@ public class InicioPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelprincipal.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new GridLayout(3, 1));
+		panel.setLayout(new BorderLayout(1, 1));
 
-		JLabel label1 = new JLabel("");
-		panel.add(label1);
+		
 
 		nombreFinca = new JLabel("Nombre de la finca");
 		nombreFinca.setHorizontalAlignment(SwingConstants.CENTER);
-		nombreFinca.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		panel.add(nombreFinca);
+		nombreFinca.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		panel.add(nombreFinca, BorderLayout.CENTER);
 
-		JLabel label2 = new JLabel("");
-		panel.add(label2);
 
 		// PANEL PRINCIPAL - INFORMACION
 
@@ -190,9 +196,10 @@ public class InicioPanel extends JPanel {
 		panelinformacion.add(nombreDueno);
 
 		txtnombreDueno = new JTextField();
+		txtnombreDueno.setEditable(false);
 		txtnombreDueno.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		txtnombreDueno.setHorizontalAlignment(SwingConstants.CENTER);
-		txtnombreDueno.setText(" Juan Camilo Velez ");
+		txtnombreDueno.setText("");
 		panelinformacion.add(txtnombreDueno);
 		txtnombreDueno.setColumns(10);
 
@@ -202,9 +209,10 @@ public class InicioPanel extends JPanel {
 		panelinformacion.add(nombreUbicacion);
 
 		txtubicacion = new JTextField();
+		txtubicacion.setEditable(false);
 		txtubicacion.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		txtubicacion.setHorizontalAlignment(SwingConstants.CENTER);
-		txtubicacion.setText(" Vereda valle de lili");
+		txtubicacion.setText("");
 		panelinformacion.add(txtubicacion);
 		txtubicacion.setColumns(10);
 
@@ -234,6 +242,35 @@ public class InicioPanel extends JPanel {
 		JLabel lblNewLabel_4 = new JLabel("     ");
 		panelinformacion.add(lblNewLabel_4);
 
+	}
+	
+	public void cargarInfo() {
+		
+		
+		Usuario user = UsuarioCRUD.select().get(0);
+		String potreros =PotreroCRUD.select().size()+ " Potreros";
+		String vacas = ResCRUD.select().size()+ " Reses";
+		
+		
+		nombreFinca.setText(user.getNombreFinca().toUpperCase());
+		
+		numeroDepotreros.setText(potreros);
+		
+		numeroDevacas.setText(vacas);
+		
+		txtnombreDueno.setText(user.getNombre());
+		
+		
+		
+		if (user.getUbicacion().equals(null)) {
+			
+			txtubicacion.setText("");
+			
+		}else {
+			txtubicacion.setText(user.getUbicacion());
+		}
+		
+		
 	}
 
 	public void listeners() {
@@ -266,10 +303,25 @@ public class InicioPanel extends JPanel {
 		});
 
 		btnGuardar.addActionListener(e -> {
+			
+			
+			Usuario useractual =UsuarioCRUD.select().get(0);
+			
+			String nombre = useractual.getNombre();
+
+			useractual.setNombre(txtnombreDueno.getText());
+			useractual.setUbicacion(txtubicacion.getText());
+			
+			UsuarioCRUD.update(nombre, useractual);
 
 		});
 
 		btnEditar.addActionListener(e -> {
+			
+			txtnombreDueno.setEditable(true);
+			txtubicacion.setEditable(true);
+			
+			
 
 		});
 

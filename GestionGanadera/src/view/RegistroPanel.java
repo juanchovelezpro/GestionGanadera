@@ -6,29 +6,35 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import db.SQLConnection;
+import db.UsuarioCRUD;
+import model.Usuario;
 
 public class RegistroPanel extends JPanel {
 
 	private JTextField txtNombreUsuario;
 	private JPasswordField txtPassword;
 	private JButton btnEntrar;
-	private JButton btnCrearUsuario;
+	private static JButton btnCrearUsuario;
 	private VentanaPrincipal ventana;
 
 	public RegistroPanel(VentanaPrincipal ventana) {
 		
 		this.ventana = ventana;
 		
+		ventana.setSize(800,600);
 		setLayout(new BorderLayout());
 
 		setComponents();
 		listeners();
+		
+		compruebaUser();
 
 	}
 	
@@ -112,25 +118,62 @@ public class RegistroPanel extends JPanel {
 		add(lblApp, BorderLayout.NORTH);
 
 	}
+	
+	public static void compruebaUser() {
+		
+		
+		if (UsuarioCRUD.select().size()==1) {
+			
+			btnCrearUsuario.setEnabled(false);
+		}
+	}
 
 	public void listeners() {
 
 		btnEntrar.addActionListener(e -> {
 
-			ventana.remove(this);
-			ventana.add(ventana.getInicio());
-			ventana.setSize(800,400);
-			ventana.setResizable(false);
-			ventana.setLocationRelativeTo(null);
-			ventana.refresh();
+			
+			Usuario usuarioActual = UsuarioCRUD.select().get(0);
+			
+			char[] letrass =txtPassword.getPassword();
+			String passActual = "";
+			
+	for (int i = 0; i < letrass.length; i++) {
+				
+				passActual += letrass[i];
+				
+			}
+	
+	
+			if(txtNombreUsuario.getText().equals(usuarioActual.getNombre()) && passActual.equals(usuarioActual.getPassword())) {
+				
+				ventana.remove(this);
+				InicioPanel inicio = new InicioPanel(ventana);
+				ventana.add(inicio);
+				ventana.setSize(800,400);
+				ventana.setResizable(false);
+				ventana.setLocationRelativeTo(null);
+				ventana.refresh();
+				
+				
+			}
+		     else {
+				
+		    	 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas");
+			}
+			
+		
 
 		});
 
 		btnCrearUsuario.addActionListener(e -> {
 
-			SQLConnection database = SQLConnection.getInstance();
+		//	SQLConnection database = SQLConnection.getInstance();
 			
-			database.createDatabase();
+		//	database.createDatabase();
+			
+			AgregarUsuario agregar = new AgregarUsuario();
+			
 			
 		});
 

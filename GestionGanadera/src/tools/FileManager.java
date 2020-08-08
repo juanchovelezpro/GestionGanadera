@@ -26,6 +26,12 @@ public class FileManager {
 		}
 
 	}
+	
+	public static boolean directoryProjectExists() 
+	{
+		
+		return new File(PATH).exists();
+	}
 
 	public static void createDirectoryProject() {
 
