@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import db.UsuarioCRUD;
+import model.Gestion;
 import tools.FileManager;
 
 public class VentanaPrincipal extends JFrame {
@@ -17,10 +18,9 @@ public class VentanaPrincipal extends JFrame {
 	public static final int HEIGHT = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 			.getDisplayMode().getHeight();
 
+	private Gestion gestion;
 	private RegistroPanel registro;
 	private InicioPanel inicio;
-	private PotrerosPanel potreros;
-	private ReportePanel reportes;
 
 	public VentanaPrincipal() {
 
@@ -40,51 +40,27 @@ public class VentanaPrincipal extends JFrame {
 
 		}
 
-		registro = new RegistroPanel(this);
-		potreros = new PotrerosPanel(this);
-		reportes = new ReportePanel(this);
-
-		
-		add(registro,BorderLayout.CENTER);
-
 		comprobarpanel();
 
 	}
-	
-	
+
 	public void comprobarpanel() {
-		
-		if(FileManager.directoryProjectExists() ) {
-			
-			if (UsuarioCRUD.select().size()==1) {
+
+		if (FileManager.directoryProjectExists()) {
+
+			if (UsuarioCRUD.select().size() == 1) {
 				inicio = new InicioPanel(this);
 				add(inicio, BorderLayout.CENTER);
 
 			}
 
-			
-		}else {
-			//CREAR BASE DE DATOS
-
-			add(registro,BorderLayout.CENTER);
-
+		} else {
+			// CREAR BASE DE DATOS
+			registro = new RegistroPanel(this);
+			add(registro, BorderLayout.CENTER);
 
 		}
 	}
-	
-	
-
-	public ReportePanel getReportes() {
-		return reportes;
-	}
-
-
-
-	public void setReportes(ReportePanel reportes) {
-		this.reportes = reportes;
-	}
-
-
 
 	public RegistroPanel getRegistro() {
 		return registro;
@@ -94,10 +70,6 @@ public class VentanaPrincipal extends JFrame {
 		return inicio;
 	}
 
-	public PotrerosPanel getPotreros() {
-		return potreros;
-	}
-	
 	public void refresh() {
 
 		invalidate();

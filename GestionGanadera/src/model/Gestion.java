@@ -28,14 +28,6 @@ public class Gestion {
 
 	public void setNotificaciones(ArrayList<Notificacion> notificaciones) {
 		this.notificaciones = notificaciones;
-	}
-
-	public void mostrarEmbarazada() {
 
 	}
-
-	public void moverVaca() {
-
-	}
-
 }

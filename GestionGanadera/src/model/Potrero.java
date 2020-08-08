@@ -30,27 +30,9 @@ public class Potrero {
 		this.vacas = vacas;
 	}
 
-	public void agregarVaca() {
-
-	}
-
-	public void eliminarVaca() {
-
-	}
-
-	public void mostrarRegistroVitamina() {
-
-	}
-
-	public void mostrarRegistroPurgar() {
-
-	}
-
 	@Override
 	public String toString() {
 		return "Potrero [nombre=" + nombre + ", vacas=" + vacas + "]";
 	}
-	
-	
 
 }

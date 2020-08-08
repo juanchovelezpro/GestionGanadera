@@ -22,20 +22,20 @@ import java.awt.event.MouseAdapter;
 
 public class PotrerosPanel extends JPanel {
 
+	private InicioPanel inicio;
 	private JComboBox comboHembraMacho;
 	private JButton btnAgregar;
 	private JButton btnReporteVitamina;
 	private JButton btnReportePartos;
 	private JButton btnNotificaciones;
 	private JLabel lblNombrePotrero;
-	private VentanaPrincipal ventana;
 	private JPanel panelResTable;
 	private JTable tablaRes;
 	private JScrollPane scroller;
 
-	public PotrerosPanel(VentanaPrincipal ventana) {
+	public PotrerosPanel(InicioPanel inicio) {
 
-		this.ventana = ventana;
+		this.inicio = inicio;
 
 		setLayout(new BorderLayout(0, 0));
 
@@ -187,7 +187,7 @@ public class PotrerosPanel extends JPanel {
 		btnReporteVitamina.addActionListener(e -> {
 
 		});
-		
+
 		tablaRes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -202,6 +202,14 @@ public class PotrerosPanel extends JPanel {
 			}
 		});
 
+	}
+
+	public InicioPanel getInicio() {
+		return inicio;
+	}
+
+	public void setInicio(InicioPanel inicio) {
+		this.inicio = inicio;
 	}
 
 	public JComboBox getComboHembraMacho() {

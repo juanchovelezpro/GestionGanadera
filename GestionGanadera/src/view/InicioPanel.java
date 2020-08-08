@@ -23,6 +23,8 @@ import model.Usuario;
 
 public class InicioPanel extends JPanel {
 
+	private PotrerosPanel potreros;
+	private ReportePanel reportes;
 	private JTextField txtnombreDueno;
 	private JTextField txtubicacion;
 	private JLabel nombreFinca;
@@ -278,7 +280,8 @@ public class InicioPanel extends JPanel {
 		btnAgregar.addActionListener(e -> {
 
 			ventana.remove(this);
-			ventana.add(ventana.getPotreros());
+			potreros = new PotrerosPanel(this);
+			ventana.add(potreros);
 			ventana.setResizable(true);
 			ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			ventana.refresh();
@@ -328,7 +331,8 @@ public class InicioPanel extends JPanel {
 		btnreporteDestete.addActionListener(e -> {
 
 			ventana.remove(this);
-			ventana.add(ventana.getReportes());
+			reportes = new ReportePanel(this);
+			ventana.add(reportes);
 			ventana.setSize(450, 300);
 			ventana.setResizable(false);
 			ventana.setLocationRelativeTo(null);
