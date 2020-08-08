@@ -181,7 +181,7 @@ public class RegistroPanel extends JPanel {
 			
 			
 		}
-	     else if ((!txtNombreUsuario.getText().equals("") || !passActual.equals("")) && !txtNombreUsuario.getText().equals(usuarioActual.getNombre()) && !passActual.equals(usuarioActual.getPassword())) {
+	     else if ((!txtNombreUsuario.getText().equals("") || !passActual.equals("")) && (!txtNombreUsuario.getText().equals(usuarioActual.getNombre()) || !passActual.equals(usuarioActual.getPassword()))) {
 			
 	    	 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas");
 		}
