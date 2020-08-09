@@ -26,6 +26,9 @@ public class AgregarUsuario extends JDialog {
 	private JTextField nombrefinca;
 
 	public AgregarUsuario() {
+		
+		setTitle("Crear Usuario");
+
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		setSize(530, 330);
@@ -70,7 +73,7 @@ public class AgregarUsuario extends JDialog {
 		JLabel password = new JLabel("");
 		panel_1.add(password);
 
-		JLabel espacio3 = new JLabel("Digite su contraseña");
+		JLabel espacio3 = new JLabel("Digite su contrase\u00F1a");
 		espacio3.setFont(new Font("Tahoma", Font.BOLD, 16));
 		espacio3.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(espacio3);

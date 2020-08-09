@@ -39,8 +39,15 @@ public class AgregarEditarVaca extends JDialog {
 	public AgregarEditarVaca(Res res) {
 
 		this.res = res;
+		
+		if (res !=null)
+			setTitle("Editar Vaca/ ID: " + res.getResID());
+		else
+			setTitle("Agregar vaca");
+		
+		
 		getContentPane().setLayout(new GridLayout(1, 2));
-		setSize(1000, 700);
+		setSize(500, 700);
 		setLocationRelativeTo(null);
 		setComponents();
 		listeners();
@@ -49,7 +56,7 @@ public class AgregarEditarVaca extends JDialog {
 	}
 
 	public void setComponents() {
-
+		
 		JPanel infoPanel = new JPanel();
 		getContentPane().add(infoPanel);
 		infoPanel.setLayout(new BorderLayout(0, 0));
@@ -82,6 +89,7 @@ public class AgregarEditarVaca extends JDialog {
 		panelAux.add(lblNumero);
 
 		txtNumero = new JTextField("");
+		txtNumero.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(txtNumero);
 
 		JLabel lblGenero = new JLabel("G\u00E9nero");
@@ -108,6 +116,7 @@ public class AgregarEditarVaca extends JDialog {
 		panelAux.add(lblColor);
 
 		txtColor = new JTextField("");
+		txtColor.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(txtColor);
 
 		JLabel lblFechaNacimiento = new JLabel("Fecha nacimiento");
@@ -228,18 +237,6 @@ public class AgregarEditarVaca extends JDialog {
 		txtObservaciones.setLineWrap(true);
 		scrollPane.setViewportView(txtObservaciones);
 
-		JPanel auxPanel = new JPanel();
-		getContentPane().add(auxPanel);
-		auxPanel.setLayout(new GridLayout(2, 1));
-
-		JPanel panel_4 = new JPanel();
-		auxPanel.add(panel_4);
-		panel_4.setLayout(new BorderLayout(0, 0));
-
-		JPanel panel_5 = new JPanel();
-		auxPanel.add(panel_5);
-		panel_5.setLayout(new GridLayout(12, 2));
-
 	}
 
 	public void cargarInfoRes() {
@@ -260,7 +257,7 @@ public class AgregarEditarVaca extends JDialog {
 
 		btnFechaNacimiento.addActionListener(e -> {
 
-			CalendarioDialog calendar = new CalendarioDialog();
+			CalendarioDialog calendar = new CalendarioDialog(btnFechaNacimiento);
 
 		});
 

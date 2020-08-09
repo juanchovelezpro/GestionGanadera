@@ -402,6 +402,9 @@ public class InicioPanel extends JPanel {
 			useractual.setNombre(txtnombreDueno.getText());
 			useractual.setUbicacion(txtubicacion.getText());
 
+			txtnombreDueno.setEditable(false);
+			txtubicacion.setEditable(false);
+			
 			UsuarioCRUD.update(nombre, useractual);
 
 		});
