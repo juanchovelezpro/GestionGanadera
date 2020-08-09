@@ -215,7 +215,7 @@ public class PotrerosPanel extends JPanel {
 					int row = tablaRes.getSelectedRow();
 					Res res = ResCRUD.selectResByID(modelRes.getData()[row][0].toString());
 
-					System.out.println(res.toString());
+					AgregarEditarVaca agregar = new AgregarEditarVaca(res);
 
 				}
 

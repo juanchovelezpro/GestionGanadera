@@ -27,7 +27,6 @@ public class AgregarEditarVaca extends JDialog {
 	private JComboBox comboEmbarazada;
 	private JComboBox comboGenero;
 	private JButton btnGuardarCerrar;
-	private JButton btnEditar;
 	private JComboBox comboTipo;
 	private JTextField txtNumero;
 	private JTextArea txtObservaciones;
@@ -35,28 +34,30 @@ public class AgregarEditarVaca extends JDialog {
 	private JButton btnCrias;
 	private JLabel lblTipo;
 	private JButton btnFechaNacimiento;
+	private JButton btnFechaEmbarazo;
 
 	public AgregarEditarVaca(Res res) {
 
 		this.res = res;
-		
-		if (res !=null)
+
+		if (res != null)
 			setTitle("Editar Vaca/ ID: " + res.getResID());
 		else
 			setTitle("Agregar vaca");
-		
-		
+
 		getContentPane().setLayout(new GridLayout(1, 2));
 		setSize(500, 700);
 		setLocationRelativeTo(null);
 		setComponents();
 		listeners();
+
+		cargarInfoRes();
 		setVisible(true);
 
 	}
 
 	public void setComponents() {
-		
+
 		JPanel infoPanel = new JPanel();
 		getContentPane().add(infoPanel);
 		infoPanel.setLayout(new BorderLayout(0, 0));
@@ -69,9 +70,6 @@ public class AgregarEditarVaca extends JDialog {
 		JPanel panelBotones = new JPanel();
 		infoPanel.add(panelBotones, BorderLayout.SOUTH);
 		panelBotones.setLayout(new GridLayout(1, 0, 0, 0));
-
-		btnEditar = new JButton("Editar");
-		panelBotones.add(btnEditar);
 
 		btnGuardarCerrar = new JButton("Guardar y cerrar");
 		panelBotones.add(btnGuardarCerrar);
@@ -107,7 +105,8 @@ public class AgregarEditarVaca extends JDialog {
 		panelAux.add(lblTipo);
 
 		comboTipo = new JComboBox();
-		comboTipo.setModel(new DefaultComboBoxModel(new String[] { "Seleccione el tipo" }));
+		comboTipo.setModel(new DefaultComboBoxModel(
+				new String[] { "Seleccione el tipo", "VP", "VH", "CH", "HL", "NV", "CM", "ML", "MC", "TP" }));
 		panelAux.add(comboTipo);
 
 		JLabel lblColor = new JLabel("Color");
@@ -145,7 +144,7 @@ public class AgregarEditarVaca extends JDialog {
 
 		panelGeneralInfo.add(panelAux);
 
-		JButton btnFechaEmbarazo = new JButton("dd/mm/AAAA");
+		btnFechaEmbarazo = new JButton("dd/mm/AAAA");
 		btnFechaEmbarazo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnFechaEmbarazo.setEnabled(false);
 		panelAux.add(btnFechaEmbarazo);
@@ -249,6 +248,31 @@ public class AgregarEditarVaca extends JDialog {
 			comboTipo.setSelectedItem(res.getTipo());
 			txtColor.setText(res.getColor());
 
+			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals(""))
+				btnFechaNacimiento.setText(res.getFecha_nacimiento());
+
+			if (genero.equals("H")) {
+
+				comboEmbarazada.setEnabled(false);
+				btnFechaEmbarazo.setEnabled(false);
+
+			} else {
+
+				comboEmbarazada.setEnabled(true);
+				btnFechaEmbarazo.setEnabled(true);
+
+				String emb = res.getEmbarazada() == 0 ? "NO" : "SI";
+
+				comboEmbarazada.setSelectedItem(emb);
+
+				if (emb.equals("SI"))
+					btnFechaEmbarazo.setText(res.getFecha_embarazo());
+
+			}
+
+			txtMadre.setText(res.getMadreID());
+			txtObservaciones.setText(res.getObservaciones());
+
 		}
 
 	}
@@ -258,6 +282,12 @@ public class AgregarEditarVaca extends JDialog {
 		btnFechaNacimiento.addActionListener(e -> {
 
 			CalendarioDialog calendar = new CalendarioDialog(btnFechaNacimiento);
+
+		});
+
+		btnFechaEmbarazo.addActionListener(e -> {
+
+			CalendarioDialog calendar = new CalendarioDialog(btnFechaEmbarazo);
 
 		});
 
@@ -277,10 +307,6 @@ public class AgregarEditarVaca extends JDialog {
 
 	public JButton getBtnGuardarCerrar() {
 		return btnGuardarCerrar;
-	}
-
-	public JButton getBtnEditar() {
-		return btnEditar;
 	}
 
 	public JComboBox getComboTipo() {
@@ -305,5 +331,9 @@ public class AgregarEditarVaca extends JDialog {
 
 	public JButton getBtnFechaNacimiento() {
 		return btnFechaNacimiento;
+	}
+
+	public JButton getBtnFechaEmbarazo() {
+		return btnFechaEmbarazo;
 	}
 }
