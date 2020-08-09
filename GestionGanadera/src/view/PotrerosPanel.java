@@ -11,12 +11,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 import db.PotreroCRUD;
+import db.ResCRUD;
 import model.Res;
 import java.awt.event.MouseAdapter;
 
@@ -31,6 +33,7 @@ public class PotrerosPanel extends JPanel {
 	private JLabel lblNombrePotrero;
 	private JPanel panelResTable;
 	private JTable tablaRes;
+	private ModelResTable modelRes;
 	private JScrollPane scroller;
 
 	public PotrerosPanel(InicioPanel inicio) {
@@ -153,7 +156,7 @@ public class PotrerosPanel extends JPanel {
 
 		}
 
-		ModelResTable modelRes = new ModelResTable();
+		modelRes = new ModelResTable();
 		modelRes.setColumns(columns);
 		modelRes.setData(data);
 		tablaRes = new JTable(modelRes);
@@ -163,7 +166,7 @@ public class PotrerosPanel extends JPanel {
 		tablaRes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		scroller = new JScrollPane(tablaRes);
-		tablaRes.setFillsViewportHeight(true);
+		tablaRes.setFillsViewportHeight(true); 
 		panelResTable.add(scroller);
 
 	}
@@ -172,7 +175,7 @@ public class PotrerosPanel extends JPanel {
 
 		btnAgregar.addActionListener(e -> {
 
-			AgregarEditarVaca dialog = new AgregarEditarVaca();
+			AgregarEditarVaca dialog = new AgregarEditarVaca(null);
 
 		});
 
@@ -195,7 +198,9 @@ public class PotrerosPanel extends JPanel {
 				if (e.getClickCount() == 2) {
 
 					int row = tablaRes.getSelectedRow();
-					System.out.println(row);
+					Res res = ResCRUD.selectResByID(modelRes.getData()[row][0].toString());
+					
+					System.out.println(res.toString());
 
 				}
 
