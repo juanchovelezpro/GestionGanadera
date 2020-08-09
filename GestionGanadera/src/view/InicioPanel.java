@@ -19,6 +19,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import db.PotreroCRUD;
 import db.ResCRUD;
 import db.UsuarioCRUD;
@@ -46,6 +48,7 @@ public class InicioPanel extends JPanel {
 	private JButton btnreporteDestete;
 	private JButton btnreportePartos;
 	private Icon icono;
+	private String potreroElegido;
 
 	public InicioPanel(VentanaPrincipal ventana) {
 
@@ -283,6 +286,7 @@ public class InicioPanel extends JPanel {
 		
 		ArrayList<Potrero> potreros2 = PotreroCRUD.select();
 		comboBoxPotreros.removeAll();
+		comboBoxPotreros.addItem("");
 		for (int i = 0; i < potreros2.size(); i++) {
 			
 			comboBoxPotreros.addItem(potreros2.get(i).getNombre());
@@ -295,17 +299,28 @@ public class InicioPanel extends JPanel {
 
 	//	btnAgregar.addActionListener(e -> {
 
-	//		ventana.remove(this);
-	//		potreros = new PotrerosPanel(this);
-	//		ventana.add(potreros);
-	//		ventana.setResizable(true);
-	//		ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
-	//		ventana.refresh();
-			
+		
 			
 	//	});
 
 		comboBoxPotreros.addActionListener(e -> {
+			
+
+			
+			String potreroelegido = (String) comboBoxPotreros.getSelectedItem();
+			
+			if (potreroelegido!=null && !potreroelegido.equals("")) {
+				
+
+				ventana.remove(this);
+				potreros = new PotrerosPanel(this,potreroelegido);
+			ventana.add(potreros);
+			ventana.setResizable(true);
+			ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			ventana.refresh();
+			
+			}
+			
 
 		});
 
@@ -332,6 +347,7 @@ public class InicioPanel extends JPanel {
 	    	  ArrayList<Potrero> potreros3 = PotreroCRUD.select();
 
 			comboBoxPotreros.removeAllItems();
+			comboBoxPotreros.addItem("");
 
 	  		for (int i = 0; i < potreros3.size(); i++) {
 	  			
@@ -343,6 +359,8 @@ public class InicioPanel extends JPanel {
 			}
 	  		
 		}
+	
+		
 		
 		
 
@@ -370,6 +388,8 @@ public class InicioPanel extends JPanel {
 		    	  
 		    	  ArrayList<Potrero> potreros3 = PotreroCRUD.select();
 		  			comboBoxPotreros.removeAllItems();
+		  			comboBoxPotreros.addItem("");
+
 
 		  		for (int i = 0; i < potreros3.size(); i++) {
 		  			
@@ -555,6 +575,14 @@ public class InicioPanel extends JPanel {
 
 	public void setBtnreportePartos(JButton btnreportePartos) {
 		this.btnreportePartos = btnreportePartos;
+	}
+	
+	public void refresh() {
+
+		invalidate();
+		revalidate();
+		repaint();
+
 	}
 
 }

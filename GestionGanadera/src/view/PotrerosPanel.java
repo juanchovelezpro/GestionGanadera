@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,11 +36,15 @@ public class PotrerosPanel extends JPanel {
 	private JTable tablaRes;
 	private ModelResTable modelRes;
 	private JScrollPane scroller;
+	private String potrero_elegido;
+	private JButton btnRegresar;
 
-	public PotrerosPanel(InicioPanel inicio) {
+	public PotrerosPanel(InicioPanel inicio, String potreroelegido) {
 
 		this.inicio = inicio;
+		potrero_elegido= potreroelegido;
 
+		
 		setLayout(new BorderLayout(0, 0));
 
 		setComponents();
@@ -57,13 +62,13 @@ public class PotrerosPanel extends JPanel {
 		panelSuperior.add(panel_2);
 		panel_2.setLayout(new GridLayout(1, 10));
 
-		JButton btnRegresar = new JButton("");
+		btnRegresar = new JButton("Regresar");
 		panel_2.add(btnRegresar);
 
 		JLabel lblNewLabel_4 = new JLabel("");
 		panel_2.add(lblNewLabel_4);
 
-		lblNombrePotrero = new JLabel("Nombre");
+		lblNombrePotrero = new JLabel(potrero_elegido);
 		lblNombrePotrero.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNombrePotrero.setHorizontalAlignment(SwingConstants.CENTER);
 		panelSuperior.add(lblNombrePotrero);
@@ -106,16 +111,16 @@ public class PotrerosPanel extends JPanel {
 		panelInferior.add(btnReportePartos);
 
 		panelResTable = new JPanel();
-		crearTablaRes();
+		crearTablaRes(potrero_elegido);
 		add(panelResTable, BorderLayout.CENTER);
 		panelResTable.setLayout(new GridLayout(1, 1));
 
 	}
 
-	public void crearTablaRes() {
+	public void crearTablaRes(String nombrep) {
 
 		String[] columns = { "ID", "TIPO", "GENERO", "COLOR", "FECHA NACIMIENTO", "VIVO", "MADRE", "OBSERVACIONES" };
-		ArrayList<Res> ganado = PotreroCRUD.selectRes("YERBABUENA JULIO");
+		ArrayList<Res> ganado = PotreroCRUD.selectRes(nombrep);
 		Object[][] data = new Object[ganado.size()][columns.length];
 
 		for (int i = 0; i < data.length; i++) {
@@ -177,6 +182,25 @@ public class PotrerosPanel extends JPanel {
 
 			AgregarEditarVaca dialog = new AgregarEditarVaca(null);
 
+		});
+		
+		btnRegresar.addActionListener(e -> {
+			
+
+	    // inicio.remove(this);
+	     
+	     inicio.getVentana().remove(this);
+	     
+	     inicio.getVentana().add(inicio);
+	      
+	//	ventana.setResizable(true);
+	//	ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	       
+		//	inicio.setVisible(true);
+
+	      inicio.getVentana().refresh();
+			
+		
 		});
 
 		btnNotificaciones.addActionListener(e -> {
@@ -244,5 +268,8 @@ public class PotrerosPanel extends JPanel {
 	public JPanel getPanelResTable() {
 		return panelResTable;
 	}
+
+	
+	
 
 }
