@@ -21,6 +21,32 @@ public class PotreroCRUD {
 		}
 
 	}
+	
+public static Potrero selectPotreroByID(String nombrep) {
+		
+		SQLConnection sql = SQLConnection.getInstance();
+		Potrero potrero = null;
+		
+		try {
+			ResultSet result = sql.getStatement().executeQuery("SELECT * FROM potreros WHERE nombre='"+nombrep+"'");
+			
+			while(result.next()) {
+				
+				String nombrepotrero = result.getString(1);
+			
+
+				potrero = new Potrero(nombrepotrero);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return potrero;
+	}
 
 	public static ArrayList<Potrero> select() {
 

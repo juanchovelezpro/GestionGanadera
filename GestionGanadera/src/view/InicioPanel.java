@@ -3,10 +3,15 @@ package view;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
@@ -20,6 +25,7 @@ import db.UsuarioCRUD;
 import javafx.scene.control.ComboBox;
 import model.Potrero;
 import model.Usuario;
+import tools.FileManager;
 
 public class InicioPanel extends JPanel {
 
@@ -31,7 +37,7 @@ public class InicioPanel extends JPanel {
 	private JLabel numeroDepotreros;
 	private JLabel numeroDevacas;
 	private VentanaPrincipal ventana;
-	private JComboBox comboBoxPotreros;
+	private JComboBox<String> comboBoxPotreros;
 	private JButton btnAgregar;
 	private JButton btnEliminar;
 	private JButton btnBuscar;
@@ -39,6 +45,7 @@ public class InicioPanel extends JPanel {
 	private JButton btnEditar;
 	private JButton btnreporteDestete;
 	private JButton btnreportePartos;
+	private Icon icono;
 
 	public InicioPanel(VentanaPrincipal ventana) {
 
@@ -273,36 +280,128 @@ public class InicioPanel extends JPanel {
 		}
 		
 		
+		
+		ArrayList<Potrero> potreros2 = PotreroCRUD.select();
+		comboBoxPotreros.removeAll();
+		for (int i = 0; i < potreros2.size(); i++) {
+			
+			comboBoxPotreros.addItem(potreros2.get(i).getNombre());
+
+		}
+		
 	}
 
 	public void listeners() {
 
-		btnAgregar.addActionListener(e -> {
+	//	btnAgregar.addActionListener(e -> {
 
-			ventana.remove(this);
-			potreros = new PotrerosPanel(this);
-			ventana.add(potreros);
-			ventana.setResizable(true);
-			ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			ventana.refresh();
+	//		ventana.remove(this);
+	//		potreros = new PotrerosPanel(this);
+	//		ventana.add(potreros);
+	//		ventana.setResizable(true);
+	//		ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	//		ventana.refresh();
 			
 			
-		});
+	//	});
 
 		comboBoxPotreros.addActionListener(e -> {
 
 		});
 
 		btnAgregar.addActionListener(e -> {
+			
+			
+        icono = new ImageIcon(FileManager.imagenes.get("FINCA"));
+
+        
+	String nombre_potrero=	(String) JOptionPane.showInputDialog(null, "Ingrese el nombre del potrero", "Agregar Potrero", 0, icono, null, null);
+		
+	
+	
+	
+		if(nombre_potrero!= null && !nombre_potrero.equals("") ) 
+				
+		{
+			
+			if (PotreroCRUD.selectPotreroByID(nombre_potrero)==null) {
+				
+			
+			PotreroCRUD.insert(nombre_potrero);
+
+	    	  ArrayList<Potrero> potreros3 = PotreroCRUD.select();
+
+			comboBoxPotreros.removeAllItems();
+
+	  		for (int i = 0; i < potreros3.size(); i++) {
+	  			
+	  			comboBoxPotreros.addItem(potreros3.get(i).getNombre());
+	  		}
+	  		
+			}else {
+				JOptionPane.showMessageDialog(null, "Este potrero ya se encuentra en el programa");
+			}
+	  		
+		}
+		
+		
 
 		});
 
 		btnEliminar.addActionListener(e -> {
 
+			
+			ArrayList<Potrero> potreros2 = PotreroCRUD.select();
+
+			String[] carreras = new String[potreros2.size()];
+			
+			for (int i = 0; i < carreras.length; i++) {
+				
+				carreras[i] = potreros2.get(i).getNombre();
+			}
+			
+		      Icon icon = new ImageIcon(FileManager.imagenes.get("BORRAR"));
+		      String resp = (String) JOptionPane.showInputDialog(null, "Seleccione el potrero que desea borrar", "Eliminar Potrero", JOptionPane.DEFAULT_OPTION, icon, carreras, carreras[0]);
+			
+		      if (resp!=null && !resp.equals("")) {
+				
+		    	  PotreroCRUD.delete(resp);
+		    	  
+		    	  
+		    	  ArrayList<Potrero> potreros3 = PotreroCRUD.select();
+		  			comboBoxPotreros.removeAllItems();
+
+		  		for (int i = 0; i < potreros3.size(); i++) {
+		  			
+		  			comboBoxPotreros.addItem(potreros3.get(i).getNombre());
+
+		  		}
+		    	  
+			}
+			
 		});
 
 		btnBuscar.addActionListener(e -> {
+			
+			  icono = new ImageIcon(FileManager.imagenes.get("BUSCAR"));
 
+		        
+				String nombreVaca=	(String) JOptionPane.showInputDialog(null, "Ingrese el numero de la Res", "Buscar Vaca", 0, icono, null, null);
+					
+				
+				if (nombreVaca!=null && !nombreVaca.equals(null) ) {
+					
+					if (ResCRUD.selectResByID(nombreVaca)!=null) {
+						
+						System.out.println(ResCRUD.selectResByID(nombreVaca));
+
+					}else {
+						JOptionPane.showMessageDialog(null, "Numero de vaca no encontrado");
+					}
+				}
+				
+                 
+				
 		});
 
 		btnGuardar.addActionListener(e -> {
