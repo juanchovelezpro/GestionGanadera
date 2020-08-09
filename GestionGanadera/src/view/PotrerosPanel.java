@@ -42,9 +42,8 @@ public class PotrerosPanel extends JPanel {
 	public PotrerosPanel(InicioPanel inicio, String potreroelegido) {
 
 		this.inicio = inicio;
-		potrero_elegido= potreroelegido;
+		potrero_elegido = potreroelegido;
 
-		
 		setLayout(new BorderLayout(0, 0));
 
 		setComponents();
@@ -171,7 +170,7 @@ public class PotrerosPanel extends JPanel {
 		tablaRes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		scroller = new JScrollPane(tablaRes);
-		tablaRes.setFillsViewportHeight(true); 
+		tablaRes.setFillsViewportHeight(true);
 		panelResTable.add(scroller);
 
 	}
@@ -183,24 +182,16 @@ public class PotrerosPanel extends JPanel {
 			AgregarEditarVaca dialog = new AgregarEditarVaca(null);
 
 		});
-		
+
 		btnRegresar.addActionListener(e -> {
-			
 
-	    // inicio.remove(this);
-	     
-	     inicio.getVentana().remove(this);
-	     
-	     inicio.getVentana().add(inicio);
-	      
-	//	ventana.setResizable(true);
-	//	ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
-	       
-		//	inicio.setVisible(true);
+			inicio.getVentana().remove(this);
+			inicio.getVentana().setSize(800, 400);
+			inicio.getVentana().setResizable(false);
+			inicio.getVentana().setLocationRelativeTo(null);
+			inicio.getVentana().add(inicio);
+			inicio.getVentana().refresh();
 
-	      inicio.getVentana().refresh();
-			
-		
 		});
 
 		btnNotificaciones.addActionListener(e -> {
@@ -223,7 +214,7 @@ public class PotrerosPanel extends JPanel {
 
 					int row = tablaRes.getSelectedRow();
 					Res res = ResCRUD.selectResByID(modelRes.getData()[row][0].toString());
-					
+
 					System.out.println(res.toString());
 
 				}
@@ -268,8 +259,5 @@ public class PotrerosPanel extends JPanel {
 	public JPanel getPanelResTable() {
 		return panelResTable;
 	}
-
-	
-	
 
 }
