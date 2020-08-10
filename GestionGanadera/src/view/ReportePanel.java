@@ -3,24 +3,35 @@ package view;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 
-public class ReportePanel extends JPanel {
+public class ReportePanel extends JDialog {
 
 	private JLabel labelFecha;
 	private JButton btnExportar;
 	private JButton btnRegresar;
-	private InicioPanel inicio;
+	private String reporte;
+	private Calendar fechaSystem;
+	private String fecha_Convertida;
+	
 
-	public ReportePanel(InicioPanel inicio) {
+	public ReportePanel(String reporte) {
 
-		this.inicio = inicio;
+		this.reporte =reporte;
+		getContentPane().setLayout(new BorderLayout(0, 0));
+		setSize(450,300);
+		setLocationRelativeTo(null);
+		setVisible(true);
 
-		setLayout(new BorderLayout(0, 0));
+
 
 		Components();
 		listeners();
@@ -30,13 +41,13 @@ public class ReportePanel extends JPanel {
 	public void Components() {
 
 		JPanel panelTexto = new JPanel();
-		add(panelTexto, BorderLayout.NORTH);
+		getContentPane().add(panelTexto, BorderLayout.NORTH);
 		panelTexto.setLayout(new GridLayout(3, 1));
 
 		JLabel lblNewLabel = new JLabel("     ");
 		panelTexto.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("   Reporte de destete  ");
+		JLabel lblNewLabel_1 = new JLabel(reporte);
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panelTexto.add(lblNewLabel_1);
@@ -45,7 +56,7 @@ public class ReportePanel extends JPanel {
 		panelTexto.add(lblNewLabel_2);
 
 		JPanel panelPrincipal = new JPanel();
-		add(panelPrincipal, BorderLayout.CENTER);
+		getContentPane().add(panelPrincipal, BorderLayout.CENTER);
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
 
 		JLabel lblNewLabel_3 = new JLabel("     ");
@@ -63,7 +74,19 @@ public class ReportePanel extends JPanel {
 		JLabel lblNewLabel_5 = new JLabel("     ");
 		panelinformacion.add(lblNewLabel_5);
 
-		labelFecha = new JLabel(" FECHA DEL REPORTE");
+		  fechaSystem = new GregorianCalendar();
+			
+		 
+			int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+			int mes =fechaSystem.get(Calendar.MONTH)+1;
+			int anio =fechaSystem.get(Calendar.YEAR);
+			
+		fecha_Convertida = dia+"/"+mes+"/"+anio;
+
+		
+		labelFecha = new JLabel(fecha_Convertida);
+		labelFecha.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
+		labelFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		panelinformacion.add(labelFecha);
 
 		JLabel lblNewLabel_20 = new JLabel("     ");
@@ -123,6 +146,8 @@ public class ReportePanel extends JPanel {
 		});
 
 		btnRegresar.addActionListener(e -> {
+			
+			setVisible(false);
 
 		});
 

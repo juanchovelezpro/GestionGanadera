@@ -6,6 +6,7 @@ public class Gestion {
 
 	private ArrayList<Potrero> potreros;
 	private ArrayList<Notificacion> notificaciones;
+	
 
 	public Gestion() {
 
@@ -13,6 +14,8 @@ public class Gestion {
 		notificaciones = new ArrayList<>();
 
 	}
+	
+	
 
 	public ArrayList<Potrero> getPotreros() {
 		return potreros;

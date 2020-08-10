@@ -61,6 +61,10 @@ public class InicioPanel extends JPanel {
 		listeners();
 
 		cargarInfo();
+		
+		comprobarEliminar();
+		//System.out.println(comboBoxPotreros.getItemCount() + "<.----");
+		
 	}
 
 	private void setComponents() {
@@ -250,6 +254,22 @@ public class InicioPanel extends JPanel {
 		panelinformacion.add(lblNewLabel_4);
 
 	}
+	
+	public void comprobarEliminar() {
+		
+		
+		if (comboBoxPotreros.getItemCount()==1) {
+		
+			btnEliminar.setEnabled(false);
+		}else {
+			btnEliminar.setEnabled(true);
+		}
+		}
+		
+	
+	
+		
+	
 
 	public void cargarInfo() {
 
@@ -337,11 +357,18 @@ public class InicioPanel extends JPanel {
 				}
 
 			}
+			comprobarEliminar();
+			String potreros = PotreroCRUD.select().size() + " Potreros";
+			String vacas = ResCRUD.select().size() + " Reses";
+			numeroDepotreros.setText(potreros);
 
+			numeroDevacas.setText(vacas);
+			
 		});
 
 		btnEliminar.addActionListener(e -> {
 
+			
 			ArrayList<Potrero> potreros2 = PotreroCRUD.select();
 
 			String[] carreras = new String[potreros2.size()];
@@ -354,6 +381,8 @@ public class InicioPanel extends JPanel {
 			Icon icon = new ImageIcon(FileManager.imagenes.get("BORRAR"));
 			String resp = (String) JOptionPane.showInputDialog(null, "Seleccione el potrero que desea borrar",
 					"Eliminar Potrero", JOptionPane.DEFAULT_OPTION, icon, carreras, carreras[0]);
+			
+			
 
 			if (resp != null && !resp.equals("")) {
 
@@ -371,6 +400,13 @@ public class InicioPanel extends JPanel {
 
 			}
 
+			comprobarEliminar();
+			String potreros = PotreroCRUD.select().size() + " Potreros";
+			String vacas = ResCRUD.select().size() + " Reses";
+			numeroDepotreros.setText(potreros);
+
+			numeroDevacas.setText(vacas);
+			
 		});
 
 		btnBuscar.addActionListener(e -> {
@@ -418,17 +454,21 @@ public class InicioPanel extends JPanel {
 
 		btnreporteDestete.addActionListener(e -> {
 
-			ventana.remove(this);
-			reportes = new ReportePanel(this);
-			ventana.add(reportes);
-			ventana.setSize(450, 300);
-			ventana.setResizable(false);
-			ventana.setLocationRelativeTo(null);
-			ventana.refresh();
+			//ventana.remove(this);
+			//reportes = new ReportePanel(this, "Reporte de Destete");
+			ReportePanel dialog = new ReportePanel("Reporte de Destete");
+
+		//	ventana.add(reportes);
+		//	ventana.setSize(450, 300);
+		//	ventana.setResizable(false);
+		//	ventana.setLocationRelativeTo(null);
+		//	ventana.refresh();
 
 		});
 
 		btnreportePartos.addActionListener(e -> {
+
+			ReportePanel dialog = new ReportePanel("Reporte de Partos");
 
 		});
 

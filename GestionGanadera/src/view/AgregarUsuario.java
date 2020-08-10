@@ -122,6 +122,7 @@ public class AgregarUsuario extends JDialog {
 
 	public void listeners() {
 
+		
 		guardar.addActionListener(e -> {
 
 			char[] letras = txtpassword.getPassword();
