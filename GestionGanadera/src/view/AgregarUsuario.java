@@ -1,22 +1,19 @@
 package view;
 
-import javax.swing.JDialog;
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JLabel;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import db.SQLConnection;
 import db.UsuarioCRUD;
 import model.Usuario;
-
-import javax.swing.JButton;
-import java.awt.Font;
-import java.awt.Label;
 
 public class AgregarUsuario extends JDialog {
 	private JTextField txtusuario;

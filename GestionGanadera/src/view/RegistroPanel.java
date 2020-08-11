@@ -12,10 +12,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import db.SQLConnection;
 import db.UsuarioCRUD;
 import model.Usuario;
-import tools.FileManager;
 
 public class RegistroPanel extends JPanel {
 

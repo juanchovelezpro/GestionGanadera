@@ -1,17 +1,16 @@
 package view;
 
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class ReportePanel extends JDialog {
 

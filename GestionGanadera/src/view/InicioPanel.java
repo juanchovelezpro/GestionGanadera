@@ -1,30 +1,25 @@
 package view;
 
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import db.PotreroCRUD;
 import db.ResCRUD;
 import db.UsuarioCRUD;
-import javafx.scene.control.ComboBox;
 import model.Potrero;
 import model.Usuario;
 import tools.FileManager;

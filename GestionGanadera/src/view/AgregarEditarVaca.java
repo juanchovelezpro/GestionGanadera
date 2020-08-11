@@ -16,8 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-import com.toedter.calendar.JCalendar;
-
 import model.Res;
 
 public class AgregarEditarVaca extends JDialog {
