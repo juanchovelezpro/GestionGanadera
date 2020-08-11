@@ -2,7 +2,13 @@ package db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 import model.Peso;
 import model.Purgante;
@@ -433,7 +439,272 @@ public class ResCRUD {
 			
 			
 			
+			ArrayList<Res> reses =select();
+			
+		
+			Res res = null;
+			Res cria = null;
+			
+			for (int i = 0; i < reses.size(); i++) {
+				for (int j = 0; j < reses.size(); j++) {
+					
+		
+				
+				res =reses.get(i);
+				cria =reses.get(j);
+				
+			
+				if (res.getGenero().equalsIgnoreCase("H")) {
+					
+					if (res.getTipo().equalsIgnoreCase("VP")) {
+						
+						if (cria.getMadreID().equals(res.getResID()) ) {
+							
+							String fecha_nacimiento =cria.getFecha_nacimiento();
+							long meses = mesesEntreFechas(fecha_nacimiento);
+							
+							if (meses>9) {
+								
+								res.setTipo("VH");
+								update(res.getResID(), res);
+							}
+							
+						}
+						
+					}
+					
+					if (res.getTipo().equalsIgnoreCase("CH")) {
+						
+						String fecha_nacimiento =cria.getFecha_nacimiento();
+						long meses = mesesEntreFechas(fecha_nacimiento);
+						
+						if (meses>8) {
+							
+							res.setTipo("HL");
+							update(res.getResID(), res);
+						}
+					}
+					
+					if (res.getTipo().equalsIgnoreCase("HL")) {
+						
+						String fecha_nacimiento =cria.getFecha_nacimiento();
+						long meses = mesesEntreFechas(fecha_nacimiento);
+						
+						if (meses>24) {
+							
+							res.setTipo("NV");
+							update(res.getResID(), res);
+						}
+					}
+					
+					
+					
+					
+					
+					
+				
+				}
+				
+				if (res.getGenero().equalsIgnoreCase("M")) {
+					
+					if (res.getTipo().equalsIgnoreCase("CM")) {
+						
+						String fecha_nacimiento =cria.getFecha_nacimiento();
+						long meses = mesesEntreFechas(fecha_nacimiento);
+						
+						if (meses>8) {
+							
+							res.setTipo("ML");
+							update(res.getResID(), res);
+						} 
+					}
+					
+						if (res.getTipo().equalsIgnoreCase("ML")) {
+						
+						String fecha_nacimiento =cria.getFecha_nacimiento();
+						long meses = mesesEntreFechas(fecha_nacimiento);
+						
+						if (meses>24) {
+							
+							res.setTipo("MC");
+							update(res.getResID(), res);
+						} 
+					}
+					
+					
+				}
+				
+				
+			}
+				}
+			
 		}
+		
+
+		public static long mesesEntreFechas (String fechaIn) {
+			
+			int difM = 0;
+			
+			   Calendar fechaSystem = new GregorianCalendar();
+				
+					int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+					int mes =fechaSystem.get(Calendar.MONTH)+1;
+					int anio =fechaSystem.get(Calendar.YEAR);
+					
+					String fecha_Convertida = dia+"/"+mes+"/"+anio;
+			  try {
+		          Calendar inicio = new GregorianCalendar();
+		          Calendar fin = new GregorianCalendar();
+		          inicio.setTime(new SimpleDateFormat("dd/MM/yyyy").parse(fechaIn));
+		          fin.setTime(new SimpleDateFormat("dd/MM/yyyy").parse(fecha_Convertida));
+		          int difA = fin.get(Calendar.YEAR) - inicio.get(Calendar.YEAR);
+		           difM = difA * 12 + fin.get(Calendar.MONTH) - inicio.get(Calendar.MONTH);
+		         // System.out.println(difM);
+		      } catch(ParseException ex) {
+
+		      }
+			
+			 
+			  return Math.abs(difM);
+		                                
+			
+		}
+			
+
+		
+		public static long diasEntreFechas (String fechaIn) {
+			
+			long dias_1 =0;
+			long dias =0;
+			
+		
+			Date fecha_In=ParseFecha(fechaIn);
+			
+	        Calendar fechaSystem = new GregorianCalendar();
+			
+			int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+			int mes =fechaSystem.get(Calendar.MONTH)+1;
+			int anio =fechaSystem.get(Calendar.YEAR);
+			
+			String fecha_Convertida = dia+"/"+mes+"/"+anio;
+			
+			Date fecha_system =ParseFecha(fecha_Convertida);
+			
+		    long diff = fecha_In.getTime() - fecha_system.getTime();
+		    
+
+		    
+		    
+	         dias=(long) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+		    
+	         
+	       //  float days = (diff / (1000*60*60*24));
+
+		    
+	         
+	         dias_1 = (long) Math.abs(dias);
+			
+			
+		//	org.joda.time.format.DateTimeFormatter dateStringFormat = DateTimeFormat
+	      ///          .forPattern("dd/MM/yyyy");
+			
+			
+	        //DateTime firstTime = dateStringFormat.parseDateTime(fechaIn);
+	        ///DateTime secondTime = dateStringFormat.parseDateTime(fecha_Convertida);
+	        //long days = Days.daysBetween(new LocalDate(firstTime),
+	                    //                new LocalDate(secondTime)).getDays();
+		
+	      //  long days1 =Days.daysBetween(firstTime, secondTime).getDays();
+	        
+	     //   System.out.println(days1 + "esta es la segunda opcion");
+	        
+	        
+	        //dias_1 =days;
+	        
+			return dias_1;
+			
+			
+	                                    
+			
+		}
+		
+		public static Date fecha_sistema() {
+			
+			
+			
+	        Calendar fechaSystem = new GregorianCalendar();
+			
+			int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+			int mes =fechaSystem.get(Calendar.MONTH)+1;
+			int anio =fechaSystem.get(Calendar.YEAR);
+			
+			String fecha_Convertida = dia+"/"+mes+"/"+anio;
+			
+			Date fecha_system =ParseFecha(fecha_Convertida);
+			
+			return fecha_system;
+		}
+		
+		public static String calcDate(String date1) {
+			
+			String message="";
+		      Date fechauno =ParseFecha(date1);
+		      Date fechaactual =fecha_sistema();
+			
+		       double diff = Math.floor(fechauno.getTime() - fechaactual.getTime());
+		       double day = 1000 * 60 * 60 * 24;
+
+		       int days =   (int) Math.abs(Math.floor(diff/day)+1);
+		       int months = (int) Math.abs(Math.floor(days/30));
+		       int years = (int) Math.abs(Math.floor(months/12));
+		       
+		       if ((days==0 && months==0 && years==0) || fechauno.compareTo(fechaactual)==1 ) {
+				
+		    	 message = "Esta acción tuvo que realizarse el " + date1;
+			}
+
+		       else if(months==0) {
+		       message = "";
+		       message += " Faltan ";
+		       message += days + " dias " ;
+		       
+		       }else if (months!=0 && years==0) {
+		    	   message = "";
+			       message += " Faltan ";
+			       message += months + " meses y ";
+			       int diasres = days - (months*30);
+			       message += diasres + " dias " ;
+
+			}else if (years!=0) {
+				 message = "";
+			       message += " Faltan ";
+			       message += years + " años y ";
+			       int mesesres= months - (years*12);
+			       message += mesesres + " meses ";
+			       int dias = days - (months*30);
+			       message += dias + " dias " ;
+			}
+		    
+
+		       return message;
+		       }
+
+		
+		
+		public static Date ParseFecha(String fecha)
+	    {
+	        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+	        
+	        Date fechaDate = null;
+	        try {
+	            fechaDate = formato.parse(fecha);
+	        } 
+	        catch (ParseException ex) 
+	        {
+	            System.out.println(ex);
+	        }
+	        return fechaDate;
+	    }
 		
 		
 	
