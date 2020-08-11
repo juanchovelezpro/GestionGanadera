@@ -429,6 +429,13 @@ public class ResCRUD {
 		}
 		
 		
+		public static void actualizarTipo() {
+			
+			
+			
+		}
+		
+		
 	
 	public static void main(String[] args) {
 		
