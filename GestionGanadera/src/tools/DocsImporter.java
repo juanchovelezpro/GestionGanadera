@@ -40,7 +40,7 @@ public class DocsImporter {
 				switch (contadorCeldas) {
 
 				case 0:
-					res.setResID(cell.toString());
+					res.setResID(cell.getStringCellValue().toString().replace(" ", ""));
 					break;
 
 				case 1:
@@ -48,7 +48,7 @@ public class DocsImporter {
 					break;
 
 				case 2:
-					res.setColor(cell.toString().toUpperCase().trim());
+					res.setColor(cell.toString().toUpperCase().trim().replaceAll(" ", ""));
 					break;
 
 				case 3:
@@ -57,15 +57,15 @@ public class DocsImporter {
 					break;
 
 				case 4:
-					res.setGenero(cell.toString());
+					res.setGenero(cell.toString().replace(" ", ""));
 					break;
 
 				case 5:
-					res.setMadreID(cell.toString());
+					res.setMadreID(cell.toString().replace(" ", ""));
 					break;
 
 				case 6:
-					res.setObservaciones(cell.toString());
+					res.setObservaciones(cell.toString().trim());
 					break;
 
 				}

@@ -22,9 +22,10 @@ public class ResCRUD {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
-		String values = "'" + res.getResID() + "','" + res.getTipo() + "','" + res.getGenero() + "','" + res.getColor() + "','" + res.getFecha_nacimiento()+ "','" + res.getObservaciones()
-				+ "'," + res.getVivo() + "," + res.getEmbarazada() + ",'" + res.getFecha_embarazo() + "','" + res.getFecha_ultimo_purgado() + "','"
-				+ res.getFecha_ultimo_vacunado() + "','" + res.getMadreID()+ "','" + res.getPotreroNombre() + "'";
+		String values = "'" + res.getResID() + "','" + res.getTipo() + "','" + res.getGenero() + "','" + res.getColor()
+				+ "','" + res.getFecha_nacimiento() + "','" + res.getObservaciones() + "'," + res.getVivo() + ","
+				+ res.getEmbarazada() + ",'" + res.getFecha_embarazo() + "','" + res.getFecha_ultimo_purgado() + "','"
+				+ res.getFecha_ultimo_vacunado() + "','" + res.getMadreID() + "','" + res.getPotreroNombre() + "'";
 
 		try {
 			sql.getStatement().executeUpdate(
@@ -79,17 +80,17 @@ public class ResCRUD {
 		return vacas;
 
 	}
-	
+
 	public static Res selectResByID(String resID) {
-		
+
 		SQLConnection sql = SQLConnection.getInstance();
 		Res res = null;
-		
+
 		try {
-			ResultSet result = sql.getStatement().executeQuery("SELECT * FROM res WHERE numero='"+resID+"'");
-			
-			while(result.next()) {
-				
+			ResultSet result = sql.getStatement().executeQuery("SELECT * FROM res WHERE numero='" + resID + "'");
+
+			while (result.next()) {
+
 				String res_ID = result.getString(1);
 				String tipo = result.getString(2);
 				String genero = result.getString(3);
@@ -106,15 +107,14 @@ public class ResCRUD {
 
 				res = new Res(res_ID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
 						fecha_embarazo, madreID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potreroNombre);
-				
+
 			}
-			
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-		
+
 		return res;
 	}
 
@@ -132,35 +132,32 @@ public class ResCRUD {
 					+ res.getFecha_embarazo() + "',madreID='" + res.getMadreID() + "',fecha_ultima_purgado='"
 					+ res.getFecha_ultimo_purgado() + "', fecha_ultima_vacunado='" + res.getFecha_ultimo_vacunado()
 					+ "', potreroNombre='" + res.getPotreroNombre() + "' WHERE numero=" + id);
-			
+
 			updatePesosRes(id, res.getResID());
 			PurganteCRUD.updatePurganteRes(id, res.getResID());
 			VacunaCRUD.updateVacunaRes(id, res.getResID());
 			updateMadreaCria(id, res.getResID());
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
-	//update madreIDencrias
-	
-	
+
+	// update madreIDencrias
+
 	public static void updateMadreaCria(String idVieja, String idNueva) {
-		
-		SQLConnection sql =SQLConnection.getInstance();
-		
+
+		SQLConnection sql = SQLConnection.getInstance();
+
 		try {
-			sql.getStatement().executeUpdate("UPDATE res SET madreID='" + idNueva + "' WHERE madreID='" + idVieja + "'");
+			sql.getStatement()
+					.executeUpdate("UPDATE res SET madreID='" + idNueva + "' WHERE madreID='" + idVieja + "'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
+
 	}
 
 	// Elimina una res de la base de datos.
@@ -173,17 +170,15 @@ public class ResCRUD {
 			deletePesosRes(id);
 			PurganteCRUD.deletePurganteRes(id);
 			VacunaCRUD.deleteVacunaRes(id);
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 
 	}
-	
-	
 
-	//seleccion una cria
+	// seleccion una cria
 	public static ArrayList<Res> selectCria(String madreID) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -220,8 +215,8 @@ public class ResCRUD {
 
 		return crias;
 	}
-	
-	//insertar peso
+
+	// insertar peso
 
 	public static void insertPeso(String resID, double peso, String fecha) {
 
@@ -236,558 +231,505 @@ public class ResCRUD {
 		}
 
 	}
-	
-	
-	//seleccionar peso
-	public static ArrayList<Peso> selectPesos(String resID){
-		
+
+	// seleccionar peso
+	public static ArrayList<Peso> selectPesos(String resID) {
+
 		SQLConnection sql = SQLConnection.getInstance();
 		ArrayList<Peso> pesos = new ArrayList<Peso>();
-		
+
 		try {
-			ResultSet result = sql.getStatement().executeQuery("SELECT * FROM res_tiene_pesos WHERE resID='"+resID+"'");
-			
-			while(result.next()) {
-				
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT * FROM res_tiene_pesos WHERE resID='" + resID + "'");
+
+			while (result.next()) {
+
 				double peso = result.getDouble(3);
 				String fecha = result.getString(4);
-				
+
 				pesos.add(new Peso(peso, fecha));
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-		
+
 		return pesos;
-		
+
 	}
-	
-	
-	//actualizar peso
-	public static void updatePeso(String resID,String fechaVieja, Peso peso) {
-		
+
+	// actualizar peso
+	public static void updatePeso(String resID, String fechaVieja, Peso peso) {
+
 		SQLConnection sql = SQLConnection.getInstance();
-		
+
 		try {
-			sql.getStatement().executeUpdate("UPDATE res_tiene_pesos SET peso="+peso.getPeso()+", fecha='"+peso.getFecha()+"' WHERE resID='"+resID+"' AND fecha='"+fechaVieja+"'");
+			sql.getStatement().executeUpdate("UPDATE res_tiene_pesos SET peso=" + peso.getPeso() + ", fecha='"
+					+ peso.getFecha() + "' WHERE resID='" + resID + "' AND fecha='" + fechaVieja + "'");
 		} catch (SQLException e) {
-		
+
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
-	//insertvacuna
+
+	// insertvacuna
 	public static void insertVacuna(String resID, String vacunaNombre, String fecha) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			sql.getStatement().executeUpdate("INSERT INTO res_tiene_vacunas (resID,vacunaNombre,fecha) VALUES ('" + resID + "','"
-					+ vacunaNombre + "','" + fecha + "')");
+			sql.getStatement().executeUpdate("INSERT INTO res_tiene_vacunas (resID,vacunaNombre,fecha) VALUES ('"
+					+ resID + "','" + vacunaNombre + "','" + fecha + "')");
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 
 	}
-	
-	//seleccionar Vacuna
-	public static ArrayList<Vacuna> selectVacunas(String resID){
-		
+
+	// seleccionar Vacuna
+	public static ArrayList<Vacuna> selectVacunas(String resID) {
+
 		SQLConnection sql = SQLConnection.getInstance();
 		ArrayList<Vacuna> vacunas = new ArrayList<Vacuna>();
-		
+
 		try {
-			ResultSet result = sql.getStatement().executeQuery("SELECT * FROM res_tiene_vacunas WHERE resID='"+resID+"'");
-			
-			while(result.next()) {
-				
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT * FROM res_tiene_vacunas WHERE resID='" + resID + "'");
+
+			while (result.next()) {
+
 				String vacuna_Nombre = result.getString(3);
 				String fecha = result.getString(4);
-				
-				Vacuna vacuna_Actual =new Vacuna(vacuna_Nombre);
+
+				Vacuna vacuna_Actual = new Vacuna(vacuna_Nombre);
 				vacuna_Actual.setFecha(fecha);
 				vacunas.add(vacuna_Actual);
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-		
+
 		return vacunas;
-		
+
 	}
-	
-	//actualizar peso
-	public static void updateVacuna(String resID,String fechaVieja, Vacuna vacuna) {
-		
+
+	// actualizar peso
+	public static void updateVacuna(String resID, String fechaVieja, Vacuna vacuna) {
+
 		SQLConnection sql = SQLConnection.getInstance();
-		
+
 		try {
-			sql.getStatement().executeUpdate("UPDATE res_tiene_vacunas SET vacunaNombre='"+vacuna.getNombre()+"', fecha='"+vacuna.getFecha()+"' WHERE resID='"+resID+"' AND fecha='"+fechaVieja+"'");
+			sql.getStatement()
+					.executeUpdate("UPDATE res_tiene_vacunas SET vacunaNombre='" + vacuna.getNombre() + "', fecha='"
+							+ vacuna.getFecha() + "' WHERE resID='" + resID + "' AND fecha='" + fechaVieja + "'");
 		} catch (SQLException e) {
-		
+
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
-	//insertpurgante
-		public static void insertPurgante(String resID, String purganteNombre, String fecha) {
 
-			SQLConnection sql = SQLConnection.getInstance();
+	// insertpurgante
+	public static void insertPurgante(String resID, String purganteNombre, String fecha) {
 
-			try {
-				sql.getStatement().executeUpdate("INSERT INTO res_tiene_purgantes (resID,purganteNombre,fecha) VALUES ('" + resID + "','"
-						+ purganteNombre + "','" + fecha + "')");
-			} catch (SQLException e) {
+		SQLConnection sql = SQLConnection.getInstance();
 
-				e.printStackTrace();
+		try {
+			sql.getStatement().executeUpdate("INSERT INTO res_tiene_purgantes (resID,purganteNombre,fecha) VALUES ('"
+					+ resID + "','" + purganteNombre + "','" + fecha + "')");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	// seleccionar purgante
+	public static ArrayList<Purgante> selectPurgantes(String resID) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+		ArrayList<Purgante> purgantes = new ArrayList<Purgante>();
+
+		try {
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT * FROM res_tiene_purgantes WHERE resID='" + resID + "'");
+
+			while (result.next()) {
+
+				String purgante_Nombre = result.getString(3);
+				String fecha = result.getString(4);
+
+				Purgante purgante_Actual = new Purgante(purgante_Nombre);
+				purgante_Actual.setFecha(fecha);
+				purgantes.add(purgante_Actual);
+
 			}
 
+		} catch (SQLException e) {
+
+			e.printStackTrace();
 		}
-		
-		
-		
-		//seleccionar purgante
-		public static ArrayList<Purgante> selectPurgantes(String resID){
-			
-			SQLConnection sql = SQLConnection.getInstance();
-			ArrayList<Purgante> purgantes = new ArrayList<Purgante>();
-			
-			try {
-				ResultSet result = sql.getStatement().executeQuery("SELECT * FROM res_tiene_purgantes WHERE resID='"+resID+"'");
-				
-				while(result.next()) {
-					
-					String purgante_Nombre = result.getString(3);
-					String fecha = result.getString(4);
-					
-					Purgante purgante_Actual =new Purgante(purgante_Nombre);
-					purgante_Actual.setFecha(fecha);
-					purgantes.add(purgante_Actual);
-					
-				}
-				
-			} catch (SQLException e) {
 
-				e.printStackTrace();
-			}
-			
-			return purgantes;
-			
+		return purgantes;
+
+	}
+
+	// actualizar purgante
+	public static void updatePurgante(String resID, String fechaVieja, Purgante purgante) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+			sql.getStatement()
+					.executeUpdate("UPDATE res_tiene_purgantes SET purganteNombre='" + purgante.getNombre()
+							+ "', fecha='" + purgante.getFecha() + "' WHERE resID='" + resID + "' AND fecha='"
+							+ fechaVieja + "'");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
 		}
-		
 
-		//actualizar purgante
-		public static void updatePurgante(String resID,String fechaVieja, Purgante purgante) {
-			
-			SQLConnection sql = SQLConnection.getInstance();
-			
-			try {
-				sql.getStatement().executeUpdate("UPDATE res_tiene_purgantes SET purganteNombre='"+purgante.getNombre()+"', fecha='"+purgante.getFecha()+"' WHERE resID='"+resID+"' AND fecha='"+fechaVieja+"'");
-			} catch (SQLException e) {
-			
-				e.printStackTrace();
-			}
-			
+	}
+
+	public static void deletePesosRes(String idRes) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate("DELETE FROM res_tiene_pesos WHERE resID= '" + idRes + "'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
-		public static void deletePesosRes (String idRes) {
-			
-			
-			SQLConnection sql =SQLConnection.getInstance();
-			
-			try {
-				
-				sql.getStatement().executeUpdate("DELETE FROM res_tiene_pesos WHERE resID= '"+idRes+"'");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
+
+	}
+
+	public static void updatePesosRes(String resIdViejo, String resIdNuevo) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+			sql.getStatement().executeUpdate(
+					"UPDATE res_tiene_pesos SET resID='" + resIdNuevo + "' WHERE resID='" + resIdViejo + "'");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
 		}
-		
-		
-		
-		public static void updatePesosRes(String resIdViejo, String resIdNuevo) {
 
-			SQLConnection sql = SQLConnection.getInstance();
+	}
 
-			try {
-				sql.getStatement().executeUpdate("UPDATE res_tiene_pesos SET resID='" + resIdNuevo
-						+ "' WHERE resID='" + resIdViejo + "'");
-			} catch (SQLException e) {
+	public static void actualizarTipo() {
 
-				e.printStackTrace();
-			}
+		ArrayList<Res> reses = select();
 
-		}
-		
-		
-		public static void actualizarTipo() {
-			
-			
-			
-			ArrayList<Res> reses =select();
-			
-		
-			Res res = null;
-			Res cria = null;
-			
-			for (int i = 0; i < reses.size(); i++) {
-				for (int j = 0; j < reses.size(); j++) {
-					
-		
-				
-				res =reses.get(i);
-				cria =reses.get(j);
-				
-			
+		Res res = null;
+		Res cria = null;
+
+		for (int i = 0; i < reses.size(); i++) {
+			for (int j = 0; j < reses.size(); j++) {
+
+				res = reses.get(i);
+				cria = reses.get(j);
+
 				if (res.getGenero().equalsIgnoreCase("H")) {
-					
+
 					if (res.getTipo().equalsIgnoreCase("VP")) {
-						
-						if (cria.getMadreID().equals(res.getResID()) ) {
-							
-							String fecha_nacimiento =cria.getFecha_nacimiento();
+
+						if (cria.getMadreID().equals(res.getResID())) {
+
+							String fecha_nacimiento = cria.getFecha_nacimiento();
 							long meses = mesesEntreFechas(fecha_nacimiento);
-							
-							if (meses>9) {
-								
+
+							if (meses > 9) {
+
 								res.setTipo("VH");
 								update(res.getResID(), res);
 							}
-							
+
 						}
-						
+
 					}
-					
+
 					if (res.getTipo().equalsIgnoreCase("CH")) {
-						
-						String fecha_nacimiento =cria.getFecha_nacimiento();
+
+						String fecha_nacimiento = cria.getFecha_nacimiento();
 						long meses = mesesEntreFechas(fecha_nacimiento);
-						
-						if (meses>8) {
-							
+
+						if (meses > 8) {
+
 							res.setTipo("HL");
 							update(res.getResID(), res);
 						}
 					}
-					
+
 					if (res.getTipo().equalsIgnoreCase("HL")) {
-						
-						String fecha_nacimiento =cria.getFecha_nacimiento();
+
+						String fecha_nacimiento = cria.getFecha_nacimiento();
 						long meses = mesesEntreFechas(fecha_nacimiento);
-						
-						if (meses>24) {
-							
+
+						if (meses > 24) {
+
 							res.setTipo("NV");
 							update(res.getResID(), res);
 						}
 					}
-					
-					
-					
-					
-				
-					
-					
-				
+
 				}
-				
+
 				if (res.getGenero().equalsIgnoreCase("M")) {
-					
+
 					if (res.getTipo().equalsIgnoreCase("CM")) {
-						
-						String fecha_nacimiento =cria.getFecha_nacimiento();
+
+						String fecha_nacimiento = cria.getFecha_nacimiento();
 						long meses = mesesEntreFechas(fecha_nacimiento);
-						
-						if (meses>8) {
-							
+
+						if (meses > 8) {
+
 							res.setTipo("ML");
 							update(res.getResID(), res);
-						} 
+						}
 					}
-					
-						if (res.getTipo().equalsIgnoreCase("ML")) {
-						
-						String fecha_nacimiento =cria.getFecha_nacimiento();
+
+					if (res.getTipo().equalsIgnoreCase("ML")) {
+
+						String fecha_nacimiento = cria.getFecha_nacimiento();
 						long meses = mesesEntreFechas(fecha_nacimiento);
-						
-						if (meses>24) {
-							
+
+						if (meses > 24) {
+
 							res.setTipo("MC");
 							update(res.getResID(), res);
-						} 
+						}
 					}
-					
-					
+
 				}
-				
-				
+
 			}
-				}
-			
 		}
-		
 
-		public static long mesesEntreFechas (String fechaIn) {
-			
-			int difM = 0;
-			
-			   Calendar fechaSystem = new GregorianCalendar();
-				
-					int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
-					int mes =fechaSystem.get(Calendar.MONTH)+1;
-					int anio =fechaSystem.get(Calendar.YEAR);
-					
-					String fecha_Convertida = dia+"/"+mes+"/"+anio;
-			  try {
-		          Calendar inicio = new GregorianCalendar();
-		          Calendar fin = new GregorianCalendar();
-		          inicio.setTime(new SimpleDateFormat("dd/MM/yyyy").parse(fechaIn));
-		          fin.setTime(new SimpleDateFormat("dd/MM/yyyy").parse(fecha_Convertida));
-		          int difA = fin.get(Calendar.YEAR) - inicio.get(Calendar.YEAR);
-		           difM = difA * 12 + fin.get(Calendar.MONTH) - inicio.get(Calendar.MONTH);
-		         // System.out.println(difM);
-		      } catch(ParseException ex) {
+	}
 
-		      }
-			
-			 
-			  return Math.abs(difM);
-		                                
-			
+	public static long mesesEntreFechas(String fechaIn) {
+
+		int difM = 0;
+
+		Calendar fechaSystem = new GregorianCalendar();
+
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		String fecha_Convertida = dia + "/" + mes + "/" + anio;
+		try {
+			Calendar inicio = new GregorianCalendar();
+			Calendar fin = new GregorianCalendar();
+			inicio.setTime(new SimpleDateFormat("dd/MM/yyyy").parse(fechaIn));
+			fin.setTime(new SimpleDateFormat("dd/MM/yyyy").parse(fecha_Convertida));
+			int difA = fin.get(Calendar.YEAR) - inicio.get(Calendar.YEAR);
+			difM = difA * 12 + fin.get(Calendar.MONTH) - inicio.get(Calendar.MONTH);
+			// System.out.println(difM);
+		} catch (ParseException ex) {
+
 		}
-			
 
-		
-		public static long diasEntreFechas (String fechaIn) {
-			
-			long dias_1 =0;
-			long dias =0;
-			
-		
-			Date fecha_In=ParseFecha(fechaIn);
-			
-	        Calendar fechaSystem = new GregorianCalendar();
-			
-			int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
-			int mes =fechaSystem.get(Calendar.MONTH)+1;
-			int anio =fechaSystem.get(Calendar.YEAR);
-			
-			String fecha_Convertida = dia+"/"+mes+"/"+anio;
-			
-			Date fecha_system =ParseFecha(fecha_Convertida);
-			
-		    long diff = fecha_In.getTime() - fecha_system.getTime();
-		    
+		return Math.abs(difM);
 
-		    
-		    
-	         dias=(long) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-		    
-	         
-	       //  float days = (diff / (1000*60*60*24));
+	}
 
-		    
-	         
-	         dias_1 = (long) Math.abs(dias);
-			
-			
-		//	org.joda.time.format.DateTimeFormatter dateStringFormat = DateTimeFormat
-	      ///          .forPattern("dd/MM/yyyy");
-			
-			
-	        //DateTime firstTime = dateStringFormat.parseDateTime(fechaIn);
-	        ///DateTime secondTime = dateStringFormat.parseDateTime(fecha_Convertida);
-	        //long days = Days.daysBetween(new LocalDate(firstTime),
-	                    //                new LocalDate(secondTime)).getDays();
-		
-	      //  long days1 =Days.daysBetween(firstTime, secondTime).getDays();
-	        
-	     //   System.out.println(days1 + "esta es la segunda opcion");
-	        
-	        
-	        //dias_1 =days;
-	        
-			return dias_1;
-			
-			
-	                                    
-			
+	public static long diasEntreFechas(String fechaIn) {
+
+		long dias_1 = 0;
+		long dias = 0;
+
+		Date fecha_In = ParseFecha(fechaIn);
+
+		Calendar fechaSystem = new GregorianCalendar();
+
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		String fecha_Convertida = dia + "/" + mes + "/" + anio;
+
+		Date fecha_system = ParseFecha(fecha_Convertida);
+
+		long diff = fecha_In.getTime() - fecha_system.getTime();
+
+		dias = (long) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+
+		// float days = (diff / (1000*60*60*24));
+
+		dias_1 = (long) Math.abs(dias);
+
+		// org.joda.time.format.DateTimeFormatter dateStringFormat = DateTimeFormat
+		/// .forPattern("dd/MM/yyyy");
+
+		// DateTime firstTime = dateStringFormat.parseDateTime(fechaIn);
+		/// DateTime secondTime = dateStringFormat.parseDateTime(fecha_Convertida);
+		// long days = Days.daysBetween(new LocalDate(firstTime),
+		// new LocalDate(secondTime)).getDays();
+
+		// long days1 =Days.daysBetween(firstTime, secondTime).getDays();
+
+		// System.out.println(days1 + "esta es la segunda opcion");
+
+		// dias_1 =days;
+
+		return dias_1;
+
+	}
+
+	public static Date fecha_sistema() {
+
+		Calendar fechaSystem = new GregorianCalendar();
+
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		String fecha_Convertida = dia + "/" + mes + "/" + anio;
+
+		Date fecha_system = ParseFecha(fecha_Convertida);
+
+		return fecha_system;
+	}
+
+	public static String calcDate(String date1) {
+
+		String message = "";
+		Date fechauno = ParseFecha(date1);
+		Date fechaactual = fecha_sistema();
+
+		double diff = Math.floor(fechauno.getTime() - fechaactual.getTime());
+		double day = 1000 * 60 * 60 * 24;
+
+		int days = (int) Math.abs(Math.floor(diff / day) + 1);
+		int months = (int) Math.abs(Math.floor(days / 30));
+		int years = (int) Math.abs(Math.floor(months / 12));
+
+		if ((days == 0 && months == 0 && years == 0) || fechauno.compareTo(fechaactual) == 1) {
+
+			message = "Esta acción tuvo que realizarse el " + date1;
 		}
-		
-		public static Date fecha_sistema() {
-			
-			
-			
-	        Calendar fechaSystem = new GregorianCalendar();
-			
-			int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
-			int mes =fechaSystem.get(Calendar.MONTH)+1;
-			int anio =fechaSystem.get(Calendar.YEAR);
-			
-			String fecha_Convertida = dia+"/"+mes+"/"+anio;
-			
-			Date fecha_system =ParseFecha(fecha_Convertida);
-			
-			return fecha_system;
+
+		else if (months == 0) {
+			message = "";
+			message += " Faltan ";
+			message += days + " dias ";
+
+		} else if (months != 0 && years == 0) {
+			message = "";
+			message += " Faltan ";
+			message += months + " meses y ";
+			int diasres = days - (months * 30);
+			message += diasres + " dias ";
+
+		} else if (years != 0) {
+			message = "";
+			message += " Faltan ";
+			message += years + " años y ";
+			int mesesres = months - (years * 12);
+			message += mesesres + " meses ";
+			int dias = days - (months * 30);
+			message += dias + " dias ";
 		}
-		
-		public static String calcDate(String date1) {
-			
-			String message="";
-		      Date fechauno =ParseFecha(date1);
-		      Date fechaactual =fecha_sistema();
-			
-		       double diff = Math.floor(fechauno.getTime() - fechaactual.getTime());
-		       double day = 1000 * 60 * 60 * 24;
 
-		       int days =   (int) Math.abs(Math.floor(diff/day)+1);
-		       int months = (int) Math.abs(Math.floor(days/30));
-		       int years = (int) Math.abs(Math.floor(months/12));
-		       
-		       if ((days==0 && months==0 && years==0) || fechauno.compareTo(fechaactual)==1 ) {
-				
-		    	 message = "Esta acción tuvo que realizarse el " + date1;
-			}
+		return message;
+	}
 
-		       else if(months==0) {
-		       message = "";
-		       message += " Faltan ";
-		       message += days + " dias " ;
-		       
-		       }else if (months!=0 && years==0) {
-		    	   message = "";
-			       message += " Faltan ";
-			       message += months + " meses y ";
-			       int diasres = days - (months*30);
-			       message += diasres + " dias " ;
+	public static Date ParseFecha(String fecha) {
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-			}else if (years!=0) {
-				 message = "";
-			       message += " Faltan ";
-			       message += years + " años y ";
-			       int mesesres= months - (years*12);
-			       message += mesesres + " meses ";
-			       int dias = days - (months*30);
-			       message += dias + " dias " ;
-			}
-		    
+		Date fechaDate = null;
+		try {
+			fechaDate = formato.parse(fecha);
+		} catch (ParseException ex) {
+			System.out.println(ex);
+		}
+		return fechaDate;
+	}
 
-		       return message;
-		       }
-
-		
-		
-		public static Date ParseFecha(String fecha)
-	    {
-	        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-	        
-	        Date fechaDate = null;
-	        try {
-	            fechaDate = formato.parse(fecha);
-	        } 
-	        catch (ParseException ex) 
-	        {
-	            System.out.println(ex);
-	        }
-	        return fechaDate;
-	    }
-		
-		
-	
 	public static void main(String[] args) {
-		
+
 //	insert("101","VH", "H", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "povelez");
 //		insert("102","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "povelez");
 //		insert("103","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", "101", "povelez");
-	//	insert("104","VH", "H", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "popaz");
-	//	insert("105","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "popaz");
-	//	insert("106","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", "104", "popaz");
+		// insert("104","VH", "H", "negro", "12/12/2000", "bonito", 1, 0, null,
+		// "12/12/2018", "12/12/2018", null, "popaz");
+		// insert("105","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null,
+		// "12/12/2018", "12/12/2018", null, "popaz");
+		// insert("106","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null,
+		// "12/12/2018", "12/12/2018", "104", "popaz");
 
-		///System.out.println(select().size());
-		
-	//	Res resita = select().get(1);
-	//	resita.setColor("BLANCO");
-		
-	//	Res resita2 = select().get(4);
-	//	resita2.setColor("BLANCO");
-		
-		
-	//	update("102", resita);
-	//	update("105", resita2);
+		/// System.out.println(select().size());
 
-		
-		
-		//delete("105");
-		
-	//	System.out.println(selectCria("101"));
-		
-	//	insertPeso("104", 150.6, "12/12/2012");
-	//	insertPeso("105", 200.6, "12/06/2013");
-	//	insertPeso("106", 200.7, "12/12/2013");
+		// Res resita = select().get(1);
+		// resita.setColor("BLANCO");
 
-	//	insertPeso("106", 250.6, "12/12/2013");
+		// Res resita2 = select().get(4);
+		// resita2.setColor("BLANCO");
 
-	 //System.out.println(selectPesos("102").size());	
-		
-	//	updatePeso("102", "12/12/2013", new Peso(300, "13/12/2015"));
-		
-    //   PurganteCRUD.insert("purgantebueno");	
-      // VacunaCRUD.insert("vacunabuena");	
+		// update("102", resita);
+		// update("105", resita2);
 
-       
-	//	insertPurgante("101", "purgantebueno", "15/01/2010");
-	//	insertPurgante("102", "purgantebueno", "15/07/2010");
-		
-	//	insertVacuna("101", "vacunabuena", "01/01/2000");
-	//	insertVacuna("102", "vacunabuena", "01/07/2000");
-		
-	//	insertPurgante("104", "purgantebueno", "15/01/2010");
-	//	insertPurgante("105", "purgantebueno", "15/07/2010");
-		
-	//	insertVacuna("104", "vacunabuena", "01/01/2000");
-	//	insertVacuna("105", "vacunabuena", "01/07/2000");
+		// delete("105");
 
+		// System.out.println(selectCria("101"));
 
-	//	System.out.println(selectPurgantes("104").size());
-	//	System.out.println(selectPurgantes("103").size());
-	//	System.out.println(selectVacunas("104").size());
-		
-	//Purgante purgan =new Purgante("purgantemalo");
-	//			purgan.setFecha("21/12/2020");
-				
-	//			Vacuna vacun =new Vacuna("vacunamalo");
-	//			vacun.setFecha("22/12/2020");
-				
-		//		  PurganteCRUD.insert("purgantemalo");	
-		//	      VacunaCRUD.insert("vacunamalo");	
-				
-	//	updatePurgante("104", "15/01/2010", purgan);
-	//	updateVacuna("104", "01/01/2000", vacun);
+		// insertPeso("104", 150.6, "12/12/2012");
+		// insertPeso("105", 200.6, "12/06/2013");
+		// insertPeso("106", 200.7, "12/12/2013");
 
+		// insertPeso("106", 250.6, "12/12/2013");
 
-		
-	//	System.out.println(select().size());
-		
-	//	delete("104");
-		//delete("102");
-		
-		
+		// System.out.println(selectPesos("102").size());
+
+		// updatePeso("102", "12/12/2013", new Peso(300, "13/12/2015"));
+
+		// PurganteCRUD.insert("purgantebueno");
+		// VacunaCRUD.insert("vacunabuena");
+
+		// insertPurgante("101", "purgantebueno", "15/01/2010");
+		// insertPurgante("102", "purgantebueno", "15/07/2010");
+
+		// insertVacuna("101", "vacunabuena", "01/01/2000");
+		// insertVacuna("102", "vacunabuena", "01/07/2000");
+
+		// insertPurgante("104", "purgantebueno", "15/01/2010");
+		// insertPurgante("105", "purgantebueno", "15/07/2010");
+
+		// insertVacuna("104", "vacunabuena", "01/01/2000");
+		// insertVacuna("105", "vacunabuena", "01/07/2000");
+
+		// System.out.println(selectPurgantes("104").size());
+		// System.out.println(selectPurgantes("103").size());
+		// System.out.println(selectVacunas("104").size());
+
+		// Purgante purgan =new Purgante("purgantemalo");
+		// purgan.setFecha("21/12/2020");
+
+		// Vacuna vacun =new Vacuna("vacunamalo");
+		// vacun.setFecha("22/12/2020");
+
+		// PurganteCRUD.insert("purgantemalo");
+		// VacunaCRUD.insert("vacunamalo");
+
+		// updatePurgante("104", "15/01/2010", purgan);
+		// updateVacuna("104", "01/01/2000", vacun);
+
+		// System.out.println(select().size());
+
+		// delete("104");
+		// delete("102");
+
 	}
-	
 
 }

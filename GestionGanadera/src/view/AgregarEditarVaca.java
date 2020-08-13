@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
+import db.ResCRUD;
 import model.Res;
 
 public class AgregarEditarVaca extends JDialog {
@@ -33,6 +34,7 @@ public class AgregarEditarVaca extends JDialog {
 	private JLabel lblTipo;
 	private JButton btnFechaNacimiento;
 	private JButton btnFechaEmbarazo;
+	private JButton btnVerRegistroPeso;
 
 	public AgregarEditarVaca(Res res) {
 
@@ -170,7 +172,7 @@ public class AgregarEditarVaca extends JDialog {
 		lblRegistroPeso.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelAux.add(lblRegistroPeso);
 
-		JButton btnVerRegistroPeso = new JButton("Ver Registro Peso");
+		btnVerRegistroPeso = new JButton("Ver Registro Peso");
 		btnVerRegistroPeso.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelAux.add(btnVerRegistroPeso);
 
@@ -248,13 +250,10 @@ public class AgregarEditarVaca extends JDialog {
 
 			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals(""))
 				btnFechaNacimiento.setText(res.getFecha_nacimiento());
+			else
+				btnFechaNacimiento.setText("SIN REGISTRO");
 
-			if (genero.equals("H")) {
-
-				comboEmbarazada.setEnabled(false);
-				btnFechaEmbarazo.setEnabled(false);
-
-			} else {
+			if (res.getGenero().equals("H")) {
 
 				comboEmbarazada.setEnabled(true);
 				btnFechaEmbarazo.setEnabled(true);
@@ -266,12 +265,44 @@ public class AgregarEditarVaca extends JDialog {
 				if (emb.equals("SI"))
 					btnFechaEmbarazo.setText(res.getFecha_embarazo());
 
+			} else {
+
+				comboEmbarazada.setEnabled(false);
+				btnFechaEmbarazo.setEnabled(false);
+
+				comboEmbarazada.setSelectedItem("NO APLICA");
+
 			}
 
 			txtMadre.setText(res.getMadreID());
 			txtObservaciones.setText(res.getObservaciones());
 
 		}
+
+	}
+
+	public Res obtenerInfoRes() {
+
+		Res res = new Res();
+
+		res.setResID(txtNumero.getText());
+		res.setTipo(comboTipo.getSelectedItem().toString());
+
+		String genero = comboGenero.getSelectedItem().toString();
+
+		if (genero.equals("HEMBRA")) {
+
+			res.setGenero("H");
+
+		} else {
+
+			res.setGenero("M");
+
+		}
+
+		res.setColor(txtColor.getText());
+
+		return res;
 
 	}
 
@@ -286,6 +317,48 @@ public class AgregarEditarVaca extends JDialog {
 		btnFechaEmbarazo.addActionListener(e -> {
 
 			CalendarioDialog calendar = new CalendarioDialog(btnFechaEmbarazo);
+
+		});
+
+		btnCrias.addActionListener(e -> {
+
+		});
+
+		btnGuardarCerrar.addActionListener(e -> {
+
+			// Guardar en la base de datos.
+
+			if (res != null) {
+
+			//	ResCRUD.update(res.getResID(), obtenerInfoRes());
+
+			} else {
+
+			//	ResCRUD.insert(obtenerInfoRes());
+
+			}
+
+			dispose();
+
+		});
+
+		comboGenero.addActionListener(e -> {
+
+			String selected = comboGenero.getSelectedItem().toString();
+
+			if (selected.equals("MACHO")) {
+
+				comboEmbarazada.setSelectedItem("NO APLICA");
+				comboEmbarazada.setEnabled(false);
+				btnFechaEmbarazo.setText("NO APLICA");
+				btnFechaEmbarazo.setEnabled(false);
+
+			} else {
+
+				comboEmbarazada.setEnabled(true);
+				btnFechaEmbarazo.setEnabled(true);
+
+			}
 
 		});
 
@@ -333,5 +406,9 @@ public class AgregarEditarVaca extends JDialog {
 
 	public JButton getBtnFechaEmbarazo() {
 		return btnFechaEmbarazo;
+	}
+
+	public JButton getBtnVerRegistroPeso() {
+		return btnVerRegistroPeso;
 	}
 }
