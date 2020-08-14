@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
 import model.Peso;
@@ -233,10 +234,11 @@ public class ResCRUD {
 	}
 
 	// seleccionar peso
-	public static ArrayList<Peso> selectPesos(String resID) {
+	public static Stack<Peso> selectPesos(String resID) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 		ArrayList<Peso> pesos = new ArrayList<Peso>();
+		Stack<Peso> pesos2 =new Stack();
 
 		try {
 			ResultSet result = sql.getStatement()
@@ -248,6 +250,7 @@ public class ResCRUD {
 				String fecha = result.getString(4);
 
 				pesos.add(new Peso(peso, fecha));
+				pesos2.push(new Peso(peso,fecha));
 
 			}
 
@@ -256,7 +259,7 @@ public class ResCRUD {
 			e.printStackTrace();
 		}
 
-		return pesos;
+		return pesos2;
 
 	}
 
@@ -425,6 +428,134 @@ public class ResCRUD {
 		}
 
 	}
+	
+	public ArrayList<String> desteteMensaje(){
+		
+		ArrayList<String> vacas_destete =new ArrayList<>();
+		
+		Res res = null;
+		
+		
+		ArrayList<Res> reses = select();
+
+		for (int i = 0; i < reses.size(); i++) {
+			
+			res = reses.get(i);
+			
+			long dias = diasEntreFechas(res.getFecha_nacimiento());
+			long meses =mesesEntreFechas(res.getFecha_nacimiento());
+			
+			if (dias<=275 && meses==9) {
+				
+				vacas_destete.add("Es momento de realizar el destete a la vaca:" + res.getResID() + "Del potrero: " + res.getPotreroNombre());
+				
+			}
+
+			
+		}
+		
+		
+		
+		return vacas_destete;
+	}
+	
+	
+	public ArrayList<Res> reportePartos(){
+		
+        ArrayList<Res> vacas_partos =new ArrayList<>();
+		
+		Res res = null;
+		
+		
+		ArrayList<Res> reses = select();
+		
+		for (int i = 0; i < reses.size(); i++) {
+			
+			res =reses.get(i);
+				
+			if (res.getEmbarazada()==1  ) {
+				
+				long dias =diasEntreFechas(res.getFecha_embarazo());
+				long meses = mesesEntreFechas(res.getFecha_embarazo());
+				
+				if (dias<=460 && meses==15) {
+					
+					vacas_partos.add(res);
+				}
+			}
+		}
+		
+		
+		return vacas_partos;
+		
+	}
+	
+	
+	public ArrayList<Res> notificacionPeso() {
+		
+         ArrayList<Res> vacas_pesos =new ArrayList<>();
+		
+		Res res = null;
+		
+		
+		ArrayList<Res> reses = select();
+		
+		for (int i = 0; i < reses.size(); i++) {
+			
+			res = reses.get(i);
+			
+			Peso  peso_actual = selectPesos(res.getResID()).pop();
+			
+			long dias =diasEntreFechas(peso_actual.getFecha());
+			long meses =mesesEntreFechas(peso_actual.getFecha());
+			
+			if (dias<=182 && meses==6) {
+				
+				vacas_pesos.add(res);
+			}
+			
+			
+		}
+		
+		
+		return vacas_pesos;
+		
+		
+	}
+	
+	
+    public ArrayList<Res> desteteRes(){
+		
+		ArrayList<Res> vacas_destete =new ArrayList<>();
+		
+		Res res = null;
+		
+		
+		ArrayList<Res> reses = select();
+
+		for (int i = 0; i < reses.size(); i++) {
+			
+			res = reses.get(i);
+			
+			long dias = diasEntreFechas(res.getFecha_nacimiento());
+			long meses =mesesEntreFechas(res.getFecha_nacimiento());
+			
+			if (dias<=275 && meses==9) {
+				
+				vacas_destete.add(res);
+				
+			}
+
+			
+		}
+		
+		
+		
+		return vacas_destete;
+	}
+    
+    
+   
 
 	public static void actualizarTipo() {
 
@@ -448,7 +579,7 @@ public class ResCRUD {
 							String fecha_nacimiento = cria.getFecha_nacimiento();
 							long meses = mesesEntreFechas(fecha_nacimiento);
 
-							if (meses > 9) {
+							if (meses == 9) {
 
 								res.setTipo("VH");
 								update(res.getResID(), res);
@@ -463,7 +594,7 @@ public class ResCRUD {
 						String fecha_nacimiento = cria.getFecha_nacimiento();
 						long meses = mesesEntreFechas(fecha_nacimiento);
 
-						if (meses > 8) {
+						if (meses > 9) {
 
 							res.setTipo("HL");
 							update(res.getResID(), res);
