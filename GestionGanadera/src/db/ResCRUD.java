@@ -259,6 +259,8 @@ public class ResCRUD {
 			e.printStackTrace();
 		}
 
+		
+		System.out.println(pesos2.size());
 		return pesos2;
 
 	}

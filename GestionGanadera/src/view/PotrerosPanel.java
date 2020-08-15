@@ -31,7 +31,7 @@ public class PotrerosPanel extends JPanel {
 	private JLabel lblNombrePotrero;
 	private JPanel panelResTable;
 	private JTable tablaRes;
-	private ModelResTable modelRes;
+	private ModelTable modelRes;
 	private JScrollPane scroller;
 	private String potrero_elegido;
 	private JButton btnRegresar;
@@ -157,7 +157,7 @@ public class PotrerosPanel extends JPanel {
 
 		}
 
-		modelRes = new ModelResTable();
+		modelRes = new ModelTable();
 		modelRes.setColumns(columns);
 		modelRes.setData(data);
 		tablaRes = new JTable(modelRes);

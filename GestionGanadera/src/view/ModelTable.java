@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.table.AbstractTableModel;
 
-public class ModelResTable extends AbstractTableModel {
+public class ModelTable extends AbstractTableModel {
 
 	private String[] columns;
 	private Object[][] data;

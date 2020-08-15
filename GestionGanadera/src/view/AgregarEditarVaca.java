@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Stack;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -11,12 +13,14 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import db.ResCRUD;
+import model.Peso;
 import model.Res;
 
 public class AgregarEditarVaca extends JDialog {
@@ -35,6 +39,17 @@ public class AgregarEditarVaca extends JDialog {
 	private JButton btnFechaNacimiento;
 	private JButton btnFechaEmbarazo;
 	private JButton btnVerRegistroPeso;
+	private JButton btnAgregar;
+	private JTable tablaPesos;
+	private ModelTable modelPesos;
+	private JTable tablaVacunas;
+	private ModelTable modelVacunas;
+	private JTable tablaCrias;
+	private ModelTable modelCrias;
+	private JTable tablaPurgantes;
+	private ModelTable modelPurgantes;
+	private JScrollPane scroller;
+	
 
 	public AgregarEditarVaca(Res res) {
 
@@ -306,6 +321,100 @@ public class AgregarEditarVaca extends JDialog {
 
 	}
 
+	public void transformarPanel() {
+
+		JPanel panelTablaGraficas = new JPanel();
+		panelTablaGraficas.setLayout(new GridLayout(2, 1));
+
+		JPanel panelGrafica = new JPanel();
+
+		JPanel panelTabla = new JPanel();
+		panelTabla.setLayout(new BorderLayout());
+		panelTabla.add(scroller, BorderLayout.CENTER);
+		btnAgregar = new JButton("Agregar");
+		panelTabla.add(btnAgregar, BorderLayout.SOUTH);
+
+		panelTablaGraficas.add(panelGrafica);
+		panelTablaGraficas.add(panelTabla);
+		getContentPane().add(panelTablaGraficas);
+		setSize(925, 700);
+		setLocationRelativeTo(null);
+
+	}
+
+	public void crearTablaPesos() {
+
+		String[] columns = { "PESO", "FECHA" };
+
+		if (res != null) {
+
+			Stack<Peso> pesos = ResCRUD.selectPesos(res.getResID());
+			Object[][] data = new Object[pesos.size()][columns.length];
+			Peso temp = null;
+
+			for (int i = 0; i < data.length; i++) {
+
+				temp = pesos.pop();
+
+				for (int j = 0; j < data[0].length; j++) {
+
+					if (j == 0)
+						data[i][j] = temp.getPeso();
+
+					if (j == 1)
+						data[i][j] = temp.getFecha();
+
+				}
+
+			}
+
+			modelPesos = new ModelTable();
+			modelPesos.setColumns(columns);
+			modelPesos.setData(data);
+			tablaPesos = new JTable(modelPesos);
+			tablaPesos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaPesos.setShowHorizontalLines(true);
+			tablaPesos.setShowVerticalLines(true);
+			tablaPesos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+
+			scroller = new JScrollPane(tablaPesos);
+			tablaPesos.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		} else {
+			
+			Object[][] data = new Object[0][columns.length];
+			modelPesos = new ModelTable();
+			modelPesos.setColumns(columns);
+			modelPesos.setData(data);
+			tablaPesos = new JTable(modelPesos);
+			tablaPesos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaPesos.setShowHorizontalLines(true);
+			tablaPesos.setShowVerticalLines(true);
+			tablaPesos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+
+			scroller = new JScrollPane(tablaPesos);
+			tablaPesos.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		}
+
+	}
+
+	public void crearTablaVacunas() {
+
+	}
+
+	public void crearTablaPurgantes() {
+
+	}
+
+	public void crearTablaCrias() {
+
+	}
+
 	public void listeners() {
 
 		btnFechaNacimiento.addActionListener(e -> {
@@ -330,11 +439,11 @@ public class AgregarEditarVaca extends JDialog {
 
 			if (res != null) {
 
-			//	ResCRUD.update(res.getResID(), obtenerInfoRes());
+				// ResCRUD.update(res.getResID(), obtenerInfoRes());
 
 			} else {
 
-			//	ResCRUD.insert(obtenerInfoRes());
+				// ResCRUD.insert(obtenerInfoRes());
 
 			}
 
@@ -360,6 +469,21 @@ public class AgregarEditarVaca extends JDialog {
 
 			}
 
+		});
+
+		btnVerRegistroPeso.addActionListener(e -> {
+
+			crearTablaPesos();
+
+		});
+		
+		
+		btnAgregar.addActionListener(e -> {
+			
+			
+			
+			
+			
 		});
 
 	}
