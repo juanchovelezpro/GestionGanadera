@@ -2,14 +2,14 @@ package view;
 
 import javax.swing.table.AbstractTableModel;
 
-public class ModelTable extends AbstractTableModel {
+public class ModelTable extends AbstractTableModel{
 
 	private String[] columns;
 	private Object[][] data;
 
 	@Override
 	public String getColumnName(int column) {
-
+		
 		return columns[column].toString();
 	}
 
@@ -50,5 +50,7 @@ public class ModelTable extends AbstractTableModel {
 	public void setData(Object[][] data) {
 		this.data = data;
 	}
+
+	
 
 }

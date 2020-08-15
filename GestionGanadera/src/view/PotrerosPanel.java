@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 
 import db.PotreroCRUD;
 import db.ResCRUD;
+import javafx.scene.input.ScrollEvent;
 import model.Res;
 
 public class PotrerosPanel extends JPanel {
@@ -107,6 +108,7 @@ public class PotrerosPanel extends JPanel {
 		panelInferior.add(btnReportePartos);
 
 		panelResTable = new JPanel();
+		scroller = new JScrollPane();
 		crearTablaRes(potrero_elegido);
 		add(panelResTable, BorderLayout.CENTER);
 		panelResTable.setLayout(new GridLayout(1, 1));
@@ -166,9 +168,17 @@ public class PotrerosPanel extends JPanel {
 		tablaRes.setShowVerticalLines(true);
 		tablaRes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
 
-		scroller = new JScrollPane(tablaRes);
+		scroller.getViewport().add(tablaRes);
 		tablaRes.setFillsViewportHeight(true);
 		panelResTable.add(scroller);
+
+	}
+
+	public void refreshTable() {
+
+		scroller.getViewport().removeAll();
+		crearTablaRes(potrero_elegido);
+		listeners();
 
 	}
 
@@ -176,7 +186,7 @@ public class PotrerosPanel extends JPanel {
 
 		btnAgregar.addActionListener(e -> {
 
-			AgregarEditarVaca dialog = new AgregarEditarVaca(null);
+			AgregarEditarVaca dialog = new AgregarEditarVaca(null, this);
 
 		});
 
@@ -212,13 +222,23 @@ public class PotrerosPanel extends JPanel {
 					int row = tablaRes.getSelectedRow();
 					Res res = ResCRUD.selectResByID(modelRes.getData()[row][0].toString());
 
-					AgregarEditarVaca agregar = new AgregarEditarVaca(res);
+					AgregarEditarVaca agregar = new AgregarEditarVaca(res, PotrerosPanel.this);
 
 				}
 
 			}
 		});
 
+	}
+	
+	
+
+	public String getPotrero_elegido() {
+		return potrero_elegido;
+	}
+
+	public void setPotrero_elegido(String potrero_elegido) {
+		this.potrero_elegido = potrero_elegido;
 	}
 
 	public InicioPanel getInicio() {

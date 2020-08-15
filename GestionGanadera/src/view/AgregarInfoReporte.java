@@ -26,18 +26,21 @@ public class AgregarInfoReporte extends JDialog {
 	private JLabel mensaje;
 	private JButton btnGuardar;
 	private String res_ID;
+	private AgregarEditarVaca agregarEditarPanel;
 
-	public AgregarInfoReporte(int mensaje2, String resID) {
+	public AgregarInfoReporte(int mensaje2, String resID, AgregarEditarVaca agregarEditarPanel) {
 
+		this.agregarEditarPanel = agregarEditarPanel;
 		this.mensajeMostrar = mensaje2;
-		res_ID =resID;
+		res_ID = resID;
 
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		setLocationRelativeTo(null);
+
 		setSize(450, 300);
 		Components();
 		listeners();
 		elegirMensaje(mensaje2);
+		setLocationRelativeTo(null);
 		setVisible(true);
 
 	}
@@ -102,7 +105,6 @@ public class AgregarInfoReporte extends JDialog {
 
 		case 4:
 
-
 			break;
 
 		default:
@@ -113,47 +115,48 @@ public class AgregarInfoReporte extends JDialog {
 	public void listeners() {
 
 		btnGuardar.addActionListener(e -> {
-			
-			String fechaSeleccionada ="";
+
+			String fechaSeleccionada = "";
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-            Date fechaSelected = calendar.getDate();
+			Date fechaSelected = calendar.getDate();
 
-            if (fechaSelected != null) {
-                fechaSeleccionada = format.format(fechaSelected);
+			if (fechaSelected != null) {
+				fechaSeleccionada = format.format(fechaSelected);
 
-            }
-			
+			}
 
 			switch (mensajeMostrar) {
-			
-			
+
 			case 1:
 
-
 				try {
-				double pesoNuevo =  Double.parseDouble(textField.getText());
-				
-				ResCRUD.insertPeso(res_ID, pesoNuevo, fechaSeleccionada);
-				}catch (Exception e2) {
+					double pesoNuevo = Double.parseDouble(textField.getText());
+
+					ResCRUD.insertPeso(res_ID, pesoNuevo, fechaSeleccionada);
+					agregarEditarPanel.refreshTable(1);
 					
+							
+
+				} catch (Exception e2) {
+
 					JOptionPane.showMessageDialog(null, "Ingrese un valor númerico separado de punto (.)");
 				}
 
 				break;
 
 			case 2:
-				
+
 				ResCRUD.insertVacuna(res_ID, textField.getText(), fechaSeleccionada);
+				agregarEditarPanel.refreshTable(2);
 				break;
 
 			case 3:
 
 				ResCRUD.insertPurgante(res_ID, textField.getText(), fechaSeleccionada);
+				agregarEditarPanel.refreshTable(3);
 
 				break;
-
-	
 
 			default:
 				break;

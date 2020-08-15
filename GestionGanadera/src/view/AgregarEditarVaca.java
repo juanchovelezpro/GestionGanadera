@@ -29,6 +29,7 @@ import model.Vacuna;
 public class AgregarEditarVaca extends JDialog {
 
 	private Res res;
+	private PotrerosPanel potrero;
 	private JTextField txtColor;
 	private JComboBox comboEmbarazada;
 	private JComboBox comboGenero;
@@ -60,9 +61,10 @@ public class AgregarEditarVaca extends JDialog {
 	private JPanel panelGrafica;
 	private JPanel panelTabla;
 
-	public AgregarEditarVaca(Res res) {
+	public AgregarEditarVaca(Res res, PotrerosPanel potrero) {
 
 		this.res = res;
+		this.potrero = potrero;
 
 		if (res != null)
 			setTitle("Editar Vaca/ ID: " + res.getResID());
@@ -76,6 +78,16 @@ public class AgregarEditarVaca extends JDialog {
 		listeners();
 
 		cargarInfoRes();
+
+		if (res == null) {
+
+			btnVerRegistroPeso.setEnabled(false);
+			btnCrias.setEnabled(false);
+			btnRegistroPurgantes.setEnabled(false);
+			btnRegistroVacunas.setEnabled(false);
+
+		}
+
 		setVisible(true);
 
 	}
@@ -327,6 +339,8 @@ public class AgregarEditarVaca extends JDialog {
 
 		Res res = new Res();
 
+		res.setPotreroNombre(potrero.getPotrero_elegido());
+
 		res.setResID(txtNumero.getText());
 		res.setTipo(comboTipo.getSelectedItem().toString());
 
@@ -335,14 +349,29 @@ public class AgregarEditarVaca extends JDialog {
 		if (genero.equals("HEMBRA")) {
 
 			res.setGenero("H");
+			int embarazo = comboEmbarazada.getSelectedItem().toString().equals("SI") ? 1 : 0;
+			res.setEmbarazada(embarazo);
 
 		} else {
 
 			res.setGenero("M");
+			res.setEmbarazada(-1);
 
 		}
 
 		res.setColor(txtColor.getText());
+
+		String fechaNac = btnFechaNacimiento.getText();
+
+		if (fechaNac != null && !fechaNac.equals("") && !fechaNac.equals("dd/mm/AAAA")) {
+			res.setFecha_nacimiento(fechaNac);
+
+		}
+
+		res.setMadreID(txtMadre.getText());
+
+		System.out.println(txtObservaciones.getText());
+		res.setObservaciones(txtObservaciones.getText());
 
 		return res;
 
@@ -589,6 +618,29 @@ public class AgregarEditarVaca extends JDialog {
 		}
 	}
 
+	public void refreshTable(int tipo) {
+
+		switch (tipo) {
+
+		case 1:
+			scroller.getViewport().removeAll();
+			crearTablaPesos();
+			break;
+
+		case 2:
+			scroller.getViewport().removeAll();
+			crearTablaVacunas();
+			break;
+
+		case 3:
+			scroller.getViewport().removeAll();
+			crearTablaPurgantes();
+			break;
+
+		}
+
+	}
+
 	public void listeners() {
 
 		btnFechaNacimiento.addActionListener(e -> {
@@ -609,15 +661,30 @@ public class AgregarEditarVaca extends JDialog {
 
 			if (res != null) {
 
-				// ResCRUD.update(res.getResID(), obtenerInfoRes());
+				if (!existeRes(txtNumero.getText())) {
+					ResCRUD.update(res.getResID(), obtenerInfoRes());
+					potrero.refreshTable();
+					dispose();
+				} else {
+
+					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
 
 			} else {
 
-				// ResCRUD.insert(obtenerInfoRes());
-
+				if (!existeRes(txtNumero.getText())) {
+					ResCRUD.insert(obtenerInfoRes());
+					potrero.refreshTable();
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 
-			dispose();
+			
 
 		});
 
@@ -651,9 +718,8 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			crearTablaPesos();
-			
-			btnAgregar.setEnabled(true);
 
+			btnAgregar.setEnabled(true);
 
 		});
 
@@ -667,9 +733,8 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			crearTablaVacunas();
-			
-			btnAgregar.setEnabled(true);
 
+			btnAgregar.setEnabled(true);
 
 		});
 
@@ -683,9 +748,8 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			crearTablaPurgantes();
-			
-			btnAgregar.setEnabled(true);
 
+			btnAgregar.setEnabled(true);
 
 		});
 
@@ -699,22 +763,62 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			crearTablaCrias();
-			
+
 			btnAgregar.setEnabled(false);
 
 		});
 
 		btnAgregar.addActionListener(e -> {
 
-			AgregarInfoReporte inforeporte =new AgregarInfoReporte(tiporeporte, res.getResID());
-			
-			
-			
-			
-
+			AgregarInfoReporte inforeporte = new AgregarInfoReporte(tiporeporte, res.getResID(), this);
 
 		});
 
+	}
+
+	public boolean existeRes(String resID) {
+
+		boolean existe = false;
+
+		Res resita = ResCRUD.selectResByID(resID);
+
+		if (resita != null)
+			existe = true;
+
+		return existe;
+
+	}
+
+	public JTable getTablaPesos() {
+		return tablaPesos;
+	}
+
+	public JTable getTablaVacunas() {
+		return tablaVacunas;
+	}
+
+	public JTable getTablaCrias() {
+		return tablaCrias;
+	}
+
+	public JTable getTablaPurgantes() {
+		return tablaPurgantes;
+	}
+
+	public ModelTable getModelPesos() {
+		return modelPesos;
+	}
+
+	public ModelTable getModelVacunas() {
+		return modelVacunas;
+	}
+
+	public ModelTable getModelCrias() {
+		return modelCrias;
+	}
+
+	public ModelTable getModelPurgantes() {
+		return modelPurgantes;
 	}
 
 	public JTextField getTxtColor() {
