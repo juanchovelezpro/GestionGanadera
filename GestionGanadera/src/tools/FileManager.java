@@ -33,10 +33,13 @@ public class FileManager {
 	
 	public static void cargarRecursos() {
 		
+		imagenes.put("ICONO", ImageLoader.cargarImagen("imagenes/icono.png"));
 		imagenes.put("VACA", ImageLoader.cargarImagen("imagenes/vaca.png"));
 		imagenes.put("FINCA", ImageLoader.cargarImagen("imagenes/finca.png"));
 		imagenes.put("BORRAR", ImageLoader.cargarImagen("imagenes/borrar.png"));
 		imagenes.put("BUSCAR", ImageLoader.cargarImagen("imagenes/buscar.png"));
+		imagenes.put("CALENDAR", ImageLoader.cargarImagen("imagenes/calendar.png"));
+		imagenes.put("REPORTE", ImageLoader.cargarImagen("imagenes/reporte.png"));
 
 
 

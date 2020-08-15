@@ -12,7 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class ReportePanel extends JDialog {
+import tools.FileManager;
+
+public class ReporteDialog extends JDialog {
 
 	private JLabel labelFecha;
 	private JButton btnExportar;
@@ -22,11 +24,13 @@ public class ReportePanel extends JDialog {
 	private String fecha_Convertida;
 	
 
-	public ReportePanel(String reporte) {
+	public ReporteDialog(String reporte) {
 
 		this.reporte =reporte;
+		setTitle("Reporte");
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		setSize(450,300);
+		setIconImage(FileManager.imagenes.get("REPORTE"));
 		setLocationRelativeTo(null);
 		setVisible(true);
 

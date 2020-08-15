@@ -27,7 +27,7 @@ import tools.FileManager;
 public class InicioPanel extends JPanel {
 
 	private PotrerosPanel potreros;
-	private ReportePanel reportes;
+	private ReporteDialog reportes;
 	private JTextField txtnombreDueno;
 	private JTextField txtubicacion;
 	private JLabel nombreFinca;
@@ -442,7 +442,7 @@ public class InicioPanel extends JPanel {
 
 			// ventana.remove(this);
 			// reportes = new ReportePanel(this, "Reporte de Destete");
-			ReportePanel dialog = new ReportePanel("Reporte de Destete");
+			ReporteDialog dialog = new ReporteDialog("Reporte de Destete");
 
 			// ventana.add(reportes);
 			// ventana.setSize(450, 300);
@@ -454,7 +454,7 @@ public class InicioPanel extends JPanel {
 
 		btnreportePartos.addActionListener(e -> {
 
-			ReportePanel dialog = new ReportePanel("Reporte de Partos");
+			ReporteDialog dialog = new ReporteDialog("Reporte de Partos");
 
 		});
 

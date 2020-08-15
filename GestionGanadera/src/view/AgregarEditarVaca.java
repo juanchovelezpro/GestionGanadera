@@ -27,6 +27,7 @@ import model.Peso;
 import model.Purgante;
 import model.Res;
 import model.Vacuna;
+import tools.FileManager;
 
 public class AgregarEditarVaca extends JDialog {
 
@@ -73,6 +74,7 @@ public class AgregarEditarVaca extends JDialog {
 		else
 			setTitle("Agregar vaca");
 
+		setIconImage(FileManager.imagenes.get("ICONO"));
 		getContentPane().setLayout(new GridLayout(1, 2));
 		setSize(500, 700);
 		setLocationRelativeTo(null);

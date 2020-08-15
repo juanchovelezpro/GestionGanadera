@@ -30,6 +30,8 @@ public class VentanaPrincipal extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		
+		setIconImage(FileManager.imagenes.get("ICONO"));
 
 		try {
 

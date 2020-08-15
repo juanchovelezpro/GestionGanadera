@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
+import tools.FileManager;
+
 public class CalendarioDialog extends JDialog {
 
 	private JDateChooser calendar;
@@ -28,6 +30,7 @@ public class CalendarioDialog extends JDialog {
 		setTitle("Seleccionar Fecha");
 		setSize(250, 110);
 		getContentPane().setLayout(new GridLayout(2, 1));
+		setIconImage(FileManager.imagenes.get("CALENDAR"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 
