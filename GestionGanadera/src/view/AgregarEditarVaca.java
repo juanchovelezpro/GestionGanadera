@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,7 +22,9 @@ import javax.swing.SwingConstants;
 
 import db.ResCRUD;
 import model.Peso;
+import model.Purgante;
 import model.Res;
+import model.Vacuna;
 
 public class AgregarEditarVaca extends JDialog {
 
@@ -49,7 +52,13 @@ public class AgregarEditarVaca extends JDialog {
 	private JTable tablaPurgantes;
 	private ModelTable modelPurgantes;
 	private JScrollPane scroller;
-	
+	// 1= peso , 2= vacuna, 3= purgante 4=crias
+	private int tiporeporte;
+	private JButton btnRegistroVacunas;
+	private JButton btnRegistroPurgantes;
+	private JPanel panelTablaGraficas;
+	private JPanel panelGrafica;
+	private JPanel panelTabla;
 
 	public AgregarEditarVaca(Res res) {
 
@@ -208,7 +217,7 @@ public class AgregarEditarVaca extends JDialog {
 		lblRegistroVacunas.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_15.add(lblRegistroVacunas);
 
-		JButton btnRegistroVacunas = new JButton("Ver Registro Vacunas");
+		btnRegistroVacunas = new JButton("Ver Registro Vacunas");
 		btnRegistroVacunas.setHorizontalAlignment(SwingConstants.CENTER);
 		btnRegistroVacunas.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_15.add(btnRegistroVacunas);
@@ -218,7 +227,7 @@ public class AgregarEditarVaca extends JDialog {
 		lblRegistroPurgantes.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_15.add(lblRegistroPurgantes);
 
-		JButton btnRegistroPurgantes = new JButton("Ver Registro Purgantes");
+		btnRegistroPurgantes = new JButton("Ver Registro Purgantes");
 		btnRegistroPurgantes.setHorizontalAlignment(SwingConstants.CENTER);
 		btnRegistroPurgantes.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_15.add(btnRegistroPurgantes);
@@ -250,6 +259,24 @@ public class AgregarEditarVaca extends JDialog {
 		txtObservaciones = new JTextArea();
 		txtObservaciones.setLineWrap(true);
 		scrollPane.setViewportView(txtObservaciones);
+
+		btnAgregar = new JButton("Agregar");
+
+		scroller = new JScrollPane();
+
+		panelTablaGraficas = new JPanel();
+		panelTablaGraficas.setLayout(new GridLayout(2, 1));
+
+		panelGrafica = new JPanel();
+
+		panelTabla = new JPanel();
+		panelTabla.setLayout(new BorderLayout());
+		panelTabla.add(scroller, BorderLayout.CENTER);
+
+		panelTabla.add(btnAgregar, BorderLayout.SOUTH);
+
+		panelTablaGraficas.add(panelGrafica);
+		panelTablaGraficas.add(panelTabla);
 
 	}
 
@@ -323,19 +350,6 @@ public class AgregarEditarVaca extends JDialog {
 
 	public void transformarPanel() {
 
-		JPanel panelTablaGraficas = new JPanel();
-		panelTablaGraficas.setLayout(new GridLayout(2, 1));
-
-		JPanel panelGrafica = new JPanel();
-
-		JPanel panelTabla = new JPanel();
-		panelTabla.setLayout(new BorderLayout());
-		panelTabla.add(scroller, BorderLayout.CENTER);
-		btnAgregar = new JButton("Agregar");
-		panelTabla.add(btnAgregar, BorderLayout.SOUTH);
-
-		panelTablaGraficas.add(panelGrafica);
-		panelTablaGraficas.add(panelTabla);
 		getContentPane().add(panelTablaGraficas);
 		setSize(925, 700);
 		setLocationRelativeTo(null);
@@ -377,13 +391,13 @@ public class AgregarEditarVaca extends JDialog {
 			tablaPesos.setShowVerticalLines(true);
 			tablaPesos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
 
-			scroller = new JScrollPane(tablaPesos);
+			scroller.getViewport().add(tablaPesos);
 			tablaPesos.setFillsViewportHeight(true);
 
 			transformarPanel();
 
 		} else {
-			
+
 			Object[][] data = new Object[0][columns.length];
 			modelPesos = new ModelTable();
 			modelPesos.setColumns(columns);
@@ -394,7 +408,7 @@ public class AgregarEditarVaca extends JDialog {
 			tablaPesos.setShowVerticalLines(true);
 			tablaPesos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
 
-			scroller = new JScrollPane(tablaPesos);
+			scroller.getViewport().add(tablaPesos);
 			tablaPesos.setFillsViewportHeight(true);
 
 			transformarPanel();
@@ -405,14 +419,174 @@ public class AgregarEditarVaca extends JDialog {
 
 	public void crearTablaVacunas() {
 
+		String[] columns = { "VACUNA", "FECHA" };
+
+		if (res != null) {
+
+			ArrayList<Vacuna> vacunas = ResCRUD.selectVacunas(res.getResID());
+			Object[][] data = new Object[vacunas.size()][columns.length];
+
+			for (int i = 0; i < data.length; i++) {
+
+				for (int j = 0; j < data[0].length; j++) {
+
+					if (j == 0)
+						data[i][j] = vacunas.get(i).getNombre();
+
+					if (j == 1)
+						data[i][j] = vacunas.get(i).getFecha();
+
+				}
+
+			}
+
+			modelVacunas = new ModelTable();
+			modelVacunas.setColumns(columns);
+			modelVacunas.setData(data);
+			tablaVacunas = new JTable(modelVacunas);
+			tablaVacunas.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaVacunas.setShowHorizontalLines(true);
+			tablaVacunas.setShowVerticalLines(true);
+			tablaVacunas.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+
+			scroller.getViewport().add(tablaVacunas);
+			tablaVacunas.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		} else {
+
+			Object[][] data = new Object[0][columns.length];
+			modelVacunas = new ModelTable();
+			modelVacunas.setColumns(columns);
+			modelVacunas.setData(data);
+			tablaVacunas = new JTable(modelVacunas);
+			tablaVacunas.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaVacunas.setShowHorizontalLines(true);
+			tablaVacunas.setShowVerticalLines(true);
+			tablaVacunas.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+
+			scroller.getViewport().add(tablaVacunas);
+			tablaVacunas.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		}
+
 	}
 
 	public void crearTablaPurgantes() {
 
+		String[] columns = { "PURGANTE", "FECHA" };
+
+		if (res != null) {
+
+			ArrayList<Purgante> purgantes = ResCRUD.selectPurgantes(res.getResID());
+			Object[][] data = new Object[purgantes.size()][columns.length];
+
+			for (int i = 0; i < data.length; i++) {
+
+				for (int j = 0; j < data[0].length; j++) {
+
+					if (j == 0)
+						data[i][j] = purgantes.get(i).getNombre();
+
+					if (j == 1)
+						data[i][j] = purgantes.get(i).getFecha();
+
+				}
+
+			}
+
+			modelPurgantes = new ModelTable();
+			modelPurgantes.setColumns(columns);
+			modelPurgantes.setData(data);
+			tablaPurgantes = new JTable(modelPurgantes);
+			tablaPurgantes.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaPurgantes.setShowHorizontalLines(true);
+			tablaPurgantes.setShowVerticalLines(true);
+			tablaPurgantes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+
+			scroller.getViewport().add(tablaPurgantes);
+			tablaPurgantes.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		} else {
+
+			Object[][] data = new Object[0][columns.length];
+			modelPurgantes = new ModelTable();
+			modelPurgantes.setColumns(columns);
+			modelPurgantes.setData(data);
+			tablaPurgantes = new JTable(modelPurgantes);
+			tablaPurgantes.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaPurgantes.setShowHorizontalLines(true);
+			tablaPurgantes.setShowVerticalLines(true);
+			tablaPurgantes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+
+			scroller.getViewport().add(tablaPurgantes);
+			tablaPurgantes.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		}
 	}
 
 	public void crearTablaCrias() {
 
+		String[] columns = { "# Cria", "FECHA NACIMIENTO" };
+
+		if (res != null) {
+
+			ArrayList<Res> crias = ResCRUD.selectCria(res.getResID());
+			Object[][] data = new Object[crias.size()][columns.length];
+
+			for (int i = 0; i < data.length; i++) {
+
+				for (int j = 0; j < data[0].length; j++) {
+
+					if (j == 0)
+						data[i][j] = crias.get(i).getResID();
+
+					if (j == 1)
+						data[i][j] = crias.get(i).getFecha_nacimiento();
+
+				}
+
+			}
+
+			modelCrias = new ModelTable();
+			modelCrias.setColumns(columns);
+			modelCrias.setData(data);
+			tablaCrias = new JTable(modelCrias);
+			tablaCrias.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaCrias.setShowHorizontalLines(true);
+			tablaCrias.setShowVerticalLines(true);
+			tablaCrias.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+
+			scroller.getViewport().add(tablaCrias);
+			tablaCrias.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		} else {
+
+			Object[][] data = new Object[0][columns.length];
+			modelCrias = new ModelTable();
+			modelCrias.setColumns(columns);
+			modelCrias.setData(data);
+			tablaCrias = new JTable(modelCrias);
+			tablaCrias.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaCrias.setShowHorizontalLines(true);
+			tablaCrias.setShowVerticalLines(true);
+			tablaCrias.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+
+			scroller.getViewport().add(tablaCrias);
+			tablaCrias.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		}
 	}
 
 	public void listeners() {
@@ -426,10 +600,6 @@ public class AgregarEditarVaca extends JDialog {
 		btnFechaEmbarazo.addActionListener(e -> {
 
 			CalendarioDialog calendar = new CalendarioDialog(btnFechaEmbarazo);
-
-		});
-
-		btnCrias.addActionListener(e -> {
 
 		});
 
@@ -473,17 +643,83 @@ public class AgregarEditarVaca extends JDialog {
 
 		btnVerRegistroPeso.addActionListener(e -> {
 
+			tiporeporte = 1;
+			// scroller.removeAll();
+			if (panelTablaGraficas.getParent() != null) {
+
+				getContentPane().remove(panelTablaGraficas);
+			}
+
 			crearTablaPesos();
 
 		});
-		
-		
+
+		btnRegistroVacunas.addActionListener(e -> {
+
+			tiporeporte = 2;
+			// scroller.removeAll();
+			if (panelTablaGraficas.getParent() != null) {
+
+				getContentPane().remove(panelTablaGraficas);
+			}
+
+			crearTablaVacunas();
+
+		});
+
+		btnRegistroPurgantes.addActionListener(e -> {
+
+			tiporeporte = 3;
+			// scroller.removeAll();
+			if (panelTablaGraficas.getParent() != null) {
+
+				getContentPane().remove(panelTablaGraficas);
+			}
+
+			crearTablaPurgantes();
+
+		});
+
+		btnCrias.addActionListener(e -> {
+
+			tiporeporte = 4;
+			// scroller.removeAll();
+			if (panelTablaGraficas.getParent() != null) {
+
+				getContentPane().remove(panelTablaGraficas);
+			}
+
+			crearTablaCrias();
+
+		});
+
 		btnAgregar.addActionListener(e -> {
-			
-			
-			
-			
-			
+
+			switch (tiporeporte) {
+
+			case 1:
+				
+                //  ResCRUD
+				
+				break;
+
+			case 2:
+
+				break;
+
+			case 3:
+
+				break;
+
+			case 4:
+
+				break;
+
+			default:
+				break;
+			}
+
+
 		});
 
 	}
@@ -534,5 +770,13 @@ public class AgregarEditarVaca extends JDialog {
 
 	public JButton getBtnVerRegistroPeso() {
 		return btnVerRegistroPeso;
+	}
+
+	public JButton getBtnRegistroVacunas() {
+		return btnRegistroVacunas;
+	}
+
+	public JButton getBtnRegistroPurgantes() {
+		return btnRegistroPurgantes;
 	}
 }
