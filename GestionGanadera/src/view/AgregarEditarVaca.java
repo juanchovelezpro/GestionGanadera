@@ -651,6 +651,9 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			crearTablaPesos();
+			
+			btnAgregar.setEnabled(true);
+
 
 		});
 
@@ -664,6 +667,9 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			crearTablaVacunas();
+			
+			btnAgregar.setEnabled(true);
+
 
 		});
 
@@ -677,6 +683,9 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			crearTablaPurgantes();
+			
+			btnAgregar.setEnabled(true);
+
 
 		});
 
@@ -690,34 +699,18 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			crearTablaCrias();
+			
+			btnAgregar.setEnabled(false);
 
 		});
 
 		btnAgregar.addActionListener(e -> {
 
-			switch (tiporeporte) {
-
-			case 1:
-				
-                //  ResCRUD
-				
-				break;
-
-			case 2:
-
-				break;
-
-			case 3:
-
-				break;
-
-			case 4:
-
-				break;
-
-			default:
-				break;
-			}
+			AgregarInfoReporte inforeporte =new AgregarInfoReporte(tiporeporte, res.getResID());
+			
+			
+			
+			
 
 
 		});
