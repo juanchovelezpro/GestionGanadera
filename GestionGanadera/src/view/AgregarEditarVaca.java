@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
+import org.sqlite.SQLiteException;
+
 import db.ResCRUD;
 import model.Peso;
 import model.Purgante;
@@ -661,14 +663,24 @@ public class AgregarEditarVaca extends JDialog {
 
 			if (res != null) {
 
-				if (!existeRes(txtNumero.getText())) {
+				if (res.getResID().equals(txtNumero.getText())) {
+
 					ResCRUD.update(res.getResID(), obtenerInfoRes());
 					potrero.refreshTable();
 					dispose();
+
 				} else {
 
-					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					if (!existeRes(txtNumero.getText())) {
+						ResCRUD.update(res.getResID(), obtenerInfoRes());
+						potrero.refreshTable();
+						dispose();
+					} else {
+
+						JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
+								JOptionPane.ERROR_MESSAGE);
+
+					}
 
 				}
 
@@ -683,8 +695,6 @@ public class AgregarEditarVaca extends JDialog {
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
-
-			
 
 		});
 

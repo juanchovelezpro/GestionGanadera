@@ -26,8 +26,8 @@ public class PotrerosPanel extends JPanel {
 	private InicioPanel inicio;
 	private JComboBox comboHembraMacho;
 	private JButton btnAgregar;
-	private JButton btnReporteVitamina;
-	private JButton btnReportePartos;
+	private JButton btnReporteVacunas;
+	private JButton btnReportePurgantes;
 	private JButton btnNotificaciones;
 	private JLabel lblNombrePotrero;
 	private JPanel panelResTable;
@@ -82,8 +82,8 @@ public class PotrerosPanel extends JPanel {
 		JLabel lblNewLabel_1 = new JLabel("");
 		panelSuperior.add(lblNewLabel_1);
 
-		JLabel lblNewLabel_2 = new JLabel("");
-		panelSuperior.add(lblNewLabel_2);
+		JButton btnImportar = new JButton("Importar Datos");
+		panelSuperior.add(btnImportar);
 
 		btnNotificaciones = new JButton("Notificaciones");
 		panelSuperior.add(btnNotificaciones);
@@ -98,14 +98,14 @@ public class PotrerosPanel extends JPanel {
 		JLabel lblNewLabel = new JLabel("");
 		panelInferior.add(lblNewLabel);
 
-		btnReporteVitamina = new JButton("Reporte Vitaminas");
-		panelInferior.add(btnReporteVitamina);
+		btnReporteVacunas = new JButton("Reporte Vacunaci\u00F3n");
+		panelInferior.add(btnReporteVacunas);
 
 		JLabel lblNewLabel_3 = new JLabel("");
 		panelInferior.add(lblNewLabel_3);
 
-		btnReportePartos = new JButton("Reporte Desparasitar");
-		panelInferior.add(btnReportePartos);
+		btnReportePurgantes = new JButton("Reporte Desparasitar");
+		panelInferior.add(btnReportePurgantes);
 
 		panelResTable = new JPanel();
 		scroller = new JScrollPane();
@@ -167,8 +167,7 @@ public class PotrerosPanel extends JPanel {
 		tablaRes.setShowHorizontalLines(true);
 		tablaRes.setShowVerticalLines(true);
 		tablaRes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-
-		scroller.getViewport().add(tablaRes);
+		scroller.setViewportView(tablaRes);
 		tablaRes.setFillsViewportHeight(true);
 		panelResTable.add(scroller);
 
@@ -205,11 +204,11 @@ public class PotrerosPanel extends JPanel {
 
 		});
 
-		btnReportePartos.addActionListener(e -> {
+		btnReportePurgantes.addActionListener(e -> {
 
 		});
 
-		btnReporteVitamina.addActionListener(e -> {
+		btnReporteVacunas.addActionListener(e -> {
 
 		});
 
@@ -258,11 +257,11 @@ public class PotrerosPanel extends JPanel {
 	}
 
 	public JButton getBtnReporteDestete() {
-		return btnReporteVitamina;
+		return btnReporteVacunas;
 	}
 
 	public JButton getBtnReportePartos() {
-		return btnReportePartos;
+		return btnReportePurgantes;
 	}
 
 	public JButton getBtnNotificaciones() {
