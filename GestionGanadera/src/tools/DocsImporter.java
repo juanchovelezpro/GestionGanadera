@@ -42,20 +42,20 @@ public class DocsImporter {
 					break;
 
 				case 1:
-					res.setTipo(cell.toString());
+					res.setTipo(cell.toString().trim());
 					break;
 
 				case 2:
-					res.setColor(cell.toString().toUpperCase().trim().replaceAll(" ", ""));
+					res.setColor(cell.toString().toUpperCase().trim());
 					break;
 
 				case 3:
 
-					res.setFecha_nacimiento(cell.toString());
+					res.setFecha_nacimiento(cell.toString().trim());
 					break;
 
 				case 4:
-					res.setGenero(cell.toString().replace(" ", ""));
+					res.setGenero(cell.toString().trim());
 					break;
 
 				case 5:
