@@ -12,8 +12,8 @@ import java.util.HashMap;
 public class FileManager {
 
 	public static final String PATH = System.getProperty("user.home") + "/App Ganado/db/";
-	
-	public static final HashMap<String, Image> imagenes = new HashMap<>(); 
+
+	public static final HashMap<String, Image> imagenes = new HashMap<>();
 
 	public static void saveFile(File selectedFile, String target) {
 
@@ -30,9 +30,9 @@ public class FileManager {
 		}
 
 	}
-	
+
 	public static void cargarRecursos() {
-		
+
 		imagenes.put("ICONO", ImageLoader.cargarImagen("imagenes/icono.png"));
 		imagenes.put("VACA", ImageLoader.cargarImagen("imagenes/vaca.png"));
 		imagenes.put("FINCA", ImageLoader.cargarImagen("imagenes/finca.png"));
@@ -40,15 +40,12 @@ public class FileManager {
 		imagenes.put("BUSCAR", ImageLoader.cargarImagen("imagenes/buscar.png"));
 		imagenes.put("CALENDAR", ImageLoader.cargarImagen("imagenes/calendar.png"));
 		imagenes.put("REPORTE", ImageLoader.cargarImagen("imagenes/reporte.png"));
+		imagenes.put("USUARIO", ImageLoader.cargarImagen("imagenes/usuario.png"));
 
-
-
-		
 	}
-	
-	public static boolean directoryProjectExists() 
-	{
-		
+
+	public static boolean directoryProjectExists() {
+
 		return new File(PATH).exists();
 	}
 

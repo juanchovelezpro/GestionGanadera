@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 
 import db.UsuarioCRUD;
 import model.Usuario;
+import tools.FileManager;
 
 public class AgregarUsuario extends JDialog {
 	private JTextField txtusuario;
@@ -29,7 +30,7 @@ public class AgregarUsuario extends JDialog {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		setSize(530, 330);
-
+		setIconImage(FileManager.imagenes.get("USUARIO"));
 		setLocationRelativeTo(null);
 
 		setVisible(true);
