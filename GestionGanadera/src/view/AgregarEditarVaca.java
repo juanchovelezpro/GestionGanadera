@@ -665,32 +665,26 @@ public class AgregarEditarVaca extends JDialog {
 
 			if (res != null) {
 
-				if (res.getResID().equals(txtNumero.getText())) {
+				if (res.getResID().equals(txtNumero.getText().trim()) || !existeRes(txtNumero.getText())) {
 
 					ResCRUD.update(res.getResID(), obtenerInfoRes());
 					potrero.refreshTable();
+					System.out.println("UPDATED");
 					dispose();
 
 				} else {
 
-					if (!existeRes(txtNumero.getText())) {
-						ResCRUD.update(res.getResID(), obtenerInfoRes());
-						potrero.refreshTable();
-						dispose();
-					} else {
-
-						JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
-								JOptionPane.ERROR_MESSAGE);
-
-					}
+					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
+							JOptionPane.ERROR_MESSAGE);
 
 				}
 
 			} else {
 
-				if (!existeRes(txtNumero.getText())) {
+				if (!existeRes(txtNumero.getText().trim())) {
 					ResCRUD.insert(obtenerInfoRes());
 					potrero.refreshTable();
+					System.out.println("INSERTED");
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
@@ -700,7 +694,9 @@ public class AgregarEditarVaca extends JDialog {
 
 		});
 
-		comboGenero.addActionListener(e -> {
+		comboGenero.addActionListener(e ->
+
+		{
 
 			String selected = comboGenero.getSelectedItem().toString();
 
