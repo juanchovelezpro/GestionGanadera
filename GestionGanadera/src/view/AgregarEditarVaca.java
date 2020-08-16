@@ -665,7 +665,7 @@ public class AgregarEditarVaca extends JDialog {
 
 			if (res != null) {
 
-				if (res.getResID().equals(txtNumero.getText().trim()) || !existeRes(txtNumero.getText())) {
+				if (res.getResID().equals(txtNumero.getText().trim()) || !existeRes(txtNumero.getText().trim())) {
 
 					ResCRUD.update(res.getResID(), obtenerInfoRes());
 					potrero.refreshTable();
