@@ -355,6 +355,7 @@ public class AgregarEditarVaca extends JDialog {
 			res.setGenero("H");
 			int embarazo = comboEmbarazada.getSelectedItem().toString().equals("SI") ? 1 : 0;
 			res.setEmbarazada(embarazo);
+			res.setFecha_embarazo(btnFechaEmbarazo.getText());
 
 		} else {
 
