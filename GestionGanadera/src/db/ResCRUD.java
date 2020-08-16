@@ -132,7 +132,7 @@ public class ResCRUD {
 					+ res.getObservaciones() + "', embarazada =" + res.getEmbarazada() + ", fecha_embarazo='"
 					+ res.getFecha_embarazo() + "',madreID='" + res.getMadreID() + "',fecha_ultima_purgado='"
 					+ res.getFecha_ultimo_purgado() + "', fecha_ultima_vacunado='" + res.getFecha_ultimo_vacunado()
-					+ "', potreroNombre='" + res.getPotreroNombre() + "' WHERE numero=" + id);
+					+ "', potreroNombre='" + res.getPotreroNombre() + "' WHERE numero='" + id+"'");
 
 			updatePesosRes(id, res.getResID());
 			PurganteCRUD.updatePurganteRes(id, res.getResID());
@@ -167,7 +167,7 @@ public class ResCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			sql.getStatement().executeUpdate("DELETE FROM res WHERE numero=" + id);
+			sql.getStatement().executeUpdate("DELETE FROM res WHERE numero='" + id+"'");
 			deletePesosRes(id);
 			PurganteCRUD.deletePurganteRes(id);
 			VacunaCRUD.deleteVacunaRes(id);
