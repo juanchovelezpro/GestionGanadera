@@ -38,7 +38,7 @@ public class DocsImporter {
 				switch (contadorCeldas) {
 
 				case 0:
-					res.setResID(cell.toString().replace(" ", ""));
+					res.setResID(cell.toString().split("\\.")[0]);
 					break;
 
 				case 1:
@@ -59,7 +59,7 @@ public class DocsImporter {
 					break;
 
 				case 5:
-					res.setMadreID(cell.toString().replace(" ", ""));
+					res.setMadreID(cell.toString().replace(" ", "").split("\\.")[0]);
 					break;
 
 				case 6:
@@ -80,59 +80,6 @@ public class DocsImporter {
 
 		workbook.close();
 
-		System.out.println("FINISH");
-
 	}
-
-//	public static void main(String[] args) {
-//
-//		JFrame frame = new JFrame();
-//		JButton but = new JButton("Import");
-//
-//		but.addActionListener(e -> {
-//
-//			JFileChooser fileChooser = new JFileChooser();
-//			fileChooser.showOpenDialog(null);
-//			fileChooser.isVisible();
-//
-//			FileInputStream fs = null;
-//
-//			try {
-//				if (fileChooser.getSelectedFile() != null) {
-//					fs = new FileInputStream(fileChooser.getSelectedFile());
-//
-//				} else {
-//
-//					JOptionPane.showMessageDialog(null, "No se ha seleccionado un archivo", "Error",
-//							JOptionPane.ERROR_MESSAGE);
-//
-//				}
-//
-//				if (fs != null) {
-//
-//					// Cargar definitivamente el excel al programa y realizar todos los calculos y
-//					// procesos.
-//
-//					importData(fs, "YERBABUENA JULIO");
-//					JOptionPane.showMessageDialog(null, "El archivo se ha cargado correctamente!", "Info",
-//							JOptionPane.INFORMATION_MESSAGE);
-//					fs.close();
-//
-//				}
-//
-//			} catch (Exception ex) {
-//
-//				ex.printStackTrace();
-//			}
-//
-//		});
-//
-//		frame.getContentPane().add(but);
-//		frame.pack();
-//		frame.setLocationRelativeTo(null);
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setVisible(true);
-//
-//	}
 
 }
