@@ -323,13 +323,14 @@ public class InicioPanel extends JPanel {
 			String nombre_potrero = (String) JOptionPane.showInputDialog(null, "Ingrese el nombre del potrero",
 					"Agregar Potrero", 0, icono, null, null);
 
+			
 			if (nombre_potrero != null && !nombre_potrero.equals(""))
 
 			{
 
 				if (PotreroCRUD.selectPotreroByID(nombre_potrero) == null) {
 
-					PotreroCRUD.insert(nombre_potrero);
+					PotreroCRUD.insert(nombre_potrero.toUpperCase());
 
 					ArrayList<Potrero> potreros3 = PotreroCRUD.select();
 

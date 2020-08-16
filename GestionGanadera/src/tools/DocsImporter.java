@@ -20,8 +20,6 @@ public class DocsImporter {
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheetAt(0);
 
-		PotreroCRUD.insert(potreroNombre);
-
 		Iterator<Row> rows = sheet.iterator();
 		rows.next();
 
@@ -40,7 +38,7 @@ public class DocsImporter {
 				switch (contadorCeldas) {
 
 				case 0:
-					res.setResID(cell.getStringCellValue().toString().replace(" ", ""));
+					res.setResID(cell.toString().replace(" ", ""));
 					break;
 
 				case 1:
@@ -75,13 +73,13 @@ public class DocsImporter {
 			}
 
 			res.setPotreroNombre(potreroNombre.toUpperCase().trim());
-			
+
 			ResCRUD.insert(res);
 
 		}
 
 		workbook.close();
-		
+
 		System.out.println("FINISH");
 
 	}

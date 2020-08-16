@@ -5,12 +5,15 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,6 +23,7 @@ import db.PotreroCRUD;
 import db.ResCRUD;
 import javafx.scene.input.ScrollEvent;
 import model.Res;
+import tools.DocsImporter;
 
 public class PotrerosPanel extends JPanel {
 
@@ -36,6 +40,7 @@ public class PotrerosPanel extends JPanel {
 	private JScrollPane scroller;
 	private String potrero_elegido;
 	private JButton btnRegresar;
+	private JButton btnImportar;
 
 	public PotrerosPanel(InicioPanel inicio, String potreroelegido) {
 
@@ -82,7 +87,7 @@ public class PotrerosPanel extends JPanel {
 		JLabel lblNewLabel_1 = new JLabel("");
 		panelSuperior.add(lblNewLabel_1);
 
-		JButton btnImportar = new JButton("Importar Datos");
+		btnImportar = new JButton("Importar Datos");
 		panelSuperior.add(btnImportar);
 
 		btnNotificaciones = new JButton("Notificaciones");
@@ -211,6 +216,13 @@ public class PotrerosPanel extends JPanel {
 		btnReporteVacunas.addActionListener(e -> {
 
 		});
+		
+		btnImportar.addActionListener(e ->{
+			
+			importarDatos();
+			refreshTable();
+			
+		});
 
 		tablaRes.addMouseListener(new MouseAdapter() {
 			@Override
@@ -230,7 +242,43 @@ public class PotrerosPanel extends JPanel {
 
 	}
 	
-	
+	public void importarDatos() {
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.showOpenDialog(null);
+		fileChooser.isVisible();
+
+		FileInputStream fs = null;
+
+		try {
+			if (fileChooser.getSelectedFile() != null) {
+				fs = new FileInputStream(fileChooser.getSelectedFile());
+
+			} else {
+
+				JOptionPane.showMessageDialog(null, "No se ha seleccionado un archivo", "Error",
+						JOptionPane.ERROR_MESSAGE);
+
+			}
+
+			if (fs != null) {
+
+				// Cargar definitivamente el excel al programa y realizar todos los calculos y
+				// procesos.
+
+				DocsImporter.importData(fs, potrero_elegido);
+				JOptionPane.showMessageDialog(null, "El archivo se ha cargado correctamente!", "Info",
+						JOptionPane.INFORMATION_MESSAGE);
+				fs.close();
+
+			}
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+		
+	}
 
 	public String getPotrero_elegido() {
 		return potrero_elegido;
@@ -276,4 +324,7 @@ public class PotrerosPanel extends JPanel {
 		return panelResTable;
 	}
 
+	public JButton getBtnImportar() {
+		return btnImportar;
+	}
 }
