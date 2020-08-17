@@ -449,7 +449,7 @@ public class ResCRUD {
 			
 			if (dias<=275 && meses==9) {
 				
-				vacas_destete.add("Es momento de realizar el destete a la vaca:" + res.getResID() + "Del potrero: " + res.getPotreroNombre());
+				vacas_destete.add("Es momento de realizar el destete a la vaca:" + res.getResID() + " Del potrero: " + res.getPotreroNombre());
 				
 			}
 
@@ -493,7 +493,7 @@ public class ResCRUD {
 	}
 	
 	
-	public ArrayList<Res> notificacionPeso() {
+	public ArrayList<Res> reportePeso() {
 		
          ArrayList<Res> vacas_pesos =new ArrayList<>();
 		
