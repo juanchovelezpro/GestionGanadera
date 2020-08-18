@@ -206,6 +206,17 @@ public class PotrerosPanel extends JPanel {
 		});
 
 		btnNotificaciones.addActionListener(e -> {
+			
+			inicio.getVentana().remove(this);
+			//inicio.getVentana().setSize(800, 400);
+			inicio.getVentana().setSize(605,452);
+
+			inicio.getVentana().setResizable(false);
+			inicio.getVentana().setLocationRelativeTo(null);
+			NotificacionesPanel paneln =new NotificacionesPanel(this);
+			inicio.getVentana().add(paneln);
+			inicio.getVentana().refresh();
+
 
 		});
 

@@ -431,7 +431,7 @@ public class ResCRUD {
 
 	}
 	
-	public ArrayList<String> desteteMensaje(){
+	public static ArrayList<String> desteteMensaje(){
 		
 		ArrayList<String> vacas_destete =new ArrayList<>();
 		
@@ -443,17 +443,19 @@ public class ResCRUD {
 		for (int i = 0; i < reses.size(); i++) {
 			
 			res = reses.get(i);
+			if (res.getFecha_nacimiento()!= null && !res.getFecha_nacimiento().equals("")) {
+				
 			
 			long dias = diasEntreFechas(res.getFecha_nacimiento());
 			long meses =mesesEntreFechas(res.getFecha_nacimiento());
 			
 			if (dias<=275 && meses==9) {
 				
-				vacas_destete.add("Es momento de realizar el destete a la vaca:" + res.getResID() + " Del potrero: " + res.getPotreroNombre());
+				vacas_destete.add("Es momento de realizar el destete a la vaca:" + res.getResID() + " Del potrero: " + res.getPotreroNombre() + "Con fecha de nacimiento" + res.getFecha_nacimiento());
 				
 			}
 
-			
+			}
 		}
 		
 		
@@ -462,7 +464,7 @@ public class ResCRUD {
 	}
 	
 	
-	public ArrayList<Res> reportePartos(){
+	public static ArrayList<Res> reportePartos(){
 		
         ArrayList<Res> vacas_partos =new ArrayList<>();
 		
@@ -493,7 +495,7 @@ public class ResCRUD {
 	}
 	
 	
-	public ArrayList<Res> reportePeso() {
+	public static ArrayList<Res> reportePeso() {
 		
          ArrayList<Res> vacas_pesos =new ArrayList<>();
 		
@@ -526,7 +528,7 @@ public class ResCRUD {
 	}
 	
 	
-    public ArrayList<Res> desteteRes(){
+    public static ArrayList<Res> desteteRes(){
 		
 		ArrayList<Res> vacas_destete =new ArrayList<>();
 		
