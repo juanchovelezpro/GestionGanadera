@@ -132,7 +132,7 @@ public class ResCRUD {
 					+ res.getObservaciones() + "', embarazada =" + res.getEmbarazada() + ", fecha_embarazo='"
 					+ res.getFecha_embarazo() + "',madreID='" + res.getMadreID() + "',fecha_ultima_purgado='"
 					+ res.getFecha_ultimo_purgado() + "', fecha_ultima_vacunado='" + res.getFecha_ultimo_vacunado()
-					+ "', potreroNombre='" + res.getPotreroNombre() + "' WHERE numero='" + id+"'");
+					+ "', potreroNombre='" + res.getPotreroNombre() + "' WHERE numero='" + id + "'");
 
 			updatePesosRes(id, res.getResID());
 			PurganteCRUD.updatePurganteRes(id, res.getResID());
@@ -167,7 +167,7 @@ public class ResCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			sql.getStatement().executeUpdate("DELETE FROM res WHERE numero='" + id+"'");
+			sql.getStatement().executeUpdate("DELETE FROM res WHERE numero='" + id + "'");
 			deletePesosRes(id);
 			PurganteCRUD.deletePurganteRes(id);
 			VacunaCRUD.deleteVacunaRes(id);
@@ -238,7 +238,7 @@ public class ResCRUD {
 
 		SQLConnection sql = SQLConnection.getInstance();
 		ArrayList<Peso> pesos = new ArrayList<Peso>();
-		Stack<Peso> pesos2 =new Stack();
+		Stack<Peso> pesos2 = new Stack();
 
 		try {
 			ResultSet result = sql.getStatement()
@@ -250,7 +250,7 @@ public class ResCRUD {
 				String fecha = result.getString(4);
 
 				pesos.add(new Peso(peso, fecha));
-				pesos2.push(new Peso(peso,fecha));
+				pesos2.push(new Peso(peso, fecha));
 
 			}
 
@@ -259,7 +259,6 @@ public class ResCRUD {
 			e.printStackTrace();
 		}
 
-		
 		System.out.println(pesos2.size());
 		return pesos2;
 
@@ -361,6 +360,7 @@ public class ResCRUD {
 
 		SQLConnection sql = SQLConnection.getInstance();
 		ArrayList<Purgante> purgantes = new ArrayList<Purgante>();
+		Stack<Purgante> purgantespila = new Stack<>();
 
 		try {
 			ResultSet result = sql.getStatement()
@@ -374,6 +374,7 @@ public class ResCRUD {
 				Purgante purgante_Actual = new Purgante(purgante_Nombre);
 				purgante_Actual.setFecha(fecha);
 				purgantes.add(purgante_Actual);
+				purgantespila.add(purgante_Actual);
 
 			}
 
@@ -430,136 +431,157 @@ public class ResCRUD {
 		}
 
 	}
-	
-	public static ArrayList<String> desteteMensaje(){
-		
-		ArrayList<String> vacas_destete =new ArrayList<>();
-		
+
+	public static ArrayList<String> desteteMensaje() {
+
+		ArrayList<String> vacas_destete = new ArrayList<>();
+
 		Res res = null;
-		
-		
+
 		ArrayList<Res> reses = select();
 
 		for (int i = 0; i < reses.size(); i++) {
-			
+
 			res = reses.get(i);
-			if (res.getFecha_nacimiento()!= null && !res.getFecha_nacimiento().equals("")) {
-				
-			
-			long dias = diasEntreFechas(res.getFecha_nacimiento());
-			long meses =mesesEntreFechas(res.getFecha_nacimiento());
-			
-			if (dias<=275 && meses==9) {
-				
-				vacas_destete.add("Es momento de realizar el destete a la vaca:" + res.getResID() + " Del potrero: " + res.getPotreroNombre() + "Con fecha de nacimiento" + res.getFecha_nacimiento());
-				
-			}
+			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals("")) {
+
+				long dias = diasEntreFechas(res.getFecha_nacimiento());
+				long meses = mesesEntreFechas(res.getFecha_nacimiento());
+
+				if (dias <= 275 && meses == 9) {
+
+					vacas_destete.add("Es momento de realizar el destete a la res: " + res.getResID() + " Del potrero: "
+							+ res.getPotreroNombre() + " Con fecha de nacimiento " + res.getFecha_nacimiento());
+
+				}
 
 			}
 		}
-		
-		
-		
+
 		return vacas_destete;
 	}
-	
-	
-	public static ArrayList<Res> reportePartos(){
+
+	public static ArrayList<String> partosMensaje() {
+
 		
-        ArrayList<Res> vacas_partos =new ArrayList<>();
-		
+
+		ArrayList<String> vacas_partos = new ArrayList<>();
+
 		Res res = null;
-		
-		
+
 		ArrayList<Res> reses = select();
-		
+
 		for (int i = 0; i < reses.size(); i++) {
-			
-			res =reses.get(i);
-				
-			if (res.getEmbarazada()==1  ) {
-				
-				long dias =diasEntreFechas(res.getFecha_embarazo());
+
+			res = reses.get(i);
+
+			if (res.getEmbarazada() == 1) {
+
+				long dias = diasEntreFechas(res.getFecha_embarazo());
 				long meses = mesesEntreFechas(res.getFecha_embarazo());
-				
-				if (dias<=460 && meses==15) {
-					
+
+				if (dias <= 460 && meses == 15) {
+
+					vacas_partos.add("Este atento al parto de la res:" + res.getResID() + " Del potrero: " + res.getPotreroNombre() + " con fecha de embarazo: " + res.getFecha_embarazo());
+				}
+			}
+		}
+
+		return vacas_partos;
+
+	}
+    public static ArrayList<String> purganteMensaje(){
+    	
+		ArrayList<String> vacas_purgantes = new ArrayList<>();
+
+    	
+		
+		
+		return vacas_purgantes;
+    	
+		
+    }
+	public static ArrayList<Res> reportePartos() {
+
+		ArrayList<Res> vacas_partos = new ArrayList<>();
+
+		Res res = null;
+
+		ArrayList<Res> reses = select();
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			res = reses.get(i);
+
+			if (res.getEmbarazada() == 1) {
+
+				long dias = diasEntreFechas(res.getFecha_embarazo());
+				long meses = mesesEntreFechas(res.getFecha_embarazo());
+
+				if (dias <= 460 && meses == 15) {
+
 					vacas_partos.add(res);
 				}
 			}
 		}
-		
-		
+
 		return vacas_partos;
-		
+
 	}
-	
-	
+
 	public static ArrayList<Res> reportePeso() {
-		
-         ArrayList<Res> vacas_pesos =new ArrayList<>();
-		
+
+		ArrayList<Res> vacas_pesos = new ArrayList<>();
+
 		Res res = null;
-		
-		
+
 		ArrayList<Res> reses = select();
-		
+
 		for (int i = 0; i < reses.size(); i++) {
-			
+
 			res = reses.get(i);
-			
-			Peso  peso_actual = selectPesos(res.getResID()).pop();
-			
-			long dias =diasEntreFechas(peso_actual.getFecha());
-			long meses =mesesEntreFechas(peso_actual.getFecha());
-			
-			if (dias<=182 && meses==6) {
-				
+
+			Peso peso_actual = selectPesos(res.getResID()).pop();
+
+			long dias = diasEntreFechas(peso_actual.getFecha());
+			long meses = mesesEntreFechas(peso_actual.getFecha());
+
+			if (dias <= 182 && meses == 6) {
+
 				vacas_pesos.add(res);
 			}
-			
-			
+
 		}
-		
-		
+
 		return vacas_pesos;
-		
-		
+
 	}
-	
-	
-    public static ArrayList<Res> desteteRes(){
-		
-		ArrayList<Res> vacas_destete =new ArrayList<>();
-		
+
+	public static ArrayList<Res> desteteRes() {
+
+		ArrayList<Res> vacas_destete = new ArrayList<>();
+
 		Res res = null;
-		
-		
+
 		ArrayList<Res> reses = select();
 
 		for (int i = 0; i < reses.size(); i++) {
-			
+
 			res = reses.get(i);
-			
+
 			long dias = diasEntreFechas(res.getFecha_nacimiento());
-			long meses =mesesEntreFechas(res.getFecha_nacimiento());
-			
-			if (dias<=275 && meses==9) {
-				
+			long meses = mesesEntreFechas(res.getFecha_nacimiento());
+
+			if (dias <= 275 && meses == 9) {
+
 				vacas_destete.add(res);
-				
+
 			}
 
-			
 		}
-		
-		
-		
+
 		return vacas_destete;
 	}
-    
-    
-   
 
 	public static void actualizarTipo() {
 

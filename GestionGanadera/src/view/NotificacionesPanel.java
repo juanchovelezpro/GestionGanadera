@@ -139,6 +139,29 @@ public class NotificacionesPanel extends JPanel {
 		});
 		
 		btnPartos.addActionListener(e -> {
+			
+
+			list.removeAll();
+			ArrayList<String > mensaje =ResCRUD.desteteMensaje();
+			System.out.println(mensaje.size() + "asdasdd");
+			
+			String[] values = new String[mensaje.size()];
+			
+			for (int i = 0; i < mensaje.size(); i++) {
+				values[i] = mensaje.get(i);
+			}
+			
+			list.setModel(new AbstractListModel() {
+			
+				
+				public int getSize() {
+					return values.length;
+				}
+				public Object getElementAt(int index) {
+					return values[index];
+				}
+			});
+
 
 		});
 		
