@@ -515,7 +515,7 @@ public class AgregarEditarVaca extends JDialog {
 
 		if (res != null) {
 
-			ArrayList<Purgante> purgantes = ResCRUD.selectPurgantes(res.getResID());
+			Stack<Purgante> purgantes = ResCRUD.selectPurgantes(res.getResID());
 			Object[][] data = new Object[purgantes.size()][columns.length];
 
 			for (int i = 0; i < data.length; i++) {

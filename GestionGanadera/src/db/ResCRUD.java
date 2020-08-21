@@ -1,5 +1,7 @@
 package db;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -356,7 +358,7 @@ public class ResCRUD {
 	}
 
 	// seleccionar purgante
-	public static ArrayList<Purgante> selectPurgantes(String resID) {
+	public static Stack<Purgante> selectPurgantes(String resID) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 		ArrayList<Purgante> purgantes = new ArrayList<Purgante>();
@@ -374,7 +376,9 @@ public class ResCRUD {
 				Purgante purgante_Actual = new Purgante(purgante_Nombre);
 				purgante_Actual.setFecha(fecha);
 				purgantes.add(purgante_Actual);
-				purgantespila.add(purgante_Actual);
+				purgantespila.push(purgante_Actual);
+				System.out.println(purgante_Actual.getNombre());
+
 
 			}
 
@@ -383,7 +387,7 @@ public class ResCRUD {
 			e.printStackTrace();
 		}
 
-		return purgantes;
+		return purgantespila;
 
 	}
 
@@ -493,6 +497,28 @@ public class ResCRUD {
     public static ArrayList<String> purganteMensaje(){
     	
 		ArrayList<String> vacas_purgantes = new ArrayList<>();
+		
+	    Res res =null;
+	    
+		ArrayList<Res> reses = select();
+
+		for (int i = 0; i < reses.size(); i++) {
+			
+			res =reses.get(i);
+			Purgante purgante = selectPurgantes(res.getResID()).pop();
+			
+			if (purgante!=null) {
+				
+				long dias =diasEntreFechas(purgante.getFecha());
+				
+				if (dias<30) {
+					
+					vacas_purgantes.add("Recuerde repurgar a la res:" + res.getResID() + " Del potrero:" + res.getPotreroNombre() + "Con fecha de primera purgada: " + purgante.getFecha());
+				}
+				
+			}
+			
+		}
 
     	
 		
@@ -501,6 +527,9 @@ public class ResCRUD {
     	
 		
     }
+    
+    
+    
 	public static ArrayList<Res> reportePartos() {
 
 		ArrayList<Res> vacas_partos = new ArrayList<>();
