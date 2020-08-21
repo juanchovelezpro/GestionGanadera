@@ -64,10 +64,10 @@ public class AgregarEditarVaca extends JDialog {
 	private JPanel panelGrafica;
 	private JPanel panelTabla;
 
-	public AgregarEditarVaca(Res res, PotrerosPanel potrero) {
+	public AgregarEditarVaca(Res res) {
 
 		this.res = res;
-		this.potrero = potrero;
+	//	this.potrero = potrero;
 
 		if (res != null)
 			setTitle("Editar Vaca/ ID: " + res.getResID());

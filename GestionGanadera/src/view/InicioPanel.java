@@ -408,6 +408,8 @@ public class InicioPanel extends JPanel {
 				if (ResCRUD.selectResByID(nombreVaca) != null) {
 
 					System.out.println(ResCRUD.selectResByID(nombreVaca));
+					AgregarEditarVaca dialog = new AgregarEditarVaca(ResCRUD.selectResByID(nombreVaca));
+
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Numero de vaca no encontrado");
