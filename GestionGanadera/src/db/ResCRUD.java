@@ -507,6 +507,7 @@ public class ResCRUD {
 			res =reses.get(i);
 			Purgante purgante = selectPurgantes(res.getResID()).pop();
 			
+			
 			if (purgante!=null) {
 				
 				long dias =diasEntreFechas(purgante.getFecha());
@@ -529,6 +530,42 @@ public class ResCRUD {
     }
     
     
+    public static ArrayList<Res> reporteDestete(){
+    	
+		ArrayList<Res> vacas_destete = new ArrayList<>();
+
+		Res res = null;
+
+		ArrayList<Res> reses = select();
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			res = reses.get(i);
+			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals("")) {
+
+				long dias = diasEntreFechas(res.getFecha_nacimiento());
+				long meses = mesesEntreFechas(res.getFecha_nacimiento());
+
+				if (res.getTipo().equals("CH") || res.getTipo().equals("MC")) {
+					
+				
+				if (dias <= 249 && meses == 8) {
+
+				//	vacas_destete.add("Es momento de realizar el destete a la res: " + res.getResID() + " Del potrero: "
+				//			+ res.getPotreroNombre() + " Con fecha de nacimiento " + res.getFecha_nacimiento());
+					vacas_destete.add(res);
+
+				}
+				
+				}
+
+			}
+		}
+
+		
+		return vacas_destete;
+
+    }
     
 	public static ArrayList<Res> reportePartos() {
 

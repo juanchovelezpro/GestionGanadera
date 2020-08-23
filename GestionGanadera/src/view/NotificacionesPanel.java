@@ -6,9 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
@@ -18,12 +22,15 @@ import javax.swing.ListModel;
 import javax.swing.JScrollBar;
 import javax.swing.border.TitledBorder;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import db.ResCRUD;
+import model.Res;
 
 import java.awt.Color;
 import java.awt.Dimension;
 
-public class NotificacionesPanel extends JPanel {
+public class NotificacionesPanel extends JPanel  {
 	
 	
 	private final JLabel label = new JLabel("");
@@ -34,6 +41,7 @@ public class NotificacionesPanel extends JPanel {
 	private JButton btnVacunas;
 	private JButton btnPurgado;
 	private JList list;
+	private JScrollPane listScroller;
 	
 	public NotificacionesPanel(PotrerosPanel ventana) {
 		setLayout(new BorderLayout(0, 0));
@@ -95,10 +103,14 @@ public class NotificacionesPanel extends JPanel {
 		panel_2.setLayout(new BorderLayout());
 		add(panel_2, BorderLayout.EAST);
 		
-		list = new JList();
+		
+
+		ListModel<String> listModel = new DefaultListModel<String>();
+		
+		list = new JList<String>(listModel);
 		
 	
-		JScrollPane listScroller = new JScrollPane(list);
+		listScroller = new JScrollPane(list);
 		listScroller.setPreferredSize(new Dimension(450, 300));
 			
 		panel_2.add(listScroller, BorderLayout.CENTER);
@@ -111,30 +123,81 @@ public class NotificacionesPanel extends JPanel {
 		panel_2.add(lblNewLabel_7, BorderLayout.NORTH);
 		
 	}
+	
+	
 
 	public void listeners() {
 		
 		btnDestete.addActionListener(e -> {
 			
-			ArrayList<String > mensaje =ResCRUD.desteteMensaje();
-			System.out.println(mensaje.size() + "asdasdd");
+			ArrayList<Res> reses = ResCRUD.reporteDestete();
+			System.out.println(reses.size());
+			int posicion=0;
 			
-			String[] values = new String[mensaje.size()];
+			String[] values = new String[reses.size()];
 			
-			for (int i = 0; i < mensaje.size(); i++) {
-				values[i] = mensaje.get(i);
+			for (int i = 0; i < reses.size(); i++) {
+				values[i] = reses.get(i).toString();
+				posicion= i;
 			}
 			
-			list.setModel(new AbstractListModel() {
+
 			
+			list.addMouseListener(new MouseAdapter() {
 				
-				public int getSize() {
-					return values.length;
-				}
-				public Object getElementAt(int index) {
-					return values[index];
-				}
+				   public void mouseClicked(MouseEvent evt) {
+				        JList list = (JList)evt.getSource();
+				        if (evt.getClickCount() == 2) {
+
+				            // Double-click detected
+							System.out.println(list.getSelectedIndex()+ "oprimio");
+
+							int numero=list.getSelectedIndex();
+							Res res = reses.get(list.getSelectedIndex());
+							
+			int valor= JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+			
+			if (valor == JOptionPane.OK_OPTION) {
+				
+				if (res.getGenero().equals("H")) {
+					
+					
+					res.setTipo("HL");
+					ResCRUD.update(res.getResID(), res);
+					
+					}
+					
+					if (res.getGenero().equals("M")) {
+						
+
+						res.setTipo("ML");
+						ResCRUD.update(res.getResID(), res);
+						
+					}
+					
+					
+			}
+				       
+			
+				        }
+				        
+				        
+				        
+				   
+				   }
+				   
+				 
+				   
+				
+
 			});
+			
+			System.out.println(posicion + "posicion");
+
+
+			
+			
+			
 
 		});
 		
@@ -199,6 +262,17 @@ public class NotificacionesPanel extends JPanel {
 		
 		btnRegresar.addActionListener(e -> {
 
+			ventana.getInicio().getVentana().remove(this);
+			ventana.getInicio().getVentana().setResizable(true);
+			ventana.getInicio().getVentana().setLocationRelativeTo(null);
+			ventana.getInicio().getVentana().add(ventana);
+			ventana.getInicio().getVentana().refresh();
+			ventana.refreshTable();
+
+
+			
+
+
 		});
 
 	}
@@ -217,4 +291,6 @@ public class NotificacionesPanel extends JPanel {
 	public JList lista() {
 		return list;
 	}
+
+
 }
