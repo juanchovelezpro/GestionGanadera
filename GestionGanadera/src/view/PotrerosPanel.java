@@ -35,6 +35,7 @@ public class PotrerosPanel extends JPanel {
 	private InicioPanel inicio;
 	private JPopupMenu menu;
 	private AgregarEditarVaca dialogAgregarEditar;
+	private NotificacionesPanel notificaciones;
 	private JComboBox comboHembraMacho;
 	private JButton btnAgregar;
 	private JButton btnReporteVacunas;
@@ -217,7 +218,8 @@ public class PotrerosPanel extends JPanel {
 
 		btnNotificaciones.addActionListener(e -> {
 
-			NotificacionesPanel notificaciones =new NotificacionesPanel(this);
+			if(notificaciones == null)
+			notificaciones =new NotificacionesPanel(this);
 
 		});
 
@@ -379,6 +381,14 @@ public class PotrerosPanel extends JPanel {
 			ex.printStackTrace();
 		}
 
+	}
+
+	public NotificacionesPanel getNotificaciones() {
+		return notificaciones;
+	}
+
+	public void setNotificaciones(NotificacionesPanel notificaciones) {
+		this.notificaciones = notificaciones;
 	}
 
 	public String getPotrero_elegido() {

@@ -9,6 +9,9 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import javax.swing.JDialog;
 
@@ -40,9 +43,9 @@ public class NotificacionesPanel extends JDialog {
 	private JButton btnDestete;
 	private JButton btnPartos;
 	private JButton btnPurgado;
-	private JList<String> list;
+	private JList<Res> list;
 	private JScrollPane listScroller;
-	DefaultListModel<String> modelo;
+	DefaultListModel<Res> modelo;
 
 	public NotificacionesPanel(PotrerosPanel ventana) {
 
@@ -104,8 +107,8 @@ public class NotificacionesPanel extends JDialog {
 		panel_2.setLayout(new BorderLayout());
 		add(panel_2, BorderLayout.EAST);
 
-		list = new JList();
-		modelo = new DefaultListModel<String>();
+		list = new JList<Res>();
+		modelo = new DefaultListModel<Res>();
 		list.setModel(modelo);
 
 		listScroller = new JScrollPane(list);
@@ -124,144 +127,159 @@ public class NotificacionesPanel extends JDialog {
 	public void listeners() {
 
 		btnDestete.addActionListener(e -> {
-			modelo.clear();
 
-
-			ArrayList<Res> reses = ResCRUD.reporteDestete();
-			System.out.println(reses.size());
-			int posicion = 0;
-
-			String[] values = new String[reses.size()];
-
-			for (int i = 0; i < reses.size(); i++) {
-				values[i] = reses.get(i).toString();
-				posicion = i;
-				modelo.add(i, values[i]);
-			}
-
-			list.addMouseListener(new MouseAdapter() {
-
-				public void mouseClicked(MouseEvent evt) {
-					JList list = (JList<String>) evt.getSource();
-					if (evt.getClickCount() == 2) {
-
-						// Double-click detected
-						System.out.println(list.getSelectedIndex() + "oprimio");
-
-						int numero = list.getSelectedIndex();
-						if (numero != -1) {
-							Res res = reses.get(list.getSelectedIndex());
-
-							int valor = JOptionPane.showConfirmDialog(null,
-									"¿Está seguro de eliminar esta notificación?");
-
-							if (valor == JOptionPane.OK_OPTION) {
-
-								if (res.getGenero().equals("H")) {
-
-									res.setTipo("HL");
-									ResCRUD.update(res.getResID(), res);
-
-								}
-
-								if (res.getGenero().equals("M")) {
-
-									res.setTipo("ML");
-									ResCRUD.update(res.getResID(), res);
-
-								}
-
-								if (numero != -1) {
-
-									modelo.removeElement(list.getSelectedValue());
-								}
-
-								ventana.refreshTable();
-							}
-
-						}
-
-					}
-				}
-
-			});
+			destetar();
 
 		});
 
 		btnPartos.addActionListener(e -> {
 
-			// list.removeAll();
-		//	modelo.removeAllElements();
-			modelo.clear();
-
-			ArrayList<Res> reses = ResCRUD.reportePartos();
-			System.out.println(reses.size());
-			int posicion = 0;
-
-			String[] values = new String[reses.size()];
-
-			for (int i = 0; i < reses.size(); i++) {
-				values[i] = reses.get(i).toPartos();
-				posicion = i;
-				modelo.add(i, values[i]);
-			}
-
-			list.addMouseListener(new MouseAdapter() {
-
-				public void mouseClicked(MouseEvent evt) {
-					JList list = (JList<String>) evt.getSource();
-					if (evt.getClickCount() == 2) {
-
-						// Double-click detected
-						System.out.println(list.getSelectedIndex() + "oprimio");
-
-						int numero = list.getSelectedIndex();
-						if (numero != -1) {
-							Res res = reses.get(list.getSelectedIndex());
-
-							int valor = JOptionPane.showConfirmDialog(null,
-									"¿Está seguro de eliminar esta notificación?");
-
-							if (valor == JOptionPane.OK_OPTION) {
-
-								if (res.getGenero().equals("H")) {
-
-									res.setTipo("VP");
-									ResCRUD.update(res.getResID(), res);
-
-								}
-
-								if (numero != -1) {
-
-									modelo.removeElement(list.getSelectedValue());
-								}
-
-								ventana.refreshTable();
-
-							}
-
-						}
-
-					}
-				}
-
-			});
-
-			System.out.println(posicion + "posicion");
+			partos();
 
 		});
 
 		btnPurgado.addActionListener(e -> {
 			modelo.clear();
 
-
 		});
 
 		btnRegresar.addActionListener(e -> {
 
+			ventana.setNotificaciones(null);
 			dispose();
 
 		});
+
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent we) {
+
+				ventana.setNotificaciones(null);
+				dispose();
+
+			}
+
+		});
+
+	}
+
+	public void destetar() {
+
+		modelo.clear();
+
+		ArrayList<Res> reses = ResCRUD.reporteDestete();
+		System.out.println(reses.size());
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			modelo.addElement(reses.get(i));
+		
+		}
+
+		list.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent evt) {
+				if (evt.getClickCount() == 2) {
+
+					int numero = list.getSelectedIndex();
+					if (numero != -1) {
+						Res res = list.getSelectedValue();
+						System.out.println(res.toString());
+
+						int valor = JOptionPane.showConfirmDialog(null,
+								"¿Está seguro de eliminar esta notificación?");
+
+						if (valor == JOptionPane.YES_OPTION) {
+
+							if (res.getGenero().equals("H")) {
+
+								res.setTipo("HL");
+								ResCRUD.update(res.getResID(), res);
+								modelo.removeElement(list.getSelectedValue());
+								System.out.println("actualizado");
+
+							}
+
+							if (res.getGenero().equals("M")) {
+
+								res.setTipo("ML");
+								ResCRUD.update(res.getResID(), res);
+								modelo.removeElement(list.getSelectedValue());
+								System.out.println("actualizado");
+
+							}
+							
+							ventana.refreshTable();
+						}
+
+					}
+
+				}
+			}
+
+		});
+
+	}
+
+	public void partos() {
+
+		// list.removeAll();
+		// modelo.removeAllElements();
+		modelo.clear();
+
+		ArrayList<Res> reses = ResCRUD.reportePartos();
+		System.out.println(reses.size());
+
+
+		String[] values = new String[reses.size()];
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			modelo.addElement(reses.get(i));
+		}
+
+		list.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent evt) {
+				JList list = (JList<String>) evt.getSource();
+				if (evt.getClickCount() == 2) {
+
+					// Double-click detected
+					System.out.println(list.getSelectedIndex() + "oprimio");
+
+					int numero = list.getSelectedIndex();
+					if (numero != -1) {
+						Res res = reses.get(list.getSelectedIndex());
+
+						int valor = JOptionPane.showConfirmDialog(null,
+								"¿Está seguro de eliminar esta notificación?");
+
+						if (valor == JOptionPane.OK_OPTION) {
+
+							if (res.getGenero().equals("H")) {
+
+								res.setTipo("VP");
+								ResCRUD.update(res.getResID(), res);
+
+							}
+
+							if (numero != -1) {
+
+								modelo.removeElement(list.getSelectedValue());
+							}
+
+							ventana.refreshTable();
+
+						}
+
+					}
+
+				}
+			}
+
+		});
+
 
 	}
 
