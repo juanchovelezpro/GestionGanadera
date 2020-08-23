@@ -93,8 +93,9 @@ public class AgregarEditarVaca extends JDialog {
 
 		}
 
+		
 		setVisible(true);
-
+		
 	}
 
 	public AgregarEditarVaca(Res res, InicioPanel inicio) {
@@ -375,7 +376,7 @@ public class AgregarEditarVaca extends JDialog {
 	public Res obtenerInfoRes(String potrero) {
 
 		Res res = new Res();
-		
+
 		res.setPotreroNombre(potrero);
 
 		res.setResID(txtNumero.getText());
@@ -701,21 +702,20 @@ public class AgregarEditarVaca extends JDialog {
 
 				if (res.getResID().equals(txtNumero.getText().trim()) || !existeRes(txtNumero.getText().trim())) {
 
-					
-					
 					if (potrero != null) {
-						
+
 						ResCRUD.update(res.getResID(), obtenerInfoRes(potrero.getPotrero_elegido()));
 						potrero.refreshTable();
 						System.out.println("UPDATED");
+						potrero.setDialogAgregarEditar(null);
 						dispose();
-						
-					}else {
-						
-						ResCRUD.update(res.getResID(), obtenerInfoRes(res.getPotreroNombre()));			
+
+					} else {
+
+						ResCRUD.update(res.getResID(), obtenerInfoRes(res.getPotreroNombre()));
 						System.out.println("UPDATED");
 						dispose();
-						
+
 					}
 				} else {
 
@@ -730,6 +730,7 @@ public class AgregarEditarVaca extends JDialog {
 					ResCRUD.insert(obtenerInfoRes(potrero.getPotrero_elegido()));
 					potrero.refreshTable();
 					System.out.println("INSERTED");
+					potrero.setDialogAgregarEditar(null);
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
@@ -824,6 +825,24 @@ public class AgregarEditarVaca extends JDialog {
 		btnAgregar.addActionListener(e -> {
 
 			AgregarInfoReporte inforeporte = new AgregarInfoReporte(tiporeporte, res.getResID(), this);
+
+		});
+
+		comboEmbarazada.addActionListener(e -> {
+
+			String selected = comboEmbarazada.getSelectedItem().toString();
+
+			if (selected.equalsIgnoreCase("NO") || selected.equalsIgnoreCase("NO APLICA")) {
+
+				btnFechaEmbarazo.setText("");
+				btnFechaEmbarazo.setEnabled(false);
+
+			} else {
+
+				btnFechaEmbarazo.setText("dd/MM/AAAA");
+				btnFechaEmbarazo.setEnabled(true);
+
+			}
 
 		});
 

@@ -7,15 +7,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
@@ -28,6 +33,8 @@ import tools.DocsImporter;
 public class PotrerosPanel extends JPanel {
 
 	private InicioPanel inicio;
+	private JPopupMenu menu;
+	private AgregarEditarVaca dialogAgregarEditar;
 	private JComboBox comboHembraMacho;
 	private JButton btnAgregar;
 	private JButton btnReporteVacunas;
@@ -118,6 +125,8 @@ public class PotrerosPanel extends JPanel {
 		add(panelResTable, BorderLayout.CENTER);
 		panelResTable.setLayout(new GridLayout(1, 1));
 
+		popUpMenu();
+
 	}
 
 	public void crearTablaRes(String nombrep) {
@@ -190,7 +199,8 @@ public class PotrerosPanel extends JPanel {
 
 		btnAgregar.addActionListener(e -> {
 
-			AgregarEditarVaca dialog = new AgregarEditarVaca(null,this);
+			if (dialogAgregarEditar == null)
+				dialogAgregarEditar = new AgregarEditarVaca(null, this);
 
 		});
 
@@ -206,17 +216,15 @@ public class PotrerosPanel extends JPanel {
 		});
 
 		btnNotificaciones.addActionListener(e -> {
-			
+
 			inicio.getVentana().remove(this);
-			//inicio.getVentana().setSize(800, 400);
-			inicio.getVentana().setSize(605,452);
+			inicio.getVentana().setSize(605, 452);
 
 			inicio.getVentana().setResizable(false);
 			inicio.getVentana().setLocationRelativeTo(null);
-			NotificacionesPanel paneln =new NotificacionesPanel(this);
+			NotificacionesPanel paneln = new NotificacionesPanel(this);
 			inicio.getVentana().add(paneln);
 			inicio.getVentana().refresh();
-
 
 		});
 
@@ -227,34 +235,125 @@ public class PotrerosPanel extends JPanel {
 		btnReporteVacunas.addActionListener(e -> {
 
 		});
-		
-		btnImportar.addActionListener(e ->{
-			
+
+		btnImportar.addActionListener(e -> {
+
 			importarDatos();
 			refreshTable();
-			
+
 		});
 
 		tablaRes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				if (e.getClickCount() == 2) {
+				// Para editar la res seleccionada.
+				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
 
 					int row = tablaRes.getSelectedRow();
 					Res res = ResCRUD.selectResByID(modelRes.getData()[row][0].toString());
 
-					AgregarEditarVaca agregar = new AgregarEditarVaca(res,PotrerosPanel.this);
+					AgregarEditarVaca dialog = new AgregarEditarVaca(res, PotrerosPanel.this);
 
+				}
+
+				// Click derecho
+				if (e.getButton() == MouseEvent.BUTTON3) {
+
+					menu.show(e.getComponent(), e.getX(), e.getY());
 				}
 
 			}
 		});
 
 	}
-	
+
+	public AgregarEditarVaca getDialogAgregarEditar() {
+		return dialogAgregarEditar;
+	}
+
+	public void setDialogAgregarEditar(AgregarEditarVaca dialogAgregarEditar) {
+		this.dialogAgregarEditar = dialogAgregarEditar;
+	}
+
+	public void popUpMenu() {
+
+		menu = new JPopupMenu();
+
+		JMenuItem vacunar = new JMenuItem("Vacunar");
+		vacunar.addActionListener(a -> {
+
+		});
+
+		JMenuItem purgar = new JMenuItem("Purgar");
+		purgar.addActionListener(a -> {
+
+		});
+
+		JMenuItem eliminar = new JMenuItem("Eliminar");
+		eliminar.addActionListener(a -> {
+
+			eliminar();
+
+		});
+
+		menu.add(vacunar);
+		menu.addSeparator();
+		menu.add(purgar);
+		menu.addSeparator();
+		menu.add(eliminar);
+
+	}
+
+	public void vacunar() {
+
+	}
+
+	public void purgar() {
+
+	}
+
+	public void eliminar() {
+
+		int[] rowsSelected = tablaRes.getSelectedRows();
+
+		int option = JOptionPane.showConfirmDialog(this,
+				"¿Esta seguro que desea eliminar " + rowsSelected.length + " reses?", "Eliminar",
+				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+		// Si presiona SI
+		if (option == 0) {
+
+			new Thread() {
+				BarraProgreso progreso = new BarraProgreso(rowsSelected.length);
+				
+				int value = 0;
+
+				@Override
+				public void run() {
+
+					for (int i = 0; i < rowsSelected.length; i++) {
+
+						String id = modelRes.getData()[rowsSelected[i]][0].toString();
+						ResCRUD.delete(id);
+						value++;
+						progreso.getProgreso().setValue(value);
+
+					}
+
+					refreshTable();
+					progreso.dispose();
+
+				}
+
+			}.start();
+
+		}
+
+	}
+
 	public void importarDatos() {
-		
+
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.showOpenDialog(null);
 		fileChooser.isVisible();
@@ -277,9 +376,7 @@ public class PotrerosPanel extends JPanel {
 				// Cargar definitivamente el excel al programa y realizar todos los calculos y
 				// procesos.
 
-				DocsImporter.importData(fs, potrero_elegido);
-				JOptionPane.showMessageDialog(null, "El archivo se ha cargado correctamente!", "Info",
-						JOptionPane.INFORMATION_MESSAGE);
+				DocsImporter.importData(fs, potrero_elegido, this);
 				fs.close();
 
 			}
@@ -288,7 +385,7 @@ public class PotrerosPanel extends JPanel {
 
 			ex.printStackTrace();
 		}
-		
+
 	}
 
 	public String getPotrero_elegido() {

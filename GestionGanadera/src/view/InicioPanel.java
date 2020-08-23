@@ -21,6 +21,7 @@ import db.PotreroCRUD;
 import db.ResCRUD;
 import db.UsuarioCRUD;
 import model.Potrero;
+import model.Res;
 import model.Usuario;
 import tools.FileManager;
 
@@ -323,7 +324,6 @@ public class InicioPanel extends JPanel {
 			String nombre_potrero = (String) JOptionPane.showInputDialog(null, "Ingrese el nombre del potrero",
 					"Agregar Potrero", 0, icono, null, null);
 
-			
 			if (nombre_potrero != null && !nombre_potrero.equals(""))
 
 			{
@@ -405,11 +405,13 @@ public class InicioPanel extends JPanel {
 
 			if (nombreVaca != null && !nombreVaca.equals(null)) {
 
-				if (ResCRUD.selectResByID(nombreVaca) != null) {
+				Res resita = ResCRUD.selectResByID(nombreVaca);
 
-					System.out.println(ResCRUD.selectResByID(nombreVaca));
-					AgregarEditarVaca dialog = new AgregarEditarVaca(ResCRUD.selectResByID(nombreVaca),this);
+				if (resita != null) {
 
+					System.out.println(resita);
+
+					AgregarEditarVaca dialog = new AgregarEditarVaca(resita, this);
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Numero de vaca no encontrado");
