@@ -51,7 +51,7 @@ public class DocsImporter {
 
 				case 3:
 
-					res.setFecha_nacimiento(cell.toString().trim());
+					res.setFecha_nacimiento(cell.toString().trim().replaceAll(" ", "").trim());
 					break;
 
 				case 4:
