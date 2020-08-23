@@ -546,7 +546,7 @@ public class ResCRUD {
 				long dias = diasEntreFechas(res.getFecha_nacimiento());
 				long meses = mesesEntreFechas(res.getFecha_nacimiento());
 
-				if (res.getTipo().equals("CH") || res.getTipo().equals("MC")) {
+				if (res.getTipo().equals("CH") || res.getTipo().equals("CM")) {
 					
 				
 				if (dias <= 249 && meses == 8) {
@@ -579,15 +579,19 @@ public class ResCRUD {
 
 			res = reses.get(i);
 
+			if (res.getTipo().equals("NV")) {
+				
+			
 			if (res.getEmbarazada() == 1) {
 
 				long dias = diasEntreFechas(res.getFecha_embarazo());
 				long meses = mesesEntreFechas(res.getFecha_embarazo());
 
-				if (dias <= 460 && meses == 15) {
+				if (dias <= 278 && meses == 9) {
 
 					vacas_partos.add(res);
 				}
+			}
 			}
 		}
 

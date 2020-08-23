@@ -40,8 +40,9 @@ public class NotificacionesPanel extends JPanel  {
 	private JButton btnPartos;
 	private JButton btnVacunas;
 	private JButton btnPurgado;
-	private JList list;
+	private JList<String> list;
 	private JScrollPane listScroller;
+	DefaultListModel<String> modelo;
 	
 	public NotificacionesPanel(PotrerosPanel ventana) {
 		setLayout(new BorderLayout(0, 0));
@@ -103,11 +104,9 @@ public class NotificacionesPanel extends JPanel  {
 		panel_2.setLayout(new BorderLayout());
 		add(panel_2, BorderLayout.EAST);
 		
-		
-
-		ListModel<String> listModel = new DefaultListModel<String>();
-		
-		list = new JList<String>(listModel);
+		list = new JList();
+		 modelo =new DefaultListModel<String>();
+			list.setModel(modelo);
 		
 	
 		listScroller = new JScrollPane(list);
@@ -134,26 +133,31 @@ public class NotificacionesPanel extends JPanel  {
 			System.out.println(reses.size());
 			int posicion=0;
 			
+	        
+			
+			
 			String[] values = new String[reses.size()];
 			
 			for (int i = 0; i < reses.size(); i++) {
 				values[i] = reses.get(i).toString();
 				posicion= i;
+				modelo.add(i, values[i]);
 			}
 			
-
-			
+		
 			list.addMouseListener(new MouseAdapter() {
 				
 				   public void mouseClicked(MouseEvent evt) {
-				        JList list = (JList)evt.getSource();
+				        JList list = (JList<String>)evt.getSource();
 				        if (evt.getClickCount() == 2) {
 
 				            // Double-click detected
 							System.out.println(list.getSelectedIndex()+ "oprimio");
 
 							int numero=list.getSelectedIndex();
+							if(numero!=-1) {
 							Res res = reses.get(list.getSelectedIndex());
+							
 							
 			int valor= JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 			
@@ -163,32 +167,28 @@ public class NotificacionesPanel extends JPanel  {
 					
 					
 					res.setTipo("HL");
-					ResCRUD.update(res.getResID(), res);
+					ResCRUD.update(res.getResID(),res);
 					
 					}
 					
 					if (res.getGenero().equals("M")) {
 						
-
 						res.setTipo("ML");
-						ResCRUD.update(res.getResID(), res);
+						ResCRUD.update(res.getResID(),res);
 						
 					}
 					
+					if(numero!=-1) {
+						
+						modelo.removeElement(list.getSelectedValue());
+					}
+			}			
 					
 			}
 				       
-			
-				        }
-				        
-				        
-				        
+				        }}
 				   
-				   }
 				   
-				 
-				   
-				
 
 			});
 			
@@ -204,26 +204,74 @@ public class NotificacionesPanel extends JPanel  {
 		btnPartos.addActionListener(e -> {
 			
 
-			list.removeAll();
-			ArrayList<String > mensaje =ResCRUD.desteteMensaje();
-			System.out.println(mensaje.size() + "asdasdd");
+
+	//	list.removeAll();
+		modelo.removeAllElements();
 			
-			String[] values = new String[mensaje.size()];
+			ArrayList<Res> reses = ResCRUD.reportePartos();
+			System.out.println(reses.size());
+			int posicion=0;
 			
-			for (int i = 0; i < mensaje.size(); i++) {
-				values[i] = mensaje.get(i);
+	        
+			
+			
+			String[] values = new String[reses.size()];
+			
+			for (int i = 0; i < reses.size(); i++) {
+				values[i] = reses.get(i).toString();
+				posicion= i;
+				modelo.add(i, values[i]);
 			}
 			
-			list.setModel(new AbstractListModel() {
-			
+		
+			list.addMouseListener(new MouseAdapter() {
 				
-				public int getSize() {
-					return values.length;
-				}
-				public Object getElementAt(int index) {
-					return values[index];
-				}
+				   public void mouseClicked(MouseEvent evt) {
+				        JList list = (JList<String>)evt.getSource();
+				        if (evt.getClickCount() == 2) {
+
+				            // Double-click detected
+							System.out.println(list.getSelectedIndex()+ "oprimio");
+
+							int numero=list.getSelectedIndex();
+							if(numero!=-1) {
+							Res res = reses.get(list.getSelectedIndex());
+							
+							
+			int valor= JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+			
+			if (valor == JOptionPane.OK_OPTION) {
+				
+				if (res.getGenero().equals("H")) {
+					
+					
+					res.setTipo("VP");
+					ResCRUD.update(res.getResID(), res);
+					
+					}
+					
+					
+					if(numero!=-1) {
+						
+						modelo.removeElement(list.getSelectedValue());
+					}
+			}			
+					
+			}
+				       
+				        }}
+				   
+				   
+
 			});
+			
+			System.out.println(posicion + "posicion");
+
+
+			
+			
+			
+			
 
 
 		});
