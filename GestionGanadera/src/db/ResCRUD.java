@@ -436,98 +436,8 @@ public class ResCRUD {
 
 	}
 
-	public static ArrayList<String> desteteMensaje() {
+	
 
-		ArrayList<String> vacas_destete = new ArrayList<>();
-
-		Res res = null;
-
-		ArrayList<Res> reses = select();
-
-		for (int i = 0; i < reses.size(); i++) {
-
-			res = reses.get(i);
-			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals("")) {
-
-				long dias = diasEntreFechas(res.getFecha_nacimiento());
-				long meses = mesesEntreFechas(res.getFecha_nacimiento());
-
-				if (dias <= 275 && meses == 9) {
-
-					vacas_destete.add("Es momento de realizar el destete a la res: " + res.getResID() + " Del potrero: "
-							+ res.getPotreroNombre() + " Con fecha de nacimiento " + res.getFecha_nacimiento());
-
-				}
-
-			}
-		}
-
-		return vacas_destete;
-	}
-
-	public static ArrayList<String> partosMensaje() {
-
-		
-
-		ArrayList<String> vacas_partos = new ArrayList<>();
-
-		Res res = null;
-
-		ArrayList<Res> reses = select();
-
-		for (int i = 0; i < reses.size(); i++) {
-
-			res = reses.get(i);
-
-			if (res.getEmbarazada() == 1) {
-
-				long dias = diasEntreFechas(res.getFecha_embarazo());
-				long meses = mesesEntreFechas(res.getFecha_embarazo());
-
-				if (dias <= 460 && meses == 15) {
-
-					vacas_partos.add("Este atento al parto de la res:" + res.getResID() + " Del potrero: " + res.getPotreroNombre() + " con fecha de embarazo: " + res.getFecha_embarazo());
-				}
-			}
-		}
-
-		return vacas_partos;
-
-	}
-    public static ArrayList<String> purganteMensaje(){
-    	
-		ArrayList<String> vacas_purgantes = new ArrayList<>();
-		
-	    Res res =null;
-	    
-		ArrayList<Res> reses = select();
-
-		for (int i = 0; i < reses.size(); i++) {
-			
-			res =reses.get(i);
-			Purgante purgante = selectPurgantes(res.getResID()).pop();
-			
-			
-			if (purgante!=null) {
-				
-				long dias =diasEntreFechas(purgante.getFecha());
-				
-				if (dias<30) {
-					
-					vacas_purgantes.add("Recuerde repurgar a la res:" + res.getResID() + " Del potrero:" + res.getPotreroNombre() + "Con fecha de primera purgada: " + purgante.getFecha());
-				}
-				
-			}
-			
-		}
-
-    	
-		
-		
-		return vacas_purgantes;
-    	
-		
-    }
     
     
     public static ArrayList<Res> reporteDestete(){
@@ -626,32 +536,35 @@ public class ResCRUD {
 		return vacas_pesos;
 
 	}
-
-	public static ArrayList<Res> desteteRes() {
-
-		ArrayList<Res> vacas_destete = new ArrayList<>();
-
-		Res res = null;
-
+	
+	
+	public static void reportePurgado() {
+		
 		ArrayList<Res> reses = select();
 
+		Res res = null;
+		
 		for (int i = 0; i < reses.size(); i++) {
-
-			res = reses.get(i);
-
-			long dias = diasEntreFechas(res.getFecha_nacimiento());
-			long meses = mesesEntreFechas(res.getFecha_nacimiento());
-
-			if (dias <= 275 && meses == 9) {
-
-				vacas_destete.add(res);
-
+			
+			res= reses.get(i);
+			
+			if (res.getPurgantes()!=null) {
+				
+				
+			Purgante ultimoPurgante =ResCRUD.selectPurgantes(res.getResID()).pop();
+			
+			long dias = diasEntreFechas(ultimoPurgante.getFecha());
+			
 			}
-
+					
 		}
-
-		return vacas_destete;
+		
+		
+		
 	}
+
+	
+	
 
 	public static void actualizarTipo() {
 

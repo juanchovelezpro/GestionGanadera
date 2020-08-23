@@ -217,14 +217,7 @@ public class PotrerosPanel extends JPanel {
 
 		btnNotificaciones.addActionListener(e -> {
 
-			inicio.getVentana().remove(this);
-			inicio.getVentana().setSize(605, 452);
-
-			inicio.getVentana().setResizable(false);
-			inicio.getVentana().setLocationRelativeTo(null);
-			NotificacionesPanel paneln = new NotificacionesPanel(this);
-			inicio.getVentana().add(paneln);
-			inicio.getVentana().refresh();
+			NotificacionesPanel notificaciones =new NotificacionesPanel(this);
 
 		});
 
@@ -318,7 +311,7 @@ public class PotrerosPanel extends JPanel {
 		int[] rowsSelected = tablaRes.getSelectedRows();
 
 		int option = JOptionPane.showConfirmDialog(this,
-				"¿Esta seguro que desea eliminar " + rowsSelected.length + " reses?", "Eliminar",
+				"ï¿½Esta seguro que desea eliminar " + rowsSelected.length + " reses?", "Eliminar",
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
 		// Si presiona SI

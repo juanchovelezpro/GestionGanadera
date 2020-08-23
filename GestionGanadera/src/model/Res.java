@@ -196,6 +196,11 @@ public class Res {
 		return "Es momento de realizar el destete a la res: " + resID + " Del potrero: "
 				+ potreroNombre + " Con fecha de nacimiento " + fecha_nacimiento;
 	}
+	
+	public String toPartos() {
+		return "Este atento al parto de la res: " + resID + " Del potrero: "
+				+ potreroNombre + " Con fecha de embarazo " + fecha_embarazo;
+	}
 	public String infoVaca() {
 		return "Res [resID=" + resID + ", genero=" + genero + ", tipo=" + tipo + ", color=" + color + ", vivo=" + vivo
 				+ ", fecha_nacimiento=" + fecha_nacimiento + ", observaciones=" + observaciones + ", embarazada="
