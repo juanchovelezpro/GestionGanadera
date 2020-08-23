@@ -33,6 +33,7 @@ public class AgregarEditarVaca extends JDialog {
 
 	private Res res;
 	private PotrerosPanel potrero;
+	private InicioPanel inicio;
 	private JTextField txtColor;
 	private JComboBox comboEmbarazada;
 	private JComboBox comboGenero;
@@ -64,10 +65,42 @@ public class AgregarEditarVaca extends JDialog {
 	private JPanel panelGrafica;
 	private JPanel panelTabla;
 
-	public AgregarEditarVaca(Res res) {
+	public AgregarEditarVaca(Res res, PotrerosPanel potrero) {
 
 		this.res = res;
-	//	this.potrero = potrero;
+		this.potrero = potrero;
+
+		if (res != null)
+			setTitle("Editar Vaca/ ID: " + res.getResID());
+		else
+			setTitle("Agregar vaca");
+
+		setIconImage(FileManager.imagenes.get("ICONO"));
+		getContentPane().setLayout(new GridLayout(1, 2));
+		setSize(500, 700);
+		setLocationRelativeTo(null);
+		setComponents();
+		listeners();
+
+		cargarInfoRes();
+
+		if (res == null) {
+
+			btnVerRegistroPeso.setEnabled(false);
+			btnCrias.setEnabled(false);
+			btnRegistroPurgantes.setEnabled(false);
+			btnRegistroVacunas.setEnabled(false);
+
+		}
+
+		setVisible(true);
+
+	}
+
+	public AgregarEditarVaca(Res res, InicioPanel inicio) {
+
+		this.res = res;
+		this.inicio = inicio;
 
 		if (res != null)
 			setTitle("Editar Vaca/ ID: " + res.getResID());
@@ -339,11 +372,11 @@ public class AgregarEditarVaca extends JDialog {
 
 	}
 
-	public Res obtenerInfoRes() {
+	public Res obtenerInfoRes(String potrero) {
 
 		Res res = new Res();
-
-		res.setPotreroNombre(potrero.getPotrero_elegido());
+		
+		res.setPotreroNombre(potrero);
 
 		res.setResID(txtNumero.getText());
 		res.setTipo(comboTipo.getSelectedItem().toString());
@@ -668,11 +701,22 @@ public class AgregarEditarVaca extends JDialog {
 
 				if (res.getResID().equals(txtNumero.getText().trim()) || !existeRes(txtNumero.getText().trim())) {
 
-					ResCRUD.update(res.getResID(), obtenerInfoRes());
-					potrero.refreshTable();
-					System.out.println("UPDATED");
-					dispose();
-
+					
+					
+					if (potrero != null) {
+						
+						ResCRUD.update(res.getResID(), obtenerInfoRes(potrero.getPotrero_elegido()));
+						potrero.refreshTable();
+						System.out.println("UPDATED");
+						dispose();
+						
+					}else {
+						
+						ResCRUD.update(res.getResID(), obtenerInfoRes(res.getPotreroNombre()));			
+						System.out.println("UPDATED");
+						dispose();
+						
+					}
 				} else {
 
 					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
@@ -683,7 +727,7 @@ public class AgregarEditarVaca extends JDialog {
 			} else {
 
 				if (!existeRes(txtNumero.getText().trim())) {
-					ResCRUD.insert(obtenerInfoRes());
+					ResCRUD.insert(obtenerInfoRes(potrero.getPotrero_elegido()));
 					potrero.refreshTable();
 					System.out.println("INSERTED");
 					dispose();

@@ -190,7 +190,7 @@ public class PotrerosPanel extends JPanel {
 
 		btnAgregar.addActionListener(e -> {
 
-			AgregarEditarVaca dialog = new AgregarEditarVaca(null);
+			AgregarEditarVaca dialog = new AgregarEditarVaca(null,this);
 
 		});
 
@@ -244,7 +244,7 @@ public class PotrerosPanel extends JPanel {
 					int row = tablaRes.getSelectedRow();
 					Res res = ResCRUD.selectResByID(modelRes.getData()[row][0].toString());
 
-					AgregarEditarVaca agregar = new AgregarEditarVaca(res);
+					AgregarEditarVaca agregar = new AgregarEditarVaca(res,PotrerosPanel.this);
 
 				}
 
