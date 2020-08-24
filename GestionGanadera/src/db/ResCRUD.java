@@ -23,6 +23,7 @@ public class ResCRUD {
 	// Agrega una res a la tabla res de la base de datos.
 	public static void insert(Res res) {
 
+		
 		SQLConnection sql = SQLConnection.getInstance();
 
 		String values = "'" + res.getResID() + "','" + res.getTipo() + "','" + res.getGenero() + "','" + res.getColor()
@@ -348,8 +349,11 @@ public class ResCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
+			
+			PurganteCRUD.insert(purganteNombre);
 			sql.getStatement().executeUpdate("INSERT INTO res_tiene_purgantes (resID,purganteNombre,fecha) VALUES ('"
 					+ resID + "','" + purganteNombre + "','" + fecha + "')");
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -377,8 +381,6 @@ public class ResCRUD {
 				purgante_Actual.setFecha(fecha);
 				purgantes.add(purgante_Actual);
 				purgantespila.push(purgante_Actual);
-				System.out.println(purgante_Actual.getNombre());
-
 
 			}
 
@@ -436,12 +438,8 @@ public class ResCRUD {
 
 	}
 
-	
+	public static ArrayList<Res> reporteDestete() {
 
-    
-    
-    public static ArrayList<Res> reporteDestete(){
-    	
 		ArrayList<Res> vacas_destete = new ArrayList<>();
 
 		Res res = null;
@@ -451,32 +449,32 @@ public class ResCRUD {
 		for (int i = 0; i < reses.size(); i++) {
 
 			res = reses.get(i);
-			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals("")) {
+			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals("") && !res.getFecha_nacimiento().equalsIgnoreCase("SIN REGISTRO")) {
 
 				long dias = diasEntreFechas(res.getFecha_nacimiento());
 				long meses = mesesEntreFechas(res.getFecha_nacimiento());
 
 				if (res.getTipo().equals("CH") || res.getTipo().equals("CM")) {
-					
-				
-				if (dias <= 249 && meses == 8) {
 
-				//	vacas_destete.add("Es momento de realizar el destete a la res: " + res.getResID() + " Del potrero: "
-				//			+ res.getPotreroNombre() + " Con fecha de nacimiento " + res.getFecha_nacimiento());
-					vacas_destete.add(res);
+					if (dias <= 249 && meses == 8) {
 
-				}
-				
+						// vacas_destete.add("Es momento de realizar el destete a la res: " +
+						// res.getResID() + " Del potrero: "
+						// + res.getPotreroNombre() + " Con fecha de nacimiento " +
+						// res.getFecha_nacimiento());
+						vacas_destete.add(res);
+
+					}
+
 				}
 
 			}
 		}
 
-		
 		return vacas_destete;
 
-    }
-    
+	}
+
 	public static ArrayList<Res> reportePartos() {
 
 		ArrayList<Res> vacas_partos = new ArrayList<>();
@@ -490,16 +488,19 @@ public class ResCRUD {
 			res = reses.get(i);
 
 			if (res.getTipo().equals("NV")) {
+
+				if (res.getEmbarazada() == 1) {
+
+				if (!res.getFecha_embarazo().equals("") && !res.getFecha_embarazo().equalsIgnoreCase("SIN REGISTRO")) {
+					
 				
-			
-			if (res.getEmbarazada() == 1) {
+					long dias = diasEntreFechas(res.getFecha_embarazo());
+					long meses = mesesEntreFechas(res.getFecha_embarazo());
 
-				long dias = diasEntreFechas(res.getFecha_embarazo());
-				long meses = mesesEntreFechas(res.getFecha_embarazo());
+					if (dias <= 278 && meses == 9) {
 
-				if (dias <= 278 && meses == 9) {
-
-					vacas_partos.add(res);
+						vacas_partos.add(res);
+					}
 				}
 			}
 			}
@@ -521,6 +522,7 @@ public class ResCRUD {
 
 			res = reses.get(i);
 
+		
 			Peso peso_actual = selectPesos(res.getResID()).pop();
 
 			long dias = diasEntreFechas(peso_actual.getFecha());
@@ -536,35 +538,63 @@ public class ResCRUD {
 		return vacas_pesos;
 
 	}
-	
-	
-	public static void reportePurgado() {
+
+	public static ArrayList<Res> reportePurgado() {
 		
+		
+		ArrayList<Res> reses_purgado = new ArrayList<>();
+
+
 		ArrayList<Res> reses = select();
 
 		Res res = null;
-		
-		for (int i = 0; i < reses.size(); i++) {
-			
-			res= reses.get(i);
-			
-			if (res.getPurgantes()!=null) {
-				
-				
-			Purgante ultimoPurgante =ResCRUD.selectPurgantes(res.getResID()).pop();
-			
-			long dias = diasEntreFechas(ultimoPurgante.getFecha());
-			
-			}
-					
-		}
-		
-		
-		
-	}
 
-	
-	
+		for (int i = 0; i < reses.size(); i++) {
+
+			res = reses.get(i);
+
+
+			Stack<Purgante> resess = selectPurgantes(res.getResID());
+			res.setPurgantes(resess);
+
+
+			if (resess != null ) {
+
+				
+				int tamanio =resess.size();
+			
+				if (tamanio>0) {
+					Purgante ultimo =resess.peek();
+
+					
+				
+				if (ultimo != null) {
+
+					// if (selectPurgantes(res.getResID()).peek()!=null) {
+
+					
+					if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
+
+						long dias = diasEntreFechas(ultimo.getFecha());
+
+						if (dias < 20 && resess.size() % 2 != 0) {
+
+							reses_purgado.add(res);
+
+						}
+					}
+					// }
+
+				}
+
+				}
+			}
+
+		}
+
+		return reses_purgado;
+
+	}
 
 	public static void actualizarTipo() {
 

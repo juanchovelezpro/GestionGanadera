@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Res {
 
@@ -16,7 +17,7 @@ public class Res {
 	private String madreID;
 	private ArrayList<Res> crias;
 	private ArrayList<Vacuna> vacunas;
-	private ArrayList<Purgante> purgantes;
+	private Stack<Purgante> purgantes;
 	private ArrayList<Peso> pesos;
 	private String fecha_ultimo_purgado;
 	private String fecha_ultimo_vacunado;
@@ -42,7 +43,7 @@ public class Res {
 
 		crias = new ArrayList<>();
 		vacunas = new ArrayList<>();
-		purgantes = new ArrayList<>();
+		purgantes = new Stack<>();
 		pesos = new ArrayList<>();
 	}
 
@@ -50,7 +51,7 @@ public class Res {
 
 		crias = new ArrayList<>();
 		vacunas = new ArrayList<>();
-		purgantes = new ArrayList<>();
+		purgantes = new Stack<>();
 		pesos = new ArrayList<>();
 
 	}
@@ -159,12 +160,12 @@ public class Res {
 		this.vacunas = vacunas;
 	}
 
-	public ArrayList<Purgante> getPurgantes() {
+	public Stack<Purgante> getPurgantes() {
 		return purgantes;
 	}
 
-	public void setPurgantes(ArrayList<Purgante> purgantes) {
-		this.purgantes = purgantes;
+	public void setPurgantes(Stack<Purgante> resess) {
+		this.purgantes = resess;
 	}
 
 	public ArrayList<Peso> getPesos() {
@@ -193,15 +194,6 @@ public class Res {
 
 	@Override
 	public String toString() {
-		return "Es momento de realizar el destete a la res: " + resID + " Del potrero: "
-				+ potreroNombre + " Con fecha de nacimiento " + fecha_nacimiento;
-	}
-	
-	public String toPartos() {
-		return "Este atento al parto de la res: " + resID + " Del potrero: "
-				+ potreroNombre + " Con fecha de embarazo " + fecha_embarazo;
-	}
-	public String infoVaca() {
 		return "Res [resID=" + resID + ", genero=" + genero + ", tipo=" + tipo + ", color=" + color + ", vivo=" + vivo
 				+ ", fecha_nacimiento=" + fecha_nacimiento + ", observaciones=" + observaciones + ", embarazada="
 				+ embarazada + ", fecha_embarazo=" + fecha_embarazo + ", madreID=" + madreID + ", crias=" + crias
@@ -209,5 +201,25 @@ public class Res {
 				+ fecha_ultimo_purgado + ", fecha_ultimo_vacunado=" + fecha_ultimo_vacunado + ", potreroNombre="
 				+ potreroNombre + "]";
 	}
+	
+	public String toPartos() {
+		return "Este atento al parto de la res: " + resID + " Del potrero: "
+				+ potreroNombre + " Con fecha de embarazo " + fecha_embarazo;
+	}
+	public String toDestete() {
+	
+		return "Es momento de realizar el destete a la res: " + resID + " Del potrero: "
+		+ potreroNombre + " Con fecha de nacimiento " + fecha_nacimiento;
+	}
+	public String toPurgado() {
+		
+		if (purgantes.size()>0) {
+			return " Es momento de aplicar la segunda dosis del purgante " + purgantes.get(purgantes.size()-1).getNombre() + " Que tuvo la primera dosis el día " + purgantes.get(purgantes.size()-1).getFecha() + " a la res " + resID; 
+
+		}else {
+			return "hay un problemilla";
+		}
+	}
+
 
 }

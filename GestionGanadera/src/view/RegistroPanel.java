@@ -178,6 +178,7 @@ public class RegistroPanel extends JPanel {
 
 			}
 
+			
 		});
 
 		btnCrearUsuario.addActionListener(e -> {

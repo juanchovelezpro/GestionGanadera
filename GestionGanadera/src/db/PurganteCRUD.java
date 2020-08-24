@@ -14,8 +14,29 @@ public class PurganteCRUD {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
+		
 		try {
+			ArrayList<Purgante> purgantes =select();
+		     
+			boolean existe =false;
+			
+			
+			for (int i = 0 ; i < purgantes.size() && !existe; i++) {
+				
+				if (purgantes.get(i).getNombre().equalsIgnoreCase(nombre)) {
+					
+					existe =true;
+				}
+			}
+			
+			if (!existe) {
+				
+		
+
+			
 			sql.getStatement().executeUpdate("INSERT INTO purgantes (nombre) VALUES ('" + nombre + "')");
+			}
+				
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -33,7 +54,7 @@ public class PurganteCRUD {
 
 			while (result.next()) {
 
-				purgantes.add(new Purgante(result.getString(2)));
+				purgantes.add(new Purgante(result.getString(1))); 
 
 			}
 

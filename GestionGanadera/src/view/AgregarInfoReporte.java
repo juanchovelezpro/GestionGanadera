@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 
 import com.toedter.calendar.JDateChooser;
 
+import db.PurganteCRUD;
 import db.ResCRUD;
 
 import java.awt.BorderLayout;
@@ -124,6 +125,7 @@ public class AgregarInfoReporte extends JDialog {
 			if (fechaSelected != null) {
 				fechaSeleccionada = format.format(fechaSelected);
 
+				
 			}
 
 			switch (mensajeMostrar) {
@@ -153,7 +155,9 @@ public class AgregarInfoReporte extends JDialog {
 
 			case 3:
 
+				
 				ResCRUD.insertPurgante(res_ID, textField.getText(), fechaSeleccionada);
+				
 				agregarEditarPanel.refreshTable(3);
 
 				break;

@@ -34,7 +34,8 @@ public class VacunaCRUD {
 
 			while (result.next()) {
 
-				vacunas.add(new Vacuna(result.getString(2)));
+				
+				vacunas.add(new Vacuna(result.getString(1)));
 
 			}
 

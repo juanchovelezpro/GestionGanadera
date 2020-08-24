@@ -27,6 +27,7 @@ public class CalendarioDialog extends JDialog {
 
 		this.boton = boton;
 
+		
 		setTitle("Seleccionar Fecha");
 		setSize(250, 110);
 		getContentPane().setLayout(new GridLayout(2, 1));
@@ -67,10 +68,15 @@ public class CalendarioDialog extends JDialog {
 
 			Date fechaSelected = calendar.getDate();
 
+			
 			if (fechaSelected != null) {
 				fechaSeleccionada = format.format(fechaSelected);
 
-				boton.setText(fechaSeleccionada);
+				if (boton!=null) {
+				
+					boton.setText(fechaSeleccionada);
+
+				}
 			}
 
 			dispose();
@@ -89,6 +95,14 @@ public class CalendarioDialog extends JDialog {
 
 	public void setFechaSeleccionada(String fechaSeleccionada) {
 		this.fechaSeleccionada = fechaSeleccionada;
+	}
+
+	public JDateChooser getCalendar() {
+		return calendar;
+	}
+
+	public void setCalendar(JDateChooser calendar) {
+		this.calendar = calendar;
 	}
 
 }

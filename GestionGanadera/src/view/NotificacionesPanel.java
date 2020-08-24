@@ -1,6 +1,9 @@
 package view;
 
 import javax.swing.JPanel;
+
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -12,7 +15,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JDialog;
 
 import javax.swing.JList;
@@ -22,14 +28,21 @@ import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.JScrollBar;
 import javax.swing.border.TitledBorder;
+
+import org.apache.commons.compress.archivers.ar.ArArchiveEntry;
 
 import com.sun.javafx.collections.SetListenerHelper;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import db.ResCRUD;
+import model.Purgante;
+import model.RenderizadoDestete;
+import model.RenderizadoPartos;
+import model.RenderizadoPurgado;
 import model.Res;
 
 import java.awt.Color;
@@ -139,7 +152,8 @@ public class NotificacionesPanel extends JDialog {
 		});
 
 		btnPurgado.addActionListener(e -> {
-			modelo.clear();
+
+			purgado();
 
 		});
 
@@ -164,9 +178,80 @@ public class NotificacionesPanel extends JDialog {
 
 	}
 
+	public void purgado() {
+
+		modelo.clear();
+
+		ArrayList<Res> reses = ResCRUD.reportePurgado();
+		System.out.println(reses.size());
+
+		list.setCellRenderer(new RenderizadoPurgado());
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			modelo.addElement(reses.get(i));
+
+		}
+
+		list.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent evt) {
+				if (evt.getButton() == MouseEvent.BUTTON3) {
+
+					List<Res> selectedValuesList = list.getSelectedValuesList();
+
+					System.out.println(selectedValuesList.size() + "jeje");
+
+					int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+
+					if (valor == JOptionPane.YES_OPTION) {
+
+						CalendarioDialog calendario = new CalendarioDialog(null);
+
+						calendario.getBtnSeleccionarFecha().addActionListener(e -> {
+
+							Res res = null;
+							Purgante purgante = null;
+
+							SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+							String fecha = format.format(calendario.getCalendar().getDate());
+							for (int i = 0; i < selectedValuesList.size(); i++) {
+
+								res = selectedValuesList.get(i);
+								purgante = ResCRUD.selectPurgantes(res.getResID()).pop();
+
+								ResCRUD.insertPurgante(res.getResID(), purgante.getNombre(), fecha);
+								modelo.removeElement(list.getSelectedValue());
+
+							}
+
+						});
+
+						// ResCRUD.insertPurgante(res.getResID(),purgante.getNombre(),
+						// ResCRUD.fecha_sistema().toString() );
+
+						// System.out.println("actualizado");
+
+						// ResCRUD.update(res.getResID(), res);
+						// modelo.removeElement(list.getSelectedValue());
+
+						ventana.refreshTable();
+					}
+
+				}
+
+			}
+
+		});
+
+	}
+
 	public void destetar() {
 
 		modelo.clear();
+
+		list.setCellRenderer(new RenderizadoDestete());
 
 		ArrayList<Res> reses = ResCRUD.reporteDestete();
 		System.out.println(reses.size());
@@ -174,7 +259,7 @@ public class NotificacionesPanel extends JDialog {
 		for (int i = 0; i < reses.size(); i++) {
 
 			modelo.addElement(reses.get(i));
-		
+
 		}
 
 		list.addMouseListener(new MouseAdapter() {
@@ -187,8 +272,7 @@ public class NotificacionesPanel extends JDialog {
 						Res res = list.getSelectedValue();
 						System.out.println(res.toString());
 
-						int valor = JOptionPane.showConfirmDialog(null,
-								"¿Está seguro de eliminar esta notificación?");
+						int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
 						if (valor == JOptionPane.YES_OPTION) {
 
@@ -209,7 +293,7 @@ public class NotificacionesPanel extends JDialog {
 								System.out.println("actualizado");
 
 							}
-							
+
 							ventana.refreshTable();
 						}
 
@@ -228,11 +312,10 @@ public class NotificacionesPanel extends JDialog {
 		// modelo.removeAllElements();
 		modelo.clear();
 
+		list.setCellRenderer(new RenderizadoPartos());
+
 		ArrayList<Res> reses = ResCRUD.reportePartos();
 		System.out.println(reses.size());
-
-
-		String[] values = new String[reses.size()];
 
 		for (int i = 0; i < reses.size(); i++) {
 
@@ -242,7 +325,6 @@ public class NotificacionesPanel extends JDialog {
 		list.addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent evt) {
-				JList list = (JList<String>) evt.getSource();
 				if (evt.getClickCount() == 2) {
 
 					// Double-click detected
@@ -250,10 +332,9 @@ public class NotificacionesPanel extends JDialog {
 
 					int numero = list.getSelectedIndex();
 					if (numero != -1) {
-						Res res = reses.get(list.getSelectedIndex());
+						Res res = list.getSelectedValue();
 
-						int valor = JOptionPane.showConfirmDialog(null,
-								"¿Está seguro de eliminar esta notificación?");
+						int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
 						if (valor == JOptionPane.OK_OPTION) {
 
@@ -261,12 +342,8 @@ public class NotificacionesPanel extends JDialog {
 
 								res.setTipo("VP");
 								ResCRUD.update(res.getResID(), res);
-
-							}
-
-							if (numero != -1) {
-
 								modelo.removeElement(list.getSelectedValue());
+
 							}
 
 							ventana.refreshTable();
@@ -279,7 +356,6 @@ public class NotificacionesPanel extends JDialog {
 			}
 
 		});
-
 
 	}
 
