@@ -1,4 +1,4 @@
-package model;
+package view;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -9,7 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-public class RenderizadoPurgado extends JLabel implements ListCellRenderer<Res> {
+import model.Res;
+
+public class RenderizadoDestete extends JLabel implements ListCellRenderer<Res> {
 
 	
 
@@ -25,7 +27,7 @@ public class RenderizadoPurgado extends JLabel implements ListCellRenderer<Res> 
 		
 	
          DefaultListCellRenderer default2 = new DefaultListCellRenderer(); 
-         JLabel label = (JLabel) default2.getListCellRendererComponent(list, value.toPurgado(), index, isSelected, cellHasFocus);
+         JLabel label = (JLabel) default2.getListCellRendererComponent(list, value.toDestete(), index, isSelected, cellHasFocus);
         
 
 		return label;

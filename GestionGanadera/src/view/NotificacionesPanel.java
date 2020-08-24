@@ -40,9 +40,6 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import db.ResCRUD;
 import model.Purgante;
-import model.RenderizadoDestete;
-import model.RenderizadoPartos;
-import model.RenderizadoPurgado;
 import model.Res;
 
 import java.awt.Color;
