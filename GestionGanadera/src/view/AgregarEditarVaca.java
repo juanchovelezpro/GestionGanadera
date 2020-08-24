@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -93,9 +95,8 @@ public class AgregarEditarVaca extends JDialog {
 
 		}
 
-		
 		setVisible(true);
-		
+
 	}
 
 	public AgregarEditarVaca(Res res, InicioPanel inicio) {
@@ -841,6 +842,18 @@ public class AgregarEditarVaca extends JDialog {
 
 				btnFechaEmbarazo.setText("dd/MM/AAAA");
 				btnFechaEmbarazo.setEnabled(true);
+
+			}
+
+		});
+
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+
+				if (potrero != null)
+					potrero.setDialogAgregarEditar(null);
 
 			}
 

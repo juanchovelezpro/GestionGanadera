@@ -111,12 +111,12 @@ public class DocsImporter {
 					progreso.getProgreso().setValue(value);
 
 				}
-				
+				progreso.dispose();
 				JOptionPane.showMessageDialog(null, "El archivo se ha cargado correctamente!", "Info",
 						JOptionPane.INFORMATION_MESSAGE);
 				
 				panel.refreshTable();
-				progreso.dispose();
+				
 				
 				try {
 					workbook.close();

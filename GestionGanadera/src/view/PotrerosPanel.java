@@ -188,6 +188,10 @@ public class PotrerosPanel extends JPanel {
 
 	}
 
+	public void mostrarHembras() {
+
+	}
+
 	public void refreshTable() {
 
 		scroller.getViewport().removeAll();
@@ -218,8 +222,8 @@ public class PotrerosPanel extends JPanel {
 
 		btnNotificaciones.addActionListener(e -> {
 
-			if(notificaciones == null)
-			notificaciones =new NotificacionesPanel(this);
+			if (notificaciones == null)
+				notificaciones = new NotificacionesPanel(this);
 
 		});
 
@@ -235,6 +239,10 @@ public class PotrerosPanel extends JPanel {
 
 			importarDatos();
 			refreshTable();
+
+		});
+
+		comboHembraMacho.addActionListener(e -> {
 
 		});
 
@@ -321,7 +329,7 @@ public class PotrerosPanel extends JPanel {
 
 			new Thread() {
 				BarraProgreso progreso = new BarraProgreso(rowsSelected.length);
-				
+
 				int value = 0;
 
 				@Override
