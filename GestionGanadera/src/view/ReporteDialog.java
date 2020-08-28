@@ -36,6 +36,7 @@ public class ReporteDialog extends JDialog {
 
 
 
+	
 		Components();
 		listeners();
 

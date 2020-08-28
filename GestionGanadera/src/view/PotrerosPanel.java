@@ -210,6 +210,11 @@ public class PotrerosPanel extends JPanel {
 		});
 
 		btnRegresar.addActionListener(e -> {
+			
+
+			int reses = ResCRUD.select().size();
+			
+			inicio.actualizarreses(reses);
 
 			inicio.getVentana().remove(this);
 			inicio.getVentana().setSize(800, 400);
@@ -217,6 +222,7 @@ public class PotrerosPanel extends JPanel {
 			inicio.getVentana().setLocationRelativeTo(null);
 			inicio.getVentana().add(inicio);
 			inicio.getVentana().refresh();
+			
 
 		});
 

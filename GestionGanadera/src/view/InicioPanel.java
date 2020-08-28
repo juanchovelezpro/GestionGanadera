@@ -576,6 +576,11 @@ public class InicioPanel extends JPanel {
 	public void setBtnreportePartos(JButton btnreportePartos) {
 		this.btnreportePartos = btnreportePartos;
 	}
+	
+	public void actualizarreses(int cantidad) {
+		
+		numeroDevacas.setText(cantidad+"");
+	}
 
 	public void refresh() {
 

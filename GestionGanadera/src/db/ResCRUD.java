@@ -39,6 +39,7 @@ public class ResCRUD {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+			
 		}
 
 	}
@@ -482,11 +483,14 @@ public class ResCRUD {
 		Res res = null;
 
 		ArrayList<Res> reses = select();
+		
 
 		for (int i = 0; i < reses.size(); i++) {
 
 			res = reses.get(i);
 
+			System.out.println(res + "primera prueba");
+			
 			if (res.getTipo().equals("NV")) {
 
 				if (res.getEmbarazada() == 1) {
@@ -494,13 +498,17 @@ public class ResCRUD {
 				if (!res.getFecha_embarazo().equals("") && !res.getFecha_embarazo().equalsIgnoreCase("SIN REGISTRO")) {
 					
 				
+					System.out.println(res.getFecha_embarazo() + "fecha");
 					long dias = diasEntreFechas(res.getFecha_embarazo());
 					long meses = mesesEntreFechas(res.getFecha_embarazo());
 
-					if (dias <= 278 && meses == 9) {
+					if (dias <= 280 && meses == 9 ) {
 
 						vacas_partos.add(res);
+						
+						
 					}
+					System.out.println(vacas_partos.size());
 				}
 			}
 			}

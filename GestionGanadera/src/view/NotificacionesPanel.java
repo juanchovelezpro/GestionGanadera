@@ -265,16 +265,21 @@ public class NotificacionesPanel extends JDialog {
 		list.addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent evt) {
-				if (evt.getClickCount() == 2) {
+				if (evt.getButton() == MouseEvent.BUTTON3) {
+					
+					List<Res> selectedValuesList = list.getSelectedValuesList();
 
-					int numero = list.getSelectedIndex();
-					if (numero != -1) {
-						Res res = list.getSelectedValue();
-						System.out.println(res.toString());
+
 
 						int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
 						if (valor == JOptionPane.YES_OPTION) {
+							
+							Res res = null;
+
+							for (int i = 0; i < selectedValuesList.size(); i++) {
+								res =selectedValuesList.get(i);
+							
 
 							if (res.getGenero().equals("H")) {
 
@@ -284,6 +289,7 @@ public class NotificacionesPanel extends JDialog {
 								System.out.println("actualizado");
 
 							}
+							
 
 							if (res.getGenero().equals("M")) {
 
@@ -293,6 +299,7 @@ public class NotificacionesPanel extends JDialog {
 								System.out.println("actualizado");
 
 							}
+							}
 
 							ventana.refreshTable();
 						}
@@ -300,7 +307,7 @@ public class NotificacionesPanel extends JDialog {
 					}
 
 				}
-			}
+			
 
 		});
 
@@ -315,7 +322,7 @@ public class NotificacionesPanel extends JDialog {
 		list.setCellRenderer(new RenderizadoPartos());
 
 		ArrayList<Res> reses = ResCRUD.reportePartos();
-		System.out.println(reses.size());
+		System.out.println(reses.size() + "aqui");
 
 		for (int i = 0; i < reses.size(); i++) {
 
@@ -325,25 +332,34 @@ public class NotificacionesPanel extends JDialog {
 		list.addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent evt) {
-				if (evt.getClickCount() == 2) {
+				if (evt.getButton() == MouseEvent.BUTTON3) {
+
+					List<Res> selectedValuesList = list.getSelectedValuesList();
 
 					// Double-click detected
 					System.out.println(list.getSelectedIndex() + "oprimio");
 
 					int numero = list.getSelectedIndex();
-					if (numero != -1) {
-						Res res = list.getSelectedValue();
+					
 
 						int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
 						if (valor == JOptionPane.OK_OPTION) {
+							Res res =null;
 
+							for (int i = 0; i < selectedValuesList.size(); i++) {
+								
+								res =selectedValuesList.get(i);
+								
+							
+							
 							if (res.getGenero().equals("H")) {
 
 								res.setTipo("VP");
 								ResCRUD.update(res.getResID(), res);
 								modelo.removeElement(list.getSelectedValue());
 
+							}
 							}
 
 							ventana.refreshTable();
@@ -352,7 +368,7 @@ public class NotificacionesPanel extends JDialog {
 
 					}
 
-				}
+				
 			}
 
 		});
