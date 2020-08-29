@@ -7,7 +7,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -18,21 +17,20 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import db.PotreroCRUD;
 import db.ResCRUD;
-import javafx.scene.input.ScrollEvent;
 import model.Res;
 import tools.DocsImporter;
 
 public class PotrerosPanel extends JPanel {
 
 	private InicioPanel inicio;
+	private int filterOption;
 	private JPopupMenu menu;
 	private ArrayList<Res> ganado;
 	private AgregarEditarVaca dialogAgregarEditar;
@@ -85,7 +83,7 @@ public class PotrerosPanel extends JPanel {
 		panelSuperior.add(lblNombrePotrero);
 
 		comboHembraMacho = new JComboBox();
-		comboHembraMacho.setModel(new DefaultComboBoxModel(new String[] {"VER TODO", "HEMBRAS", "MACHOS"}));
+		comboHembraMacho.setModel(new DefaultComboBoxModel(new String[] { "VER TODO", "HEMBRAS", "MACHOS" }));
 		panelSuperior.add(comboHembraMacho);
 
 		JLabel lblCantVacas = new JLabel("# Vacas");
@@ -124,6 +122,9 @@ public class PotrerosPanel extends JPanel {
 		panelResTable = new JPanel();
 		scroller = new JScrollPane();
 		ganado = PotreroCRUD.selectRes(potrero_elegido);
+		
+		modelRes = new ModelTable();
+		
 		crearTablaRes();
 		add(panelResTable, BorderLayout.CENTER);
 		panelResTable.setLayout(new GridLayout(1, 1));
@@ -133,6 +134,29 @@ public class PotrerosPanel extends JPanel {
 	}
 
 	public void crearTablaRes() {
+
+		fillData();
+		
+		tablaRes = new JTable(modelRes);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		for (int i = 0; i < modelRes.getColumnCount(); i++) {
+
+			tablaRes.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+
+		}
+		tablaRes.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		tablaRes.setRowHeight(25);
+		tablaRes.setShowHorizontalLines(true);
+		tablaRes.setShowVerticalLines(true);
+		tablaRes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 20));
+		scroller.setViewportView(tablaRes);
+		tablaRes.setFillsViewportHeight(true);
+		panelResTable.add(scroller);
+
+	}
+
+	public void fillData() {
 
 		String[] columns = { "ID", "TIPO", "GENERO", "COLOR", "FECHA NACIMIENTO", "VIVO", "MADRE", "OBSERVACIONES" };
 		Object[][] data = new Object[ganado.size()][columns.length];
@@ -175,17 +199,9 @@ public class PotrerosPanel extends JPanel {
 
 		}
 
-		modelRes = new ModelTable();
+		
 		modelRes.setColumns(columns);
 		modelRes.setData(data);
-		tablaRes = new JTable(modelRes);
-		tablaRes.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tablaRes.setShowHorizontalLines(true);
-		tablaRes.setShowVerticalLines(true);
-		tablaRes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-		scroller.setViewportView(tablaRes);
-		tablaRes.setFillsViewportHeight(true);
-		panelResTable.add(scroller);
 
 	}
 
@@ -195,8 +211,9 @@ public class PotrerosPanel extends JPanel {
 
 	public void refreshTable() {
 
-		scroller.getViewport().removeAll();
-		crearTablaRes();
+		ganado = PotreroCRUD.selectRes(potrero_elegido);
+		fillData();
+		modelRes.fireTableDataChanged();
 		listeners();
 
 	}
@@ -249,23 +266,20 @@ public class PotrerosPanel extends JPanel {
 
 		comboHembraMacho.addActionListener(e -> {
 
-			if(comboHembraMacho.getSelectedIndex() == 0) {
-				
-				ganado = PotreroCRUD.selectRes(potrero_elegido);
+			if (comboHembraMacho.getSelectedIndex() == 0) {
+
 				refreshTable();
-				
+
 			}
-			
+
 			if (comboHembraMacho.getSelectedIndex() == 1) {
 
-				ganado = ResCRUD.selectCustom(" potreroNombre='"+potrero_elegido+"' AND genero='H'");
 				refreshTable();
-				
+
 			}
 
 			if (comboHembraMacho.getSelectedIndex() == 2) {
-				
-				ganado = ResCRUD.selectCustom(" potreroNombre='"+potrero_elegido+"' AND genero='M'");
+
 				refreshTable();
 
 			}
@@ -280,9 +294,10 @@ public class PotrerosPanel extends JPanel {
 				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
 
 					int row = tablaRes.getSelectedRow();
-					Res res = ResCRUD.selectResByID(modelRes.getData()[row][0].toString());
+					Res res = ResCRUD.selectResByID(modelRes.getValueAt(row, 0).toString());
 
-					AgregarEditarVaca dialog = new AgregarEditarVaca(res, PotrerosPanel.this);
+					if(dialogAgregarEditar == null)
+					dialogAgregarEditar = new AgregarEditarVaca(res, PotrerosPanel.this);
 
 				}
 
@@ -334,6 +349,22 @@ public class PotrerosPanel extends JPanel {
 
 	}
 
+	public JTable getTablaRes() {
+		return tablaRes;
+	}
+
+	public void setTablaRes(JTable tablaRes) {
+		this.tablaRes = tablaRes;
+	}
+
+	public ModelTable getModelRes() {
+		return modelRes;
+	}
+
+	public void setModelRes(ModelTable modelRes) {
+		this.modelRes = modelRes;
+	}
+
 	public void vacunar() {
 
 	}
@@ -363,7 +394,7 @@ public class PotrerosPanel extends JPanel {
 
 					for (int i = 0; i < rowsSelected.length; i++) {
 
-						String id = modelRes.getData()[rowsSelected[i]][0].toString();
+						String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
 						ResCRUD.delete(id);
 						value++;
 						progreso.getProgreso().setValue(value);

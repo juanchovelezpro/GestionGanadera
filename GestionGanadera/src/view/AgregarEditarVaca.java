@@ -95,6 +95,7 @@ public class AgregarEditarVaca extends JDialog {
 
 		}
 
+
 		setVisible(true);
 
 	}
@@ -452,8 +453,8 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			modelPesos = new ModelTable();
-			modelPesos.setColumns(columns);
 			modelPesos.setData(data);
+			modelPesos.setColumns(columns);
 			tablaPesos = new JTable(modelPesos);
 			tablaPesos.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaPesos.setShowHorizontalLines(true);
@@ -469,8 +470,8 @@ public class AgregarEditarVaca extends JDialog {
 
 			Object[][] data = new Object[0][columns.length];
 			modelPesos = new ModelTable();
-			modelPesos.setColumns(columns);
 			modelPesos.setData(data);
+			modelPesos.setColumns(columns);
 			tablaPesos = new JTable(modelPesos);
 			tablaPesos.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaPesos.setShowHorizontalLines(true);
@@ -510,8 +511,8 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			modelVacunas = new ModelTable();
-			modelVacunas.setColumns(columns);
 			modelVacunas.setData(data);
+			modelVacunas.setColumns(columns);
 			tablaVacunas = new JTable(modelVacunas);
 			tablaVacunas.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaVacunas.setShowHorizontalLines(true);
@@ -527,8 +528,8 @@ public class AgregarEditarVaca extends JDialog {
 
 			Object[][] data = new Object[0][columns.length];
 			modelVacunas = new ModelTable();
-			modelVacunas.setColumns(columns);
 			modelVacunas.setData(data);
+			modelVacunas.setColumns(columns);
 			tablaVacunas = new JTable(modelVacunas);
 			tablaVacunas.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaVacunas.setShowHorizontalLines(true);
@@ -568,8 +569,8 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			modelPurgantes = new ModelTable();
-			modelPurgantes.setColumns(columns);
 			modelPurgantes.setData(data);
+			modelPurgantes.setColumns(columns);
 			tablaPurgantes = new JTable(modelPurgantes);
 			tablaPurgantes.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaPurgantes.setShowHorizontalLines(true);
@@ -585,8 +586,8 @@ public class AgregarEditarVaca extends JDialog {
 
 			Object[][] data = new Object[0][columns.length];
 			modelPurgantes = new ModelTable();
-			modelPurgantes.setColumns(columns);
 			modelPurgantes.setData(data);
+			modelPurgantes.setColumns(columns);
 			tablaPurgantes = new JTable(modelPurgantes);
 			tablaPurgantes.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaPurgantes.setShowHorizontalLines(true);
@@ -625,8 +626,8 @@ public class AgregarEditarVaca extends JDialog {
 			}
 
 			modelCrias = new ModelTable();
-			modelCrias.setColumns(columns);
 			modelCrias.setData(data);
+			modelCrias.setColumns(columns);
 			tablaCrias = new JTable(modelCrias);
 			tablaCrias.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaCrias.setShowHorizontalLines(true);
@@ -642,8 +643,8 @@ public class AgregarEditarVaca extends JDialog {
 
 			Object[][] data = new Object[0][columns.length];
 			modelCrias = new ModelTable();
-			modelCrias.setColumns(columns);
 			modelCrias.setData(data);
+			modelCrias.setColumns(columns);
 			tablaCrias = new JTable(modelCrias);
 			tablaCrias.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaCrias.setShowHorizontalLines(true);
