@@ -1,7 +1,5 @@
 package db;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -23,7 +21,6 @@ public class ResCRUD {
 	// Agrega una res a la tabla res de la base de datos.
 	public static void insert(Res res) {
 
-		
 		SQLConnection sql = SQLConnection.getInstance();
 
 		String values = "'" + res.getResID() + "','" + res.getTipo() + "','" + res.getGenero() + "','" + res.getColor()
@@ -39,7 +36,7 @@ public class ResCRUD {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			
+
 		}
 
 	}
@@ -146,6 +143,47 @@ public class ResCRUD {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public static ArrayList<Res> selectCustom(String criteria) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+		ArrayList<Res> vacas = new ArrayList<>();
+
+		try {
+
+			ResultSet result = sql.getStatement().executeQuery("SELECT * FROM res WHERE " + criteria);
+
+			while (result.next()) {
+
+				String resID = result.getString(1);
+				String tipo = result.getString(2);
+				String genero = result.getString(3);
+				String color = result.getString(4);
+				String fecha_nacimiento = result.getString(5);
+				String observaciones = result.getString(6);
+				int vivo = result.getInt(7);
+				int embarazada = result.getInt(8);
+				String fecha_embarazo = result.getString(9);
+				String fecha_ultimo_purgado = result.getString(10);
+				String fecha_ultimo_vacunado = result.getString(11);
+				String madreID = result.getString(12);
+				String potreroNombre = result.getString(13);
+
+				Res res = new Res(resID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
+						fecha_embarazo, madreID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potreroNombre);
+				vacas.add(res);
+
+			}
+
+		} catch (SQLException ex) {
+
+			ex.printStackTrace();
+
+		}
+
+		return vacas;
 
 	}
 
@@ -350,11 +388,11 @@ public class ResCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			
+
 			PurganteCRUD.insert(purganteNombre);
 			sql.getStatement().executeUpdate("INSERT INTO res_tiene_purgantes (resID,purganteNombre,fecha) VALUES ('"
 					+ resID + "','" + purganteNombre + "','" + fecha + "')");
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -450,7 +488,8 @@ public class ResCRUD {
 		for (int i = 0; i < reses.size(); i++) {
 
 			res = reses.get(i);
-			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals("") && !res.getFecha_nacimiento().equalsIgnoreCase("SIN REGISTRO")) {
+			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals("")
+					&& !res.getFecha_nacimiento().equalsIgnoreCase("SIN REGISTRO")) {
 
 				long dias = diasEntreFechas(res.getFecha_nacimiento());
 				long meses = mesesEntreFechas(res.getFecha_nacimiento());
@@ -483,34 +522,32 @@ public class ResCRUD {
 		Res res = null;
 
 		ArrayList<Res> reses = select();
-		
 
 		for (int i = 0; i < reses.size(); i++) {
 
 			res = reses.get(i);
 
 			System.out.println(res + "primera prueba");
-			
+
 			if (res.getTipo().equals("NV")) {
 
 				if (res.getEmbarazada() == 1) {
 
-				if (!res.getFecha_embarazo().equals("") && !res.getFecha_embarazo().equalsIgnoreCase("SIN REGISTRO")) {
-					
-				
-					System.out.println(res.getFecha_embarazo() + "fecha");
-					long dias = diasEntreFechas(res.getFecha_embarazo());
-					long meses = mesesEntreFechas(res.getFecha_embarazo());
+					if (!res.getFecha_embarazo().equals("")
+							&& !res.getFecha_embarazo().equalsIgnoreCase("SIN REGISTRO")) {
 
-					if (dias <= 280 && meses == 9 ) {
+						System.out.println(res.getFecha_embarazo() + "fecha");
+						long dias = diasEntreFechas(res.getFecha_embarazo());
+						long meses = mesesEntreFechas(res.getFecha_embarazo());
 
-						vacas_partos.add(res);
-						
-						
+						if (dias <= 280 && meses == 9) {
+
+							vacas_partos.add(res);
+
+						}
+						System.out.println(vacas_partos.size());
 					}
-					System.out.println(vacas_partos.size());
 				}
-			}
 			}
 		}
 
@@ -530,7 +567,6 @@ public class ResCRUD {
 
 			res = reses.get(i);
 
-		
 			Peso peso_actual = selectPesos(res.getResID()).pop();
 
 			long dias = diasEntreFechas(peso_actual.getFecha());
@@ -548,10 +584,8 @@ public class ResCRUD {
 	}
 
 	public static ArrayList<Res> reportePurgado() {
-		
-		
-		ArrayList<Res> reses_purgado = new ArrayList<>();
 
+		ArrayList<Res> reses_purgado = new ArrayList<>();
 
 		ArrayList<Res> reses = select();
 
@@ -561,39 +595,33 @@ public class ResCRUD {
 
 			res = reses.get(i);
 
-
 			Stack<Purgante> resess = selectPurgantes(res.getResID());
 			res.setPurgantes(resess);
 
+			if (resess != null) {
 
-			if (resess != null ) {
+				int tamanio = resess.size();
 
-				
-				int tamanio =resess.size();
-			
-				if (tamanio>0) {
-					Purgante ultimo =resess.peek();
+				if (tamanio > 0) {
+					Purgante ultimo = resess.peek();
 
-					
-				
-				if (ultimo != null) {
+					if (ultimo != null) {
 
-					// if (selectPurgantes(res.getResID()).peek()!=null) {
+						// if (selectPurgantes(res.getResID()).peek()!=null) {
 
-					
-					if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
+						if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
 
-						long dias = diasEntreFechas(ultimo.getFecha());
+							long dias = diasEntreFechas(ultimo.getFecha());
 
-						if (dias < 20 && resess.size() % 2 != 0) {
+							if (dias < 20 && resess.size() % 2 != 0) {
 
-							reses_purgado.add(res);
+								reses_purgado.add(res);
 
+							}
 						}
-					}
-					// }
+						// }
 
-				}
+					}
 
 				}
 			}

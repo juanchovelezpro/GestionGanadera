@@ -34,6 +34,7 @@ public class PotrerosPanel extends JPanel {
 
 	private InicioPanel inicio;
 	private JPopupMenu menu;
+	private ArrayList<Res> ganado;
 	private AgregarEditarVaca dialogAgregarEditar;
 	private NotificacionesPanel notificaciones;
 	private JComboBox comboHembraMacho;
@@ -84,7 +85,7 @@ public class PotrerosPanel extends JPanel {
 		panelSuperior.add(lblNombrePotrero);
 
 		comboHembraMacho = new JComboBox();
-		comboHembraMacho.setModel(new DefaultComboBoxModel(new String[] { "VER", "HEMBRAS", "MACHOS" }));
+		comboHembraMacho.setModel(new DefaultComboBoxModel(new String[] {"VER TODO", "HEMBRAS", "MACHOS"}));
 		panelSuperior.add(comboHembraMacho);
 
 		JLabel lblCantVacas = new JLabel("# Vacas");
@@ -122,7 +123,8 @@ public class PotrerosPanel extends JPanel {
 
 		panelResTable = new JPanel();
 		scroller = new JScrollPane();
-		crearTablaRes(potrero_elegido);
+		ganado = PotreroCRUD.selectRes(potrero_elegido);
+		crearTablaRes();
 		add(panelResTable, BorderLayout.CENTER);
 		panelResTable.setLayout(new GridLayout(1, 1));
 
@@ -130,10 +132,9 @@ public class PotrerosPanel extends JPanel {
 
 	}
 
-	public void crearTablaRes(String nombrep) {
+	public void crearTablaRes() {
 
 		String[] columns = { "ID", "TIPO", "GENERO", "COLOR", "FECHA NACIMIENTO", "VIVO", "MADRE", "OBSERVACIONES" };
-		ArrayList<Res> ganado = PotreroCRUD.selectRes(nombrep);
 		Object[][] data = new Object[ganado.size()][columns.length];
 
 		for (int i = 0; i < data.length; i++) {
@@ -195,7 +196,7 @@ public class PotrerosPanel extends JPanel {
 	public void refreshTable() {
 
 		scroller.getViewport().removeAll();
-		crearTablaRes(potrero_elegido);
+		crearTablaRes();
 		listeners();
 
 	}
@@ -210,10 +211,9 @@ public class PotrerosPanel extends JPanel {
 		});
 
 		btnRegresar.addActionListener(e -> {
-			
 
 			int reses = ResCRUD.select().size();
-			
+
 			inicio.actualizarreses(reses);
 
 			inicio.getVentana().remove(this);
@@ -222,7 +222,6 @@ public class PotrerosPanel extends JPanel {
 			inicio.getVentana().setLocationRelativeTo(null);
 			inicio.getVentana().add(inicio);
 			inicio.getVentana().refresh();
-			
 
 		});
 
@@ -249,6 +248,27 @@ public class PotrerosPanel extends JPanel {
 		});
 
 		comboHembraMacho.addActionListener(e -> {
+
+			if(comboHembraMacho.getSelectedIndex() == 0) {
+				
+				ganado = PotreroCRUD.selectRes(potrero_elegido);
+				refreshTable();
+				
+			}
+			
+			if (comboHembraMacho.getSelectedIndex() == 1) {
+
+				ganado = ResCRUD.selectCustom(" potreroNombre='"+potrero_elegido+"' AND genero='H'");
+				refreshTable();
+				
+			}
+
+			if (comboHembraMacho.getSelectedIndex() == 2) {
+				
+				ganado = ResCRUD.selectCustom(" potreroNombre='"+potrero_elegido+"' AND genero='M'");
+				refreshTable();
+
+			}
 
 		});
 
