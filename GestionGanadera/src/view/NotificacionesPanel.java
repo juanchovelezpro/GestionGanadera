@@ -57,7 +57,10 @@ public class NotificacionesPanel extends JDialog {
 	private JScrollPane listScroller;
 	DefaultListModel<Res> modelo;
 
-	public NotificacionesPanel(PotrerosPanel ventana) {
+
+public NotificacionesPanel(PotrerosPanel ventana) {
+
+	setTitle("Notificaciones");
 
 		setLayout(new BorderLayout(0, 0));
 

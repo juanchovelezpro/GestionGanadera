@@ -651,10 +651,8 @@ public class ResCRUD {
 
 						if (cria.getMadreID().equals(res.getResID())) {
 
-							String fecha_nacimiento = cria.getFecha_nacimiento();
-							long meses = mesesEntreFechas(fecha_nacimiento);
 
-							if (meses == 9) {
+							if (cria.getTipo() == "HL") {
 
 								res.setTipo("VH");
 								update(res.getResID(), res);
@@ -664,52 +662,46 @@ public class ResCRUD {
 
 					}
 
-					if (res.getTipo().equalsIgnoreCase("CH")) {
-
-						String fecha_nacimiento = cria.getFecha_nacimiento();
-						long meses = mesesEntreFechas(fecha_nacimiento);
-
-						if (meses > 9) {
-
-							res.setTipo("HL");
-							update(res.getResID(), res);
-						}
-					}
-
 					if (res.getTipo().equalsIgnoreCase("HL")) {
 
 						String fecha_nacimiento = cria.getFecha_nacimiento();
 						long meses = mesesEntreFechas(fecha_nacimiento);
+						long dias = diasEntreFechas(fecha_nacimiento);
 
-						if (meses > 24) {
+						if (meses == 24 && dias<735) {
 
 							res.setTipo("NV");
 							update(res.getResID(), res);
 						}
 					}
-
+					
+					if (res.getTipo().equalsIgnoreCase("VH")) {
+						
+						if(res.getEmbarazada()==1) {
+							String fecha_nacimiento =cria.getFecha_embarazo();
+							long meses = mesesEntreFechas(fecha_nacimiento);
+							long dias = diasEntreFechas(fecha_nacimiento);
+							
+							if (meses<=9 && dias<275) {
+								
+								res.setTipo("VP");
+								update(res.getResID(), res);
+							}
+						}
+					}
 				}
 
 				if (res.getGenero().equalsIgnoreCase("M")) {
 
-					if (res.getTipo().equalsIgnoreCase("CM")) {
-
-						String fecha_nacimiento = cria.getFecha_nacimiento();
-						long meses = mesesEntreFechas(fecha_nacimiento);
-
-						if (meses > 8) {
-
-							res.setTipo("ML");
-							update(res.getResID(), res);
-						}
-					}
+					
 
 					if (res.getTipo().equalsIgnoreCase("ML")) {
 
 						String fecha_nacimiento = cria.getFecha_nacimiento();
 						long meses = mesesEntreFechas(fecha_nacimiento);
+						long dias = diasEntreFechas(fecha_nacimiento);
 
-						if (meses > 24) {
+						if (meses ==24 && dias<735) {
 
 							res.setTipo("MC");
 							update(res.getResID(), res);
