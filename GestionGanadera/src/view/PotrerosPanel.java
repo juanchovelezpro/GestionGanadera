@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -26,8 +28,10 @@ import javax.swing.table.TableRowSorter;
 
 import db.PotreroCRUD;
 import db.ResCRUD;
+import model.Potrero;
 import model.Res;
 import tools.DocsImporter;
+import tools.FileManager;
 
 public class PotrerosPanel extends JPanel {
 
@@ -141,7 +145,7 @@ public class PotrerosPanel extends JPanel {
 
 		tablaRes = new JTable(modelRes);
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		for (int i = 0; i < modelRes.getColumnCount(); i++) {
 
 			tablaRes.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
@@ -217,6 +221,7 @@ public class PotrerosPanel extends JPanel {
 
 	public void listeners() {
 
+		// Abre el panel para agregar una vaca
 		btnAgregar.addActionListener(e -> {
 
 			if (dialogAgregarEditar == null)
@@ -224,6 +229,7 @@ public class PotrerosPanel extends JPanel {
 
 		});
 
+		// Regresar al panel inicio
 		btnRegresar.addActionListener(e -> {
 
 			int reses = ResCRUD.select().size();
@@ -239,11 +245,13 @@ public class PotrerosPanel extends JPanel {
 
 		});
 
+		// Abrir panel de notificaciones
 		btnNotificaciones.addActionListener(e -> {
 
-			if (notificaciones == null)
+			if (notificaciones == null) {
 				notificaciones = new NotificacionesPanel(this);
-
+				notificaciones.setIconImage(FileManager.imagenes.get("ICONO"));
+			}
 		});
 
 		btnReportePurgantes.addActionListener(e -> {
@@ -254,6 +262,7 @@ public class PotrerosPanel extends JPanel {
 
 		});
 
+		// Importar el documento de excel.
 		btnImportar.addActionListener(e -> {
 
 			importarDatos();
@@ -261,32 +270,35 @@ public class PotrerosPanel extends JPanel {
 
 		});
 
+		// Filtro
 		comboHembraMacho.addActionListener(e -> {
 
-			if (comboHembraMacho.getSelectedIndex() == 0) {
+			switch (comboHembraMacho.getSelectedIndex()) {
 
+			case 0:
+				// Mostrar todo - Quitar Filtro
 				tablaRes.setRowSorter(null);
+				break;
 
-			}
-
-			if (comboHembraMacho.getSelectedIndex() == 1) {
-
+			case 1:
+				// Filtrar por hembras
 				sorter = new TableRowSorter<>(modelRes);
 				sorter.setRowFilter(RowFilter.regexFilter("H", 2));
 				tablaRes.setRowSorter(sorter);
+				break;
 
-			}
-
-			if (comboHembraMacho.getSelectedIndex() == 2) {
-
+			case 2:
+				// Filtrar por machos
 				sorter = new TableRowSorter<>(modelRes);
 				sorter.setRowFilter(RowFilter.regexFilter("M", 2));
 				tablaRes.setRowSorter(sorter);
+				break;
 
 			}
 
 		});
 
+		// Acciones y eventos con el mouse en la tabla.
 		tablaRes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -302,6 +314,7 @@ public class PotrerosPanel extends JPanel {
 
 					Res res = ResCRUD.selectResByID(modelRes.getValueAt(row, 0).toString());
 
+					// Abre el panel para editar la vaca seleccionada.
 					if (dialogAgregarEditar == null)
 						dialogAgregarEditar = new AgregarEditarVaca(res, PotrerosPanel.this);
 
@@ -340,6 +353,13 @@ public class PotrerosPanel extends JPanel {
 
 		});
 
+		JMenuItem trasladar = new JMenuItem("Trasladar");
+		trasladar.addActionListener(a -> {
+
+			trasladar();
+
+		});
+
 		JMenuItem eliminar = new JMenuItem("Eliminar");
 		eliminar.addActionListener(a -> {
 
@@ -350,6 +370,8 @@ public class PotrerosPanel extends JPanel {
 		menu.add(vacunar);
 		menu.addSeparator();
 		menu.add(purgar);
+		menu.addSeparator();
+		menu.add(trasladar);
 		menu.addSeparator();
 		menu.add(eliminar);
 
@@ -379,6 +401,46 @@ public class PotrerosPanel extends JPanel {
 
 	}
 
+	public void trasladar() {
+
+		int[] rowsSelected = tablaRes.getSelectedRows();
+
+		// Por si se encuentra "sorted or filtered" la tabla
+		if (tablaRes.getRowSorter() != null) {
+
+			for (int i = 0; i < rowsSelected.length; i++) {
+
+				rowsSelected[i] = tablaRes.getRowSorter().convertRowIndexToModel(rowsSelected[i]);
+
+			}
+
+		}
+
+		ArrayList<Potrero> potreros = PotreroCRUD.select();
+		String[] potreritos = new String[potreros.size()];
+
+		for (int i = 0; i < potreritos.length; i++) {
+			potreritos[i] = potreros.get(i).getNombre();
+		}
+
+		Icon icon = new ImageIcon("");
+
+		String resp = (String) JOptionPane.showInputDialog(null,
+				"Seleccione el potrero al que desea trasladar las reses", "Trasladar de potrero",
+				JOptionPane.DEFAULT_OPTION, icon, potreritos, potreritos[0]);
+
+		if (resp != null) {
+			int option = JOptionPane.showConfirmDialog(this,
+					"\u00BFEsta seguro que desea trasladar " + rowsSelected.length + " reses al potrero " + resp + "?",
+					"Trasladar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+			if (option == 0) {
+
+			}
+		}
+
+	}
+
 	public void eliminar() {
 
 		int[] rowsSelected = tablaRes.getSelectedRows();
@@ -395,7 +457,7 @@ public class PotrerosPanel extends JPanel {
 		}
 
 		int option = JOptionPane.showConfirmDialog(this,
-				"�Esta seguro que desea eliminar " + rowsSelected.length + " reses?", "Eliminar",
+				"\u00BFEsta seguro que desea eliminar " + rowsSelected.length + " reses?", "Eliminar",
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
 		// Si presiona SI
@@ -432,7 +494,7 @@ public class PotrerosPanel extends JPanel {
 	public void importarDatos() {
 
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.showOpenDialog(null);
+		fileChooser.showOpenDialog(inicio.getVentana());
 		fileChooser.isVisible();
 
 		FileInputStream fs = null;
@@ -450,8 +512,7 @@ public class PotrerosPanel extends JPanel {
 
 			if (fs != null) {
 
-				// Cargar definitivamente el excel al programa y realizar todos los calculos y
-				// procesos.
+				// Cargar definitivamente el excel al programa y base de datos.
 
 				DocsImporter.importData(fs, potrero_elegido, this);
 				fs.close();

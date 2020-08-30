@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -310,7 +311,7 @@ public class InicioPanel extends JPanel {
 				potreros = new PotrerosPanel(this, potreroelegido);
 				ventana.add(potreros);
 				ventana.setResizable(true);
-				ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				ventana.setExtendedState(Frame.MAXIMIZED_BOTH);
 				ventana.refresh();
 
 			}
@@ -576,10 +577,10 @@ public class InicioPanel extends JPanel {
 	public void setBtnreportePartos(JButton btnreportePartos) {
 		this.btnreportePartos = btnreportePartos;
 	}
-	
+
 	public void actualizarreses(int cantidad) {
-		
-		numeroDevacas.setText(cantidad+"");
+
+		numeroDevacas.setText(cantidad + "");
 	}
 
 	public void refresh() {

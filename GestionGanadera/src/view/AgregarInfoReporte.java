@@ -123,7 +123,6 @@ public class AgregarInfoReporte extends JDialog {
 			if (fechaSelected != null) {
 				fechaSeleccionada = format.format(fechaSelected);
 
-				
 			}
 
 			switch (mensajeMostrar) {
@@ -135,8 +134,6 @@ public class AgregarInfoReporte extends JDialog {
 
 					ResCRUD.insertPeso(res_ID, pesoNuevo, fechaSeleccionada);
 					agregarEditarPanel.refreshTable(1);
-					
-							
 
 				} catch (Exception e2) {
 
@@ -153,9 +150,8 @@ public class AgregarInfoReporte extends JDialog {
 
 			case 3:
 
-				
 				ResCRUD.insertPurgante(res_ID, textField.getText(), fechaSeleccionada);
-				
+
 				agregarEditarPanel.refreshTable(3);
 
 				break;

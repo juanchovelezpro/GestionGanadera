@@ -22,21 +22,17 @@ public class ReporteDialog extends JDialog {
 	private String reporte;
 	private Calendar fechaSystem;
 	private String fecha_Convertida;
-	
 
 	public ReporteDialog(String reporte) {
 
-		this.reporte =reporte;
+		this.reporte = reporte;
 		setTitle("Reporte");
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		setSize(450,300);
+		setSize(450, 300);
 		setIconImage(FileManager.imagenes.get("REPORTE"));
 		setLocationRelativeTo(null);
 		setVisible(true);
 
-
-
-	
 		Components();
 		listeners();
 
@@ -78,16 +74,14 @@ public class ReporteDialog extends JDialog {
 		JLabel lblNewLabel_5 = new JLabel("     ");
 		panelinformacion.add(lblNewLabel_5);
 
-		  fechaSystem = new GregorianCalendar();
-			
-		 
-			int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
-			int mes =fechaSystem.get(Calendar.MONTH)+1;
-			int anio =fechaSystem.get(Calendar.YEAR);
-			
-		fecha_Convertida = dia+"/"+mes+"/"+anio;
+		fechaSystem = new GregorianCalendar();
 
-		
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		fecha_Convertida = dia + "/" + mes + "/" + anio;
+
 		labelFecha = new JLabel(fecha_Convertida);
 		labelFecha.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		labelFecha.setHorizontalAlignment(SwingConstants.CENTER);
@@ -150,7 +144,7 @@ public class ReporteDialog extends JDialog {
 		});
 
 		btnRegresar.addActionListener(e -> {
-			
+
 			setVisible(false);
 
 		});

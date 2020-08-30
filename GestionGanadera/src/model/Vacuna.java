@@ -7,7 +7,7 @@ public class Vacuna {
 
 	public Vacuna(String nombre) {
 		this.nombre = nombre;
-		
+
 	}
 
 	public String getNombre() {
@@ -31,6 +31,4 @@ public class Vacuna {
 		return "Vacuna [nombre=" + nombre + "]";
 	}
 
-	
-	
 }

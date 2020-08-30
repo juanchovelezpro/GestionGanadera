@@ -118,7 +118,6 @@ public class RegistroPanel extends JPanel {
 
 	}
 
-	
 	public static void compruebaUser() {
 
 		if (UsuarioCRUD.select().size() == 1) {
@@ -178,7 +177,6 @@ public class RegistroPanel extends JPanel {
 
 			}
 
-			
 		});
 
 		btnCrearUsuario.addActionListener(e -> {

@@ -11,7 +11,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import db.PotreroCRUD;
 import db.ResCRUD;
 import model.Res;
 import view.BarraProgreso;
@@ -114,10 +113,9 @@ public class DocsImporter {
 				progreso.dispose();
 				JOptionPane.showMessageDialog(null, "El archivo se ha cargado correctamente!", "Info",
 						JOptionPane.INFORMATION_MESSAGE);
-				
+
 				panel.refreshTable();
-				
-				
+
 				try {
 					workbook.close();
 				} catch (IOException e) {

@@ -651,7 +651,6 @@ public class ResCRUD {
 
 						if (cria.getMadreID().equals(res.getResID())) {
 
-
 							if (cria.getTipo() == "HL") {
 
 								res.setTipo("VH");
@@ -668,22 +667,22 @@ public class ResCRUD {
 						long meses = mesesEntreFechas(fecha_nacimiento);
 						long dias = diasEntreFechas(fecha_nacimiento);
 
-						if (meses == 24 && dias<735) {
+						if (meses == 24 && dias < 735) {
 
 							res.setTipo("NV");
 							update(res.getResID(), res);
 						}
 					}
-					
+
 					if (res.getTipo().equalsIgnoreCase("VH")) {
-						
-						if(res.getEmbarazada()==1) {
-							String fecha_nacimiento =cria.getFecha_embarazo();
+
+						if (res.getEmbarazada() == 1) {
+							String fecha_nacimiento = cria.getFecha_embarazo();
 							long meses = mesesEntreFechas(fecha_nacimiento);
 							long dias = diasEntreFechas(fecha_nacimiento);
-							
-							if (meses<=9 && dias<275) {
-								
+
+							if (meses <= 9 && dias < 275) {
+
 								res.setTipo("VP");
 								update(res.getResID(), res);
 							}
@@ -693,15 +692,13 @@ public class ResCRUD {
 
 				if (res.getGenero().equalsIgnoreCase("M")) {
 
-					
-
 					if (res.getTipo().equalsIgnoreCase("ML")) {
 
 						String fecha_nacimiento = cria.getFecha_nacimiento();
 						long meses = mesesEntreFechas(fecha_nacimiento);
 						long dias = diasEntreFechas(fecha_nacimiento);
 
-						if (meses ==24 && dias<735) {
+						if (meses == 24 && dias < 735) {
 
 							res.setTipo("MC");
 							update(res.getResID(), res);
@@ -761,11 +758,11 @@ public class ResCRUD {
 
 		long diff = fecha_In.getTime() - fecha_system.getTime();
 
-		dias = (long) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+		dias = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 
 		// float days = (diff / (1000*60*60*24));
 
-		dias_1 = (long) Math.abs(dias);
+		dias_1 = Math.abs(dias);
 
 		// org.joda.time.format.DateTimeFormatter dateStringFormat = DateTimeFormat
 		/// .forPattern("dd/MM/yyyy");

@@ -201,25 +201,28 @@ public class Res {
 				+ fecha_ultimo_purgado + ", fecha_ultimo_vacunado=" + fecha_ultimo_vacunado + ", potreroNombre="
 				+ potreroNombre + "]";
 	}
-	
-	public String toPartos() {
-		return "Este atento al parto de la res: " + resID + " Del potrero: "
-				+ potreroNombre + " Con fecha de embarazo " + fecha_embarazo;
-	}
-	public String toDestete() {
-	
-		return "Es momento de realizar el destete a la res: " + resID + " Del potrero: "
-		+ potreroNombre + " Con fecha de nacimiento " + fecha_nacimiento;
-	}
-	public String toPurgado() {
-		
-		if (purgantes.size()>0) {
-			return " Es momento de aplicar la segunda dosis del purgante " + purgantes.get(purgantes.size()-1).getNombre() + " Que tuvo la primera dosis el día " + purgantes.get(purgantes.size()-1).getFecha() + " a la res " + resID; 
 
-		}else {
+	public String toPartos() {
+		return "Este atento al parto de la res: " + resID + " Del potrero: " + potreroNombre + " Con fecha de embarazo "
+				+ fecha_embarazo;
+	}
+
+	public String toDestete() {
+
+		return "Es momento de realizar el destete a la res: " + resID + " Del potrero: " + potreroNombre
+				+ " Con fecha de nacimiento " + fecha_nacimiento;
+	}
+
+	public String toPurgado() {
+
+		if (purgantes.size() > 0) {
+			return " Es momento de aplicar la segunda dosis del purgante "
+					+ purgantes.get(purgantes.size() - 1).getNombre() + " Que tuvo la primera dosis el día "
+					+ purgantes.get(purgantes.size() - 1).getFecha() + " a la res " + resID;
+
+		} else {
 			return "hay un problemilla";
 		}
 	}
-
 
 }

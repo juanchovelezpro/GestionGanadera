@@ -65,13 +65,16 @@ public class AgregarEditarVaca extends JDialog {
 	private JPanel panelGrafica;
 	private JPanel panelTabla;
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public AgregarEditarVaca(Res res, PotrerosPanel potrero) {
 
 		this.res = res;
 		this.potrero = potrero;
 
 		if (res != null)
-			setTitle("Editar Vaca/ ID: " + res.getResID());
+			setTitle("Editar Vaca/ ID: " + res.getResID() + " / Potrero: " + res.getPotreroNombre());
 		else
 			setTitle("Agregar vaca");
 
@@ -93,7 +96,6 @@ public class AgregarEditarVaca extends JDialog {
 
 		}
 
-
 		setVisible(true);
 
 	}
@@ -104,7 +106,7 @@ public class AgregarEditarVaca extends JDialog {
 		this.inicio = inicio;
 
 		if (res != null)
-			setTitle("Editar Vaca/ ID: " + res.getResID());
+			setTitle("Editar Vaca/ ID: " + res.getResID() + " / Potrero: " + res.getPotreroNombre());
 		else
 			setTitle("Agregar vaca");
 
@@ -155,7 +157,7 @@ public class AgregarEditarVaca extends JDialog {
 		JPanel panelAux = new JPanel();
 		panelAux.setLayout(new GridLayout(10, 2));
 
-		JLabel lblNumero = new JLabel("Numero");
+		JLabel lblNumero = new JLabel("N\u00FAmero*");
 		lblNumero.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNumero.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(lblNumero);
@@ -164,7 +166,7 @@ public class AgregarEditarVaca extends JDialog {
 		txtNumero.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(txtNumero);
 
-		JLabel lblGenero = new JLabel("G\u00E9nero");
+		JLabel lblGenero = new JLabel("G\u00E9nero*");
 		lblGenero.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblGenero.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(lblGenero);
@@ -173,7 +175,7 @@ public class AgregarEditarVaca extends JDialog {
 		comboGenero.setModel(new DefaultComboBoxModel(new String[] { "Seleccione el g\u00E9nero", "HEMBRA", "MACHO" }));
 		panelAux.add(comboGenero);
 
-		lblTipo = new JLabel("Tipo");
+		lblTipo = new JLabel("Tipo*");
 		lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTipo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelAux.add(lblTipo);
@@ -183,7 +185,7 @@ public class AgregarEditarVaca extends JDialog {
 				new String[] { "Seleccione el tipo", "VP", "VH", "CH", "HL", "NV", "CM", "ML", "MC", "TP" }));
 		panelAux.add(comboTipo);
 
-		JLabel lblColor = new JLabel("Color");
+		JLabel lblColor = new JLabel("Color*");
 		lblColor.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblColor.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(lblColor);
@@ -343,7 +345,7 @@ public class AgregarEditarVaca extends JDialog {
 			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals(""))
 				btnFechaNacimiento.setText(res.getFecha_nacimiento());
 			else
-				btnFechaNacimiento.setText("SIN REGISTRO");
+				btnFechaNacimiento.setText("");
 
 			if (res.getGenero().equals("H")) {
 
@@ -408,8 +410,6 @@ public class AgregarEditarVaca extends JDialog {
 		}
 
 		res.setMadreID(txtMadre.getText());
-
-		System.out.println(txtObservaciones.getText());
 		res.setObservaciones(txtObservaciones.getText());
 
 		return res;
@@ -458,8 +458,7 @@ public class AgregarEditarVaca extends JDialog {
 			tablaPesos.setShowHorizontalLines(true);
 			tablaPesos.setShowVerticalLines(true);
 			tablaPesos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-
-			scroller.getViewport().add(tablaPesos);
+			scroller.setViewportView(tablaPesos);
 			tablaPesos.setFillsViewportHeight(true);
 
 			transformarPanel();
@@ -475,8 +474,7 @@ public class AgregarEditarVaca extends JDialog {
 			tablaPesos.setShowHorizontalLines(true);
 			tablaPesos.setShowVerticalLines(true);
 			tablaPesos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-
-			scroller.getViewport().add(tablaPesos);
+			scroller.setViewportView(tablaPesos);
 			tablaPesos.setFillsViewportHeight(true);
 
 			transformarPanel();
@@ -516,8 +514,7 @@ public class AgregarEditarVaca extends JDialog {
 			tablaVacunas.setShowHorizontalLines(true);
 			tablaVacunas.setShowVerticalLines(true);
 			tablaVacunas.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-
-			scroller.getViewport().add(tablaVacunas);
+			scroller.setViewportView(tablaVacunas);
 			tablaVacunas.setFillsViewportHeight(true);
 
 			transformarPanel();
@@ -533,8 +530,7 @@ public class AgregarEditarVaca extends JDialog {
 			tablaVacunas.setShowHorizontalLines(true);
 			tablaVacunas.setShowVerticalLines(true);
 			tablaVacunas.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-
-			scroller.getViewport().add(tablaVacunas);
+			scroller.setViewportView(tablaVacunas);
 			tablaVacunas.setFillsViewportHeight(true);
 
 			transformarPanel();
@@ -574,8 +570,7 @@ public class AgregarEditarVaca extends JDialog {
 			tablaPurgantes.setShowHorizontalLines(true);
 			tablaPurgantes.setShowVerticalLines(true);
 			tablaPurgantes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-
-			scroller.getViewport().add(tablaPurgantes);
+			scroller.setViewportView(tablaPurgantes);
 			tablaPurgantes.setFillsViewportHeight(true);
 
 			transformarPanel();
@@ -591,8 +586,7 @@ public class AgregarEditarVaca extends JDialog {
 			tablaPurgantes.setShowHorizontalLines(true);
 			tablaPurgantes.setShowVerticalLines(true);
 			tablaPurgantes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-
-			scroller.getViewport().add(tablaPurgantes);
+			scroller.setViewportView(tablaPurgantes);
 			tablaPurgantes.setFillsViewportHeight(true);
 
 			transformarPanel();
@@ -631,8 +625,7 @@ public class AgregarEditarVaca extends JDialog {
 			tablaCrias.setShowHorizontalLines(true);
 			tablaCrias.setShowVerticalLines(true);
 			tablaCrias.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-
-			scroller.getViewport().add(tablaCrias);
+			scroller.setViewportView(tablaCrias);
 			tablaCrias.setFillsViewportHeight(true);
 
 			transformarPanel();
@@ -648,8 +641,7 @@ public class AgregarEditarVaca extends JDialog {
 			tablaCrias.setShowHorizontalLines(true);
 			tablaCrias.setShowVerticalLines(true);
 			tablaCrias.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-
-			scroller.getViewport().add(tablaCrias);
+			scroller.setViewportView(tablaCrias);
 			tablaCrias.setFillsViewportHeight(true);
 
 			transformarPanel();

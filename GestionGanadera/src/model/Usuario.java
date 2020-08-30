@@ -52,7 +52,5 @@ public class Usuario {
 		return "Usuario [nombre=" + nombre + ", ubicacion=" + ubicacion + ", nombreFinca=" + nombreFinca + ", password="
 				+ password + "]";
 	}
-	
-	
 
 }

@@ -38,10 +38,9 @@ public class NotificacionesPanel extends JDialog {
 	private JScrollPane listScroller;
 	DefaultListModel<Res> modelo;
 
+	public NotificacionesPanel(PotrerosPanel ventana) {
 
-public NotificacionesPanel(PotrerosPanel ventana) {
-
-	setTitle("Notificaciones");
+		setTitle("Notificaciones");
 
 		setLayout(new BorderLayout(0, 0));
 
@@ -176,6 +175,7 @@ public NotificacionesPanel(PotrerosPanel ventana) {
 
 		list.addMouseListener(new MouseAdapter() {
 
+			@Override
 			public void mouseClicked(MouseEvent evt) {
 				if (evt.getButton() == MouseEvent.BUTTON3) {
 
@@ -245,22 +245,20 @@ public NotificacionesPanel(PotrerosPanel ventana) {
 
 		list.addMouseListener(new MouseAdapter() {
 
+			@Override
 			public void mouseClicked(MouseEvent evt) {
 				if (evt.getButton() == MouseEvent.BUTTON3) {
-					
+
 					List<Res> selectedValuesList = list.getSelectedValuesList();
 
+					int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
+					if (valor == JOptionPane.YES_OPTION) {
 
-						int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+						Res res = null;
 
-						if (valor == JOptionPane.YES_OPTION) {
-							
-							Res res = null;
-
-							for (int i = 0; i < selectedValuesList.size(); i++) {
-								res =selectedValuesList.get(i);
-							
+						for (int i = 0; i < selectedValuesList.size(); i++) {
+							res = selectedValuesList.get(i);
 
 							if (res.getGenero().equals("H")) {
 
@@ -270,7 +268,6 @@ public NotificacionesPanel(PotrerosPanel ventana) {
 								System.out.println("actualizado");
 
 							}
-							
 
 							if (res.getGenero().equals("M")) {
 
@@ -280,15 +277,14 @@ public NotificacionesPanel(PotrerosPanel ventana) {
 								System.out.println("actualizado");
 
 							}
-							}
-
-							ventana.refreshTable();
 						}
 
+						ventana.refreshTable();
 					}
 
 				}
-			
+
+			}
 
 		});
 
@@ -312,6 +308,7 @@ public NotificacionesPanel(PotrerosPanel ventana) {
 
 		list.addMouseListener(new MouseAdapter() {
 
+			@Override
 			public void mouseClicked(MouseEvent evt) {
 				if (evt.getButton() == MouseEvent.BUTTON3) {
 
@@ -321,19 +318,16 @@ public NotificacionesPanel(PotrerosPanel ventana) {
 					System.out.println(list.getSelectedIndex() + "oprimio");
 
 					int numero = list.getSelectedIndex();
-					
 
-						int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+					int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
-						if (valor == JOptionPane.OK_OPTION) {
-							Res res =null;
+					if (valor == JOptionPane.OK_OPTION) {
+						Res res = null;
 
-							for (int i = 0; i < selectedValuesList.size(); i++) {
-								
-								res =selectedValuesList.get(i);
-								
-							
-							
+						for (int i = 0; i < selectedValuesList.size(); i++) {
+
+							res = selectedValuesList.get(i);
+
 							if (res.getGenero().equals("H")) {
 
 								res.setTipo("VP");
@@ -341,15 +335,14 @@ public NotificacionesPanel(PotrerosPanel ventana) {
 								modelo.removeElement(list.getSelectedValue());
 
 							}
-							}
-
-							ventana.refreshTable();
-
 						}
+
+						ventana.refreshTable();
 
 					}
 
-				
+				}
+
 			}
 
 		});

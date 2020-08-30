@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -19,7 +20,7 @@ public class CalendarioDialog extends JDialog {
 	private JDateChooser calendar;
 	private JButton btnSeleccionarFecha;
 	private String fechaSeleccionada;
-	
+
 	// El boton al que se le mandara la fecha que se seleccione.
 	private JButton boton;
 
@@ -27,12 +28,11 @@ public class CalendarioDialog extends JDialog {
 
 		this.boton = boton;
 
-		
 		setTitle("Seleccionar Fecha");
 		setSize(250, 110);
 		getContentPane().setLayout(new GridLayout(2, 1));
 		setIconImage(FileManager.imagenes.get("CALENDAR"));
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 
 		fechaSeleccionada = "";
@@ -68,19 +68,18 @@ public class CalendarioDialog extends JDialog {
 
 			Date fechaSelected = calendar.getDate();
 
-			
 			if (fechaSelected != null) {
 				fechaSeleccionada = format.format(fechaSelected);
 
-				if (boton!=null) {
-				
+				if (boton != null) {
+
 					boton.setText(fechaSeleccionada);
 
 				}
 			}
 
 			dispose();
-			
+
 		});
 
 	}

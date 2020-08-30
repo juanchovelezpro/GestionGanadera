@@ -24,7 +24,7 @@ public class AgregarUsuario extends JDialog {
 	private JTextField nombrefinca;
 
 	public AgregarUsuario() {
-		
+
 		setTitle("Crear Usuario");
 
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -120,7 +120,6 @@ public class AgregarUsuario extends JDialog {
 
 	public void listeners() {
 
-		
 		guardar.addActionListener(e -> {
 
 			char[] letras = txtpassword.getPassword();

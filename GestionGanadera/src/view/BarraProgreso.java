@@ -21,9 +21,9 @@ public class BarraProgreso extends JDialog {
 		getContentPane().setLayout(new GridLayout(1, 1));
 		setSize(600, 70);
 		setLocationRelativeTo(null);
-		
-		UIManager.put( "nimbusOrange", Color.GREEN.brighter() );
-		
+
+		UIManager.put("nimbusOrange", Color.GREEN.brighter());
+
 		progreso = new JProgressBar(0, carga);
 		progreso.setSize(600, 70);
 		progreso.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -31,7 +31,6 @@ public class BarraProgreso extends JDialog {
 		progreso.setStringPainted(true);
 		progreso.setIndeterminate(false);
 		progreso.setBackground(Color.GREEN);
-		
 
 		getContentPane().add(progreso);
 		setAlwaysOnTop(true);

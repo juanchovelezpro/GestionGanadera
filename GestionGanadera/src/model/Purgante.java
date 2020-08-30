@@ -1,6 +1,6 @@
 package model;
 
-public class Purgante  {
+public class Purgante {
 
 	private String nombre;
 	private String fecha;
@@ -31,20 +31,9 @@ public class Purgante  {
 		return "Purgante [nombre=" + nombre + ", fecha=" + fecha + "]";
 	}
 
-	
 	public boolean equals(Purgante purgante) {
-		
-	
-		
-		return nombre.equals(purgante.getNombre());	
+
+		return nombre.equals(purgante.getNombre());
 	}
 
-	
-	
-	
-	
-
-
-	
-	
 }
