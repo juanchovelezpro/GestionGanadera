@@ -7,10 +7,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -36,7 +32,6 @@ import tools.DocsImporter;
 public class PotrerosPanel extends JPanel {
 
 	private InicioPanel inicio;
-	private int filterOption;
 	private JPopupMenu menu;
 	private ArrayList<Res> ganado;
 	private AgregarEditarVaca dialogAgregarEditar;
@@ -60,7 +55,6 @@ public class PotrerosPanel extends JPanel {
 
 		this.inicio = inicio;
 		potrero_elegido = potreroelegido;
-		filterOption = 0;
 
 		setLayout(new BorderLayout(0, 0));
 
@@ -302,6 +296,7 @@ public class PotrerosPanel extends JPanel {
 
 					int row = tablaRes.getSelectedRow();
 
+					// Por si se encuentra sortered or filtered la tabla
 					if (tablaRes.getRowSorter() != null)
 						row = tablaRes.getRowSorter().convertRowIndexToModel(row);
 
@@ -388,6 +383,7 @@ public class PotrerosPanel extends JPanel {
 
 		int[] rowsSelected = tablaRes.getSelectedRows();
 
+		// Por si se encuentra "sorted or filtered" la tabla
 		if (tablaRes.getRowSorter() != null) {
 
 			for (int i = 0; i < rowsSelected.length; i++) {
@@ -466,12 +462,6 @@ public class PotrerosPanel extends JPanel {
 
 			ex.printStackTrace();
 		}
-
-	}
-
-	public List<Res> filter(Predicate<Res> criterio, List<Res> list) {
-
-		return list.stream().filter(criterio).collect(Collectors.<Res>toList());
 
 	}
 

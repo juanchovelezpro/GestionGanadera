@@ -1,10 +1,6 @@
 package view;
 
-import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
-
-import model.Res;
 
 public class ModelTable extends AbstractTableModel {
 

@@ -1,49 +1,30 @@
 package view;
 
-import javax.swing.JPanel;
-
-import static org.junit.Assert.assertNotNull;
-
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JDialog;
-
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import javax.swing.AbstractListModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ListSelectionModel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
-import javax.swing.JScrollBar;
-import javax.swing.border.TitledBorder;
-
-import org.apache.commons.compress.archivers.ar.ArArchiveEntry;
-
-import com.sun.javafx.collections.SetListenerHelper;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+import javax.swing.SwingConstants;
 
 import db.ResCRUD;
 import model.Purgante;
 import model.Res;
-
-import java.awt.Color;
-import java.awt.Dimension;
 
 public class NotificacionesPanel extends JDialog {
 

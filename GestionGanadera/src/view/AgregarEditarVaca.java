@@ -22,8 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-import org.sqlite.SQLiteException;
-
 import db.ResCRUD;
 import model.Peso;
 import model.Purgante;

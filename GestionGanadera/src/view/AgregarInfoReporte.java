@@ -1,23 +1,21 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.toedter.calendar.JDateChooser;
 
-import db.PurganteCRUD;
 import db.ResCRUD;
-
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
 
 public class AgregarInfoReporte extends JDialog {
 

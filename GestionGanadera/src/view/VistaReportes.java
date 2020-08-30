@@ -1,15 +1,14 @@
 package view;
 
-import javax.swing.JDialog;
 import java.awt.BorderLayout;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class VistaReportes extends JDialog{
 	

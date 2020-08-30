@@ -1,18 +1,13 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
-import javax.swing.plaf.ColorUIResource;
 
 import db.SQLConnection;
 import db.UsuarioCRUD;
-import model.Gestion;
 import tools.FileManager;
 
 public class VentanaPrincipal extends JFrame {
@@ -22,7 +17,6 @@ public class VentanaPrincipal extends JFrame {
 	public static final int HEIGHT = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 			.getDisplayMode().getHeight();
 
-	private Gestion gestion;
 	private RegistroPanel registro;
 	private InicioPanel inicio;
 
@@ -34,9 +28,7 @@ public class VentanaPrincipal extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		
-		
-		
+
 		setIconImage(FileManager.imagenes.get("ICONO"));
 
 		try {
