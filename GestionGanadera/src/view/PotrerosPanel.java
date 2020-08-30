@@ -213,7 +213,6 @@ public class PotrerosPanel extends JPanel {
 		ganado = PotreroCRUD.selectRes(potrero_elegido);
 		fillData();
 		modelRes.fireTableDataChanged();
-		listeners();
 
 	}
 
@@ -222,8 +221,7 @@ public class PotrerosPanel extends JPanel {
 		// Abre el panel para agregar una vaca
 		btnAgregar.addActionListener(e -> {
 
-			AgregarEditarResDialog dialogAgregarEditar = new AgregarEditarResDialog(null, this);
-
+			AgregarEditarResDialog agregarEditarDialog = new AgregarEditarResDialog(null, this);
 		});
 
 		// Regresar al panel inicio
@@ -311,7 +309,7 @@ public class PotrerosPanel extends JPanel {
 
 					// Abre el panel para editar la vaca seleccionada.
 
-					AgregarEditarResDialog dialogAgregarEditar = new AgregarEditarResDialog(res, PotrerosPanel.this);
+					AgregarEditarResDialog agregarEditarDialog = new AgregarEditarResDialog(res, PotrerosPanel.this);
 
 				}
 
@@ -482,7 +480,6 @@ public class PotrerosPanel extends JPanel {
 
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.showOpenDialog(inicio.getVentana());
-		fileChooser.isVisible();
 
 		FileInputStream fs = null;
 
