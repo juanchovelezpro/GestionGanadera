@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
 
 import db.ResCRUD;
+import tools.FileManager;
 
 public class AgregarInfoReporte extends JDialog {
 
@@ -33,7 +34,11 @@ public class AgregarInfoReporte extends JDialog {
 		this.mensajeMostrar = mensaje2;
 		res_ID = resID;
 
+		setTitle("Agregar");
+		
 		getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		setIconImage(FileManager.imagenes.get("ICONO"));
 
 		setSize(450, 300);
 		Components();
