@@ -197,22 +197,23 @@ public class ResCRUD {
 			sql.getStatement()
 					.executeUpdate("UPDATE res SET madreID='" + idNueva + "' WHERE madreID='" + idVieja + "'");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
 	}
 
 	// Elimina una res de la base de datos.
-	public static void delete(String id) {
+	public static void delete(ArrayList<String> ids) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			sql.getStatement().executeUpdate("DELETE FROM res WHERE numero='" + id + "'");
-			deletePesosRes(id);
-			PurganteCRUD.deletePurganteRes(id);
-			VacunaCRUD.deleteVacunaRes(id);
+			sql.getStatement()
+					.executeUpdate("DELETE FROM res WHERE numero IN (" + SQLUtils.concatenarValores(ids) + ")");
+			deletePesosRes(ids);
+			PurganteCRUD.deletePurganteRes(ids);
+			VacunaCRUD.deleteVacunaRes(ids);
 
 		} catch (SQLException e) {
 
@@ -449,15 +450,15 @@ public class ResCRUD {
 
 	}
 
-	public static void deletePesosRes(String idRes) {
+	public static void deletePesosRes(ArrayList<String> idsRes) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
 
-			sql.getStatement().executeUpdate("DELETE FROM res_tiene_pesos WHERE resID= '" + idRes + "'");
+			sql.getStatement().executeUpdate(
+					"DELETE FROM res_tiene_pesos WHERE resID IN (" + SQLUtils.concatenarValores(idsRes) + ")");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

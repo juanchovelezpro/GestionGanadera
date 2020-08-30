@@ -59,13 +59,14 @@ public class VacunaCRUD {
 
 	}
 
-	public static void deleteVacunaRes(String idRes) {
+	public static void deleteVacunaRes(ArrayList<String> idsRes) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
 
-			sql.getStatement().executeUpdate("DELETE FROM res_tiene_vacunas WHERE resID= '" + idRes + "'");
+			sql.getStatement().executeUpdate(
+					"DELETE FROM res_tiene_vacunas WHERE resID IN (" + SQLUtils.concatenarValores(idsRes) + ")");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -75,13 +75,14 @@ public class PurganteCRUD {
 
 	}
 
-	public static void deletePurganteRes(String idRes) {
+	public static void deletePurganteRes(ArrayList<String> idRes) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
 
-			sql.getStatement().executeUpdate("DELETE FROM res_tiene_purgantes WHERE resID= '" + idRes + "'");
+			sql.getStatement().executeUpdate(
+					"DELETE FROM res_tiene_purgantes WHERE resID IN (" + SQLUtils.concatenarValores(idRes) + ")");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

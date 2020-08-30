@@ -458,18 +458,17 @@ public class PotrerosPanel extends JPanel {
 				public void run() {
 
 					ArrayList<String> ids = new ArrayList<String>();
-					
+
 					for (int i = 0; i < rowsSelected.length; i++) {
 
 						String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
 						ids.add(id);
-						ResCRUD.delete(id);
 						value++;
 						progreso.getProgreso().setValue(value);
 
 					}
 
-					System.out.println(SQLUtils.concatenarValores(ids));
+					ResCRUD.delete(ids);
 					refreshTable();
 					progreso.dispose();
 
