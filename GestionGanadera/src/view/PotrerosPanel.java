@@ -246,7 +246,6 @@ public class PotrerosPanel extends JPanel {
 		btnNotificaciones.addActionListener(e -> {
 
 			NotificacionesDialog notificaciones = new NotificacionesDialog(this);
-			notificaciones.setIconImage(FileManager.imagenes.get("ICONO"));
 
 		});
 

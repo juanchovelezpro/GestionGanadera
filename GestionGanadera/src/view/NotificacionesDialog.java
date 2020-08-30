@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import db.ResCRUD;
 import model.Purgante;
 import model.Res;
+import tools.FileManager;
 
 public class NotificacionesDialog extends JDialog {
 
@@ -40,6 +41,8 @@ public class NotificacionesDialog extends JDialog {
 
 	public NotificacionesDialog(PotrerosPanel ventana) {
 
+		this.ventana = ventana;
+
 		setTitle("Notificaciones");
 
 		setLayout(new BorderLayout(0, 0));
@@ -47,7 +50,7 @@ public class NotificacionesDialog extends JDialog {
 		setSize(605, 452);
 		setLocationRelativeTo(null);
 
-		this.ventana = ventana;
+		setIconImage(FileManager.imagenes.get("ICONO"));
 		Components();
 		listeners();
 
