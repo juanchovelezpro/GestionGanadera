@@ -28,6 +28,7 @@ import javax.swing.table.TableRowSorter;
 
 import db.PotreroCRUD;
 import db.ResCRUD;
+import db.SQLUtils;
 import model.Potrero;
 import model.Res;
 import tools.DocsImporter;
@@ -456,15 +457,19 @@ public class PotrerosPanel extends JPanel {
 				@Override
 				public void run() {
 
+					ArrayList<String> ids = new ArrayList<String>();
+					
 					for (int i = 0; i < rowsSelected.length; i++) {
 
 						String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
+						ids.add(id);
 						ResCRUD.delete(id);
 						value++;
 						progreso.getProgreso().setValue(value);
 
 					}
 
+					System.out.println(SQLUtils.concatenarValores(ids));
 					refreshTable();
 					progreso.dispose();
 
