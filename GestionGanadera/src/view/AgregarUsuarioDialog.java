@@ -16,14 +16,14 @@ import db.UsuarioCRUD;
 import model.Usuario;
 import tools.FileManager;
 
-public class AgregarUsuario extends JDialog {
+public class AgregarUsuarioDialog extends JDialog {
 	private JTextField txtusuario;
 	private JPasswordField txtpassword;
 	private JButton guardar;
 	private RegistroPanel ventana;
 	private JTextField nombrefinca;
 
-	public AgregarUsuario() {
+	public AgregarUsuarioDialog() {
 
 		setTitle("Crear Usuario");
 
@@ -33,12 +33,13 @@ public class AgregarUsuario extends JDialog {
 		setIconImage(FileManager.imagenes.get("USUARIO"));
 		setLocationRelativeTo(null);
 
+		Components();
+		listeners();
+
+		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
 
 		// this.ventana = new RegistroPanel(ventana);
-
-		Components();
-		listeners();
 
 	}
 

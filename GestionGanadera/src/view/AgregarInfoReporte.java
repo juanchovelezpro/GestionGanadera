@@ -25,9 +25,9 @@ public class AgregarInfoReporte extends JDialog {
 	private JLabel mensaje;
 	private JButton btnGuardar;
 	private String res_ID;
-	private AgregarEditarVaca agregarEditarPanel;
+	private AgregarEditarResDialog agregarEditarPanel;
 
-	public AgregarInfoReporte(int mensaje2, String resID, AgregarEditarVaca agregarEditarPanel) {
+	public AgregarInfoReporte(int mensaje2, String resID, AgregarEditarResDialog agregarEditarPanel) {
 
 		this.agregarEditarPanel = agregarEditarPanel;
 		this.mensajeMostrar = mensaje2;
@@ -40,6 +40,9 @@ public class AgregarInfoReporte extends JDialog {
 		listeners();
 		elegirMensaje(mensaje2);
 		setLocationRelativeTo(null);
+		
+		
+		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
 
 	}

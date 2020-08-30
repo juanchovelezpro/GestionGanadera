@@ -10,11 +10,11 @@ import javax.swing.UIManager;
 
 import tools.FileManager;
 
-public class BarraProgreso extends JDialog {
+public class BarraProgresoDialog extends JDialog {
 
 	private JProgressBar progreso;
 
-	public BarraProgreso(int carga) {
+	public BarraProgresoDialog(int carga) {
 
 		setTitle("Proceso");
 		setIconImage(FileManager.imagenes.get("VACA"));

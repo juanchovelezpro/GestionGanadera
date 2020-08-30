@@ -40,6 +40,7 @@ public class CalendarioDialog extends JDialog {
 		setComponents();
 		listeners();
 
+		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
 
 	}

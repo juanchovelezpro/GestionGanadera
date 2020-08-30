@@ -26,7 +26,7 @@ import db.ResCRUD;
 import model.Purgante;
 import model.Res;
 
-public class NotificacionesPanel extends JDialog {
+public class NotificacionesDialog extends JDialog {
 
 	private final JLabel label = new JLabel("");
 	private PotrerosPanel ventana;
@@ -38,7 +38,7 @@ public class NotificacionesPanel extends JDialog {
 	private JScrollPane listScroller;
 	DefaultListModel<Res> modelo;
 
-	public NotificacionesPanel(PotrerosPanel ventana) {
+	public NotificacionesDialog(PotrerosPanel ventana) {
 
 		setTitle("Notificaciones");
 
@@ -50,6 +50,8 @@ public class NotificacionesPanel extends JDialog {
 		this.ventana = ventana;
 		Components();
 		listeners();
+
+		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
 
 	}
@@ -139,20 +141,7 @@ public class NotificacionesPanel extends JDialog {
 
 		btnRegresar.addActionListener(e -> {
 
-			ventana.setNotificaciones(null);
 			dispose();
-
-		});
-
-		addWindowListener(new WindowAdapter() {
-
-			@Override
-			public void windowClosing(WindowEvent we) {
-
-				ventana.setNotificaciones(null);
-				dispose();
-
-			}
 
 		});
 

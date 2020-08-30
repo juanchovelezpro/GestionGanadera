@@ -412,7 +412,7 @@ public class InicioPanel extends JPanel {
 
 					System.out.println(resita);
 
-					AgregarEditarVaca dialog = new AgregarEditarVaca(resita, this);
+					AgregarEditarResDialog dialog = new AgregarEditarResDialog(resita, this);
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Numero de vaca no encontrado");

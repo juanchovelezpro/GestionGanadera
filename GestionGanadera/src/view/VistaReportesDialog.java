@@ -10,9 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class VistaReportes extends JDialog {
+public class VistaReportesDialog extends JDialog {
 
-	public VistaReportes() {
+	public VistaReportesDialog() {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		setSize(720, 400);

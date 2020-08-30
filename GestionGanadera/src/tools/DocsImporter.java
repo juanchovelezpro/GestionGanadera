@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import db.ResCRUD;
 import model.Res;
-import view.BarraProgreso;
+import view.BarraProgresoDialog;
 import view.PotrerosPanel;
 
 public class DocsImporter {
@@ -41,7 +41,7 @@ public class DocsImporter {
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheetAt(0);
 
-		BarraProgreso progreso = new BarraProgreso(countRows(sheet));
+		BarraProgresoDialog progreso = new BarraProgresoDialog(countRows(sheet));
 
 		Iterator<Row> rows = sheet.iterator();
 		rows.next();

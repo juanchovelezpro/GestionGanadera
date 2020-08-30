@@ -31,10 +31,12 @@ public class ReporteDialog extends JDialog {
 		setSize(450, 300);
 		setIconImage(FileManager.imagenes.get("REPORTE"));
 		setLocationRelativeTo(null);
-		setVisible(true);
 
 		Components();
 		listeners();
+
+		setModalityType(ModalityType.APPLICATION_MODAL);
+		setVisible(true);
 
 	}
 

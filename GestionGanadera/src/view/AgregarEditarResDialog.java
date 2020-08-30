@@ -29,7 +29,7 @@ import model.Res;
 import model.Vacuna;
 import tools.FileManager;
 
-public class AgregarEditarVaca extends JDialog {
+public class AgregarEditarResDialog extends JDialog {
 
 	private Res res;
 	private PotrerosPanel potrero;
@@ -68,7 +68,7 @@ public class AgregarEditarVaca extends JDialog {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public AgregarEditarVaca(Res res, PotrerosPanel potrero) {
+	public AgregarEditarResDialog(Res res, PotrerosPanel potrero) {
 
 		this.res = res;
 		this.potrero = potrero;
@@ -96,11 +96,12 @@ public class AgregarEditarVaca extends JDialog {
 
 		}
 
+		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
 
 	}
 
-	public AgregarEditarVaca(Res res, InicioPanel inicio) {
+	public AgregarEditarResDialog(Res res, InicioPanel inicio) {
 
 		this.res = res;
 		this.inicio = inicio;
@@ -128,6 +129,7 @@ public class AgregarEditarVaca extends JDialog {
 
 		}
 
+		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
 
 	}
@@ -699,7 +701,6 @@ public class AgregarEditarVaca extends JDialog {
 						ResCRUD.update(res.getResID(), obtenerInfoRes(potrero.getPotrero_elegido()));
 						potrero.refreshTable();
 						System.out.println("UPDATED");
-						potrero.setDialogAgregarEditar(null);
 						dispose();
 
 					} else {
@@ -722,7 +723,6 @@ public class AgregarEditarVaca extends JDialog {
 					ResCRUD.insert(obtenerInfoRes(potrero.getPotrero_elegido()));
 					potrero.refreshTable();
 					System.out.println("INSERTED");
-					potrero.setDialogAgregarEditar(null);
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
@@ -833,18 +833,6 @@ public class AgregarEditarVaca extends JDialog {
 
 				btnFechaEmbarazo.setText("dd/MM/AAAA");
 				btnFechaEmbarazo.setEnabled(true);
-
-			}
-
-		});
-
-		addWindowListener(new WindowAdapter() {
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-
-				if (potrero != null)
-					potrero.setDialogAgregarEditar(null);
 
 			}
 

@@ -181,7 +181,7 @@ public class RegistroPanel extends JPanel {
 
 		btnCrearUsuario.addActionListener(e -> {
 
-			AgregarUsuario agregar = new AgregarUsuario();
+			AgregarUsuarioDialog agregar = new AgregarUsuarioDialog();
 
 		});
 

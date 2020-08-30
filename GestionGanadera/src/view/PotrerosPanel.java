@@ -38,8 +38,6 @@ public class PotrerosPanel extends JPanel {
 	private InicioPanel inicio;
 	private JPopupMenu menu;
 	private ArrayList<Res> ganado;
-	private AgregarEditarVaca dialogAgregarEditar;
-	private NotificacionesPanel notificaciones;
 	private JComboBox comboHembraMacho;
 	private JButton btnAgregar;
 	private JButton btnReporteVacunas;
@@ -224,8 +222,7 @@ public class PotrerosPanel extends JPanel {
 		// Abre el panel para agregar una vaca
 		btnAgregar.addActionListener(e -> {
 
-			if (dialogAgregarEditar == null)
-				dialogAgregarEditar = new AgregarEditarVaca(null, this);
+			AgregarEditarResDialog dialogAgregarEditar = new AgregarEditarResDialog(null, this);
 
 		});
 
@@ -248,10 +245,9 @@ public class PotrerosPanel extends JPanel {
 		// Abrir panel de notificaciones
 		btnNotificaciones.addActionListener(e -> {
 
-			if (notificaciones == null) {
-				notificaciones = new NotificacionesPanel(this);
-				notificaciones.setIconImage(FileManager.imagenes.get("ICONO"));
-			}
+			NotificacionesDialog notificaciones = new NotificacionesDialog(this);
+			notificaciones.setIconImage(FileManager.imagenes.get("ICONO"));
+
 		});
 
 		btnReportePurgantes.addActionListener(e -> {
@@ -315,8 +311,8 @@ public class PotrerosPanel extends JPanel {
 					Res res = ResCRUD.selectResByID(modelRes.getValueAt(row, 0).toString());
 
 					// Abre el panel para editar la vaca seleccionada.
-					if (dialogAgregarEditar == null)
-						dialogAgregarEditar = new AgregarEditarVaca(res, PotrerosPanel.this);
+
+					AgregarEditarResDialog dialogAgregarEditar = new AgregarEditarResDialog(res, PotrerosPanel.this);
 
 				}
 
@@ -329,14 +325,6 @@ public class PotrerosPanel extends JPanel {
 			}
 		});
 
-	}
-
-	public AgregarEditarVaca getDialogAgregarEditar() {
-		return dialogAgregarEditar;
-	}
-
-	public void setDialogAgregarEditar(AgregarEditarVaca dialogAgregarEditar) {
-		this.dialogAgregarEditar = dialogAgregarEditar;
 	}
 
 	public void popUpMenu() {
@@ -464,7 +452,7 @@ public class PotrerosPanel extends JPanel {
 		if (option == 0) {
 
 			new Thread() {
-				BarraProgreso progreso = new BarraProgreso(rowsSelected.length);
+				BarraProgresoDialog progreso = new BarraProgresoDialog(rowsSelected.length);
 
 				int value = 0;
 
@@ -524,14 +512,6 @@ public class PotrerosPanel extends JPanel {
 			ex.printStackTrace();
 		}
 
-	}
-
-	public NotificacionesPanel getNotificaciones() {
-		return notificaciones;
-	}
-
-	public void setNotificaciones(NotificacionesPanel notificaciones) {
-		this.notificaciones = notificaciones;
 	}
 
 	public String getPotrero_elegido() {
