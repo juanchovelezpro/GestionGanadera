@@ -7,6 +7,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,8 +23,10 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
 import db.PotreroCRUD;
 import db.ResCRUD;
@@ -43,6 +49,7 @@ public class PotrerosPanel extends JPanel {
 	private JLabel lblNombrePotrero;
 	private JPanel panelResTable;
 	private JTable tablaRes;
+	private TableRowSorter<ModelTable> sorter;
 	private ModelTable modelRes;
 	private JScrollPane scroller;
 	private String potrero_elegido;
@@ -53,6 +60,7 @@ public class PotrerosPanel extends JPanel {
 
 		this.inicio = inicio;
 		potrero_elegido = potreroelegido;
+		filterOption = 0;
 
 		setLayout(new BorderLayout(0, 0));
 
@@ -122,9 +130,9 @@ public class PotrerosPanel extends JPanel {
 		panelResTable = new JPanel();
 		scroller = new JScrollPane();
 		ganado = PotreroCRUD.selectRes(potrero_elegido);
-		
+
 		modelRes = new ModelTable();
-		
+
 		crearTablaRes();
 		add(panelResTable, BorderLayout.CENTER);
 		panelResTable.setLayout(new GridLayout(1, 1));
@@ -136,7 +144,7 @@ public class PotrerosPanel extends JPanel {
 	public void crearTablaRes() {
 
 		fillData();
-		
+
 		tablaRes = new JTable(modelRes);
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -199,13 +207,8 @@ public class PotrerosPanel extends JPanel {
 
 		}
 
-		
 		modelRes.setColumns(columns);
 		modelRes.setData(data);
-
-	}
-
-	public void mostrarHembras() {
 
 	}
 
@@ -268,19 +271,23 @@ public class PotrerosPanel extends JPanel {
 
 			if (comboHembraMacho.getSelectedIndex() == 0) {
 
-				refreshTable();
+				tablaRes.setRowSorter(null);
 
 			}
 
 			if (comboHembraMacho.getSelectedIndex() == 1) {
 
-				refreshTable();
+				sorter = new TableRowSorter<>(modelRes);
+				sorter.setRowFilter(RowFilter.regexFilter("H", 2));
+				tablaRes.setRowSorter(sorter);
 
 			}
 
 			if (comboHembraMacho.getSelectedIndex() == 2) {
 
-				refreshTable();
+				sorter = new TableRowSorter<>(modelRes);
+				sorter.setRowFilter(RowFilter.regexFilter("M", 2));
+				tablaRes.setRowSorter(sorter);
 
 			}
 
@@ -294,10 +301,14 @@ public class PotrerosPanel extends JPanel {
 				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
 
 					int row = tablaRes.getSelectedRow();
+
+					if (tablaRes.getRowSorter() != null)
+						row = tablaRes.getRowSorter().convertRowIndexToModel(row);
+
 					Res res = ResCRUD.selectResByID(modelRes.getValueAt(row, 0).toString());
 
-					if(dialogAgregarEditar == null)
-					dialogAgregarEditar = new AgregarEditarVaca(res, PotrerosPanel.this);
+					if (dialogAgregarEditar == null)
+						dialogAgregarEditar = new AgregarEditarVaca(res, PotrerosPanel.this);
 
 				}
 
@@ -377,6 +388,16 @@ public class PotrerosPanel extends JPanel {
 
 		int[] rowsSelected = tablaRes.getSelectedRows();
 
+		if (tablaRes.getRowSorter() != null) {
+
+			for (int i = 0; i < rowsSelected.length; i++) {
+
+				rowsSelected[i] = tablaRes.getRowSorter().convertRowIndexToModel(rowsSelected[i]);
+
+			}
+
+		}
+
 		int option = JOptionPane.showConfirmDialog(this,
 				"�Esta seguro que desea eliminar " + rowsSelected.length + " reses?", "Eliminar",
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -445,6 +466,12 @@ public class PotrerosPanel extends JPanel {
 
 			ex.printStackTrace();
 		}
+
+	}
+
+	public List<Res> filter(Predicate<Res> criterio, List<Res> list) {
+
+		return list.stream().filter(criterio).collect(Collectors.<Res>toList());
 
 	}
 
