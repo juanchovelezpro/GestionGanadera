@@ -409,7 +409,7 @@ public class PotrerosPanel extends JPanel {
 			potreritos[i] = potreros.get(i).getNombre();
 		}
 
-		Icon icon = new ImageIcon("");
+		Icon icon = new ImageIcon(FileManager.imagenes.get("TRASLADAR"));
 
 		String resp = (String) JOptionPane.showInputDialog(null,
 				"Seleccione el potrero al que desea trasladar las reses", "Trasladar de potrero",
@@ -421,6 +421,32 @@ public class PotrerosPanel extends JPanel {
 					"Trasladar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
 			if (option == 0) {
+
+				new Thread() {
+					BarraProgresoDialog progreso = new BarraProgresoDialog(rowsSelected.length);
+
+					int value = 0;
+
+					@Override
+					public void run() {
+
+						ArrayList<String> ids = new ArrayList<String>();
+
+						for (int i = 0; i < rowsSelected.length; i++) {
+
+							String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
+							ids.add(id);
+							value++;
+							progreso.getProgreso().setValue(value);
+
+						}
+
+						ResCRUD.trasladar(ids, potrero_elegido, resp);
+						refreshTable();
+						progreso.dispose();
+
+					}
+				}.start();
 
 			}
 		}

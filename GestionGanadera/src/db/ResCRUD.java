@@ -222,6 +222,24 @@ public class ResCRUD {
 
 	}
 
+	// Trasladar reses de un potrero a otro
+	public static void trasladar(ArrayList<String> idsRes, String potreroOrigen, String potreroDestino) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate("UPDATE res SET potreroNombre='" + potreroDestino + "' WHERE numero IN ("
+					+ SQLUtils.concatenarValores(idsRes) + ")");
+
+		} catch (SQLException ex) {
+
+			ex.printStackTrace();
+
+		}
+
+	}
+
 	// seleccion una cria
 	public static ArrayList<Res> selectCria(String madreID) {
 

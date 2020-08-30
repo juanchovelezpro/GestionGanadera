@@ -41,6 +41,7 @@ public class FileManager {
 		imagenes.put("CALENDAR", ImageLoader.cargarImagen("imagenes/calendar.png"));
 		imagenes.put("REPORTE", ImageLoader.cargarImagen("imagenes/reporte.png"));
 		imagenes.put("USUARIO", ImageLoader.cargarImagen("imagenes/usuario.png"));
+		imagenes.put("TRASLADAR", ImageLoader.cargarImagen("imagenes/trasladar.png"));
 
 	}
 
