@@ -46,6 +46,8 @@ public class InicioPanel extends JPanel {
 	private JButton btnreportePartos;
 	private Icon icono;
 	private String potreroElegido;
+	private JButton btnreporteVacuna;
+	private JButton btnreportePurgante;
 
 	public InicioPanel(VentanaPrincipal ventana) {
 
@@ -81,11 +83,14 @@ public class InicioPanel extends JPanel {
 
 		JPanel panelDerechoinfo = new JPanel();
 		panelderecho.add(panelDerechoinfo, BorderLayout.CENTER);
-		panelDerechoinfo.setLayout(new GridLayout(13, 1));
+		panelDerechoinfo.setLayout(new GridLayout(18, 1));
 
-		JLabel lblNewLabel_5 = new JLabel("                                                          ");
+		JLabel lblNewLabel_5 = new JLabel("POTREROS");
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_11 = new JLabel("");
+		panelDerechoinfo.add(lblNewLabel_11);
 
 		comboBoxPotreros = new JComboBox();
 		panelDerechoinfo.add(comboBoxPotreros);
@@ -94,24 +99,24 @@ public class InicioPanel extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel);
 
-		btnAgregar = new JButton(" Agregar ");
+		btnAgregar = new JButton(" Agregar potrero ");
 		panelDerechoinfo.add(btnAgregar);
 
 		JLabel lblNewLabel_6 = new JLabel("     ");
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_6);
 
-		btnEliminar = new JButton(" Eliminar ");
+		btnEliminar = new JButton(" Eliminar potrero");
 		panelDerechoinfo.add(btnEliminar);
 
 		JLabel lblNewLabel_7 = new JLabel("     ");
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_7);
 
-		btnBuscar = new JButton(" Buscar ");
+		btnBuscar = new JButton(" Buscar res");
 		panelDerechoinfo.add(btnBuscar);
 
-		JLabel lblNewLabel_8 = new JLabel("     ");
+		JLabel lblNewLabel_8 = new JLabel("----------------------------");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_8);
 
@@ -129,6 +134,20 @@ public class InicioPanel extends JPanel {
 		JLabel lblNewLabel_10 = new JLabel("     ");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_10);
+		
+		btnreporteVacuna = new JButton(" Reporte Vacunas ");
+		panelDerechoinfo.add(btnreporteVacuna);
+
+		JLabel lblNewLabel_13 = new JLabel("     ");
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		panelDerechoinfo.add(lblNewLabel_13);
+		
+		btnreportePurgante = new JButton(" Reporte Purgantes ");
+		panelDerechoinfo.add(btnreportePurgante);
+
+		JLabel lblNewLabel_12 = new JLabel("     ");
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		panelDerechoinfo.add(lblNewLabel_12);
 
 		JPanel panelprincipal = new JPanel();
 		panelprincipal.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -461,6 +480,18 @@ public class InicioPanel extends JPanel {
 		btnreportePartos.addActionListener(e -> {
 
 			ReporteDialog dialog = new ReporteDialog("Reporte de Partos", 2);
+
+		});
+		
+		btnreporteVacuna.addActionListener(e -> {
+
+			ReporteDialog dialog = new ReporteDialog("Reporte de Vacuna", 3);
+
+		});
+		
+		btnreportePurgante.addActionListener(e -> {
+
+			ReporteDialog dialog = new ReporteDialog("Reporte de Purgado", 4);
 
 		});
 

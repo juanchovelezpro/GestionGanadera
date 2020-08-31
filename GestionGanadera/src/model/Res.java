@@ -16,7 +16,7 @@ public class Res {
 	private String fecha_embarazo;
 	private String madreID;
 	private ArrayList<Res> crias;
-	private ArrayList<Vacuna> vacunas;
+	private Stack<Vacuna> vacunas;
 	private Stack<Purgante> purgantes;
 	private ArrayList<Peso> pesos;
 	private String fecha_ultimo_purgado;
@@ -42,7 +42,7 @@ public class Res {
 		this.potreroNombre = potreroNombre;
 
 		crias = new ArrayList<>();
-		vacunas = new ArrayList<>();
+		vacunas = new Stack<>();
 		purgantes = new Stack<>();
 		pesos = new ArrayList<>();
 	}
@@ -50,7 +50,7 @@ public class Res {
 	public Res() {
 
 		crias = new ArrayList<>();
-		vacunas = new ArrayList<>();
+		vacunas = new Stack<>();
 		purgantes = new Stack<>();
 		pesos = new ArrayList<>();
 
@@ -152,12 +152,12 @@ public class Res {
 		this.crias = crias;
 	}
 
-	public ArrayList<Vacuna> getVacunas() {
+	public Stack<Vacuna> getVacunas() {
 		return vacunas;
 	}
 
-	public void setVacunas(ArrayList<Vacuna> vacunas) {
-		this.vacunas = vacunas;
+	public void setVacunas(Stack<Vacuna> resess2) {
+		this.vacunas = resess2;
 	}
 
 	public Stack<Purgante> getPurgantes() {
@@ -206,10 +206,17 @@ public class Res {
 		return "Este atento al parto de la res: " + resID + " Del potrero: " + potreroNombre + " Con fecha de embarazo "
 				+ fecha_embarazo;
 	}
+	
+	public String toVacunas() {
+		return " Es momento de aplicar la vacuna "
+				+ vacunas.get(vacunas.size() - 1).getNombre() + " Que tuvo la dosis anterior el día "
+				+ vacunas.get(vacunas.size() - 1).getFecha() + " a la res " + resID;
+
+	}
 
 	public String toDestete() {
 
-		return "Es momento de realizar el destete a la res: " + resID + " Del potrero: " + potreroNombre
+		return "Es momento de realizar el destete a la res: " + resID + " del potrero: " + potreroNombre
 				+ " Con fecha de nacimiento " + fecha_nacimiento;
 	}
 

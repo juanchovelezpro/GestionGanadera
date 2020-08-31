@@ -31,9 +31,12 @@ public class ReporteDialog extends JDialog {
 	private ModelTable modelDestete;
 	private JTable tablaParto;
 	private ModelTable modelParto;
+	private JTable tablaPurgante;
+	private ModelTable modelPurgante;
+	private JTable tablaVacuna;
+	private ModelTable modelVacuna;
 	private JScrollPane scroller;
 	private JPanel panelinfo;
-
 
 	public ReporteDialog(String reporte, int valor) {
 
@@ -52,7 +55,6 @@ public class ReporteDialog extends JDialog {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 
 		setVisible(true);
-		
 
 	}
 
@@ -72,7 +74,7 @@ public class ReporteDialog extends JDialog {
 		int anio = fechaSystem.get(Calendar.YEAR);
 
 		fecha_Convertida = dia + "/" + mes + "/" + anio;
-		
+
 		JLabel lblNewLabel_1 = new JLabel(reporte + " - " + fecha_Convertida);
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -93,91 +95,78 @@ public class ReporteDialog extends JDialog {
 
 		// REPORTE DE INFORMACION
 
-	    panelinfo = new JPanel();
-		panelinfo.setLayout(new GridLayout(1,1));
+		panelinfo = new JPanel();
+		panelinfo.setLayout(new GridLayout(1, 1));
 
-		scroller =new JScrollPane();
+		scroller = new JScrollPane();
 
-
-		
 		JPanel panel = new JPanel();
 		panelPrincipal.add(panel, BorderLayout.SOUTH);
-		
-	     btnExportar = new JButton(" Exportar ");
-				panel.add(btnExportar);
-			
 
-				btnRegresar = new JButton(" Regresar ");
-				panel.add(btnRegresar);
+		btnExportar = new JButton(" Exportar ");
+		panel.add(btnExportar);
 
-				panelPrincipal.add(panelinfo, BorderLayout.CENTER);
+		btnRegresar = new JButton(" Regresar ");
+		panel.add(btnRegresar);
 
-
-				
-
+		panelPrincipal.add(panelinfo, BorderLayout.CENTER);
 
 	}
-	
+
 	public void elegirTabla(int valor) {
-		
-		if (valor ==1) {
+
+		if (valor == 1) {
 			crearTablaDestete();
-		}
-		else if (valor ==2) {
+		} else if (valor == 2) {
 			crearTablaPartos();
 		}
-		
+		else if (valor==4) {
+			crearTablaPurgante();
+		}
+		else if (valor ==3) {
+			crearTablaVacuna();
+		}
+
 	}
-	
+
 	public void crearTablaPartos() {
-		
 
-
-
-		String[] columns = { "NUMERO", "FECHA EMBARAZO", "TIEMPO DE EMBARAZO", "POTRERO"  };
+		String[] columns = { "NUMERO", "FECHA EMBARAZO", "TIEMPO DE EMBARAZO", "POTRERO" };
 
 		modelParto = new ModelTable();
 
-			ArrayList<Res> reses =ResCRUD.reportePartos();
-			Object[][] data = new Object[reses.size()][columns.length];
-			Res temp = null;
-			String mensaje = "";
+		ArrayList<Res> reses = ResCRUD.reportePartos();
+		Object[][] data = new Object[reses.size()][columns.length];
+		Res temp = null;
+		String mensaje = "";
 
-			for (int i = 0; i < data.length; i++) {
+		for (int i = 0; i < data.length; i++) {
 
-				temp = reses.get(i);
+			temp = reses.get(i);
 
-				for (int j = 0; j < data[0].length; j++) {
+			for (int j = 0; j < data[0].length; j++) {
 
-					if (j == 0)
-						data[i][j] = temp.getResID();
+				if (j == 0)
+					data[i][j] = temp.getResID();
 
-					if (j == 1)
-						data[i][j] = temp.getFecha_embarazo();
-					
-					if (j == 2)
-						data[i][j] = ResCRUD.calcDate(temp.getFecha_embarazo());
-					
-					if (j == 3)
-						data[i][j] = temp.getPotreroNombre();
-					
-					
-					
-					
+				if (j == 1)
+					data[i][j] = temp.getFecha_embarazo();
 
-				}
+				if (j == 2)
+					data[i][j] = ResCRUD.calcDate(temp.getFecha_embarazo());
 
-			
+				if (j == 3)
+					data[i][j] = temp.getPotreroNombre();
 
-		         
+			}
+
 			modelParto.setData(data);
 			modelParto.setColumns(columns);
 			tablaParto = new JTable(modelParto);
 			tablaParto.getColumnModel().getColumn(2).setPreferredWidth(140);
 			tablaParto.getColumnModel().getColumn(1).setPreferredWidth(120);
-			//tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+			// tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
-                
 			tablaParto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaParto.setShowHorizontalLines(true);
 			tablaParto.setShowVerticalLines(true);
@@ -185,77 +174,165 @@ public class ReporteDialog extends JDialog {
 			scroller.setViewportView(tablaParto);
 			tablaParto.setFillsViewportHeight(true);
 			panelinfo.add(scroller);
-			
-			}
-			
-
 
 		}
-	
-	public void crearTablaDestete() {
+
+	}
+
+	public void crearTablaPurgante() {
+
+		String[] columns = { "NUMERO", "PURGANTE", "ULTIMA FECHA", "POTRERO" };
+
+		modelPurgante = new ModelTable();
+
+		ArrayList<Res> reses = ResCRUD.reportePurgado();
+		Object[][] data = new Object[reses.size()][columns.length];
+		Res temp = null;
+		String mensaje = "";
+
+		for (int i = 0; i < data.length; i++) {
+
+			temp = reses.get(i);
+
+			for (int j = 0; j < data[0].length; j++) {
+
+				if (j == 0)
+					data[i][j] = temp.getResID();
+
+				if (j == 1)
+					data[i][j] = temp.getPurgantes().peek().getNombre();
+
+				if (j == 2)
+					data[i][j] = temp.getPurgantes().peek().getFecha();
+
+				if (j == 3)
+					data[i][j] = temp.getPotreroNombre();
+
+			}
+                 
+			modelPurgante.setData(data);
+			modelPurgante.setColumns(columns);
+			tablaPurgante = new JTable(modelPurgante);
+			tablaPurgante.getColumnModel().getColumn(2).setPreferredWidth(140);
+			tablaPurgante.getColumnModel().getColumn(1).setPreferredWidth(120);
+			// tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+
+			tablaPurgante.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaPurgante.setShowHorizontalLines(true);
+			tablaPurgante.setShowVerticalLines(true);
+			tablaPurgante.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+			scroller.setViewportView(tablaPurgante);
+			tablaPurgante.setFillsViewportHeight(true);
+			panelinfo.add(scroller);
+
+		}
+
+	}
+
+	public void crearTablaVacuna() {
+
+		String[] columns = { "NUMERO", "VACUNA", "ULTIMA FECHA", "POTRERO" };
+
+		modelVacuna = new ModelTable();
+
 		
+		ArrayList<Res> reses = ResCRUD.reporteVacunaNotificaciones();
+		
+		Object[][] data = new Object[reses.size()][columns.length];
+		Res temp = null;
+		String mensaje = "";
 
+		for (int i = 0; i < data.length; i++) {
 
+			temp = reses.get(i);
 
-			String[] columns = { "NUMERO", "NACIMIENTO", "TIEMPO DE CRÍA", "MADRE", "POTRERO"  };
+			for (int j = 0; j < data[0].length; j++) {
 
-			modelDestete = new ModelTable();
+				if (j == 0)
+					data[i][j] = temp.getResID();
 
-				ArrayList<Res> reses =ResCRUD.reporteDestete();
-				Object[][] data = new Object[reses.size()][columns.length];
-				Res temp = null;
-				String mensaje = "";
+				if (j == 1)
+					data[i][j] = temp.getVacunas().peek().getNombre();
 
-				for (int i = 0; i < data.length; i++) {
+				if (j == 2)
+					data[i][j] = temp.getVacunas().peek().getFecha();
 
-					temp = reses.get(i);
-
-					for (int j = 0; j < data[0].length; j++) {
-
-						if (j == 0)
-							data[i][j] = temp.getResID();
-
-						if (j == 1)
-							data[i][j] = temp.getFecha_nacimiento();
-						
-						if (j == 2)
-							data[i][j] = ResCRUD.calcDate(temp.getFecha_nacimiento());
-						
-						if (j == 3)
-							data[i][j] = temp.getMadreID();
-						
-						if (j == 4)
-							data[i][j] = temp.getPotreroNombre();
-						
-						
-
-					}
-
-				
-
-			
-				modelDestete.setData(data);
-				modelDestete.setColumns(columns);
-				tablaDestete = new JTable(modelDestete);
-				tablaDestete.getColumnModel().getColumn(2).setPreferredWidth(140);
-				tablaDestete.getColumnModel().getColumn(1).setPreferredWidth(120);
-				//tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-
-
-				tablaDestete.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				tablaDestete.setShowHorizontalLines(true);
-				tablaDestete.setShowVerticalLines(true);
-				tablaDestete.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
-				scroller.setViewportView(tablaDestete);
-				tablaDestete.setFillsViewportHeight(true);
-				panelinfo.add(scroller);
-				
-
+				if (j == 3)
+					data[i][j] = temp.getPotreroNombre();
 
 			}
 
+			modelVacuna.setData(data);
+			modelVacuna.setColumns(columns);
+			tablaVacuna = new JTable(modelVacuna);
+			tablaVacuna.getColumnModel().getColumn(2).setPreferredWidth(140);
+			tablaVacuna.getColumnModel().getColumn(1).setPreferredWidth(120);
+			// tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+
+			tablaVacuna.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaVacuna.setShowHorizontalLines(true);
+			tablaVacuna.setShowVerticalLines(true);
+			tablaVacuna.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+			scroller.setViewportView(tablaVacuna);
+			tablaVacuna.setFillsViewportHeight(true);
+			panelinfo.add(scroller);
+
 		}
-	
+
+	}
+
+	public void crearTablaDestete() {
+
+		String[] columns = { "NUMERO", "NACIMIENTO", "TIEMPO DE CRÍA", "MADRE", "POTRERO" };
+
+		modelDestete = new ModelTable();
+
+		ArrayList<Res> reses = ResCRUD.reporteDestete();
+		Object[][] data = new Object[reses.size()][columns.length];
+		Res temp = null;
+		String mensaje = "";
+
+		for (int i = 0; i < data.length; i++) {
+
+			temp = reses.get(i);
+
+			for (int j = 0; j < data[0].length; j++) {
+
+				if (j == 0)
+					data[i][j] = temp.getResID();
+
+				if (j == 1)
+					data[i][j] = temp.getFecha_nacimiento();
+
+				if (j == 2)
+					data[i][j] = ResCRUD.calcDate(temp.getFecha_nacimiento());
+
+				if (j == 3)
+					data[i][j] = temp.getMadreID();
+
+				if (j == 4)
+					data[i][j] = temp.getPotreroNombre();
+
+			}
+
+			modelDestete.setData(data);
+			modelDestete.setColumns(columns);
+			tablaDestete = new JTable(modelDestete);
+			tablaDestete.getColumnModel().getColumn(2).setPreferredWidth(140);
+			tablaDestete.getColumnModel().getColumn(1).setPreferredWidth(120);
+			// tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+
+			tablaDestete.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaDestete.setShowHorizontalLines(true);
+			tablaDestete.setShowVerticalLines(true);
+			tablaDestete.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+			scroller.setViewportView(tablaDestete);
+			tablaDestete.setFillsViewportHeight(true);
+			panelinfo.add(scroller);
+
+		}
+
+	}
 
 	public void listeners() {
 
@@ -270,7 +347,6 @@ public class ReporteDialog extends JDialog {
 		});
 
 	}
-
 
 	public JButton getBtnExportar() {
 		return btnExportar;

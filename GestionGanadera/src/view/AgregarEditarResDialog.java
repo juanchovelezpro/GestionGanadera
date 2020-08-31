@@ -491,7 +491,7 @@ public class AgregarEditarResDialog extends JDialog {
 
 		if (res != null) {
 
-			ArrayList<Vacuna> vacunas = ResCRUD.selectVacunas(res.getResID());
+			Stack<Vacuna> vacunas = ResCRUD.selectVacunas(res.getResID());
 			Object[][] data = new Object[vacunas.size()][columns.length];
 
 			for (int i = 0; i < data.length; i++) {

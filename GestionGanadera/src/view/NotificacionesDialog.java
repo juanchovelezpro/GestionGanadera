@@ -10,7 +10,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -25,6 +27,7 @@ import javax.swing.SwingConstants;
 import db.ResCRUD;
 import model.Purgante;
 import model.Res;
+import model.Vacuna;
 import tools.FileManager;
 
 public class NotificacionesDialog extends JDialog {
@@ -38,6 +41,7 @@ public class NotificacionesDialog extends JDialog {
 	private JList<Res> list;
 	private JScrollPane listScroller;
 	DefaultListModel<Res> modelo;
+	private JButton btnVacunas;
 
 	public NotificacionesDialog(PotrerosPanel ventana) {
 
@@ -45,7 +49,7 @@ public class NotificacionesDialog extends JDialog {
 
 		setTitle("Notificaciones");
 
-		setLayout(new BorderLayout(0, 0));
+		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		setSize(605, 452);
 		setLocationRelativeTo(null);
@@ -63,10 +67,10 @@ public class NotificacionesDialog extends JDialog {
 		JLabel lblNewLabel_2 = new JLabel("Eventos Proximos");
 		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblNewLabel_2, BorderLayout.NORTH);
+		getContentPane().add(lblNewLabel_2, BorderLayout.NORTH);
 
 		JPanel panel_1 = new JPanel();
-		add(panel_1, BorderLayout.SOUTH);
+		getContentPane().add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new GridLayout(1, 3));
 		panel_1.add(label);
 
@@ -77,8 +81,8 @@ public class NotificacionesDialog extends JDialog {
 		panel_1.add(lblNewLabel_3);
 
 		JPanel panel = new JPanel();
-		add(panel, BorderLayout.WEST);
-		panel.setLayout(new GridLayout(10, 1));
+		getContentPane().add(panel, BorderLayout.WEST);
+		panel.setLayout(new GridLayout(11, 1));
 
 		JLabel lblNewLabel = new JLabel("");
 		panel.add(lblNewLabel);
@@ -100,10 +104,18 @@ public class NotificacionesDialog extends JDialog {
 
 		btnPurgado = new JButton("Purgado");
 		panel.add(btnPurgado);
+		
+		
+		JLabel lblNewLabel_8 = new JLabel("");
+		panel.add(lblNewLabel_8);
+		
+		btnVacunas = new JButton("Vacunas");
+		panel.add(btnVacunas);
+		
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(new BorderLayout());
-		add(panel_2, BorderLayout.EAST);
+		getContentPane().add(panel_2, BorderLayout.EAST);
 
 		list = new JList<Res>();
 		modelo = new DefaultListModel<Res>();
@@ -141,6 +153,12 @@ public class NotificacionesDialog extends JDialog {
 			purgado();
 
 		});
+		
+		btnVacunas.addActionListener(e -> {
+
+			vacunas();
+
+		});
 
 		btnRegresar.addActionListener(e -> {
 
@@ -149,6 +167,106 @@ public class NotificacionesDialog extends JDialog {
 		});
 
 	}
+	
+	public void vacunas() {
+		
+		modelo.clear();
+
+		ArrayList<Res> reses = ResCRUD.reporteVacunaNotificaciones();
+		System.out.println(reses.size());
+
+		list.setCellRenderer(new RenderizadoVacuna());
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			modelo.addElement(reses.get(i));
+
+		}
+
+		list.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent evt) {
+				if (evt.getButton() == MouseEvent.BUTTON3) {
+
+					List<Res> selectedValuesList = list.getSelectedValuesList();
+
+					System.out.println(selectedValuesList.size() + "jeje");
+
+					int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+
+					if (valor == JOptionPane.YES_OPTION) {
+
+
+						CalendarioDialog calendario = new CalendarioDialog(null);
+
+						
+
+							SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+							String fecha = format.format(calendario.getCalendar().getDate());
+							System.out.println("dsdasadd");
+							Res res = null;
+							Vacuna vacuna = null;
+							HashMap<Res, Vacuna> mapa =new HashMap<>();
+							BarraProgresoDialog progreso =new BarraProgresoDialog(selectedValuesList.size());
+
+
+							for (int i = 0; i < selectedValuesList.size(); i++) {
+
+								System.out.println("dsadada");
+								System.out.println(selectedValuesList.get(i).getResID());
+								res = selectedValuesList.get(i);
+								
+								vacuna = ResCRUD.selectVacunas(res.getResID()).peek();
+								mapa.put(res, vacuna);
+							}
+						
+							new Thread(){
+
+								int value =0;
+								@Override
+								public void run() {
+									
+									
+									
+								     for (Map.Entry<Res, Vacuna> entry: mapa.entrySet()) {
+										
+									
+
+										ResCRUD.insertVacuna(entry.getKey().getResID(), entry.getValue().getNombre(), fecha);
+										modelo.removeElement(list.getSelectedValue());
+										value++;
+										progreso.getProgreso().setValue(value);
+
+								     }
+
+								}
+								
+							}.start();
+							
+			
+
+						// ResCRUD.insertPurgante(res.getResID(),purgante.getNombre(),
+						// ResCRUD.fecha_sistema().toString() );
+
+						// System.out.println("actualizado");
+
+						// ResCRUD.update(res.getResID(), res);
+						// modelo.removeElement(list.getSelectedValue());
+
+						ventana.refreshTable();
+					}
+
+				}
+
+			}
+
+		});
+
+	}
+		
+
 
 	public void purgado() {
 
@@ -179,27 +297,55 @@ public class NotificacionesDialog extends JDialog {
 
 					if (valor == JOptionPane.YES_OPTION) {
 
+
 						CalendarioDialog calendario = new CalendarioDialog(null);
 
-						calendario.getBtnSeleccionarFecha().addActionListener(e -> {
-
-							Res res = null;
-							Purgante purgante = null;
+						
 
 							SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
 							String fecha = format.format(calendario.getCalendar().getDate());
+							System.out.println("dsdasadd");
+							Res res = null;
+							Purgante purgante = null;
+							HashMap<Res, Purgante> mapa =new HashMap<>();
+							BarraProgresoDialog progreso =new BarraProgresoDialog(selectedValuesList.size());
+
+
 							for (int i = 0; i < selectedValuesList.size(); i++) {
 
+								System.out.println("dsadada");
+								System.out.println(selectedValuesList.get(i).getResID());
 								res = selectedValuesList.get(i);
-								purgante = ResCRUD.selectPurgantes(res.getResID()).pop();
-
-								ResCRUD.insertPurgante(res.getResID(), purgante.getNombre(), fecha);
-								modelo.removeElement(list.getSelectedValue());
-
+								
+								purgante = ResCRUD.selectPurgantes(res.getResID()).peek();
+								mapa.put(res, purgante);
 							}
+						
+							new Thread(){
 
-						});
+								int value =0;
+								@Override
+								public void run() {
+									
+									
+									
+								     for (Map.Entry<Res, Purgante> entry: mapa.entrySet()) {
+										
+									
+
+										ResCRUD.insertPurgante(entry.getKey().getResID(), entry.getValue().getNombre(), fecha);
+										modelo.removeElement(list.getSelectedValue());
+										value++;
+										progreso.getProgreso().setValue(value);
+
+								     }
+
+								}
+								
+							}.start();
+							
+			
 
 						// ResCRUD.insertPurgante(res.getResID(),purgante.getNombre(),
 						// ResCRUD.fecha_sistema().toString() );

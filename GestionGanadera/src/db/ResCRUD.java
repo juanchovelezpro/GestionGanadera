@@ -346,6 +346,7 @@ public class ResCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
+			VacunaCRUD.insert(vacunaNombre);
 			sql.getStatement().executeUpdate("INSERT INTO res_tiene_vacunas (resID,vacunaNombre,fecha) VALUES ('"
 					+ resID + "','" + vacunaNombre + "','" + fecha + "')");
 		} catch (SQLException e) {
@@ -356,10 +357,11 @@ public class ResCRUD {
 	}
 
 	// seleccionar Vacuna
-	public static ArrayList<Vacuna> selectVacunas(String resID) {
+	public static Stack<Vacuna> selectVacunas(String resID) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 		ArrayList<Vacuna> vacunas = new ArrayList<Vacuna>();
+		Stack<Vacuna> vacunas2 = new Stack<Vacuna>();
 
 		try {
 			ResultSet result = sql.getStatement()
@@ -373,6 +375,7 @@ public class ResCRUD {
 				Vacuna vacuna_Actual = new Vacuna(vacuna_Nombre);
 				vacuna_Actual.setFecha(fecha);
 				vacunas.add(vacuna_Actual);
+				vacunas2.push(vacuna_Actual);
 
 			}
 
@@ -381,7 +384,7 @@ public class ResCRUD {
 			e.printStackTrace();
 		}
 
-		return vacunas;
+		return vacunas2;
 
 	}
 
@@ -390,6 +393,7 @@ public class ResCRUD {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
+		
 		try {
 			sql.getStatement()
 					.executeUpdate("UPDATE res_tiene_vacunas SET vacunaNombre='" + vacuna.getNombre() + "', fecha='"
@@ -533,6 +537,8 @@ public class ResCRUD {
 		return vacas_destete;
 
 	}
+	
+	
 
 	public static ArrayList<Res> reportePartos() {
 
@@ -632,7 +638,7 @@ public class ResCRUD {
 
 							long dias = diasEntreFechas(ultimo.getFecha());
 
-							if (dias < 20 && resess.size() % 2 != 0) {
+							if (dias > 10 && resess.size() % 2 != 0) {
 
 								reses_purgado.add(res);
 
@@ -648,6 +654,56 @@ public class ResCRUD {
 		}
 
 		return reses_purgado;
+
+	}
+	
+	public static ArrayList<Res> reporteVacunaNotificaciones() {
+
+		ArrayList<Res> reses_vacuna = new ArrayList<>();
+
+		ArrayList<Res> reses = select();
+
+		Res res = null;
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			res = reses.get(i);
+
+			Stack<Vacuna> resess = selectVacunas(res.getResID());
+			res.setVacunas(resess);
+
+			if (resess != null) {
+
+				int tamanio = resess.size();
+
+				if (tamanio > 0) {
+					Vacuna ultimo = resess.peek();
+
+					if (ultimo != null) {
+
+						// if (selectPurgantes(res.getResID()).peek()!=null) {
+
+						if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
+
+							long dias = diasEntreFechas(ultimo.getFecha());
+							long meses=mesesEntreFechas(ultimo.getFecha());
+
+							if (dias < 195 && meses == 6) {
+
+								reses_vacuna.add(res);
+
+							}
+						}
+						// }
+
+					}
+
+				}
+			}
+
+		}
+
+		return reses_vacuna;
 
 	}
 
