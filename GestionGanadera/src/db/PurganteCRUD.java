@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Purgante;
+import model.Vacuna;
 
 public class PurganteCRUD {
 
@@ -72,6 +73,32 @@ public class PurganteCRUD {
 
 			e.printStackTrace();
 		}
+
+	}
+
+	public static Purgante selectPurganteByNombre(String nombre) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+		Purgante purgante = null;
+		try {
+
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT nombre FROM purgantes WHERE nombre = '" + nombre + "'");
+
+			while (result.next()) {
+
+				String pNombre = result.getString(1);
+				purgante = new Purgante(pNombre);
+
+			}
+
+		} catch (SQLException ex) {
+
+			ex.printStackTrace();
+
+		}
+
+		return purgante;
 
 	}
 

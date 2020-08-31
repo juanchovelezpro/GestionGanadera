@@ -42,6 +42,8 @@ public class FileManager {
 		imagenes.put("REPORTE", ImageLoader.cargarImagen("imagenes/reporte.png"));
 		imagenes.put("USUARIO", ImageLoader.cargarImagen("imagenes/usuario.png"));
 		imagenes.put("TRASLADAR", ImageLoader.cargarImagen("imagenes/trasladar.png"));
+		imagenes.put("VACUNA", ImageLoader.cargarImagen("imagenes/vacuna.png"));
+		imagenes.put("PURGANTE", ImageLoader.cargarImagen("imagenes/purgante.png"));
 
 	}
 

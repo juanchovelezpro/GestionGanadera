@@ -59,6 +59,32 @@ public class VacunaCRUD {
 
 	}
 
+	public static Vacuna selectVacunaByNombre(String nombre) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+		Vacuna vacuna = null;
+		try {
+
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT nombre FROM vacunas WHERE nombre = '" + nombre + "'");
+
+			while (result.next()) {
+
+				String vNombre = result.getString(1);
+				vacuna = new Vacuna(vNombre);
+
+			}
+
+		} catch (SQLException ex) {
+
+			ex.printStackTrace();
+
+		}
+
+		return vacuna;
+
+	}
+
 	public static void deleteVacunaRes(ArrayList<String> idsRes) {
 
 		SQLConnection sql = SQLConnection.getInstance();

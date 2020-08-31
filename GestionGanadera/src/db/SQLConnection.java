@@ -20,6 +20,7 @@ public class SQLConnection {
 			FileManager.createDirectoryProject();
 			connection = DriverManager.getConnection("jdbc:sqlite:" + FileManager.PATH + "database.db");
 			statement = connection.createStatement();
+
 		} catch (SQLException e) {
 
 			System.err.println(e.getMessage());
@@ -63,6 +64,9 @@ public class SQLConnection {
 					"CREATE TABLE \"res_tiene_purgantes\" ( \"id\" INTEGER UNIQUE, \"resID\" TEXT, \"purganteNombre\" TEXT, \"fecha\" TEXT, FOREIGN KEY(\"purganteNombre\") REFERENCES \"purgantes\"(\"nombre\"), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\"), PRIMARY KEY(\"id\" AUTOINCREMENT) )");
 			statement.executeUpdate(
 					"CREATE TABLE \"res_tiene_vacunas\" ( \"id\" INTEGER UNIQUE, \"resID\" TEXT, \"vacunaNombre\" TEXT, \"fecha\" TEXT, PRIMARY KEY(\"id\" AUTOINCREMENT), FOREIGN KEY(\"vacunaNombre\") REFERENCES \"vacunas\"(\"nombre\"), FOREIGN KEY(\"resID\") REFERENCES \"res\"(\"numero\") )");
+
+			// Para activar errores de "Foreign key constraint"
+			statement.executeUpdate("PRAGMA foreign_keys = ON; ");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

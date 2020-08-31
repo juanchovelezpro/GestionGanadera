@@ -27,10 +27,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import db.PotreroCRUD;
+import db.PurganteCRUD;
 import db.ResCRUD;
 import db.SQLUtils;
+import db.VacunaCRUD;
 import model.Potrero;
+import model.Purgante;
 import model.Res;
+import model.Vacuna;
 import tools.DocsImporter;
 import tools.FileManager;
 
@@ -41,8 +45,6 @@ public class PotrerosPanel extends JPanel {
 	private ArrayList<Res> ganado;
 	private JComboBox comboHembraMacho;
 	private JButton btnAgregar;
-	private JButton btnReporteVacunas;
-	private JButton btnReportePurgantes;
 	private JButton btnNotificaciones;
 	private JLabel lblNombrePotrero;
 	private JPanel panelResTable;
@@ -53,6 +55,11 @@ public class PotrerosPanel extends JPanel {
 	private String potrero_elegido;
 	private JButton btnRegresar;
 	private JButton btnImportar;
+	private JButton btnAgregarPurgante;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_2;
+	private JButton btnPlantilla;
+	private JButton btnAgregarVacuna;
 
 	public PotrerosPanel(InicioPanel inicio, String potreroelegido) {
 
@@ -96,8 +103,8 @@ public class PotrerosPanel extends JPanel {
 		lblCantVacas.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panelSuperior.add(lblCantVacas);
 
-		JLabel lblNewLabel_1 = new JLabel("");
-		panelSuperior.add(lblNewLabel_1);
+		btnPlantilla = new JButton("Plantilla");
+		panelSuperior.add(btnPlantilla);
 
 		btnImportar = new JButton("Importar Datos");
 		panelSuperior.add(btnImportar);
@@ -109,20 +116,20 @@ public class PotrerosPanel extends JPanel {
 		add(panelInferior, BorderLayout.SOUTH);
 		panelInferior.setLayout(new GridLayout(1, 6));
 
-		btnAgregar = new JButton("Agregar vaca");
-		panelInferior.add(btnAgregar);
-
-		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel = new JLabel("");
 		panelInferior.add(lblNewLabel);
 
-		btnReporteVacunas = new JButton("Reporte Vacunaci\u00F3n");
-		panelInferior.add(btnReporteVacunas);
+		btnAgregarPurgante = new JButton("Agregar Purgante");
+		panelInferior.add(btnAgregarPurgante);
 
-		JLabel lblNewLabel_3 = new JLabel("");
-		panelInferior.add(lblNewLabel_3);
+		btnAgregar = new JButton("Agregar Res");
+		panelInferior.add(btnAgregar);
 
-		btnReportePurgantes = new JButton("Reporte Desparasitar");
-		panelInferior.add(btnReportePurgantes);
+		btnAgregarVacuna = new JButton("Agregar Vacuna");
+		panelInferior.add(btnAgregarVacuna);
+
+		lblNewLabel_2 = new JLabel("");
+		panelInferior.add(lblNewLabel_2);
 
 		panelResTable = new JPanel();
 		scroller = new JScrollPane();
@@ -248,19 +255,56 @@ public class PotrerosPanel extends JPanel {
 
 		});
 
-		btnReportePurgantes.addActionListener(e -> {
-
-		});
-
-		btnReporteVacunas.addActionListener(e -> {
-
-		});
-
 		// Importar el documento de excel.
 		btnImportar.addActionListener(e -> {
 
 			importarDatos();
 			refreshTable();
+
+		});
+
+		btnPlantilla.addActionListener(e -> {
+
+		});
+
+		btnAgregarVacuna.addActionListener(e -> {
+
+			String vacuna = JOptionPane.showInputDialog(null, "Ingrese el nombre de la vacuna", "Agregar Vacuna",
+					JOptionPane.INFORMATION_MESSAGE);
+
+			if (vacuna != null && !vacuna.equals("")) {
+				if (VacunaCRUD.selectVacunaByNombre(vacuna) == null) {
+					VacunaCRUD.insert(vacuna);
+				} else {
+					JOptionPane.showMessageDialog(null, "La vacuna " + vacuna + " ya se encuentra agregada",
+							"Vacuna ya agregada", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+
+				JOptionPane.showMessageDialog(null, "Debe ingresar un nombre a la vacuna", "No agregada",
+						JOptionPane.ERROR_MESSAGE);
+
+			}
+		});
+
+		btnAgregarPurgante.addActionListener(e -> {
+
+			String purgante = JOptionPane.showInputDialog(null, "Ingrese el nombre del purgante", "Agregar Purgante",
+					JOptionPane.INFORMATION_MESSAGE);
+
+			if (purgante != null && !purgante.equals("")) {
+				if (PurganteCRUD.selectPurganteByNombre(purgante) == null) {
+					PurganteCRUD.insert(purgante);
+				} else {
+					JOptionPane.showMessageDialog(null, "El purgante " + purgante + " ya se encuentra agregado",
+							"Purgante ya agregado", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+
+				JOptionPane.showMessageDialog(null, "Debe ingresar un nombre al purgante", "No agregado",
+						JOptionPane.ERROR_MESSAGE);
+
+			}
 
 		});
 
@@ -331,12 +375,12 @@ public class PotrerosPanel extends JPanel {
 
 		JMenuItem vacunar = new JMenuItem("Vacunar");
 		vacunar.addActionListener(a -> {
-
+			vacunar();
 		});
 
 		JMenuItem purgar = new JMenuItem("Purgar");
 		purgar.addActionListener(a -> {
-
+			purgar();
 		});
 
 		JMenuItem trasladar = new JMenuItem("Trasladar");
@@ -381,9 +425,141 @@ public class PotrerosPanel extends JPanel {
 
 	public void vacunar() {
 
+		int[] rowsSelected = tablaRes.getSelectedRows();
+
+		// Por si se encuentra "sorted or filtered" la tabla
+		if (tablaRes.getRowSorter() != null) {
+
+			for (int i = 0; i < rowsSelected.length; i++) {
+
+				rowsSelected[i] = tablaRes.getRowSorter().convertRowIndexToModel(rowsSelected[i]);
+
+			}
+
+		}
+
+		ArrayList<Vacuna> vacunas = VacunaCRUD.select();
+		String[] vacunitas = new String[vacunas.size()];
+
+		for (int i = 0; i < vacunitas.length; i++) {
+			vacunitas[i] = vacunas.get(i).getNombre();
+		}
+
+		Icon icon = new ImageIcon(FileManager.imagenes.get("VACUNA"));
+
+		String resp = (String) JOptionPane.showInputDialog(null, "Seleccione la vacuna que desea aplicar a las reses",
+				"Vacunar ganado", JOptionPane.DEFAULT_OPTION, icon, vacunitas, null);
+
+		if (resp != null) {
+			CalendarioDialog cal = new CalendarioDialog(null);
+			String fecha = cal.getFechaSeleccionada();
+
+			if (fecha != null && !fecha.equals("")) {
+
+				int option = JOptionPane.showConfirmDialog(this,
+						"\u00BFESTA SEGURO QUE DESEA VACUNAR " + rowsSelected.length + " RESES CON LA VACUNA " + resp
+								+ " CON FECHA " + fecha + "" + "?",
+						"ADVERTENCIA", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+				if (option == 0) {
+
+					new Thread() {
+						BarraProgresoDialog progreso = new BarraProgresoDialog(rowsSelected.length);
+
+						int value = 0;
+
+						@Override
+						public void run() {
+
+							for (int i = 0; i < rowsSelected.length; i++) {
+
+								String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
+
+								ResCRUD.insertVacuna(id, resp, fecha);
+								value++;
+								progreso.getProgreso().setValue(value);
+
+							}
+
+							progreso.dispose();
+							JOptionPane.showMessageDialog(null, "Se ha realizado con exito la vacunacion",
+									"Vacunacion Exitosa", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}.start();
+
+				}
+			}
+		}
+
 	}
 
 	public void purgar() {
+
+		int[] rowsSelected = tablaRes.getSelectedRows();
+
+		// Por si se encuentra "sorted or filtered" la tabla
+		if (tablaRes.getRowSorter() != null) {
+
+			for (int i = 0; i < rowsSelected.length; i++) {
+
+				rowsSelected[i] = tablaRes.getRowSorter().convertRowIndexToModel(rowsSelected[i]);
+
+			}
+
+		}
+
+		ArrayList<Purgante> purgantes = PurganteCRUD.select();
+		String[] purganticos = new String[purgantes.size()];
+
+		for (int i = 0; i < purganticos.length; i++) {
+			purganticos[i] = purgantes.get(i).getNombre();
+		}
+
+		Icon icon = new ImageIcon(FileManager.imagenes.get("PURGANTE"));
+
+		String resp = (String) JOptionPane.showInputDialog(null, "Seleccione el purgante que desea aplicar a las reses",
+				"Purgar ganado", JOptionPane.DEFAULT_OPTION, icon, purganticos, null);
+
+		if (resp != null) {
+			CalendarioDialog cal = new CalendarioDialog(null);
+			String fecha = cal.getFechaSeleccionada();
+
+			if (fecha != null && !fecha.equals("")) {
+
+				int option = JOptionPane.showConfirmDialog(this,
+						"\u00BFESTA SEGURO QUE DESEA PURGAR " + rowsSelected.length + " RESES CON EL PURGANTE " + resp
+								+ " CON FECHA " + fecha + "" + "?",
+						"ADVERTENCIA", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+				if (option == 0) {
+
+					new Thread() {
+						BarraProgresoDialog progreso = new BarraProgresoDialog(rowsSelected.length);
+
+						int value = 0;
+
+						@Override
+						public void run() {
+
+							for (int i = 0; i < rowsSelected.length; i++) {
+
+								String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
+
+								ResCRUD.insertPurgante(id, resp, fecha);
+								value++;
+								progreso.getProgreso().setValue(value);
+
+							}
+
+							progreso.dispose();
+							JOptionPane.showMessageDialog(null, "Se ha realizado con exito el purgado",
+									"Purgado Exitoso", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}.start();
+
+				}
+			}
+		}
 
 	}
 
@@ -413,7 +589,7 @@ public class PotrerosPanel extends JPanel {
 
 		String resp = (String) JOptionPane.showInputDialog(null,
 				"Seleccione el potrero al que desea trasladar las reses", "Trasladar de potrero",
-				JOptionPane.DEFAULT_OPTION, icon, potreritos, potreritos[0]);
+				JOptionPane.DEFAULT_OPTION, icon, potreritos, null);
 
 		if (resp != null) {
 			int option = JOptionPane.showConfirmDialog(this,
@@ -564,14 +740,6 @@ public class PotrerosPanel extends JPanel {
 		return btnAgregar;
 	}
 
-	public JButton getBtnReporteDestete() {
-		return btnReporteVacunas;
-	}
-
-	public JButton getBtnReportePartos() {
-		return btnReportePurgantes;
-	}
-
 	public JButton getBtnNotificaciones() {
 		return btnNotificaciones;
 	}
@@ -586,5 +754,17 @@ public class PotrerosPanel extends JPanel {
 
 	public JButton getBtnImportar() {
 		return btnImportar;
+	}
+
+	public JButton getBtnPlantilla() {
+		return btnPlantilla;
+	}
+
+	public JButton getBtnAgregarPurgante() {
+		return btnAgregarPurgante;
+	}
+
+	public JButton getBtnAgregarVacuna() {
+		return btnAgregarVacuna;
 	}
 }
