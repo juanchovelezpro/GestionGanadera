@@ -829,26 +829,22 @@ public class ResCRUD {
 		int months = (int) Math.abs(Math.floor(days / 30));
 		int years = (int) Math.abs(Math.floor(months / 12));
 
-		if ((days == 0 && months == 0 && years == 0) || fechauno.compareTo(fechaactual) == 1) {
 
-			message = "Esta acción tuvo que realizarse el " + date1;
-		}
-
-		else if (months == 0) {
+		if (months == 0) {
 			message = "";
-			message += " Faltan ";
+			//message += " Faltan ";
 			message += days + " dias ";
 
 		} else if (months != 0 && years == 0) {
 			message = "";
-			message += " Faltan ";
+			//message += " Faltan ";
 			message += months + " meses y ";
 			int diasres = days - (months * 30);
 			message += diasres + " dias ";
 
 		} else if (years != 0) {
 			message = "";
-			message += " Faltan ";
+			//message += " Faltan ";
 			message += years + " años y ";
 			int mesesres = months - (years * 12);
 			message += mesesres + " meses ";

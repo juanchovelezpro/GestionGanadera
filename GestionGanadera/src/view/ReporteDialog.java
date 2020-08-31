@@ -3,40 +3,56 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
+import db.ResCRUD;
+import model.Peso;
+import model.Res;
 import tools.FileManager;
 
 public class ReporteDialog extends JDialog {
-
-	private JLabel labelFecha;
 	private JButton btnExportar;
 	private JButton btnRegresar;
 	private String reporte;
 	private Calendar fechaSystem;
 	private String fecha_Convertida;
+	private JTable tablaDestete;
+	private ModelTable modelDestete;
+	private JTable tablaParto;
+	private ModelTable modelParto;
+	private JScrollPane scroller;
+	private JPanel panelinfo;
 
-	public ReporteDialog(String reporte) {
+
+	public ReporteDialog(String reporte, int valor) {
 
 		this.reporte = reporte;
 		setTitle("Reporte");
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		setSize(450, 300);
+		setSize(647, 396);
 		setIconImage(FileManager.imagenes.get("REPORTE"));
 		setLocationRelativeTo(null);
 
 		Components();
+		elegirTabla(valor);
+
 		listeners();
 
 		setModalityType(ModalityType.APPLICATION_MODAL);
+
 		setVisible(true);
+		
 
 	}
 
@@ -49,7 +65,15 @@ public class ReporteDialog extends JDialog {
 		JLabel lblNewLabel = new JLabel("     ");
 		panelTexto.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel(reporte);
+		fechaSystem = new GregorianCalendar();
+
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		fecha_Convertida = dia + "/" + mes + "/" + anio;
+		
+		JLabel lblNewLabel_1 = new JLabel(reporte + " - " + fecha_Convertida);
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panelTexto.add(lblNewLabel_1);
@@ -69,75 +93,169 @@ public class ReporteDialog extends JDialog {
 
 		// REPORTE DE INFORMACION
 
-		JPanel panelinformacion = new JPanel();
-		panelPrincipal.add(panelinformacion, BorderLayout.CENTER);
-		panelinformacion.setLayout(new GridLayout(6, 3));
+	    panelinfo = new JPanel();
+		panelinfo.setLayout(new GridLayout(1,1));
 
-		JLabel lblNewLabel_5 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_5);
+		scroller =new JScrollPane();
 
-		fechaSystem = new GregorianCalendar();
 
-		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
-		int mes = fechaSystem.get(Calendar.MONTH) + 1;
-		int anio = fechaSystem.get(Calendar.YEAR);
+		
+		JPanel panel = new JPanel();
+		panelPrincipal.add(panel, BorderLayout.SOUTH);
+		
+	     btnExportar = new JButton(" Exportar ");
+				panel.add(btnExportar);
+			
 
-		fecha_Convertida = dia + "/" + mes + "/" + anio;
+				btnRegresar = new JButton(" Regresar ");
+				panel.add(btnRegresar);
 
-		labelFecha = new JLabel(fecha_Convertida);
-		labelFecha.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
-		labelFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		panelinformacion.add(labelFecha);
+				panelPrincipal.add(panelinfo, BorderLayout.CENTER);
 
-		JLabel lblNewLabel_20 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_20);
 
-		JLabel lblNewLabel_12 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_12);
+				
 
-		JLabel lblNewLabel_11 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_11);
-
-		JLabel lblNewLabel_17 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_17);
-
-		JLabel lblNewLabel_18 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_18);
-
-		btnExportar = new JButton(" Exportar ");
-		panelinformacion.add(btnExportar);
-
-		JLabel lblNewLabel_16 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_16);
-
-		JLabel lblNewLabel_15 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_15);
-
-		JLabel lblNewLabel_10 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_10);
-
-		JLabel lblNewLabel_9 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_9);
-
-		JLabel lblNewLabel_13 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_13);
-
-		btnRegresar = new JButton(" Regresar ");
-		panelinformacion.add(btnRegresar);
-
-		JLabel lblNewLabel_6 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_6);
-
-		JLabel lblNewLabel_7 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_7);
-
-		JLabel lblNewLabel_8 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_8);
-
-		JLabel lblNewLabel_14 = new JLabel("     ");
-		panelinformacion.add(lblNewLabel_14);
 
 	}
+	
+	public void elegirTabla(int valor) {
+		
+		if (valor ==1) {
+			crearTablaDestete();
+		}
+		else if (valor ==2) {
+			crearTablaPartos();
+		}
+		
+	}
+	
+	public void crearTablaPartos() {
+		
+
+
+
+		String[] columns = { "NUMERO", "FECHA EMBARAZO", "TIEMPO DE EMBARAZO", "POTRERO"  };
+
+		modelParto = new ModelTable();
+
+			ArrayList<Res> reses =ResCRUD.reportePartos();
+			Object[][] data = new Object[reses.size()][columns.length];
+			Res temp = null;
+			String mensaje = "";
+
+			for (int i = 0; i < data.length; i++) {
+
+				temp = reses.get(i);
+
+				for (int j = 0; j < data[0].length; j++) {
+
+					if (j == 0)
+						data[i][j] = temp.getResID();
+
+					if (j == 1)
+						data[i][j] = temp.getFecha_embarazo();
+					
+					if (j == 2)
+						data[i][j] = ResCRUD.calcDate(temp.getFecha_embarazo());
+					
+					if (j == 3)
+						data[i][j] = temp.getPotreroNombre();
+					
+					
+					
+					
+
+				}
+
+			
+
+		         
+			modelParto.setData(data);
+			modelParto.setColumns(columns);
+			tablaParto = new JTable(modelParto);
+			tablaParto.getColumnModel().getColumn(2).setPreferredWidth(140);
+			tablaParto.getColumnModel().getColumn(1).setPreferredWidth(120);
+			//tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+
+                
+			tablaParto.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaParto.setShowHorizontalLines(true);
+			tablaParto.setShowVerticalLines(true);
+			tablaParto.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+			scroller.setViewportView(tablaParto);
+			tablaParto.setFillsViewportHeight(true);
+			panelinfo.add(scroller);
+			
+			}
+			
+
+
+		}
+	
+	public void crearTablaDestete() {
+		
+
+
+
+			String[] columns = { "NUMERO", "NACIMIENTO", "TIEMPO DE CRÍA", "MADRE", "POTRERO"  };
+
+			modelDestete = new ModelTable();
+
+				ArrayList<Res> reses =ResCRUD.reporteDestete();
+				Object[][] data = new Object[reses.size()][columns.length];
+				Res temp = null;
+				String mensaje = "";
+
+				for (int i = 0; i < data.length; i++) {
+
+					temp = reses.get(i);
+
+					for (int j = 0; j < data[0].length; j++) {
+
+						if (j == 0)
+							data[i][j] = temp.getResID();
+
+						if (j == 1)
+							data[i][j] = temp.getFecha_nacimiento();
+						
+						if (j == 2)
+							data[i][j] = ResCRUD.calcDate(temp.getFecha_nacimiento());
+						
+						if (j == 3)
+							data[i][j] = temp.getMadreID();
+						
+						if (j == 4)
+							data[i][j] = temp.getPotreroNombre();
+						
+						
+
+					}
+
+				
+
+			
+				modelDestete.setData(data);
+				modelDestete.setColumns(columns);
+				tablaDestete = new JTable(modelDestete);
+				tablaDestete.getColumnModel().getColumn(2).setPreferredWidth(140);
+				tablaDestete.getColumnModel().getColumn(1).setPreferredWidth(120);
+				//tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+
+
+				tablaDestete.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				tablaDestete.setShowHorizontalLines(true);
+				tablaDestete.setShowVerticalLines(true);
+				tablaDestete.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+				scroller.setViewportView(tablaDestete);
+				tablaDestete.setFillsViewportHeight(true);
+				panelinfo.add(scroller);
+				
+
+
+			}
+
+		}
+	
 
 	public void listeners() {
 
@@ -153,13 +271,6 @@ public class ReporteDialog extends JDialog {
 
 	}
 
-	public JLabel getLabelFecha() {
-		return labelFecha;
-	}
-
-	public void setLabelFecha(JLabel labelFecha) {
-		this.labelFecha = labelFecha;
-	}
 
 	public JButton getBtnExportar() {
 		return btnExportar;
