@@ -480,7 +480,7 @@ public class InicioPanel extends JPanel {
 		
 		btnEstadistica.addActionListener(e -> {
 
-		EstadisticaDialog dialog = new EstadisticaDialog(1);
+		EstadisticaDialog dialog = new EstadisticaDialog(1,"");
 
 		});
 

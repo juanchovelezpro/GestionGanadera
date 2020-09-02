@@ -510,6 +510,8 @@ public class PotrerosPanel extends JPanel {
 		JMenu ver = new JMenu("Ver");
 		JMenuItem estadisticas = new JMenuItem("Estadisticas", new ImageIcon(FileManager.imagenes.get("STATS")));
 		estadisticas.addActionListener(e -> {
+			
+			EstadisticaDialog estadisticass =new EstadisticaDialog(2,potrero_elegido);
 
 		});
 		JMenuItem creditos = new JMenuItem("Creditos", new ImageIcon(FileManager.imagenes.get("CREDITOS")));
