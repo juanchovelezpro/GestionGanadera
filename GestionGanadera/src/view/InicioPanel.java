@@ -48,6 +48,7 @@ public class InicioPanel extends JPanel {
 	private String potreroElegido;
 	private JButton btnreporteVacuna;
 	private JButton btnreportePurgante;
+	private JButton btnEstadistica;
 
 	public InicioPanel(VentanaPrincipal ventana) {
 
@@ -104,8 +105,8 @@ public class InicioPanel extends JPanel {
 		btnBuscar = new JButton(" Buscar res");
 		panelDerechoinfo.add(btnBuscar);
 		
-		JButton btnNewButton = new JButton("Estadisticas");
-		panelDerechoinfo.add(btnNewButton);
+		btnEstadistica = new JButton("Estadisticas");
+		panelDerechoinfo.add(btnEstadistica);
 
 		JLabel lblNewLabel_8 = new JLabel("----------------------------");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
@@ -475,6 +476,14 @@ public class InicioPanel extends JPanel {
 			ReporteDialog dialog = new ReporteDialog("Reporte de Purgado", 4);
 
 		});
+		
+		
+		btnEstadistica.addActionListener(e -> {
+
+		EstadisticaDialog dialog = new EstadisticaDialog(1);
+
+		});
+
 
 	}
 
