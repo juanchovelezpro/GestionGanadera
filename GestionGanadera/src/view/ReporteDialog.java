@@ -117,6 +117,7 @@ public class ReporteDialog extends JDialog {
 
 		if (valor == 1) {
 			crearTablaDestete();
+			
 		} else if (valor == 2) {
 			crearTablaPartos();
 		}

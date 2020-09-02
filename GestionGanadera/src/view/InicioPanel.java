@@ -83,7 +83,7 @@ public class InicioPanel extends JPanel {
 
 		JPanel panelDerechoinfo = new JPanel();
 		panelderecho.add(panelDerechoinfo, BorderLayout.CENTER);
-		panelDerechoinfo.setLayout(new GridLayout(18, 1));
+		panelDerechoinfo.setLayout(new GridLayout(13, 1));
 
 		JLabel lblNewLabel_5 = new JLabel("POTREROS");
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
@@ -95,60 +95,41 @@ public class InicioPanel extends JPanel {
 		comboBoxPotreros = new JComboBox();
 		panelDerechoinfo.add(comboBoxPotreros);
 
-		JLabel lblNewLabel = new JLabel("     ");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDerechoinfo.add(lblNewLabel);
-
 		btnAgregar = new JButton(" Agregar potrero ");
 		panelDerechoinfo.add(btnAgregar);
-
-		JLabel lblNewLabel_6 = new JLabel("     ");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDerechoinfo.add(lblNewLabel_6);
 
 		btnEliminar = new JButton(" Eliminar potrero");
 		panelDerechoinfo.add(btnEliminar);
 
-		JLabel lblNewLabel_7 = new JLabel("     ");
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDerechoinfo.add(lblNewLabel_7);
-
 		btnBuscar = new JButton(" Buscar res");
 		panelDerechoinfo.add(btnBuscar);
+		
+		JButton btnNewButton = new JButton("Estadisticas");
+		panelDerechoinfo.add(btnNewButton);
 
 		JLabel lblNewLabel_8 = new JLabel("----------------------------");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_8);
 
+		
+
+
 		btnreporteDestete = new JButton(" Reporte Destete ");
-
 		panelDerechoinfo.add(btnreporteDestete);
-
-		JLabel lblNewLabel_9 = new JLabel("     ");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDerechoinfo.add(lblNewLabel_9);
 
 		btnreportePartos = new JButton(" Reporte Partos ");
 		panelDerechoinfo.add(btnreportePartos);
-
-		JLabel lblNewLabel_10 = new JLabel("     ");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDerechoinfo.add(lblNewLabel_10);
 		
 		btnreporteVacuna = new JButton(" Reporte Vacunas ");
 		panelDerechoinfo.add(btnreporteVacuna);
-
-		JLabel lblNewLabel_13 = new JLabel("     ");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDerechoinfo.add(lblNewLabel_13);
 		
 		btnreportePurgante = new JButton(" Reporte Purgantes ");
 		panelDerechoinfo.add(btnreportePurgante);
 
-		JLabel lblNewLabel_12 = new JLabel("     ");
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDerechoinfo.add(lblNewLabel_12);
-
+		
 		JPanel panelprincipal = new JPanel();
 		panelprincipal.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panelprincipal, BorderLayout.CENTER);
