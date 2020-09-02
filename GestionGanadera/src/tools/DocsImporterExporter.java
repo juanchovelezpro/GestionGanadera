@@ -16,7 +16,7 @@ import model.Res;
 import view.BarraProgresoDialog;
 import view.PotrerosPanel;
 
-public class DocsImporter {
+public class DocsImporterExporter {
 
 	public static int countRows(XSSFSheet sheet) {
 

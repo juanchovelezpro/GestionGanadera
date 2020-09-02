@@ -408,7 +408,8 @@ public class AgregarEditarResDialog extends JDialog {
 
 		if (fechaNac != null && !fechaNac.equals("") && !fechaNac.equals("dd/mm/AAAA")) {
 			res.setFecha_nacimiento(fechaNac);
-
+		}else {
+			res.setFecha_nacimiento("");
 		}
 
 		res.setMadreID(txtMadre.getText());

@@ -1,5 +1,6 @@
 package tools;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +46,24 @@ public class FileManager {
 		imagenes.put("VACUNA", ImageLoader.cargarImagen("imagenes/vacuna.png"));
 		imagenes.put("PURGANTE", ImageLoader.cargarImagen("imagenes/purgante.png"));
 		imagenes.put("ESTADISTICA", ImageLoader.cargarImagen("imagenes/presentacion.png"));
-
+		imagenes.put("RES",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/icono.png"), new Dimension(15, 15)));
+		imagenes.put("VACUNITA",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/vacuna.png"), new Dimension(15, 15)));
+		imagenes.put("PURGANTICO",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/purgante.png"), new Dimension(15, 15)));
+		imagenes.put("EXPORTAR", ImageLoader.cargarImagen("imagenes/exportar.png"));
+		imagenes.put("IMPORTAR", ImageLoader.cargarImagen("imagenes/importar.png"));
+		imagenes.put("EXCEL", ImageLoader.cargarImagen("imagenes/excel.png"));
+		imagenes.put("BACKUP", ImageLoader.cargarImagen("imagenes/backup.png"));
+		imagenes.put("ELIMINAR",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/borrar.png"), new Dimension(15, 15)));
+		imagenes.put("TRASLADADA",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/trasladar.png"), new Dimension(15, 15)));
+		imagenes.put("CREDITOS",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/usuario.png"), new Dimension(15, 15)));
+		imagenes.put("STATS",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/presentacion.png"), new Dimension(15, 15)));
 
 	}
 
