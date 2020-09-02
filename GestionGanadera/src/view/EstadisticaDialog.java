@@ -54,6 +54,9 @@ public class EstadisticaDialog extends JDialog{
 		
 		
 		this.nombrePotrero =nombrePotrero;
+		setTitle("Estadisticas");
+		ImageIcon icono = new ImageIcon(FileManager.imagenes.get("ESTADISTICA"));
+        setIconImage(icono.getImage());
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		setSize(500,420);
 		setLocationRelativeTo(null);
@@ -61,7 +64,7 @@ public class EstadisticaDialog extends JDialog{
 		listeners();
         setModalityType(ModalityType.APPLICATION_MODAL); 
 		elegir(valor);
-
+ 
 		setVisible(true);
 
 	}

@@ -523,7 +523,8 @@ public class PotrerosPanel extends JPanel {
 		JMenuItem creditos = new JMenuItem("Creditos", new ImageIcon(FileManager.imagenes.get("CREDITOS")));
 		creditos.addActionListener(e -> {
 
-		});
+			CreditosDialog cre = new CreditosDialog();
+      		});
 		ver.add(estadisticas);
 		ver.add(creditos);
 
