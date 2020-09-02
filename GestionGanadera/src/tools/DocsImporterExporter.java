@@ -97,7 +97,9 @@ public class DocsImporterExporter {
 							break;
 
 						case 7:
+							System.out.println("hpta");
 							String vivo = cell.toString().split("\\.")[0];
+							System.out.println(vivo);
 							if (vivo.equals("1"))
 								res.setVivo(1);
 							else
