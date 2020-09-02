@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
@@ -26,8 +28,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
+
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import db.PotreroCRUD;
 import db.PurganteCRUD;
@@ -121,7 +127,7 @@ public class PotrerosPanel extends JPanel {
 		panelResTable.setLayout(new GridLayout(1, 1));
 
 		popUpMenu();
-		
+
 		lblCantVacas = new JLabel("Cantidad Reses: " + modelRes.getData().length);
 		lblCantVacas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCantVacas.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -177,8 +183,6 @@ public class PotrerosPanel extends JPanel {
 		lblNewLabel_2 = new JLabel("");
 		panelInferior.add(lblNewLabel_2);
 
-		
-
 	}
 
 	public void crearTablaRes() {
@@ -206,7 +210,7 @@ public class PotrerosPanel extends JPanel {
 
 	public void fillData() {
 
-		String[] columns = { "ID", "TIPO", "GENERO", "COLOR", "FECHA NACIMIENTO", "VIVO", "MADRE", "OBSERVACIONES" };
+		String[] columns = { "ID", "TIPO", "GENERO", "COLOR", "FECHA NACIMIENTO", "ESTADO", "MADRE", "OBSERVACIONES" };
 		Object[][] data = new Object[ganado.size()][columns.length];
 
 		for (int i = 0; i < data.length; i++) {
@@ -257,7 +261,7 @@ public class PotrerosPanel extends JPanel {
 		ganado = PotreroCRUD.selectRes(potrero_elegido);
 		fillData();
 		modelRes.fireTableDataChanged();
-		lblCantVacas.setText("Cantidad Reses: "+ modelRes.getData().length);
+		lblCantVacas.setText("Cantidad Reses: " + modelRes.getData().length);
 
 	}
 
@@ -339,14 +343,14 @@ public class PotrerosPanel extends JPanel {
 		tablaRes.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode() == KeyEvent.VK_DELETE) {
+
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
 					eliminar();
 				}
-				
+
 			}
 		});
-		
+
 	}
 
 	public void filtrar() {
@@ -429,13 +433,15 @@ public class PotrerosPanel extends JPanel {
 		exportar.addActionListener(e -> {
 
 		});
-		JMenuItem copiaSeguridad = new JMenuItem("Copia de seguridad", new ImageIcon(FileManager.imagenes.get("BACKUP")));
+		JMenuItem copiaSeguridad = new JMenuItem("Copia de seguridad",
+				new ImageIcon(FileManager.imagenes.get("BACKUP")));
 		copiaSeguridad.addActionListener(e -> {
 
 		});
-		JMenuItem plantilla = new JMenuItem("Guardar Plantilla Excel", new ImageIcon(FileManager.imagenes.get("EXCEL")));
+		JMenuItem plantilla = new JMenuItem("Guardar Plantilla Excel",
+				new ImageIcon(FileManager.imagenes.get("EXCEL")));
 		plantilla.addActionListener(e -> {
-
+			guardarPlantilla();
 		});
 		JMenuItem cerrar = new JMenuItem("Cerrar");
 		cerrar.addActionListener(e -> {
@@ -510,8 +516,8 @@ public class PotrerosPanel extends JPanel {
 		JMenu ver = new JMenu("Ver");
 		JMenuItem estadisticas = new JMenuItem("Estadisticas", new ImageIcon(FileManager.imagenes.get("STATS")));
 		estadisticas.addActionListener(e -> {
-			
-			EstadisticaDialog estadisticass =new EstadisticaDialog(2,potrero_elegido);
+
+			EstadisticaDialog estadisticass = new EstadisticaDialog(2, potrero_elegido);
 
 		});
 		JMenuItem creditos = new JMenuItem("Creditos", new ImageIcon(FileManager.imagenes.get("CREDITOS")));
@@ -870,6 +876,9 @@ public class PotrerosPanel extends JPanel {
 	public void importar() {
 
 		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Libro de Excel 97-2003", "xls"));
+		FileFilter filter = new FileNameExtensionFilter("Libro de Excel", "xlsx");
+		fileChooser.setFileFilter(filter);
 		fileChooser.showOpenDialog(inicio.getVentana());
 
 		FileInputStream fs = null;
@@ -898,6 +907,30 @@ public class PotrerosPanel extends JPanel {
 		} catch (Exception ex) {
 
 			ex.printStackTrace();
+		}
+
+	}
+
+	public void guardarPlantilla() {
+
+		try {
+
+			JFileChooser fileSaver = new JFileChooser();
+			int op = fileSaver.showSaveDialog(inicio.getVentana());
+
+			if (op == JFileChooser.APPROVE_OPTION) {
+
+				InputStream file = getClass().getResourceAsStream("/archivos/Plantilla.xlsx");
+
+				XSSFWorkbook wb = new XSSFWorkbook(file);
+				FileOutputStream out = new FileOutputStream(fileSaver.getSelectedFile().getPath() + ".xlsx");
+				wb.write(out);
+				out.close();
+				JOptionPane.showMessageDialog(null, "Guardado en " + fileSaver.getSelectedFile().getPath(), "Aviso",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -949,6 +982,7 @@ public class PotrerosPanel extends JPanel {
 	public JMenuBar getMenuBar() {
 		return menuBar;
 	}
+
 	public JLabel getLblCantVacas() {
 		return lblCantVacas;
 	}

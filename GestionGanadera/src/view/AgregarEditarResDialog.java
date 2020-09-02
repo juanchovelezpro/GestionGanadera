@@ -28,6 +28,8 @@ import model.Purgante;
 import model.Res;
 import model.Vacuna;
 import tools.FileManager;
+import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
 
 public class AgregarEditarResDialog extends JDialog {
 
@@ -64,6 +66,7 @@ public class AgregarEditarResDialog extends JDialog {
 	private JPanel panelTablaGraficas;
 	private JPanel panelGrafica;
 	private JPanel panelTabla;
+	private JCheckBox checkMuerto;
 
 	/**
 	 * @wbp.parser.constructor
@@ -159,7 +162,7 @@ public class AgregarEditarResDialog extends JDialog {
 		JPanel panelAux = new JPanel();
 		panelAux.setLayout(new GridLayout(10, 2));
 
-		JLabel lblNumero = new JLabel("N\u00FAmero*");
+		JLabel lblNumero = new JLabel("N\u00FAmero (*)");
 		lblNumero.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNumero.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(lblNumero);
@@ -168,7 +171,7 @@ public class AgregarEditarResDialog extends JDialog {
 		txtNumero.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(txtNumero);
 
-		JLabel lblGenero = new JLabel("G\u00E9nero*");
+		JLabel lblGenero = new JLabel("G\u00E9nero (*)");
 		lblGenero.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblGenero.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(lblGenero);
@@ -177,7 +180,7 @@ public class AgregarEditarResDialog extends JDialog {
 		comboGenero.setModel(new DefaultComboBoxModel(new String[] { "Seleccione el g\u00E9nero", "HEMBRA", "MACHO" }));
 		panelAux.add(comboGenero);
 
-		lblTipo = new JLabel("Tipo*");
+		lblTipo = new JLabel("Tipo (*)");
 		lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTipo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelAux.add(lblTipo);
@@ -187,7 +190,7 @@ public class AgregarEditarResDialog extends JDialog {
 				new String[] { "Seleccione el tipo", "VP", "VH", "CH", "HL", "NV", "CM", "ML", "MC", "TP" }));
 		panelAux.add(comboTipo);
 
-		JLabel lblColor = new JLabel("Color*");
+		JLabel lblColor = new JLabel("Color (*)");
 		lblColor.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblColor.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAux.add(lblColor);
@@ -293,10 +296,13 @@ public class AgregarEditarResDialog extends JDialog {
 		lblNewLabel_15.add(lblNewLabel_4_2);
 
 		JLabel lblNewLabel_4_1 = new JLabel("");
+		lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_15.add(lblNewLabel_4_1);
 
-		JLabel lblNewLabel_4_3 = new JLabel("");
-		lblNewLabel_15.add(lblNewLabel_4_3);
+		checkMuerto = new JCheckBox("\u00BFMUERTO?");
+		checkMuerto.setFont(new Font("Tahoma", Font.BOLD, 12));
+		checkMuerto.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_15.add(checkMuerto);
 
 		JLabel lblObservaciones = new JLabel("Observaciones");
 		lblObservaciones.setHorizontalAlignment(SwingConstants.CENTER);
@@ -370,6 +376,10 @@ public class AgregarEditarResDialog extends JDialog {
 
 			}
 
+			if(res.getVivo() == 0) {
+				checkMuerto.setSelected(true);
+			}
+			
 			txtMadre.setText(res.getMadreID());
 			txtObservaciones.setText(res.getObservaciones());
 
@@ -377,43 +387,66 @@ public class AgregarEditarResDialog extends JDialog {
 
 	}
 
-	public Res obtenerInfoRes(String potrero) {
+	public Res obtenerInfoRes(String potrero) throws Exception {
 
 		Res res = new Res();
 
 		res.setPotreroNombre(potrero);
 
-		res.setResID(txtNumero.getText());
-		res.setTipo(comboTipo.getSelectedItem().toString());
+		String id = txtNumero.getText();
+		int tipo = comboTipo.getSelectedIndex();
+		int gender = comboGenero.getSelectedIndex();
+		String color = txtColor.getText();
 
-		String genero = comboGenero.getSelectedItem().toString();
+		if (id != null && !id.equals("") && tipo > 0 && gender > 0 && color != null && !color.equals("")) {
+			res.setResID(txtNumero.getText());
+			res.setTipo(comboTipo.getSelectedItem().toString());
+			String genero = comboGenero.getSelectedItem().toString();
 
-		if (genero.equals("HEMBRA")) {
+			if (genero.equals("HEMBRA")) {
 
-			res.setGenero("H");
-			int embarazo = comboEmbarazada.getSelectedItem().toString().equals("SI") ? 1 : 0;
-			res.setEmbarazada(embarazo);
-			res.setFecha_embarazo(btnFechaEmbarazo.getText());
+				res.setGenero("H");
+				int embarazo = comboEmbarazada.getSelectedItem().toString().equals("SI") ? 1 : 0;
+				res.setEmbarazada(embarazo);
 
+				String fechaEmba = btnFechaEmbarazo.getText();
+
+				if (fechaEmba != null && !fechaEmba.equals("") && !fechaEmba.equals("dd/mm/AAAA")) {
+					res.setFecha_embarazo(fechaEmba);
+				} else {
+					res.setFecha_embarazo("");
+				}
+
+			} else {
+
+				res.setGenero("M");
+				res.setEmbarazada(-1);
+
+			}
+
+			res.setColor(txtColor.getText());
+
+			String fechaNac = btnFechaNacimiento.getText();
+
+			if (fechaNac != null && !fechaNac.equals("") && !fechaNac.equals("dd/mm/AAAA")) {
+				res.setFecha_nacimiento(fechaNac);
+			} else {
+				res.setFecha_nacimiento("");
+			}
+
+			if (checkMuerto.isSelected()) {
+				res.setVivo(0);
+			} else {
+				res.setVivo(1);
+			}
+
+			res.setMadreID(txtMadre.getText());
+			res.setObservaciones(txtObservaciones.getText());
 		} else {
 
-			res.setGenero("M");
-			res.setEmbarazada(-1);
+			throw new Exception("No se han completado algunos campos obligatorios. (*)");
 
 		}
-
-		res.setColor(txtColor.getText());
-
-		String fechaNac = btnFechaNacimiento.getText();
-
-		if (fechaNac != null && !fechaNac.equals("") && !fechaNac.equals("dd/mm/AAAA")) {
-			res.setFecha_nacimiento(fechaNac);
-		}else {
-			res.setFecha_nacimiento("");
-		}
-
-		res.setMadreID(txtMadre.getText());
-		res.setObservaciones(txtObservaciones.getText());
 
 		return res;
 
@@ -699,17 +732,30 @@ public class AgregarEditarResDialog extends JDialog {
 
 					if (potrero != null) {
 
-						ResCRUD.update(res.getResID(), obtenerInfoRes(potrero.getPotrero_elegido()));
-						potrero.refreshTable();
-						System.out.println("UPDATED");
-						dispose();
+						try {
+							ResCRUD.update(res.getResID(), obtenerInfoRes(potrero.getPotrero_elegido()));
+							potrero.refreshTable();
+							System.out.println("UPDATED");
+							dispose();
+						} catch (Exception ex) {
+
+							JOptionPane.showMessageDialog(null, ex.getMessage(), "Info incompleta",
+									JOptionPane.ERROR_MESSAGE);
+
+						}
 
 					} else {
 
-						ResCRUD.update(res.getResID(), obtenerInfoRes(res.getPotreroNombre()));
-						System.out.println("UPDATED");
-						dispose();
+						try {
+							ResCRUD.update(res.getResID(), obtenerInfoRes(res.getPotreroNombre()));
+							System.out.println("UPDATED");
+							dispose();
+						} catch (Exception ex) {
 
+							JOptionPane.showMessageDialog(null, ex.getMessage(), "Info incompleta",
+									JOptionPane.ERROR_MESSAGE);
+
+						}
 					}
 				} else {
 
@@ -721,10 +767,17 @@ public class AgregarEditarResDialog extends JDialog {
 			} else {
 
 				if (!existeRes(txtNumero.getText().trim())) {
-					ResCRUD.insert(obtenerInfoRes(potrero.getPotrero_elegido()));
-					potrero.refreshTable();
-					System.out.println("INSERTED");
-					dispose();
+					try {
+						ResCRUD.insert(obtenerInfoRes(potrero.getPotrero_elegido()));
+						potrero.refreshTable();
+						System.out.println("INSERTED");
+						dispose();
+					} catch (Exception ex) {
+
+						JOptionPane.showMessageDialog(null, ex.getMessage(), "Info incompleta",
+								JOptionPane.ERROR_MESSAGE);
+
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -832,7 +885,7 @@ public class AgregarEditarResDialog extends JDialog {
 
 			} else {
 
-				btnFechaEmbarazo.setText("dd/MM/AAAA");
+				btnFechaEmbarazo.setText("dd/mm/AAAA");
 				btnFechaEmbarazo.setEnabled(true);
 
 			}
@@ -940,5 +993,9 @@ public class AgregarEditarResDialog extends JDialog {
 
 	public JButton getBtnRegistroPurgantes() {
 		return btnRegistroPurgantes;
+	}
+
+	public JCheckBox getCheckMuerto() {
+		return checkMuerto;
 	}
 }

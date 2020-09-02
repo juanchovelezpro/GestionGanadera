@@ -96,6 +96,13 @@ public class DocsImporterExporter {
 							res.setObservaciones(cell.toString().trim());
 							break;
 
+						case 7:
+							String vivo = cell.toString().split("\\.")[0];
+							if (vivo.equals("1"))
+								res.setVivo(1);
+							else
+								res.setVivo(0);
+							break;
 						}
 
 						contadorCeldas++;
