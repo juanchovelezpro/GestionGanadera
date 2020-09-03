@@ -519,7 +519,7 @@ public class ResCRUD {
 
 				if (res.getTipo().equals("CH") || res.getTipo().equals("CM")) {
 
-					if (dias <= 249 && meses == 8) {
+					if (dias <= 250 && (meses == 8 || meses==9)) {
 
 						// vacas_destete.add("Es momento de realizar el destete a la res: " +
 						// res.getResID() + " Del potrero: "
@@ -565,7 +565,7 @@ public class ResCRUD {
 						long dias = diasEntreFechas(res.getFecha_embarazo());
 						long meses = mesesEntreFechas(res.getFecha_embarazo());
 
-						if (dias <= 280 && meses == 9) {
+						if (dias <= 280 && (meses == 9 || meses==10)) {
 
 							vacas_partos.add(res);
 
