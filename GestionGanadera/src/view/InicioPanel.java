@@ -308,6 +308,7 @@ public class InicioPanel extends JPanel {
 				potreros = new PotrerosPanel(this, potreroelegido);
 				ventana.add(potreros);
 				ventana.setResizable(true);
+				ventana.setSize(VentanaPrincipal.WIDTH, VentanaPrincipal.HEIGHT);
 				ventana.setExtendedState(Frame.MAXIMIZED_BOTH);
 				ventana.refresh();
 

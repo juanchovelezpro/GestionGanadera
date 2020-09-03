@@ -231,6 +231,8 @@ public class EstadisticaDialog extends JDialog{
 	
 	public void elegir(int valor) {
 		
+        refrescar();
+
 		if (valor == 1) {
 			actualizarGeneral();
 		}
@@ -250,19 +252,19 @@ public class EstadisticaDialog extends JDialog{
 		numeroPotreros.setText(espacio+valores.get(0));
 		numeroReses.setText(espacio+valores.get(1));
 		numeroHembras.setText(espacio+valores.get(2));
-		numeroCH.setText(espacio+valores.get(3));
-		numeroHL.setText(espacio+valores.get(4));
-		numeroNV.setText(espacio+valores.get(5));
-		numeroVH.setText(espacio+valores.get(6));
-		numeroVP.setText(espacio+valores.get(7));
-		numeroMachos.setText(espacio+valores.get(8));
+		numeroMachos.setText(espacio+valores.get(3));
+		numeroCH.setText(espacio+valores.get(4));
+		numeroHL.setText(espacio+valores.get(5));
+		numeroNV.setText(espacio+valores.get(6));
+		numeroVH.setText(espacio+valores.get(7));
+		numeroVP.setText(espacio+valores.get(8));
 		numeroCM.setText(espacio+valores.get(9));
 		numeroML.setText(espacio+valores.get(10));
 		numeroMC.setText(espacio+valores.get(11));
 		numeroTP.setText(espacio+valores.get(12));
 
 
-		
+	
 	}
 	
 	public void actualizarPorPotrero(String nombrePotrero) {
@@ -274,12 +276,12 @@ public class EstadisticaDialog extends JDialog{
 		labelPotrero.setText("");
 		numeroReses.setText(espacio+valores.get(0));
 		numeroHembras.setText(espacio+valores.get(1));
-		numeroCH.setText(espacio+valores.get(2));
-		numeroHL.setText(espacio+valores.get(3));
-		numeroNV.setText(espacio+valores.get(4));
-		numeroVH.setText(espacio+valores.get(5));
-		numeroVP.setText(espacio+valores.get(6));
-		numeroMachos.setText(espacio+valores.get(7));
+		numeroMachos.setText(espacio+valores.get(2));
+		numeroCH.setText(espacio+valores.get(3));
+		numeroHL.setText(espacio+valores.get(4));
+		numeroNV.setText(espacio+valores.get(5));
+		numeroVH.setText(espacio+valores.get(6));
+		numeroVP.setText(espacio+valores.get(7));
 		numeroCM.setText(espacio+valores.get(8));
 		numeroML.setText(espacio+valores.get(9));
 		numeroMC.setText(espacio+valores.get(10));
@@ -287,6 +289,26 @@ public class EstadisticaDialog extends JDialog{
 
 		
 		
+	}
+	
+	
+	public void refrescar() {
+		
+		
+		titulo.setText("");
+		numeroPotreros.setText("");
+		numeroReses.setText("");
+		numeroHembras.setText("");
+		numeroCH.setText("");
+		numeroHL.setText("");
+		numeroNV.setText("");
+		numeroVH.setText("");
+		numeroVP.setText("");
+		numeroMachos.setText("");
+		numeroCM.setText("");
+		numeroML.setText("");
+		numeroMC.setText("");
+		numeroTP.setText("");
 	}
 
 	
