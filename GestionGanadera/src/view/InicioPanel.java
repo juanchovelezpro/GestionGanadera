@@ -89,7 +89,7 @@ public class InicioPanel extends JPanel {
 		JLabel lblNewLabel_5 = new JLabel("POTREROS");
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_5);
-		
+
 		JLabel lblNewLabel_11 = new JLabel("");
 		panelDerechoinfo.add(lblNewLabel_11);
 
@@ -104,16 +104,13 @@ public class InicioPanel extends JPanel {
 
 		btnBuscar = new JButton(" Buscar res");
 		panelDerechoinfo.add(btnBuscar);
-		
+
 		btnEstadistica = new JButton("Estadisticas");
 		panelDerechoinfo.add(btnEstadistica);
 
 		JLabel lblNewLabel_8 = new JLabel("----------------------------");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_8);
-
-		
-
 
 		btnreporteDestete = new JButton(" Reporte Destete ");
 		panelDerechoinfo.add(btnreporteDestete);
@@ -122,15 +119,14 @@ public class InicioPanel extends JPanel {
 		btnreportePartos = new JButton(" Reporte Partos ");
 		panelDerechoinfo.add(btnreportePartos);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		btnreporteVacuna = new JButton(" Reporte Vacunas ");
 		panelDerechoinfo.add(btnreporteVacuna);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		btnreportePurgante = new JButton(" Reporte Purgantes ");
 		panelDerechoinfo.add(btnreportePurgante);
 
-		
 		JPanel panelprincipal = new JPanel();
 		panelprincipal.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panelprincipal, BorderLayout.CENTER);
@@ -464,26 +460,24 @@ public class InicioPanel extends JPanel {
 			ReporteDialog dialog = new ReporteDialog("Reporte de Partos", 2);
 
 		});
-		
+
 		btnreporteVacuna.addActionListener(e -> {
 
 			ReporteDialog dialog = new ReporteDialog("Reporte de Vacuna", 3);
 
 		});
-		
+
 		btnreportePurgante.addActionListener(e -> {
 
 			ReporteDialog dialog = new ReporteDialog("Reporte de Purgado", 4);
 
 		});
-		
-		
+
 		btnEstadistica.addActionListener(e -> {
 
-		EstadisticaDialog dialog = new EstadisticaDialog(1,"");
+			EstadisticaDialog dialog = new EstadisticaDialog(1, "");
 
 		});
-
 
 	}
 
@@ -602,6 +596,19 @@ public class InicioPanel extends JPanel {
 	public void actualizarreses(int cantidad) {
 
 		numeroDevacas.setText(cantidad + "");
+
+		ArrayList<Potrero> potreros3 = PotreroCRUD.select();
+		comboBoxPotreros.removeAllItems();
+		comboBoxPotreros.addItem("");
+
+		for (int i = 0; i < potreros3.size(); i++) {
+
+			comboBoxPotreros.addItem(potreros3.get(i).getNombre());
+
+		}
+
+		numeroDepotreros.setText(potreros3.size() + " Potreros");
+
 	}
 
 	public void refresh() {

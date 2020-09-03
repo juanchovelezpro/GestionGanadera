@@ -186,8 +186,7 @@ public class AgregarEditarResDialog extends JDialog {
 		panelAux.add(lblTipo);
 
 		comboTipo = new JComboBox();
-		comboTipo.setModel(new DefaultComboBoxModel(
-				new String[] { "Seleccione el tipo", "VP", "VH", "CH", "HL", "NV", "CM", "ML", "MC", "TP" }));
+		comboTipo.setModel(new DefaultComboBoxModel(new String[] { "Seleccione el tipo" }));
 		panelAux.add(comboTipo);
 
 		JLabel lblColor = new JLabel("Color (*)");
@@ -376,10 +375,10 @@ public class AgregarEditarResDialog extends JDialog {
 
 			}
 
-			if(res.getVivo() == 0) {
+			if (res.getVivo() == 0) {
 				checkMuerto.setSelected(true);
 			}
-			
+
 			txtMadre.setText(res.getMadreID());
 			txtObservaciones.setText(res.getObservaciones());
 
@@ -871,6 +870,20 @@ public class AgregarEditarResDialog extends JDialog {
 		btnAgregar.addActionListener(e -> {
 
 			AgregarInfoReporte inforeporte = new AgregarInfoReporte(tiporeporte, res.getResID(), this);
+
+		});
+
+		comboGenero.addActionListener(e -> {
+
+			if (comboGenero.getSelectedIndex() == 1) {
+				comboTipo.setModel(
+						new DefaultComboBoxModel(new String[] { "Seleccione el tipo", "VP", "VH", "CH", "HL", "NV" }));
+			}
+
+			if (comboGenero.getSelectedIndex() == 2) {
+				comboTipo.setModel(
+						new DefaultComboBoxModel(new String[] { "Seleccione el tipo", "CM", "ML", "MC", "TP" }));
+			}
 
 		});
 

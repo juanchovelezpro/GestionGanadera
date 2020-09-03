@@ -47,6 +47,14 @@ public class SQLConnection {
 
 	}
 
+	public void setStatement(Statement statement) {
+		this.statement = statement;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
 	public void createDatabase() {
 
 		try {

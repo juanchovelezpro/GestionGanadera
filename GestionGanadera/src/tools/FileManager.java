@@ -23,7 +23,7 @@ public class FileManager {
 		Path to = Paths.get(target);
 
 		try {
-			Files.copy(from, to, StandardCopyOption.COPY_ATTRIBUTES);
+			Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
 			System.out.println("Data saved.");
 		} catch (IOException e) {
 

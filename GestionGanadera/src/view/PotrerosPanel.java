@@ -5,9 +5,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
@@ -38,6 +41,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import db.PotreroCRUD;
 import db.PurganteCRUD;
 import db.ResCRUD;
+import db.SQLConnection;
 import db.VacunaCRUD;
 import model.Potrero;
 import model.Purgante;
@@ -275,18 +279,7 @@ public class PotrerosPanel extends JPanel {
 
 		// Regresar al panel inicio
 		btnRegresar.addActionListener(e -> {
-
-			int reses = ResCRUD.select().size();
-
-			inicio.actualizarreses(reses);
-
-			inicio.getVentana().remove(this);
-			inicio.getVentana().setSize(800, 400);
-			inicio.getVentana().setResizable(false);
-			inicio.getVentana().setLocationRelativeTo(null);
-			inicio.getVentana().add(inicio);
-			inicio.getVentana().refresh();
-
+			irAInicio();
 		});
 
 		// Abrir panel de notificaciones
@@ -436,7 +429,7 @@ public class PotrerosPanel extends JPanel {
 		JMenuItem copiaSeguridad = new JMenuItem("Copia de seguridad",
 				new ImageIcon(FileManager.imagenes.get("BACKUP")));
 		copiaSeguridad.addActionListener(e -> {
-
+			backUp();
 		});
 		JMenuItem plantilla = new JMenuItem("Guardar Plantilla Excel",
 				new ImageIcon(FileManager.imagenes.get("EXCEL")));
@@ -524,7 +517,7 @@ public class PotrerosPanel extends JPanel {
 		creditos.addActionListener(e -> {
 
 			CreditosDialog cre = new CreditosDialog();
-      		});
+		});
 		ver.add(estadisticas);
 		ver.add(creditos);
 
@@ -877,6 +870,7 @@ public class PotrerosPanel extends JPanel {
 	public void importar() {
 
 		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Database DB", "db"));
 		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Libro de Excel 97-2003", "xls"));
 		FileFilter filter = new FileNameExtensionFilter("Libro de Excel", "xlsx");
 		fileChooser.setFileFilter(filter);
@@ -899,9 +893,26 @@ public class PotrerosPanel extends JPanel {
 
 				// Cargar definitivamente el excel al programa y base de datos.
 
-				DocsImporterExporter.importData(fs, potrero_elegido, this);
-				refreshTable();
-				fs.close();
+				String ext = fileChooser.getSelectedFile().getName().split("\\.")[1];
+
+				if (ext.equals("xlsx")) {
+					DocsImporterExporter.importData(fs, potrero_elegido, this);
+					refreshTable();
+					fs.close();
+				} else if (ext.equals("db")) {
+
+					SQLConnection.getInstance().getConnection().close();
+					FileManager.saveFile(fileChooser.getSelectedFile(), FileManager.PATH + "database.db");
+					Connection connection = DriverManager
+							.getConnection("jdbc:sqlite:" + FileManager.PATH + "database.db");
+					SQLConnection.getInstance().setConnection(connection);
+					SQLConnection.getInstance().setStatement(connection.createStatement());
+
+					irAInicio();
+
+					fs.close();
+
+				}
 
 			}
 
@@ -933,6 +944,43 @@ public class PotrerosPanel extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public void backUp() {
+
+		try {
+
+			JFileChooser fileSaver = new JFileChooser();
+			int op = fileSaver.showSaveDialog(inicio.getVentana());
+
+			if (op == JFileChooser.APPROVE_OPTION) {
+
+				File database = new File(FileManager.PATH + "database.db");
+
+				FileManager.saveFile(database, fileSaver.getSelectedFile().getPath() + ".db");
+
+				JOptionPane.showMessageDialog(null, "Guardado en " + fileSaver.getSelectedFile().getPath(), "Aviso",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void irAInicio() {
+
+		int reses = ResCRUD.select().size();
+
+		inicio.actualizarreses(reses);
+
+		inicio.getVentana().remove(this);
+		inicio.getVentana().setSize(800, 400);
+		inicio.getVentana().setResizable(false);
+		inicio.getVentana().setLocationRelativeTo(null);
+		inicio.getVentana().add(inicio);
+		inicio.getVentana().refresh();
 
 	}
 
