@@ -335,36 +335,35 @@ public class NotificacionesDialog extends JDialog {
 
 			String fecha = format.format(calendario.getCalendar().getDate());
 			System.out.println("dsdasadd");
-			Res res = null;
-			Vacuna vacuna = null;
+
 			HashMap<Res, Vacuna> mapa = new HashMap<>();
 			BarraProgresoDialog progreso = new BarraProgresoDialog(selectedValuesList.size());
-
-			for (int i = 0; i < selectedValuesList.size(); i++) {
-
-				System.out.println("dsadada");
-				System.out.println(selectedValuesList.get(i).getResID());
-				res = selectedValuesList.get(i);
-
-				vacuna = ResCRUD.selectVacunas(res.getResID()).peek();
-				mapa.put(res, vacuna);
-			}
 
 			new Thread() {
 
 				int value = 0;
+				Res res = null;
+				Vacuna vacuna = null;
 
 				@Override
 				public void run() {
 
-					for (Map.Entry<Res, Vacuna> entry : mapa.entrySet()) {
+//					for (Map.Entry<Res, Vacuna> entry : mapa.entrySet()) {
+					for (int i = 0; i < selectedValuesList.size(); i++) {
 
-						ResCRUD.insertVacuna(entry.getKey().getResID(), entry.getValue().getNombre(), fecha);
+						System.out.println("dsadada");
+						System.out.println(selectedValuesList.get(i).getResID());
+						res = selectedValuesList.get(i);
+
+						vacuna = ResCRUD.selectVacunas(res.getResID()).peek();
+//						mapa.put(res, vacuna);
+
+						ResCRUD.insertVacuna(res.getResID(), vacuna.getNombre(), fecha);
 						modeloVacuna.removeElement(listVacuna.getSelectedValue());
 						value++;
 						progreso.getProgreso().setValue(value);
-
 					}
+//					}
 
 					progreso.dispose();
 
