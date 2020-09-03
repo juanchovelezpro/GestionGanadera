@@ -127,7 +127,7 @@ public class NotificacionesDialog extends JDialog {
 					valor = tabbedPane.getSelectedIndex();
 
 					if (valor == 0) {
-                         
+
 						modeloPartos.clear();
 
 						listPartos.setCellRenderer(new RenderizadoPartos());
@@ -142,7 +142,6 @@ public class NotificacionesDialog extends JDialog {
 
 					}
 					if (valor == 1) {
-
 
 						modeloDestete.clear();
 
@@ -160,7 +159,6 @@ public class NotificacionesDialog extends JDialog {
 					}
 					if (valor == 2) {
 
-						
 						modeloPurgado.clear();
 
 						ArrayList<Res> resesP = ResCRUD.reportePurgado();
@@ -199,316 +197,254 @@ public class NotificacionesDialog extends JDialog {
 
 	public void partoLis() {
 
+		List<Res> selectedValuesList = listPartos.getSelectedValuesList();
 
-	
-		
-	
+		// Double-click detected
+		System.out.println(listPartos.getSelectedIndex() + "oprimio");
 
-				List<Res> selectedValuesList = listPartos.getSelectedValuesList();
+		int numero = listPartos.getSelectedIndex();
 
-				// Double-click detected
-				System.out.println(listPartos.getSelectedIndex() + "oprimio");
+		int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
-				int numero = listPartos.getSelectedIndex();
+		if (valor == JOptionPane.OK_OPTION) {
+			Res res = null;
 
-				int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+			for (int i = 0; i < selectedValuesList.size(); i++) {
 
-				if (valor == JOptionPane.OK_OPTION) {
-					Res res = null;
+				res = selectedValuesList.get(i);
 
-					for (int i = 0; i < selectedValuesList.size(); i++) {
+				if (res.getGenero().equals("H")) {
 
-						res = selectedValuesList.get(i);
-
-						if (res.getGenero().equals("H")) {
-
-							res.setTipo("VP");
-							ResCRUD.update(res.getResID(), res);
-							modeloPartos.removeElement(listPartos.getSelectedValue());
-
-						}
-					}
-
-					ventana.refreshTable();
+					res.setTipo("VP");
+					ResCRUD.update(res.getResID(), res);
+					modeloPartos.removeElement(listPartos.getSelectedValue());
 
 				}
+			}
 
-		
+		}
+
 	}
 
 	public void desteteLis() {
 
+		List<Res> selectedValuesList = listDestete.getSelectedValuesList();
 
+		int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
-		
+		if (valor == JOptionPane.YES_OPTION) {
 
-				List<Res> selectedValuesList = listDestete.getSelectedValuesList();
+			Res res = null;
 
-				int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+			for (int i = 0; i < selectedValuesList.size(); i++) {
+				res = selectedValuesList.get(i);
 
-				if (valor == JOptionPane.YES_OPTION) {
+				if (res.getGenero().equals("H")) {
 
-					Res res = null;
+					res.setTipo("HL");
+					ResCRUD.update(res.getResID(), res);
+					modeloDestete.removeElement(listDestete.getSelectedValue());
+					System.out.println("actualizado");
 
-					for (int i = 0; i < selectedValuesList.size(); i++) {
-						res = selectedValuesList.get(i);
-
-						if (res.getGenero().equals("H")) {
-
-							res.setTipo("HL");
-							ResCRUD.update(res.getResID(), res);
-							modeloDestete.removeElement(listDestete.getSelectedValue());
-							System.out.println("actualizado");
-
-						}
-
-						if (res.getGenero().equals("M")) {
-
-							res.setTipo("ML");
-							ResCRUD.update(res.getResID(), res);
-							modeloDestete.removeElement(listDestete.getSelectedValue());
-							System.out.println("actualizado");
-
-						}
-					}
-
-					ventana.refreshTable();
 				}
 
-			
+				if (res.getGenero().equals("M")) {
 
-		
+					res.setTipo("ML");
+					ResCRUD.update(res.getResID(), res);
+					modeloDestete.removeElement(listDestete.getSelectedValue());
+					System.out.println("actualizado");
+
+				}
+			}
+
+		}
 
 	}
 
 	public void purgadoLis() {
-		
-		
 
+		List<Res> selectedValuesList = listPurgado.getSelectedValuesList();
 
-				List<Res> selectedValuesList = listPurgado.getSelectedValuesList();
+		System.out.println(selectedValuesList.size() + "jeje");
 
-				System.out.println(selectedValuesList.size() + "jeje");
+		int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
-				int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+		if (valor == JOptionPane.YES_OPTION) {
 
-				if (valor == JOptionPane.YES_OPTION) {
+			CalendarioDialog calendario = new CalendarioDialog(null);
 
-					CalendarioDialog calendario = new CalendarioDialog(null);
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			String fecha = format.format(calendario.getCalendar().getDate());
+			System.out.println("dsdasadd");
+			Res res = null;
+			Purgante purgante = null;
+			HashMap<Res, Purgante> mapa = new HashMap<>();
+			BarraProgresoDialog progreso = new BarraProgresoDialog(selectedValuesList.size());
 
-					String fecha = format.format(calendario.getCalendar().getDate());
-					System.out.println("dsdasadd");
-					Res res = null;
-					Purgante purgante = null;
-					HashMap<Res, Purgante> mapa = new HashMap<>();
-					BarraProgresoDialog progreso = new BarraProgresoDialog(selectedValuesList.size());
+			for (int i = 0; i < selectedValuesList.size(); i++) {
 
-					for (int i = 0; i < selectedValuesList.size(); i++) {
+				System.out.println("dsadada");
+				System.out.println(selectedValuesList.get(i).getResID());
+				res = selectedValuesList.get(i);
 
-						System.out.println("dsadada");
-						System.out.println(selectedValuesList.get(i).getResID());
-						res = selectedValuesList.get(i);
+				purgante = ResCRUD.selectPurgantes(res.getResID()).peek();
+				mapa.put(res, purgante);
+			}
 
-						purgante = ResCRUD.selectPurgantes(res.getResID()).peek();
-						mapa.put(res, purgante);
+			new Thread() {
+
+				int value = 0;
+
+				@Override
+				public void run() {
+
+					for (Map.Entry<Res, Purgante> entry : mapa.entrySet()) {
+
+						ResCRUD.insertPurgante(entry.getKey().getResID(), entry.getValue().getNombre(), fecha);
+						modeloPurgado.removeElement(listPurgado.getSelectedValue());
+						value++;
+						progreso.getProgreso().setValue(value);
+
 					}
 
-					new Thread() {
+					progreso.dispose();
 
-						int value = 0;
-
-						@Override
-						public void run() {
-
-							for (Map.Entry<Res, Purgante> entry : mapa.entrySet()) {
-
-								ResCRUD.insertPurgante(entry.getKey().getResID(), entry.getValue().getNombre(),
-										fecha);
-								modeloPurgado.removeElement(listPurgado.getSelectedValue());
-								value++;
-								progreso.getProgreso().setValue(value);
-
-							}
-
-						}
-
-					}.start();
-
-					// ResCRUD.insertPurgante(res.getResID(),purgante.getNombre(),
-					// ResCRUD.fecha_sistema().toString() );
-
-					// System.out.println("actualizado");
-
-					// ResCRUD.update(res.getResID(), res);
-					// modelo.removeElement(list.getSelectedValue());
-
-					ventana.refreshTable();
 				}
 
-			
+			}.start();
 
-		
+		}
+
 	}
 
 	public void vacunasLis() {
-		
 
+		List<Res> selectedValuesList = listVacuna.getSelectedValuesList();
 
-				List<Res> selectedValuesList = listVacuna.getSelectedValuesList();
+		System.out.println(selectedValuesList.size() + "jeje");
 
-				System.out.println(selectedValuesList.size() + "jeje");
+		int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
-				int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+		if (valor == JOptionPane.YES_OPTION) {
 
-				if (valor == JOptionPane.YES_OPTION) {
+			CalendarioDialog calendario = new CalendarioDialog(null);
 
-					CalendarioDialog calendario = new CalendarioDialog(null);
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			String fecha = format.format(calendario.getCalendar().getDate());
+			System.out.println("dsdasadd");
+			Res res = null;
+			Vacuna vacuna = null;
+			HashMap<Res, Vacuna> mapa = new HashMap<>();
+			BarraProgresoDialog progreso = new BarraProgresoDialog(selectedValuesList.size());
 
-					String fecha = format.format(calendario.getCalendar().getDate());
-					System.out.println("dsdasadd");
-					Res res = null;
-					Vacuna vacuna = null;
-					HashMap<Res, Vacuna> mapa = new HashMap<>();
-					BarraProgresoDialog progreso = new BarraProgresoDialog(selectedValuesList.size());
+			for (int i = 0; i < selectedValuesList.size(); i++) {
 
-					for (int i = 0; i < selectedValuesList.size(); i++) {
+				System.out.println("dsadada");
+				System.out.println(selectedValuesList.get(i).getResID());
+				res = selectedValuesList.get(i);
 
-						System.out.println("dsadada");
-						System.out.println(selectedValuesList.get(i).getResID());
-						res = selectedValuesList.get(i);
+				vacuna = ResCRUD.selectVacunas(res.getResID()).peek();
+				mapa.put(res, vacuna);
+			}
 
-						vacuna = ResCRUD.selectVacunas(res.getResID()).peek();
-						mapa.put(res, vacuna);
+			new Thread() {
+
+				int value = 0;
+
+				@Override
+				public void run() {
+
+					for (Map.Entry<Res, Vacuna> entry : mapa.entrySet()) {
+
+						ResCRUD.insertVacuna(entry.getKey().getResID(), entry.getValue().getNombre(), fecha);
+						modeloVacuna.removeElement(listVacuna.getSelectedValue());
+						value++;
+						progreso.getProgreso().setValue(value);
+
 					}
 
-					new Thread() {
+					progreso.dispose();
 
-						int value = 0;
-
-						@Override
-						public void run() {
-
-							for (Map.Entry<Res, Vacuna> entry : mapa.entrySet()) {
-
-								ResCRUD.insertVacuna(entry.getKey().getResID(), entry.getValue().getNombre(),
-										fecha);
-								modeloVacuna.removeElement(listVacuna.getSelectedValue());
-								value++;
-								progreso.getProgreso().setValue(value);
-
-							}
-
-						}
-
-					}.start();
-
-					// ResCRUD.insertPurgante(res.getResID(),purgante.getNombre(),
-					// ResCRUD.fecha_sistema().toString() );
-
-					// System.out.println("actualizado");
-
-					// ResCRUD.update(res.getResID(), res);
-					// modelo.removeElement(list.getSelectedValue());
-
-					ventana.refreshTable();
 				}
 
-			
-	
-	
+			}.start();
+
+		}
+
 	}
 
-	
 	public void listenersPrincipales() {
 
-	
-
-		
 		listVacuna.addMouseListener(new MouseAdapter() {
 
-			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-
-			
 
 				if (e.getButton() == MouseEvent.BUTTON3) {
-					
-				
-				vacunasLis();
+
+					vacunasLis();
 				}
-				
+
 			}
 		});
-		
-		
-		
 
 		listPurgado.addMouseListener(new MouseAdapter() {
 
-		
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
 
-			
+				if (e.getButton() == MouseEvent.BUTTON3) {
 
-				
-			if (e.getButton() == MouseEvent.BUTTON3) {
+					purgadoLis();
+				}
 
-				purgadoLis();
-			}
-			
 			}
 
 		});
-		
-	
 
 		listDestete.addMouseListener(new MouseAdapter() {
 
-			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
 
-				
-			if (e.getButton() == MouseEvent.BUTTON3) {
-				
-				desteteLis();
-			}	
+				if (e.getButton() == MouseEvent.BUTTON3) {
+
+					desteteLis();
+				}
 			}
 		});
-		
-		
-		
-		
+
 		listPartos.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
-				
-				if (e.getButton()==MouseEvent.BUTTON3) {
-					
+
+				if (e.getButton() == MouseEvent.BUTTON3) {
+
 					partoLis();
 				}
 
 			}
 
 		});
+
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+
+				ventana.refreshTable();
+
+			}
+
+		});
+
 	}
-
-
-
-	
 
 }

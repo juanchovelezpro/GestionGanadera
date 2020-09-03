@@ -424,7 +424,7 @@ public class PotrerosPanel extends JPanel {
 		});
 		JMenuItem exportar = new JMenuItem("Exportar", new ImageIcon(FileManager.imagenes.get("EXPORTAR")));
 		exportar.addActionListener(e -> {
-
+			exportar();
 		});
 		JMenuItem copiaSeguridad = new JMenuItem("Copia de seguridad",
 				new ImageIcon(FileManager.imagenes.get("BACKUP")));
@@ -959,6 +959,26 @@ public class PotrerosPanel extends JPanel {
 				File database = new File(FileManager.PATH + "database.db");
 
 				FileManager.saveFile(database, fileSaver.getSelectedFile().getPath() + ".db");
+
+				JOptionPane.showMessageDialog(null, "Guardado en " + fileSaver.getSelectedFile().getPath(), "Aviso",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void exportar() {
+
+		try {
+
+			JFileChooser fileSaver = new JFileChooser();
+			int op = fileSaver.showSaveDialog(inicio.getVentana());
+
+			if (op == JFileChooser.APPROVE_OPTION) {
+
+				DocsImporterExporter.exportPotrero(potrero_elegido, fileSaver.getSelectedFile().getPath() + ".xlsx");
 
 				JOptionPane.showMessageDialog(null, "Guardado en " + fileSaver.getSelectedFile().getPath(), "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);

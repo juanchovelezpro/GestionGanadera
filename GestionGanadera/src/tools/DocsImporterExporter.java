@@ -1,7 +1,10 @@
 package tools;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JOptionPane;
@@ -11,6 +14,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import db.PotreroCRUD;
 import db.ResCRUD;
 import model.Res;
 import view.BarraProgresoDialog;
@@ -134,6 +138,105 @@ public class DocsImporterExporter {
 			}
 
 		}.start();
+
+	}
+
+	public static void exportPotrero(String potreroNombre, String destino) {
+
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sheet = wb.createSheet(potreroNombre);
+
+		ArrayList<Res> reses = PotreroCRUD.selectRes(potreroNombre);
+
+		Row firstRow = sheet.createRow(0);
+		firstRow.createCell(0).setCellValue("No");
+		firstRow.createCell(1).setCellValue("GENERO");
+		firstRow.createCell(2).setCellValue("TIPO");
+		firstRow.createCell(3).setCellValue("COLOR");
+		firstRow.createCell(4).setCellValue("VIVO");
+		firstRow.createCell(5).setCellValue("FECHA NACIMIENTO");
+		firstRow.createCell(6).setCellValue("EMBARAZADA");
+		firstRow.createCell(7).setCellValue("FECHA EMBARAZO");
+		firstRow.createCell(8).setCellValue("MADRE");
+		
+		
+		for (int i = 1; i < reses.size(); i++) {
+			Row myRow = sheet.createRow(i);
+			for (int j = 0; j < 10; j++) {
+
+				Cell myCell = myRow.createCell(j);
+
+				switch (j) {
+
+				case 0:
+					myCell.setCellValue(reses.get(i).getResID());
+					break;
+
+				case 1:
+					myCell.setCellValue(reses.get(i).getGenero());
+					break;
+				case 2:
+					myCell.setCellValue(reses.get(i).getTipo());
+					break;
+				case 3:
+					myCell.setCellValue(reses.get(i).getColor());
+					break;
+				case 4:
+					myCell.setCellValue(reses.get(i).getVivo());
+					break;
+				case 5:
+					myCell.setCellValue(reses.get(i).getFecha_nacimiento());
+					break;
+				case 6:
+					if (reses.get(i).getGenero().equals("H"))
+						myCell.setCellValue(reses.get(i).getEmbarazada());
+					else
+						myCell.setCellValue("NO APLICA");
+					break;
+				case 7:
+					if (reses.get(i).getGenero().equals("H"))
+						myCell.setCellValue(reses.get(i).getFecha_embarazo());
+					else
+						myCell.setCellValue("");
+					break;
+				case 8:
+					myCell.setCellValue(reses.get(i).getMadreID());
+					break;
+//				case 9:
+//					myCell.setCellValue(reses.get(i).getResID());
+//					break;
+//				case 10:
+//					myCell.setCellValue(reses.get(i).getResID());
+//					break;
+//				case 11:
+//					myCell.setCellValue(reses.get(i).getResID());
+//					break;
+//
+//				case 12:
+//					myCell.setCellValue(reses.get(i).getResID());
+//					break;
+
+				}
+
+			}
+		}
+
+		try {
+			FileOutputStream output = new FileOutputStream(destino);
+			wb.write(output);
+			wb.close();
+			output.close();
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void exportarTodo(String destino) {
 
 	}
 
