@@ -631,16 +631,18 @@ public class PotrerosPanel extends JPanel {
 							@Override
 							public void run() {
 
+								ArrayList<String> ids = new ArrayList<>();
+								
 								for (int i = 0; i < rowsSelected.length; i++) {
 
 									String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
-
-									ResCRUD.insertVacuna(id, resp, fecha);
+									ids.add(id);
 									value++;
 									progreso.getProgreso().setValue(value);
 
 								}
 
+								ResCRUD.insertVacunaMultiple(ids, resp, fecha);
 								progreso.dispose();
 								JOptionPane.showMessageDialog(null, "Se ha realizado con exito la vacunacion",
 										"Vacunacion Exitosa", JOptionPane.INFORMATION_MESSAGE);

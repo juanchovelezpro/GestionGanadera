@@ -127,71 +127,87 @@ public class NotificacionesDialog extends JDialog {
 					valor = tabbedPane.getSelectedIndex();
 
 					if (valor == 0) {
-
-						modeloPartos.clear();
-
-						listPartos.setCellRenderer(new RenderizadoPartos());
-
-						ArrayList<Res> resesPa = ResCRUD.reportePartos();
-						System.out.println(resesPa.size() + "aqui");
-
-						for (int i = 0; i < resesPa.size(); i++) {
-
-							modeloPartos.addElement(resesPa.get(i));
-						}
-
+						refreshPartos();
 					}
 					if (valor == 1) {
-
-						modeloDestete.clear();
-
-						listDestete.setCellRenderer(new RenderizadoDestete());
-
-						ArrayList<Res> resesD = ResCRUD.reporteDestete();
-						System.out.println(resesD.size());
-
-						for (int i = 0; i < resesD.size(); i++) {
-
-							modeloDestete.addElement(resesD.get(i));
-
-						}
-
+						refreshDestete();
 					}
 					if (valor == 2) {
-
-						modeloPurgado.clear();
-
-						ArrayList<Res> resesP = ResCRUD.reportePurgado();
-						System.out.println(resesP.size());
-
-						listPurgado.setCellRenderer(new RenderizadoPurgado());
-
-						for (int i = 0; i < resesP.size(); i++) {
-
-							modeloPurgado.addElement(resesP.get(i));
-
-						}
-
+						refreshPurgado();
 					}
 					if (valor == 3) {
-
-						modeloVacuna.clear();
-
-						ArrayList<Res> resesV = ResCRUD.reporteVacunaNotificaciones();
-						System.out.println(resesV.size());
-
-						listVacuna.setCellRenderer(new RenderizadoVacuna());
-
-						for (int i = 0; i < resesV.size(); i++) {
-
-							modeloVacuna.addElement(resesV.get(i));
-
-						}
-
+						refreshVacunas();
 					}
 				}
 			}
 		});
+
+	}
+
+	public void refreshPartos() {
+
+		modeloPartos.clear();
+
+		listPartos.setCellRenderer(new RenderizadoPartos());
+
+		ArrayList<Res> resesPa = ResCRUD.reportePartos();
+		System.out.println(resesPa.size() + "aqui");
+
+		for (int i = 0; i < resesPa.size(); i++) {
+
+			modeloPartos.addElement(resesPa.get(i));
+		}
+
+	}
+
+	public void refreshDestete() {
+
+		modeloDestete.clear();
+
+		listDestete.setCellRenderer(new RenderizadoDestete());
+
+		ArrayList<Res> resesD = ResCRUD.reporteDestete();
+		System.out.println(resesD.size());
+
+		for (int i = 0; i < resesD.size(); i++) {
+
+			modeloDestete.addElement(resesD.get(i));
+
+		}
+
+	}
+
+	public void refreshPurgado() {
+
+		modeloPurgado.clear();
+
+		ArrayList<Res> resesP = ResCRUD.reportePurgado();
+		System.out.println(resesP.size());
+
+		listPurgado.setCellRenderer(new RenderizadoPurgado());
+
+		for (int i = 0; i < resesP.size(); i++) {
+
+			modeloPurgado.addElement(resesP.get(i));
+
+		}
+
+	}
+
+	public void refreshVacunas() {
+
+		modeloVacuna.clear();
+
+		ArrayList<Res> resesV = ResCRUD.reporteVacunaNotificaciones();
+		System.out.println(resesV.size());
+
+		listVacuna.setCellRenderer(new RenderizadoVacuna());
+
+		for (int i = 0; i < resesV.size(); i++) {
+
+			modeloVacuna.addElement(resesV.get(i));
+
+		}
 
 	}
 
@@ -334,37 +350,30 @@ public class NotificacionesDialog extends JDialog {
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
 			String fecha = format.format(calendario.getCalendar().getDate());
-			System.out.println("dsdasadd");
 
-			HashMap<Res, Vacuna> mapa = new HashMap<>();
 			BarraProgresoDialog progreso = new BarraProgresoDialog(selectedValuesList.size());
 
 			new Thread() {
 
 				int value = 0;
-				Res res = null;
-				Vacuna vacuna = null;
 
 				@Override
 				public void run() {
 
-//					for (Map.Entry<Res, Vacuna> entry : mapa.entrySet()) {
+					ArrayList<Res> reses = new ArrayList<>();
+
 					for (int i = 0; i < selectedValuesList.size(); i++) {
 
 						System.out.println("dsadada");
 						System.out.println(selectedValuesList.get(i).getResID());
-						res = selectedValuesList.get(i);
-
-						vacuna = ResCRUD.selectVacunas(res.getResID()).peek();
-//						mapa.put(res, vacuna);
-
-						ResCRUD.insertVacuna(res.getResID(), vacuna.getNombre(), fecha);
-						modeloVacuna.removeElement(listVacuna.getSelectedValue());
+						reses.add(selectedValuesList.get(i));
+//						modeloVacuna.removeElement(listVacuna.getSelectedValue());
 						value++;
 						progreso.getProgreso().setValue(value);
 					}
-//					}
 
+					ResCRUD.insertVacunaMultipleSegunda(reses, fecha);
+					refreshVacunas();
 					progreso.dispose();
 
 				}

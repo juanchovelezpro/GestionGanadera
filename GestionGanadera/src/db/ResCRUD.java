@@ -340,7 +340,7 @@ public class ResCRUD {
 
 	}
 
-	// insertvacuna
+	// Insertar vacuna a una sola res
 	public static void insertVacuna(String resID, String vacunaNombre, String fecha) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -349,6 +349,38 @@ public class ResCRUD {
 			VacunaCRUD.insert(vacunaNombre);
 			sql.getStatement().executeUpdate("INSERT INTO res_tiene_vacunas (resID,vacunaNombre,fecha) VALUES ('"
 					+ resID + "','" + vacunaNombre + "','" + fecha + "')");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	// Insertar vacuna a multiples vacas (Primera Aplicacion)
+	public static void insertVacunaMultiple(ArrayList<String> ids, String vacuna, String fecha) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate("INSERT INTO res_tiene_vacunas (resID,vacunaNombre,fecha) VALUES "
+					+ SQLUtils.concatenarAplicarVacunas(ids, vacuna, fecha));
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	// Insertar vacuna a multiples reses (Segunda Aplicacion)
+	public static void insertVacunaMultipleSegunda(ArrayList<Res> reses, String fecha) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate("INSERT INTO res_tiene_vacunas (resID,vacunaNombre,fecha) VALUES "
+					+ SQLUtils.concatenarSegundoAplicarVacunas(reses, fecha));
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -393,7 +425,6 @@ public class ResCRUD {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
-		
 		try {
 			sql.getStatement()
 					.executeUpdate("UPDATE res_tiene_vacunas SET vacunaNombre='" + vacuna.getNombre() + "', fecha='"
@@ -519,7 +550,7 @@ public class ResCRUD {
 
 				if (res.getTipo().equals("CH") || res.getTipo().equals("CM")) {
 
-					if (dias <= 250 && (meses == 8 || meses==9)) {
+					if (dias <= 250 && (meses == 8 || meses == 9)) {
 
 						// vacas_destete.add("Es momento de realizar el destete a la res: " +
 						// res.getResID() + " Del potrero: "
@@ -537,8 +568,6 @@ public class ResCRUD {
 		return vacas_destete;
 
 	}
-	
-	
 
 	public static ArrayList<Res> reportePartos() {
 
@@ -565,7 +594,7 @@ public class ResCRUD {
 						long dias = diasEntreFechas(res.getFecha_embarazo());
 						long meses = mesesEntreFechas(res.getFecha_embarazo());
 
-						if (dias <= 280 && (meses == 9 || meses==10)) {
+						if (dias <= 280 && (meses == 9 || meses == 10)) {
 
 							vacas_partos.add(res);
 
@@ -656,7 +685,7 @@ public class ResCRUD {
 		return reses_purgado;
 
 	}
-	
+
 	public static ArrayList<Res> reporteVacunaNotificaciones() {
 
 		ArrayList<Res> reses_vacuna = new ArrayList<>();
@@ -686,7 +715,7 @@ public class ResCRUD {
 						if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
 
 							long dias = diasEntreFechas(ultimo.getFecha());
-							long meses=mesesEntreFechas(ultimo.getFecha());
+							long meses = mesesEntreFechas(ultimo.getFecha());
 
 							if (dias < 195 && meses == 6) {
 
@@ -885,22 +914,21 @@ public class ResCRUD {
 		int months = (int) Math.abs(Math.floor(days / 30));
 		int years = (int) Math.abs(Math.floor(months / 12));
 
-
 		if (months == 0) {
 			message = "";
-			//message += " Faltan ";
+			// message += " Faltan ";
 			message += days + " dias ";
 
 		} else if (months != 0 && years == 0) {
 			message = "";
-			//message += " Faltan ";
+			// message += " Faltan ";
 			message += months + " meses y ";
 			int diasres = days - (months * 30);
 			message += diasres + " dias ";
 
 		} else if (years != 0) {
 			message = "";
-			//message += " Faltan ";
+			// message += " Faltan ";
 			message += years + " años y ";
 			int mesesres = months - (years * 12);
 			message += mesesres + " meses ";
