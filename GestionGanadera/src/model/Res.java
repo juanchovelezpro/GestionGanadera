@@ -203,28 +203,29 @@ public class Res {
 	}
 
 	public String toPartos() {
-		return "Este atento al parto de la res: " + resID + " Del potrero: " + potreroNombre + " Con fecha de embarazo "
+		return "Atento al parto de la res: " + resID + " del potrero: " + potreroNombre + " con fecha de embarazo "
 				+ fecha_embarazo;
 	}
 	
 	public String toVacunas() {
-		return " Es momento de aplicar la vacuna "
-				+ vacunas.get(vacunas.size() - 1).getNombre() + " Que tuvo la dosis anterior el día "
+		return " Aplique la vacuna: "
+				+ vacunas.get(vacunas.size() - 1).getNombre() + " con dosis anterior el día "
 				+ vacunas.get(vacunas.size() - 1).getFecha() + " a la res " + resID;
 
 	}
 
 	public String toDestete() {
 
-		return "Es momento de realizar el destete a la res: " + resID + " del potrero: " + potreroNombre
+		return "Realice el destete a la res: " + resID + " del potrero: " + potreroNombre
 				+ " Con fecha de nacimiento " + fecha_nacimiento;
 	}
 
+	
 	public String toPurgado() {
 
 		if (purgantes.size() > 0) {
-			return " Es momento de aplicar la segunda dosis del purgante "
-					+ purgantes.get(purgantes.size() - 1).getNombre() + " Que tuvo la primera dosis el día "
+			return " Aplique el purgante: "
+					+ purgantes.get(purgantes.size() - 1).getNombre() + " con dosis anterior el "
 					+ purgantes.get(purgantes.size() - 1).getFecha() + " a la res " + resID;
 
 		} else {

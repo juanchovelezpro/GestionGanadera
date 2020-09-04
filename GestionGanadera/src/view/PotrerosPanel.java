@@ -991,6 +991,7 @@ public class PotrerosPanel extends JPanel {
 
 	}
 
+	
 	public void irAInicio() {
 
 		int reses = ResCRUD.select().size();

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -23,13 +24,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import db.ResCRUD;
+import model.Peso;
 import model.Purgante;
 import model.Res;
 import model.Vacuna;
 import tools.FileManager;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 
 public class NotificacionesDialog extends JDialog {
 	private PotrerosPanel ventana;
@@ -46,6 +51,18 @@ public class NotificacionesDialog extends JDialog {
 	private JScrollPane listScrollerVacuna;
 	DefaultListModel<Res> modeloVacuna;
 	JTabbedPane tabbedPane;
+	JTable tablaPartos;
+	JTable tablaDestete;
+	JTable tablaPurgado;
+	JTable tablaVacuna;
+	ModelTable modeloPartosP;
+	ModelTable modeloDesteteP;
+	ModelTable modeloPurgadoP;
+	ModelTable modeloVacunaP;
+	ModeloTableVacuna modelotablevacuna;
+	ModeloTablePurgado modelotablepurgado;
+	ModeloTableParto modelotablepartos;
+	ModeloTableDestete modelotabledestete;
 
 	public NotificacionesDialog(PotrerosPanel ventana) {
 
@@ -53,12 +70,14 @@ public class NotificacionesDialog extends JDialog {
 
 		setTitle("Notificaciones");
 
-		setSize(605, 452);
+		setSize(730, 450);
 		setLocationRelativeTo(null);
 
 		setIconImage(FileManager.imagenes.get("ICONO"));
 		Components();
-		listenersPrincipales();
+		// listenersPrincipales();
+		listeners();
+
 		listenerTabbed();
 
 		setModalityType(ModalityType.APPLICATION_MODAL);
@@ -103,12 +122,94 @@ public class NotificacionesDialog extends JDialog {
 		listScrollerPurgado.setPreferredSize(new Dimension(450, 300));
 
 		listScrollerVacuna = new JScrollPane(listVacuna);
+		listScrollerVacuna.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		listScrollerVacuna.setPreferredSize(new Dimension(450, 300));
 
 		tabbedPane.addTab("Partos", null, listScrollerPartos, null);
 		tabbedPane.addTab("Destete", null, listScrollerDestete, null);
 		tabbedPane.addTab("Purgado", null, listScrollerPurgado, null);
 		tabbedPane.addTab("Vacunas", null, listScrollerVacuna, null);
+
+		crearTablaVacuna();
+		crearTablaDestete();
+		crearTablaParto();
+		crearTablaPurgado();
+
+	}
+
+	public void crearTablaVacuna() {
+
+		String[] columns = { "NOTIFICACION" };
+
+		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
+
+		modelotablevacuna = new ModeloTableVacuna(resesVacuna);
+
+		modelotablevacuna.setColumna(columns);
+		tablaVacuna = new JTable(modelotablevacuna);
+		tablaVacuna.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tablaVacuna.setShowHorizontalLines(true);
+		tablaVacuna.setShowVerticalLines(true);
+		tablaVacuna.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+		listScrollerVacuna.setViewportView(tablaVacuna);
+		tablaVacuna.setFillsViewportHeight(true);
+
+	}
+
+	public void crearTablaPurgado() {
+
+		String[] columns = { "NOTIFICACION" };
+
+		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
+
+		modelotablepurgado = new ModeloTablePurgado(resesVacuna);
+
+		modelotablepurgado.setColumna(columns);
+		tablaPurgado = new JTable(modelotablepurgado);
+		tablaPurgado.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tablaPurgado.setShowHorizontalLines(true);
+		tablaPurgado.setShowVerticalLines(true);
+		tablaPurgado.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+		listScrollerPurgado.setViewportView(tablaPurgado);
+		tablaPurgado.setFillsViewportHeight(true);
+
+	}
+
+	public void crearTablaParto() {
+
+		String[] columns = { "NOTIFICACION" };
+
+		ArrayList<Res> resesVacuna = ResCRUD.reportePartos();
+
+		modelotablepartos = new ModeloTableParto(resesVacuna);
+
+		modelotablepartos.setColumna(columns);
+		tablaPartos = new JTable(modelotablepartos);
+		tablaPartos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tablaPartos.setShowHorizontalLines(true);
+		tablaPartos.setShowVerticalLines(true);
+		tablaPartos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+		listScrollerPartos.setViewportView(tablaPartos);
+		tablaPartos.setFillsViewportHeight(true);
+
+	}
+
+	public void crearTablaDestete() {
+
+		String[] columns = { "NOTIFICACION" };
+
+		ArrayList<Res> resesVacuna = ResCRUD.reporteDestete();
+
+		modelotabledestete = new ModeloTableDestete(resesVacuna);
+
+		modelotabledestete.setColumna(columns);
+		tablaDestete = new JTable(modelotabledestete);
+		tablaDestete.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tablaDestete.setShowHorizontalLines(true);
+		tablaDestete.setShowVerticalLines(true);
+		tablaDestete.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+		listScrollerDestete.setViewportView(tablaDestete);
+		tablaDestete.setFillsViewportHeight(true);
 
 	}
 
@@ -127,16 +228,19 @@ public class NotificacionesDialog extends JDialog {
 					valor = tabbedPane.getSelectedIndex();
 
 					if (valor == 0) {
-						refreshPartos();
+						// refreshPartos();
 					}
 					if (valor == 1) {
-						refreshDestete();
+						// refreshDestete();
 					}
 					if (valor == 2) {
-						refreshPurgado();
+						// refreshPurgado();
 					}
 					if (valor == 3) {
-						refreshVacunas();
+
+						refreshTableVacuna();
+
+						// refreshVacunas();
 					}
 				}
 			}
@@ -144,315 +248,510 @@ public class NotificacionesDialog extends JDialog {
 
 	}
 
-	public void refreshPartos() {
+	public void listeners() {
 
-		modeloPartos.clear();
+		tablaVacuna.addMouseListener(new MouseAdapter() {
 
-		listPartos.setCellRenderer(new RenderizadoPartos());
+			@Override
+			public void mouseClicked(MouseEvent e) {
 
-		ArrayList<Res> resesPa = ResCRUD.reportePartos();
-		System.out.println(resesPa.size() + "aqui");
+				int[] rowsSelected = tablaVacuna.getSelectedRows();
 
-		for (int i = 0; i < resesPa.size(); i++) {
+				ArrayList<Res> resesSeleccionadas = new ArrayList<>();
+				// TODO Auto-generated method stub
+				if (e.getButton() == MouseEvent.BUTTON3) {
 
-			modeloPartos.addElement(resesPa.get(i));
-		}
+					int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
-	}
+					if (valor == JOptionPane.YES_OPTION) {
 
-	public void refreshDestete() {
+						for (int i = 0; i < rowsSelected.length; i++) {
 
-		modeloDestete.clear();
+							resesSeleccionadas.add(modelotablevacuna.getReses().get(rowsSelected[i]));
 
-		listDestete.setCellRenderer(new RenderizadoDestete());
+						}
 
-		ArrayList<Res> resesD = ResCRUD.reporteDestete();
-		System.out.println(resesD.size());
+						CalendarioDialog calendario = new CalendarioDialog(null);
 
-		for (int i = 0; i < resesD.size(); i++) {
+						SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-			modeloDestete.addElement(resesD.get(i));
+						String fecha = format.format(calendario.getCalendar().getDate());
 
-		}
+						ResCRUD.insertVacunaMultipleSegunda(resesSeleccionadas, fecha);
 
-	}
-
-	public void refreshPurgado() {
-
-		modeloPurgado.clear();
-
-		ArrayList<Res> resesP = ResCRUD.reportePurgado();
-		System.out.println(resesP.size());
-
-		listPurgado.setCellRenderer(new RenderizadoPurgado());
-
-		for (int i = 0; i < resesP.size(); i++) {
-
-			modeloPurgado.addElement(resesP.get(i));
-
-		}
-
-	}
-
-	public void refreshVacunas() {
-
-		modeloVacuna.clear();
-
-		ArrayList<Res> resesV = ResCRUD.reporteVacunaNotificaciones();
-		System.out.println(resesV.size());
-
-		listVacuna.setCellRenderer(new RenderizadoVacuna());
-
-		for (int i = 0; i < resesV.size(); i++) {
-
-			modeloVacuna.addElement(resesV.get(i));
-
-		}
-
-	}
-
-	public void partoLis() {
-
-		List<Res> selectedValuesList = listPartos.getSelectedValuesList();
-
-		// Double-click detected
-		System.out.println(listPartos.getSelectedIndex() + "oprimio");
-
-		int numero = listPartos.getSelectedIndex();
-
-		int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
-
-		if (valor == JOptionPane.OK_OPTION) {
-			Res res = null;
-
-			for (int i = 0; i < selectedValuesList.size(); i++) {
-
-				res = selectedValuesList.get(i);
-
-				if (res.getGenero().equals("H")) {
-
-					res.setTipo("VP");
-					ResCRUD.update(res.getResID(), res);
-					modeloPartos.removeElement(listPartos.getSelectedValue());
+						refreshTableVacuna();
+					}
 
 				}
 			}
 
-		}
+		});
 
-	}
+		tablaPurgado.addMouseListener(new MouseAdapter() {
 
-	public void desteteLis() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 
-		List<Res> selectedValuesList = listDestete.getSelectedValuesList();
+				int[] rowsSelected = tablaPurgado.getSelectedRows();
 
-		int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+				ArrayList<Res> resesSeleccionadas = new ArrayList<>();
+				// TODO Auto-generated method stub
+				if (e.getButton() == MouseEvent.BUTTON3) {
 
-		if (valor == JOptionPane.YES_OPTION) {
+					int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
 
-			Res res = null;
+					if (valor == JOptionPane.YES_OPTION) {
 
-			for (int i = 0; i < selectedValuesList.size(); i++) {
-				res = selectedValuesList.get(i);
+						for (int i = 0; i < rowsSelected.length; i++) {
 
-				if (res.getGenero().equals("H")) {
+							resesSeleccionadas.add(modelotablepurgado.getReses().get(rowsSelected[i]));
 
-					res.setTipo("HL");
-					ResCRUD.update(res.getResID(), res);
-					modeloDestete.removeElement(listDestete.getSelectedValue());
-					System.out.println("actualizado");
+						}
 
-				}
+						CalendarioDialog calendario = new CalendarioDialog(null);
 
-				if (res.getGenero().equals("M")) {
+						SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-					res.setTipo("ML");
-					ResCRUD.update(res.getResID(), res);
-					modeloDestete.removeElement(listDestete.getSelectedValue());
-					System.out.println("actualizado");
+						String fecha = format.format(calendario.getCalendar().getDate());
+
+						//ResCRUD.insertVacunaMultipleSegunda(resesSeleccionadas, fecha);
+						ResCRUD.insertPurganteMultipleSegunda(resesSeleccionadas, fecha);
+
+						refreshTablePurgado();
+					}
 
 				}
 			}
 
-		}
+		});
+		
+		tablaPartos.addMouseListener(new MouseAdapter() {
 
-	}
+			@Override
+			public void mouseClicked(MouseEvent e) {
 
-	public void purgadoLis() {
+				int[] rowsSelected = tablaPartos.getSelectedRows();
 
-		List<Res> selectedValuesList = listPurgado.getSelectedValuesList();
+				ArrayList<Res> resesSeleccionadas = new ArrayList<>();
+				// TODO Auto-generated method stub
+				if (e.getButton() == MouseEvent.BUTTON3) {
 
-		System.out.println(selectedValuesList.size() + "jeje");
+					int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+					
 
-		int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+					if (valor == JOptionPane.YES_OPTION) {
+						
 
-		if (valor == JOptionPane.YES_OPTION) {
+						for (int i = 0; i < rowsSelected.length; i++) {
 
-			CalendarioDialog calendario = new CalendarioDialog(null);
+							resesSeleccionadas.add(modelotablepartos.getReses().get(rowsSelected[i]));
 
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+							if (resesSeleccionadas.get(i).getGenero().equals("H")) {
+								  
+								  resesSeleccionadas.get(i).setTipo("VP"); 
+								  ResCRUD.update(resesSeleccionadas.get(i).getResID(), resesSeleccionadas.get(i));
+								  
+								  } }
+							
 
-			String fecha = format.format(calendario.getCalendar().getDate());
-			System.out.println("dsdasadd");
-			Res res = null;
-			Purgante purgante = null;
-			HashMap<Res, Purgante> mapa = new HashMap<>();
-			BarraProgresoDialog progreso = new BarraProgresoDialog(selectedValuesList.size());
+						}
+					refreshTablePartos();
+					ventana.refreshTable();
 
-			for (int i = 0; i < selectedValuesList.size(); i++) {
 
-				System.out.println("dsadada");
-				System.out.println(selectedValuesList.get(i).getResID());
-				res = selectedValuesList.get(i);
 
-				purgante = ResCRUD.selectPurgantes(res.getResID()).peek();
-				mapa.put(res, purgante);
-			}
-
-			new Thread() {
-
-				int value = 0;
-
-				@Override
-				public void run() {
-
-					for (Map.Entry<Res, Purgante> entry : mapa.entrySet()) {
-
-						ResCRUD.insertPurgante(entry.getKey().getResID(), entry.getValue().getNombre(), fecha);
-						modeloPurgado.removeElement(listPurgado.getSelectedValue());
-						value++;
-						progreso.getProgreso().setValue(value);
+						
 
 					}
 
-					progreso.dispose();
-
 				}
+			
 
-			}.start();
+		});
+		
+		
+		tablaDestete.addMouseListener(new MouseAdapter() {
 
-		}
+			@Override
+			public void mouseClicked(MouseEvent e) {
 
-	}
+				int[] rowsSelected = tablaDestete.getSelectedRows();
 
-	public void vacunasLis() {
+				ArrayList<Res> resesSeleccionadas = new ArrayList<>();
+				// TODO Auto-generated method stub
+				if (e.getButton() == MouseEvent.BUTTON3) {
 
-		List<Res> selectedValuesList = listVacuna.getSelectedValuesList();
+					int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+					
 
-		System.out.println(selectedValuesList.size() + "jeje");
+					if (valor == JOptionPane.YES_OPTION) {
+						
 
-		int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta notificación?");
+						for (int i = 0; i < rowsSelected.length; i++) {
 
-		if (valor == JOptionPane.YES_OPTION) {
+							resesSeleccionadas.add(modelotabledestete.getReses().get(rowsSelected[i]));
 
-			CalendarioDialog calendario = new CalendarioDialog(null);
+							if (resesSeleccionadas.get(i).getGenero().equals("H")) {
+								  
+								  resesSeleccionadas.get(i).setTipo("HL"); ResCRUD.update(resesSeleccionadas.get(i).getResID(), resesSeleccionadas.get(i));
+								  System.out.println("actualizado");
+								  
+								  }
+								  
+								  if (resesSeleccionadas.get(i).getGenero().equals("M")) {
+								  
+								  resesSeleccionadas.get(i).setTipo("ML"); ResCRUD.update(resesSeleccionadas.get(i).getResID(), resesSeleccionadas.get(i));
+								  System.out.println("actualizado");
+								  
+								  } 
+							
 
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+						}
+						
+					refreshTableDestete();
+					ventana.refreshTable();
 
-			String fecha = format.format(calendario.getCalendar().getDate());
 
-			BarraProgresoDialog progreso = new BarraProgresoDialog(selectedValuesList.size());
+						
 
-			new Thread() {
-
-				int value = 0;
-
-				@Override
-				public void run() {
-
-					ArrayList<Res> reses = new ArrayList<>();
-
-					for (int i = 0; i < selectedValuesList.size(); i++) {
-
-						System.out.println("dsadada");
-						System.out.println(selectedValuesList.get(i).getResID());
-						reses.add(selectedValuesList.get(i));
-//						modeloVacuna.removeElement(listVacuna.getSelectedValue());
-						value++;
-						progreso.getProgreso().setValue(value);
 					}
-
-					ResCRUD.insertVacunaMultipleSegunda(reses, fecha);
-					refreshVacunas();
-					progreso.dispose();
-
 				}
 
-			}.start();
-
-		}
-
-	}
-
-	public void listenersPrincipales() {
-
-		listVacuna.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				if (e.getButton() == MouseEvent.BUTTON3) {
-
-					vacunasLis();
-				}
-
-			}
-		});
-
-		listPurgado.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-				if (e.getButton() == MouseEvent.BUTTON3) {
-
-					purgadoLis();
-				}
-
-			}
-
-		});
-
-		listDestete.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-				if (e.getButton() == MouseEvent.BUTTON3) {
-
-					desteteLis();
-				}
-			}
-		});
-
-		listPartos.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-				if (e.getButton() == MouseEvent.BUTTON3) {
-
-					partoLis();
-				}
-
-			}
-
-		});
-
-		addWindowListener(new WindowAdapter() {
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-
-				ventana.refreshTable();
-
+				
 			}
 
 		});
 
 	}
+	
+	
+
+	public void refreshTablePurgado() {
+
+		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
+
+		modelotablepurgado.setReses(resesVacuna);
+		modelotablepurgado.fireTableDataChanged();
+
+	}
+
+	public void refreshTablePartos() {
+
+		ArrayList<Res> resesVacuna = ResCRUD.reportePartos();
+
+		modelotablepartos.setReses(resesVacuna);
+		modelotablepartos.fireTableDataChanged();
+
+	}
+
+	public void refreshTableDestete() {
+
+		ArrayList<Res> resesVacuna = ResCRUD.reporteDestete();
+
+		modelotabledestete.setReses(resesVacuna);
+		modelotabledestete.fireTableDataChanged();
+
+	}
+
+	public void refreshTableVacuna() {
+
+		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
+
+		modelotablevacuna.setReses(resesVacuna);
+		modelotablevacuna.fireTableDataChanged();
+
+	}
+
+	/**
+	 * public void refreshPartos() {
+	 * 
+	 * modeloPartos.clear();
+	 * 
+	 * listPartos.setCellRenderer(new RenderizadoPartos());
+	 * 
+	 * ArrayList<Res> resesPa = ResCRUD.reportePartos();
+	 * System.out.println(resesPa.size() + "aqui");
+	 * 
+	 * for (int i = 0; i < resesPa.size(); i++) {
+	 * 
+	 * modeloPartos.addElement(resesPa.get(i)); }
+	 * 
+	 * }
+	 * 
+	 * public void refreshDestete() {
+	 * 
+	 * modeloDestete.clear();
+	 * 
+	 * listDestete.setCellRenderer(new RenderizadoDestete());
+	 * 
+	 * ArrayList<Res> resesD = ResCRUD.reporteDestete();
+	 * System.out.println(resesD.size());
+	 * 
+	 * for (int i = 0; i < resesD.size(); i++) {
+	 * 
+	 * modeloDestete.addElement(resesD.get(i));
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * public void refreshPurgado() {
+	 * 
+	 * modeloPurgado.clear();
+	 * 
+	 * ArrayList<Res> resesP = ResCRUD.reportePurgado();
+	 * System.out.println(resesP.size());
+	 * 
+	 * listPurgado.setCellRenderer(new RenderizadoPurgado());
+	 * 
+	 * for (int i = 0; i < resesP.size(); i++) {
+	 * 
+	 * modeloPurgado.addElement(resesP.get(i));
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * public void refreshVacunas() {
+	 * 
+	 * modeloVacuna.clear();
+	 * 
+	 * ArrayList<Res> resesV = ResCRUD.reporteVacunaNotificaciones();
+	 * System.out.println(resesV.size());
+	 * 
+	 * listVacuna.setCellRenderer(new RenderizadoVacuna());
+	 * 
+	 * for (int i = 0; i < resesV.size(); i++) {
+	 * 
+	 * modeloVacuna.addElement(resesV.get(i));
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * public void partoLis() {
+	 * 
+	 * List<Res> selectedValuesList = listPartos.getSelectedValuesList();
+	 * 
+	 * // Double-click detected System.out.println(listPartos.getSelectedIndex() +
+	 * "oprimio");
+	 * 
+	 * int numero = listPartos.getSelectedIndex();
+	 * 
+	 * int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar
+	 * esta notificación?");
+	 * 
+	 * if (valor == JOptionPane.OK_OPTION) { Res res = null;
+	 * 
+	 * for (int i = 0; i < selectedValuesList.size(); i++) {
+	 * 
+	 * res = selectedValuesList.get(i);
+	 * 
+	 * if (res.getGenero().equals("H")) {
+	 * 
+	 * res.setTipo("VP"); ResCRUD.update(res.getResID(), res);
+	 * modeloPartos.removeElement(listPartos.getSelectedValue());
+	 * 
+	 * } }
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * public void desteteLis() {
+	 * 
+	 * List<Res> selectedValuesList = listDestete.getSelectedValuesList();
+	 * 
+	 * int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar
+	 * esta notificación?");
+	 * 
+	 * if (valor == JOptionPane.YES_OPTION) {
+	 * 
+	 * Res res = null;
+	 * 
+	 * for (int i = 0; i < selectedValuesList.size(); i++) { res =
+	 * selectedValuesList.get(i);
+	 * 
+	 * if (res.getGenero().equals("H")) {
+	 * 
+	 * res.setTipo("HL"); ResCRUD.update(res.getResID(), res);
+	 * modeloDestete.removeElement(listDestete.getSelectedValue());
+	 * System.out.println("actualizado");
+	 * 
+	 * }
+	 * 
+	 * if (res.getGenero().equals("M")) {
+	 * 
+	 * res.setTipo("ML"); ResCRUD.update(res.getResID(), res);
+	 * modeloDestete.removeElement(listDestete.getSelectedValue());
+	 * System.out.println("actualizado");
+	 * 
+	 * } }
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * public void purgadoLis() {
+	 * 
+	 * List<Res> selectedValuesList = listPurgado.getSelectedValuesList();
+	 * 
+	 * System.out.println(selectedValuesList.size() + "jeje");
+	 * 
+	 * int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar
+	 * esta notificación?");
+	 * 
+	 * if (valor == JOptionPane.YES_OPTION) {
+	 * 
+	 * CalendarioDialog calendario = new CalendarioDialog(null);
+	 * 
+	 * SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	 * 
+	 * String fecha = format.format(calendario.getCalendar().getDate());
+	 * System.out.println("dsdasadd"); Res res = null; Purgante purgante = null;
+	 * HashMap<Res, Purgante> mapa = new HashMap<>(); BarraProgresoDialog progreso =
+	 * new BarraProgresoDialog(selectedValuesList.size());
+	 * 
+	 * for (int i = 0; i < selectedValuesList.size(); i++) {
+	 * 
+	 * System.out.println("dsadada");
+	 * System.out.println(selectedValuesList.get(i).getResID()); res =
+	 * selectedValuesList.get(i);
+	 * 
+	 * purgante = ResCRUD.selectPurgantes(res.getResID()).peek(); mapa.put(res,
+	 * purgante); }
+	 * 
+	 * new Thread() {
+	 * 
+	 * int value = 0;
+	 * 
+	 * @Override public void run() {
+	 * 
+	 *           for (Map.Entry<Res, Purgante> entry : mapa.entrySet()) {
+	 * 
+	 *           ResCRUD.insertPurgante(entry.getKey().getResID(),
+	 *           entry.getValue().getNombre(), fecha);
+	 *           modeloPurgado.removeElement(listPurgado.getSelectedValue());
+	 *           value++; progreso.getProgreso().setValue(value);
+	 * 
+	 *           }
+	 * 
+	 *           progreso.dispose();
+	 * 
+	 *           }
+	 * 
+	 *           }.start();
+	 * 
+	 *           }
+	 * 
+	 *           }
+	 * 
+	 *           public void vacunasLis() {
+	 * 
+	 *           List<Res> selectedValuesList = listVacuna.getSelectedValuesList();
+	 * 
+	 *           System.out.println(selectedValuesList.size() + "jeje");
+	 * 
+	 *           int valor = JOptionPane.showConfirmDialog(null, "¿Está seguro de
+	 *           eliminar esta notificación?");
+	 * 
+	 *           if (valor == JOptionPane.YES_OPTION) {
+	 * 
+	 *           CalendarioDialog calendario = new CalendarioDialog(null);
+	 * 
+	 *           SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	 * 
+	 *           String fecha = format.format(calendario.getCalendar().getDate());
+	 * 
+	 *           BarraProgresoDialog progreso = new
+	 *           BarraProgresoDialog(selectedValuesList.size());
+	 * 
+	 *           new Thread() {
+	 * 
+	 *           int value = 0;
+	 * 
+	 * @Override public void run() {
+	 * 
+	 *           ArrayList<Res> reses = new ArrayList<>();
+	 * 
+	 *           for (int i = 0; i < selectedValuesList.size(); i++) {
+	 * 
+	 *           System.out.println("dsadada");
+	 *           System.out.println(selectedValuesList.get(i).getResID());
+	 *           reses.add(selectedValuesList.get(i)); //
+	 *           modeloVacuna.removeElement(listVacuna.getSelectedValue()); value++;
+	 *           progreso.getProgreso().setValue(value); }
+	 * 
+	 *           ResCRUD.insertVacunaMultipleSegunda(reses, fecha);
+	 *           refreshVacunas(); progreso.dispose();
+	 * 
+	 *           }
+	 * 
+	 *           }.start();
+	 * 
+	 *           }
+	 * 
+	 *           }
+	 * 
+	 * 
+	 *           public void listenersPrincipales() {
+	 * 
+	 *           listVacuna.addMouseListener(new MouseAdapter() {
+	 * 
+	 * @Override public void mouseClicked(MouseEvent e) {
+	 * 
+	 *           if (e.getButton() == MouseEvent.BUTTON3) {
+	 * 
+	 *           vacunasLis(); }
+	 * 
+	 *           } });
+	 * 
+	 *           listPurgado.addMouseListener(new MouseAdapter() {
+	 * 
+	 * @Override public void mouseClicked(MouseEvent e) { // TODO Auto-generated
+	 *           method stub
+	 * 
+	 *           if (e.getButton() == MouseEvent.BUTTON3) {
+	 * 
+	 *           purgadoLis(); }
+	 * 
+	 *           }
+	 * 
+	 *           });
+	 * 
+	 *           listDestete.addMouseListener(new MouseAdapter() {
+	 * 
+	 * @Override public void mouseClicked(MouseEvent e) { // TODO Auto-generated
+	 *           method stub
+	 * 
+	 *           if (e.getButton() == MouseEvent.BUTTON3) {
+	 * 
+	 *           desteteLis(); } } });
+	 * 
+	 *           listPartos.addMouseListener(new MouseAdapter() {
+	 * 
+	 * @Override public void mouseClicked(MouseEvent e) { // TODO Auto-generated
+	 *           method stub
+	 * 
+	 *           if (e.getButton() == MouseEvent.BUTTON3) {
+	 * 
+	 *           partoLis(); }
+	 * 
+	 *           }
+	 * 
+	 *           });
+	 * 
+	 *           addWindowListener(new WindowAdapter() {
+	 * 
+	 * @Override public void windowClosing(WindowEvent e) {
+	 * 
+	 *           ventana.refreshTable();
+	 * 
+	 *           }
+	 * 
+	 *           });
+	 * 
+	 *           }
+	 **/
 
 }
