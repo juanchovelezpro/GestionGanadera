@@ -41,6 +41,21 @@ public class ResCRUD {
 
 	}
 
+	// Insertar multiples reses
+	public static void insertMultiple(ArrayList<Res> reses) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate(
+					"INSERT INTO res (numero,tipo,genero,color,fecha_nacimiento,observaciones,vivo,embarazada,fecha_embarazo,fecha_ultima_purgado,fecha_ultima_vacunado,madreID,potreroNombre) "
+							+ "VALUES (");
+		} catch (SQLException e) {
+
+		}
+	}
+
 	// Selecciona todas las res de la tabla res de la base de datos.
 	public static ArrayList<Res> select() {
 
@@ -447,6 +462,36 @@ public class ResCRUD {
 			sql.getStatement().executeUpdate("INSERT INTO res_tiene_purgantes (resID,purganteNombre,fecha) VALUES ('"
 					+ resID + "','" + purganteNombre + "','" + fecha + "')");
 
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void insertPurganteMultiple(ArrayList<String> ids, String purgante, String fecha) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate("INSERT INTO res_tiene_purgantes (resID,purganteNombre,fecha) VALUES "
+					+ SQLUtils.concatenarAplicarPurgantes(ids, purgante, fecha));
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void insertPurganteMultipleSegunda(ArrayList<Res> reses, String fecha) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate("INSERT INTO res_tiene_purgantes (resID,purganteNombre,fecha) VALUES "
+					+ SQLUtils.concatenarSegundoAplicarPurgantes(reses, fecha));
 		} catch (SQLException e) {
 
 			e.printStackTrace();

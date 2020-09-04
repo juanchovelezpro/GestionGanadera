@@ -25,6 +25,38 @@ public class SQLUtils {
 
 	}
 
+	public static String concatenarReses(ArrayList<Res> reses) {
+
+		String resultado = "";
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			Res resita = reses.get(i);
+			String numero = resita.getResID();
+			String tipo = resita.getTipo();
+			String genero = resita.getGenero();
+			String color = resita.getColor();
+			String fecha_nac = resita.getFecha_nacimiento();
+			String observaciones = resita.getObservaciones();
+			int vivo = resita.getVivo();
+			int embarazada = resita.getEmbarazada();
+			String fechaEmbarazo = resita.getFecha_embarazo();
+//			String fecha
+
+			if (i < reses.size() - 1) {
+
+				resultado += "(\"";
+
+			} else {
+
+			}
+
+		}
+
+		return resultado;
+
+	}
+
 	public static String concatenarAplicarVacunas(ArrayList<String> ids, String vacuna, String fecha) {
 
 		String resultado = "";
@@ -52,7 +84,8 @@ public class SQLUtils {
 
 			if (i < reses.size() - 1)
 				resultado += "(\"" + resita.getResID() + "\",\""
-						+ resita.getVacunas().get(resita.getVacunas().size() - 1).getNombre() + "\",\"" + fecha + "\"),";
+						+ resita.getVacunas().get(resita.getVacunas().size() - 1).getNombre() + "\",\"" + fecha
+						+ "\"),";
 			else
 				resultado += "(\"" + resita.getResID() + "\",\""
 						+ resita.getVacunas().get(resita.getVacunas().size() - 1).getNombre() + "\",\"" + fecha + "\")";
@@ -73,6 +106,29 @@ public class SQLUtils {
 				resultado += "(\"" + ids.get(i) + "\",\"" + purgante + "\",\"" + fecha + "\"),";
 			else
 				resultado += "(\"" + ids.get(i) + "\",\"" + purgante + "\",\"" + fecha + "\")";
+
+		}
+
+		return resultado;
+
+	}
+
+	public static String concatenarSegundoAplicarPurgantes(ArrayList<Res> reses, String fecha) {
+
+		String resultado = "";
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			Res resita = reses.get(i);
+
+			if (i < reses.size() - 1)
+				resultado += "(\"" + resita.getResID() + "\",\""
+						+ resita.getPurgantes().get(resita.getPurgantes().size() - 1).getNombre() + "\",\"" + fecha
+						+ "\"),";
+			else
+				resultado += "(\"" + resita.getResID() + "\",\""
+						+ resita.getPurgantes().get(resita.getPurgantes().size() - 1).getNombre() + "\",\"" + fecha
+						+ "\")";
 
 		}
 
