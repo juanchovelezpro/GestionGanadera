@@ -68,6 +68,7 @@ public class AgregarEditarResDialog extends JDialog {
 	private JPanel panelTabla;
 	private JCheckBox checkMuerto;
 
+	
 	/**
 	 * @wbp.parser.constructor
 	 */
@@ -869,7 +870,7 @@ public class AgregarEditarResDialog extends JDialog {
 
 		btnAgregar.addActionListener(e -> {
 
-			AgregarInfoReporte inforeporte = new AgregarInfoReporte(tiporeporte, res.getResID(), this);
+			AgregarInfoReporte inforeporte = new AgregarInfoReporte(tiporeporte, res.getResID(), this );
 
 		});
 

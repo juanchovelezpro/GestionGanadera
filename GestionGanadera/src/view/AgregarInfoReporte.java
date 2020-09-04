@@ -3,9 +3,11 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,7 +17,11 @@ import javax.swing.SwingConstants;
 
 import com.toedter.calendar.JDateChooser;
 
+import db.PurganteCRUD;
 import db.ResCRUD;
+import db.VacunaCRUD;
+import model.Purgante;
+import model.Vacuna;
 import tools.FileManager;
 
 public class AgregarInfoReporte extends JDialog {
@@ -27,17 +33,21 @@ public class AgregarInfoReporte extends JDialog {
 	private JButton btnGuardar;
 	private String res_ID;
 	private AgregarEditarResDialog agregarEditarPanel;
+	private JComboBox<String> comboOpciones;
+	JPanel panel;
+	private int pintar;
 
 	public AgregarInfoReporte(int mensaje2, String resID, AgregarEditarResDialog agregarEditarPanel) {
 
 		this.agregarEditarPanel = agregarEditarPanel;
 		this.mensajeMostrar = mensaje2;
 		res_ID = resID;
+		this.pintar = pintar;
 
 		setTitle("Agregar");
-		
+
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		
+
 		setIconImage(FileManager.imagenes.get("ICONO"));
 
 		setSize(450, 300);
@@ -45,8 +55,7 @@ public class AgregarInfoReporte extends JDialog {
 		listeners();
 		elegirMensaje(mensaje2);
 		setLocationRelativeTo(null);
-		
-		
+
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
 
@@ -60,7 +69,7 @@ public class AgregarInfoReporte extends JDialog {
 		JLabel lblNewLabel_1 = new JLabel("                      ");
 		getContentPane().add(lblNewLabel_1, BorderLayout.EAST);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(7, 1));
 
@@ -69,8 +78,11 @@ public class AgregarInfoReporte extends JDialog {
 		panel.add(mensaje);
 
 		textField = new JTextField();
-		panel.add(textField);
 		textField.setColumns(10);
+
+		comboOpciones = new JComboBox<String>();
+
+		pintarAutomatico(mensajeMostrar);
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		panel.add(lblNewLabel_2);
@@ -87,6 +99,39 @@ public class AgregarInfoReporte extends JDialog {
 
 		btnGuardar = new JButton("Guardar");
 		panel.add(btnGuardar);
+
+	}
+
+	public void pintarAutomatico(int valor) {
+
+		if (valor == 1) {
+
+			panel.add(textField);
+
+		}
+		if (valor == 2) {
+
+			ArrayList<Vacuna> vacunas = VacunaCRUD.select();
+
+			for (int i = 0; i < vacunas.size(); i++) {
+
+				comboOpciones.addItem(vacunas.get(i).getNombre());
+
+			}
+			panel.add(comboOpciones);
+
+		}
+		if (valor == 3) {
+
+			ArrayList<Purgante> purgantes = PurganteCRUD.select();
+
+			for (int i = 0; i < purgantes.size(); i++) {
+
+				comboOpciones.addItem(purgantes.get(i).getNombre());
+
+			}
+			panel.add(comboOpciones);
+		}
 
 	}
 
