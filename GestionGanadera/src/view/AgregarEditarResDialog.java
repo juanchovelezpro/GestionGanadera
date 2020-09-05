@@ -356,9 +356,6 @@ public class AgregarEditarResDialog extends JDialog {
 
 			if (res.getGenero().equals("H")) {
 
-				comboEmbarazada.setEnabled(true);
-				btnFechaEmbarazo.setEnabled(true);
-
 				String emb = res.getEmbarazada() == 0 ? "NO" : "SI";
 
 				comboEmbarazada.setSelectedItem(emb);
@@ -797,14 +794,14 @@ public class AgregarEditarResDialog extends JDialog {
 				btnFechaEmbarazo.setText("NO APLICA");
 				btnCrias.setEnabled(false);
 
-			}else if(selected.equals("HEMBRA")) {
-				
+			} else if (selected.equals("HEMBRA")) {
+
 				btnCrias.setEnabled(true);
-				
-			}else {
-				
+
+			} else {
+
 				btnCrias.setEnabled(false);
-				
+
 			}
 
 		});
