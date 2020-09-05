@@ -349,6 +349,8 @@ public class NotificacionesDialog extends JDialog {
 							if (resesSeleccionadas.get(i).getGenero().equals("H")) {
 								  
 								  resesSeleccionadas.get(i).setTipo("VP"); 
+								  resesSeleccionadas.get(i).setEmbarazada(0);
+								  resesSeleccionadas.get(i).setFecha_embarazo("");
 								  ResCRUD.update(resesSeleccionadas.get(i).getResID(), resesSeleccionadas.get(i));
 								  
 								  } }
