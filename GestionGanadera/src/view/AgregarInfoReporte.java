@@ -173,11 +173,15 @@ public class AgregarInfoReporte extends JDialog {
 
 			Date fechaSelected = calendar.getDate();
 
+			
 			if (fechaSelected != null) {
 				fechaSeleccionada = format.format(fechaSelected);
 
 			}
 
+			if ((textField.getText()!=null  && !textField.getText().equalsIgnoreCase("")) && !fechaSeleccionada.equalsIgnoreCase("")) {
+				
+			
 			switch (mensajeMostrar) {
 
 			case 1:
@@ -213,7 +217,9 @@ public class AgregarInfoReporte extends JDialog {
 				break;
 			}
 
+		}
 			dispose();
+
 		});
 	}
 
