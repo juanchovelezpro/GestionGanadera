@@ -28,6 +28,8 @@ import model.Purgante;
 import model.Res;
 import model.Vacuna;
 import tools.FileManager;
+import tools.GeneradorGrafica;
+
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
 
@@ -327,6 +329,7 @@ public class AgregarEditarResDialog extends JDialog {
 		panelTablaGraficas.setLayout(new GridLayout(2, 1));
 
 		panelGrafica = new JPanel();
+		panelGrafica.setLayout(new GridLayout(1, 1));
 
 		panelTabla = new JPanel();
 		panelTabla.setLayout(new BorderLayout());
@@ -451,7 +454,7 @@ public class AgregarEditarResDialog extends JDialog {
 	public void transformarPanel() {
 
 		getContentPane().add(panelTablaGraficas);
-		setSize(925, 700);
+		setSize(1100, 700);
 		setLocationRelativeTo(null);
 
 	}
@@ -815,6 +818,12 @@ public class AgregarEditarResDialog extends JDialog {
 				getContentPane().remove(panelTablaGraficas);
 			}
 
+			panelGrafica.removeAll();
+			panelGrafica.add(GeneradorGrafica.graficaPesos(ResCRUD.selectPesosLista(res.getResID())));
+			panelGrafica.invalidate();
+			panelGrafica.revalidate();
+			panelGrafica.repaint();
+			pack();
 			crearTablaPesos();
 
 			btnAgregar.setEnabled(true);
@@ -829,7 +838,11 @@ public class AgregarEditarResDialog extends JDialog {
 
 				getContentPane().remove(panelTablaGraficas);
 			}
-
+			panelGrafica.removeAll();
+			panelGrafica.invalidate();
+			panelGrafica.revalidate();
+			panelGrafica.repaint();
+			pack();
 			crearTablaVacunas();
 
 			btnAgregar.setEnabled(true);
@@ -844,7 +857,12 @@ public class AgregarEditarResDialog extends JDialog {
 
 				getContentPane().remove(panelTablaGraficas);
 			}
-
+			
+			panelGrafica.removeAll();
+			panelGrafica.invalidate();
+			panelGrafica.revalidate();
+			panelGrafica.repaint();
+			pack();
 			crearTablaPurgantes();
 
 			btnAgregar.setEnabled(true);
@@ -860,6 +878,11 @@ public class AgregarEditarResDialog extends JDialog {
 				getContentPane().remove(panelTablaGraficas);
 			}
 
+			panelGrafica.removeAll();
+			panelGrafica.invalidate();
+			panelGrafica.revalidate();
+			panelGrafica.repaint();
+			pack();
 			crearTablaCrias();
 
 			btnAgregar.setEnabled(false);

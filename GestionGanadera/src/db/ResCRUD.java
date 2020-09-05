@@ -339,6 +339,33 @@ public class ResCRUD {
 		return pesos2;
 
 	}
+	
+	public static ArrayList<Peso> selectPesosLista(String resID) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+		ArrayList<Peso> pesos = new ArrayList<Peso>();
+
+		try {
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT * FROM res_tiene_pesos WHERE resID='" + resID + "'");
+
+			while (result.next()) {
+
+				double peso = result.getDouble(3);
+				String fecha = result.getString(4);
+
+				pesos.add(new Peso(peso, fecha));
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return pesos;
+
+	}
 
 	// actualizar peso
 	public static void updatePeso(String resID, String fechaVieja, Peso peso) {
