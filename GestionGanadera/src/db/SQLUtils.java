@@ -41,13 +41,24 @@ public class SQLUtils {
 			int vivo = resita.getVivo();
 			int embarazada = resita.getEmbarazada();
 			String fechaEmbarazo = resita.getFecha_embarazo();
-//			String fecha
+			String madre = resita.getMadreID();
+			String fechaPurgado = resita.getFecha_ultimo_purgado();
+			String fechaVacunado = resita.getFecha_ultimo_vacunado();
+			String potrero = resita.getPotreroNombre();
 
 			if (i < reses.size() - 1) {
 
-				resultado += "(\"";
+				resultado += "(\"" + numero + "\"," + "\"" + tipo + "\"," + "\"" + genero + "\"," + "\"" + color + "\","
+						+ "\"" + fecha_nac + "\"," + "\"" + observaciones + "\"," + vivo + "," + embarazada + "," + "\""
+						+ fechaEmbarazo + "\"," + "\"" + fechaPurgado + "\"," + "\"" + fechaVacunado + "\"," + "\""
+						+ madre + "\"," + "\"" + potrero + "\"),";
 
 			} else {
+
+				resultado += "(\"" + numero + "\"," + "\"" + tipo + "\"," + "\"" + genero + "\"," + "\"" + color + "\","
+						+ "\"" + fecha_nac + "\"," + "\"" + observaciones + "\"," + vivo + "," + embarazada + "," + "\""
+						+ fechaEmbarazo + "\"," + "\"" + fechaPurgado + "\"," + "\"" + fechaVacunado + "\"," + "\""
+						+ madre + "\"," + "\"" + potrero + "\")";
 
 			}
 

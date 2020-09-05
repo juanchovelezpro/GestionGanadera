@@ -50,7 +50,7 @@ public class ResCRUD {
 
 			sql.getStatement().executeUpdate(
 					"INSERT INTO res (numero,tipo,genero,color,fecha_nacimiento,observaciones,vivo,embarazada,fecha_embarazo,fecha_ultima_purgado,fecha_ultima_vacunado,madreID,potreroNombre) "
-							+ "VALUES (");
+							+ "VALUES " + SQLUtils.concatenarReses(reses));
 		} catch (SQLException e) {
 
 		}

@@ -56,6 +56,7 @@ public class DocsImporterExporter {
 			public void run() {
 
 				int value = 0;
+				ArrayList<Res> reses = new ArrayList<>();
 
 				while (rows.hasNext()) {
 
@@ -101,9 +102,7 @@ public class DocsImporterExporter {
 							break;
 
 						case 7:
-							System.out.println("hpta");
 							String vivo = cell.toString().split("\\.")[0];
-							System.out.println(vivo);
 							if (vivo.equals("1"))
 								res.setVivo(1);
 							else
@@ -116,13 +115,16 @@ public class DocsImporterExporter {
 					}
 
 					res.setPotreroNombre(potreroNombre.toUpperCase().trim());
-
-					ResCRUD.insert(res);
+					System.out.println(res);
+					reses.add(res);
 
 					value++;
 					progreso.getProgreso().setValue(value);
 
 				}
+
+				ResCRUD.insertMultiple(reses);
+
 				progreso.dispose();
 				JOptionPane.showMessageDialog(null, "El archivo se ha cargado correctamente!", "Info",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -158,8 +160,7 @@ public class DocsImporterExporter {
 		firstRow.createCell(6).setCellValue("EMBARAZADA");
 		firstRow.createCell(7).setCellValue("FECHA EMBARAZO");
 		firstRow.createCell(8).setCellValue("MADRE");
-		
-		
+
 		for (int i = 1; i < reses.size(); i++) {
 			Row myRow = sheet.createRow(i);
 			for (int j = 0; j < 10; j++) {
