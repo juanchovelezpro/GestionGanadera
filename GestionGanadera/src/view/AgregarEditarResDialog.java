@@ -857,7 +857,7 @@ public class AgregarEditarResDialog extends JDialog {
 
 				getContentPane().remove(panelTablaGraficas);
 			}
-			
+
 			panelGrafica.removeAll();
 			panelGrafica.invalidate();
 			panelGrafica.revalidate();
@@ -957,6 +957,15 @@ public class AgregarEditarResDialog extends JDialog {
 			existe = true;
 
 		return existe;
+
+	}
+
+	public void refreshGraficaPesos() {
+
+		panelGrafica.removeAll();
+		panelGrafica.add(GeneradorGrafica.graficaPesos(ResCRUD.selectPesosLista(res.getResID())));
+		pack();
+		setSize(1100,700);
 
 	}
 

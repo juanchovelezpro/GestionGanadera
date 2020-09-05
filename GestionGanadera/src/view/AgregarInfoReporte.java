@@ -191,6 +191,7 @@ public class AgregarInfoReporte extends JDialog {
 
 					ResCRUD.insertPeso(res_ID, pesoNuevo, fechaSeleccionada);
 					agregarEditarPanel.refreshTable(1);
+					agregarEditarPanel.refreshGraficaPesos();
 
 				} catch (Exception e2) {
 
