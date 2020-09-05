@@ -68,7 +68,6 @@ public class AgregarEditarResDialog extends JDialog {
 	private JPanel panelTabla;
 	private JCheckBox checkMuerto;
 
-	
 	/**
 	 * @wbp.parser.constructor
 	 */
@@ -214,7 +213,7 @@ public class AgregarEditarResDialog extends JDialog {
 		panelAux.add(lblEmbarazada);
 
 		comboEmbarazada = new JComboBox();
-		comboEmbarazada.setModel(new DefaultComboBoxModel(new String[] { "NO APLICA", "NO", "SI" }));
+		comboEmbarazada.setModel(new DefaultComboBoxModel(new String[] { "NO", "SI", "NO APLICA" }));
 		panelAux.add(comboEmbarazada);
 		comboEmbarazada.setEnabled(false);
 
@@ -795,15 +794,17 @@ public class AgregarEditarResDialog extends JDialog {
 			if (selected.equals("MACHO")) {
 
 				comboEmbarazada.setSelectedItem("NO APLICA");
-				comboEmbarazada.setEnabled(false);
 				btnFechaEmbarazo.setText("NO APLICA");
-				btnFechaEmbarazo.setEnabled(false);
+				btnCrias.setEnabled(false);
 
-			} else {
-
-				comboEmbarazada.setEnabled(true);
-				btnFechaEmbarazo.setEnabled(true);
-
+			}else if(selected.equals("HEMBRA")) {
+				
+				btnCrias.setEnabled(true);
+				
+			}else {
+				
+				btnCrias.setEnabled(false);
+				
 			}
 
 		});
@@ -870,7 +871,7 @@ public class AgregarEditarResDialog extends JDialog {
 
 		btnAgregar.addActionListener(e -> {
 
-			AgregarInfoReporte inforeporte = new AgregarInfoReporte(tiporeporte, res.getResID(), this );
+			AgregarInfoReporte inforeporte = new AgregarInfoReporte(tiporeporte, res.getResID(), this);
 
 		});
 
@@ -904,6 +905,24 @@ public class AgregarEditarResDialog extends JDialog {
 
 			}
 
+		});
+
+		comboTipo.addActionListener(e -> {
+
+			String selected = comboTipo.getSelectedItem().toString();
+
+			if (comboGenero.getSelectedItem().equals("HEMBRA")) {
+				if (selected.equalsIgnoreCase("NV")) {
+
+					comboEmbarazada.setSelectedItem("SI");
+
+				} else {
+
+					comboEmbarazada.setSelectedItem("NO");
+					btnFechaEmbarazo.setEnabled(false);
+
+				}
+			}
 		});
 
 	}
