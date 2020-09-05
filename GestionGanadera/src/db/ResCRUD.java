@@ -339,7 +339,7 @@ public class ResCRUD {
 		return pesos2;
 
 	}
-	
+
 	public static ArrayList<Peso> selectPesosLista(String resID) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -583,6 +583,20 @@ public class ResCRUD {
 
 			sql.getStatement().executeUpdate(
 					"DELETE FROM res_tiene_pesos WHERE resID IN (" + SQLUtils.concatenarValores(idsRes) + ")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void deletePesoFromRes(String resID, double peso, String fecha) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate("DELETE FROM res_tiene_pesos WHERE resID=\"" + resID + "\" AND peso="
+					+ peso + " AND fecha=\"" + fecha + "\"");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
