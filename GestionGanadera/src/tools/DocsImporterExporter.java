@@ -203,19 +203,6 @@ public class DocsImporterExporter {
 				case 8:
 					myCell.setCellValue(reses.get(i).getMadreID());
 					break;
-//				case 9:
-//					myCell.setCellValue(reses.get(i).getResID());
-//					break;
-//				case 10:
-//					myCell.setCellValue(reses.get(i).getResID());
-//					break;
-//				case 11:
-//					myCell.setCellValue(reses.get(i).getResID());
-//					break;
-//
-//				case 12:
-//					myCell.setCellValue(reses.get(i).getResID());
-//					break;
 
 				}
 
@@ -237,21 +224,18 @@ public class DocsImporterExporter {
 
 	}
 
-	private static void exportarPartos(String destino) {
- 
-		ArrayList<Res> resesPartos = ResCRUD.reportePartos();
-		
-		XSSFWorkbook wb =new XSSFWorkbook();
-		XSSFSheet sh = wb.createSheet("Reporte de partos");
-				
+	public static void exportarPartos(String destino) {
 
+		ArrayList<Res> resesPartos = ResCRUD.reportePartos();
+
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sh = wb.createSheet("Reporte de partos");
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
 		firstRow.createCell(1).setCellValue("FECHA EMBARAZO");
 		firstRow.createCell(2).setCellValue("TIEMPO DE EMBARAZO");
 		firstRow.createCell(3).setCellValue("POTRERO");
-	
 
 		for (int i = 1; i < resesPartos.size(); i++) {
 			Row myRow = sh.createRow(i);
@@ -274,11 +258,11 @@ public class DocsImporterExporter {
 				case 3:
 					myCell.setCellValue(resesPartos.get(i).getPotreroNombre());
 					break;
-				
+
 				}
 			}
 		}
-		
+
 		try {
 			FileOutputStream output = new FileOutputStream(destino);
 			wb.write(output);
@@ -291,27 +275,22 @@ public class DocsImporterExporter {
 
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	private static void exportarDestete(String destino) {
-		
+	public static void exportarDestete(String destino) {
 
 		ArrayList<Res> resesDestete = ResCRUD.reporteDestete();
-		
-		XSSFWorkbook wb =new XSSFWorkbook();
-		XSSFSheet sh = wb.createSheet("Reporte de destete");
-				
-		String[] columns = { "NUMERO", "NACIMIENTO", "TIEMPO DE CRÍA", "MADRE", "POTRERO" };
 
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sh = wb.createSheet("Reporte de destete");
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
 		firstRow.createCell(1).setCellValue("NACIMIENTO");
-		firstRow.createCell(2).setCellValue("TIEMPO DE CRÍA");
+		firstRow.createCell(2).setCellValue("TIEMPO DE CRIA");
 		firstRow.createCell(3).setCellValue("MADRE");
 		firstRow.createCell(4).setCellValue("POTRERO");
-	
 
 		for (int i = 1; i < resesDestete.size(); i++) {
 			Row myRow = sh.createRow(i);
@@ -334,11 +313,11 @@ public class DocsImporterExporter {
 				case 3:
 					myCell.setCellValue(resesDestete.get(i).getPotreroNombre());
 					break;
-				
+
 				}
 			}
 		}
-		
+
 		try {
 			FileOutputStream output = new FileOutputStream(destino);
 			wb.write(output);
@@ -351,27 +330,22 @@ public class DocsImporterExporter {
 
 			e.printStackTrace();
 		}
-		
 
 	}
 
-	private static void exportarVacunas(String destino) {
+	public static void exportarVacunas(String destino) {
 
-		
-	ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
-		
-		XSSFWorkbook wb =new XSSFWorkbook();
-		XSSFSheet sh = wb.createSheet("Reporte de destete");
-				
-		String[] columns = { "NUMERO", "VACUNA", "ULTIMA FECHA", "POTRERO" };
+		System.out.println("HPTA");
+		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
 
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sh = wb.createSheet("Reporte de vacunas");
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
 		firstRow.createCell(1).setCellValue("VACUNA");
 		firstRow.createCell(2).setCellValue("ULTIMA FECHA");
 		firstRow.createCell(3).setCellValue("POTRERO");
-	
 
 		for (int i = 1; i < resesVacuna.size(); i++) {
 			Row myRow = sh.createRow(i);
@@ -394,11 +368,11 @@ public class DocsImporterExporter {
 				case 3:
 					myCell.setCellValue(resesVacuna.get(i).getPotreroNombre());
 					break;
-				
+
 				}
 			}
 		}
-		
+
 		try {
 			FileOutputStream output = new FileOutputStream(destino);
 			wb.write(output);
@@ -413,63 +387,57 @@ public class DocsImporterExporter {
 		}
 	}
 
-	private static void exportarPurgantes(String destino) {
+	public static void exportarPurgantes(String destino) {
 
-		
-		
 		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
-			
-			XSSFWorkbook wb =new XSSFWorkbook();
-			XSSFSheet sh = wb.createSheet("Reporte de destete");
-					
-			String[] columns = { "NUMERO", "VACUNA", "ULTIMA FECHA", "POTRERO" };
 
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sh = wb.createSheet("Reporte de purgantes");
 
-			Row firstRow = sh.createRow(0);
-			firstRow.createCell(0).setCellValue("NUMERO");
-			firstRow.createCell(1).setCellValue("PURGANTE");
-			firstRow.createCell(2).setCellValue("ULTIMA FECHA");
-			firstRow.createCell(3).setCellValue("POTRERO");
-		
+		Row firstRow = sh.createRow(0);
+		firstRow.createCell(0).setCellValue("NUMERO");
+		firstRow.createCell(1).setCellValue("PURGANTE");
+		firstRow.createCell(2).setCellValue("ULTIMA FECHA");
+		firstRow.createCell(3).setCellValue("POTRERO");
 
-			for (int i = 1; i < resesVacuna.size(); i++) {
-				Row myRow = sh.createRow(i);
-				for (int j = 0; j < 4; j++) {
+		for (int i = 1; i < resesVacuna.size(); i++) {
+			Row myRow = sh.createRow(i);
+			for (int j = 0; j < 4; j++) {
 
-					Cell myCell = myRow.createCell(j);
+				Cell myCell = myRow.createCell(j);
 
-					switch (j) {
+				switch (j) {
 
-					case 0:
-						myCell.setCellValue(resesVacuna.get(i).getResID());
-						break;
+				case 0:
+					myCell.setCellValue(resesVacuna.get(i).getResID());
+					break;
 
-					case 1:
-						myCell.setCellValue(resesVacuna.get(i).getPurgantes().peek().getNombre());
-						break;
-					case 2:
-						myCell.setCellValue(ResCRUD.calcDate(resesVacuna.get(i).getPurgantes().peek().getFecha()));
-						break;
-					case 3:
-						myCell.setCellValue(resesVacuna.get(i).getPotreroNombre());
-						break;
-					
-					}
+				case 1:
+					myCell.setCellValue(resesVacuna.get(i).getPurgantes().peek().getNombre());
+					break;
+				case 2:
+					myCell.setCellValue(ResCRUD.calcDate(resesVacuna.get(i).getPurgantes().peek().getFecha()));
+					break;
+				case 3:
+					myCell.setCellValue(resesVacuna.get(i).getPotreroNombre());
+					break;
+
 				}
 			}
-			
-			try {
-				FileOutputStream output = new FileOutputStream(destino);
-				wb.write(output);
-				wb.close();
-				output.close();
-			} catch (FileNotFoundException e) {
+		}
 
-				e.printStackTrace();
-			} catch (IOException e) {
+		try {
+			FileOutputStream output = new FileOutputStream(destino);
+			wb.write(output);
+			wb.close();
+			output.close();
+		} catch (FileNotFoundException e) {
 
-				e.printStackTrace();
-			}
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	// 1 destete - 2 partos 3- purgantes 4-vacuna
@@ -489,12 +457,10 @@ public class DocsImporterExporter {
 		case 3:
 			exportarPurgantes(destino);
 
-
 			break;
 
 		case 4:
 			exportarVacunas(destino);
-
 
 			break;
 
