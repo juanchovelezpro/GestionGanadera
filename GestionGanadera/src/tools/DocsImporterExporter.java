@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 import javax.swing.JOptionPane;
@@ -229,7 +231,16 @@ public class DocsImporterExporter {
 		ArrayList<Res> resesPartos = ResCRUD.reportePartos();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
-		XSSFSheet sh = wb.createSheet("Reporte de partos");
+		
+
+        Calendar fechaSystem = new GregorianCalendar();
+		
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes =fechaSystem.get(Calendar.MONTH)+1;
+		int anio =fechaSystem.get(Calendar.YEAR);
+		
+		String fecha_Convertida = dia+"-"+mes+"-"+anio;
+		XSSFSheet sh = wb.createSheet("Reporte de partos  "+ ""+ fecha_Convertida);
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
@@ -283,7 +294,17 @@ public class DocsImporterExporter {
 		ArrayList<Res> resesDestete = ResCRUD.reporteDestete();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
-		XSSFSheet sh = wb.createSheet("Reporte de destete");
+		
+
+        Calendar fechaSystem = new GregorianCalendar();
+		
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes =fechaSystem.get(Calendar.MONTH)+1;
+		int anio =fechaSystem.get(Calendar.YEAR);
+		
+		String fecha_Convertida = dia+"-"+mes+"-"+anio;
+		
+		XSSFSheet sh = wb.createSheet("Reporte de destete  "+ fecha_Convertida);
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
@@ -339,7 +360,17 @@ public class DocsImporterExporter {
 		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
-		XSSFSheet sh = wb.createSheet("Reporte de vacunas");
+		
+
+        Calendar fechaSystem = new GregorianCalendar();
+		
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes =fechaSystem.get(Calendar.MONTH)+1;
+		int anio =fechaSystem.get(Calendar.YEAR);
+		
+		String fecha_Convertida = dia+"-"+mes+"-"+anio;
+		
+		XSSFSheet sh = wb.createSheet("Reporte de vacunas  "+ fecha_Convertida);
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
@@ -363,7 +394,7 @@ public class DocsImporterExporter {
 					myCell.setCellValue(resesVacuna.get(i).getVacunas().peek().getNombre());
 					break;
 				case 2:
-					myCell.setCellValue(ResCRUD.calcDate(resesVacuna.get(i).getVacunas().peek().getFecha()));
+					myCell.setCellValue(resesVacuna.get(i).getVacunas().peek().getFecha());
 					break;
 				case 3:
 					myCell.setCellValue(resesVacuna.get(i).getPotreroNombre());
@@ -392,7 +423,16 @@ public class DocsImporterExporter {
 		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
-		XSSFSheet sh = wb.createSheet("Reporte de purgantes");
+		
+
+        Calendar fechaSystem = new GregorianCalendar();
+		
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes =fechaSystem.get(Calendar.MONTH)+1;
+		int anio =fechaSystem.get(Calendar.YEAR);
+		
+		String fecha_Convertida = dia+"-"+mes+"-"+anio;
+		XSSFSheet sh = wb.createSheet("Reporte de purgantes  "+ fecha_Convertida);
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
@@ -416,7 +456,7 @@ public class DocsImporterExporter {
 					myCell.setCellValue(resesVacuna.get(i).getPurgantes().peek().getNombre());
 					break;
 				case 2:
-					myCell.setCellValue(ResCRUD.calcDate(resesVacuna.get(i).getPurgantes().peek().getFecha()));
+					myCell.setCellValue(resesVacuna.get(i).getPurgantes().peek().getFecha());
 					break;
 				case 3:
 					myCell.setCellValue(resesVacuna.get(i).getPotreroNombre());
@@ -445,6 +485,7 @@ public class DocsImporterExporter {
 
 		switch (valor) {
 		case 1:
+			
 			exportarDestete(destino);
 
 			break;
@@ -455,12 +496,15 @@ public class DocsImporterExporter {
 			break;
 
 		case 3:
-			exportarPurgantes(destino);
+
+			exportarVacunas(destino);
 
 			break;
 
 		case 4:
-			exportarVacunas(destino);
+			
+			exportarPurgantes(destino);
+
 
 			break;
 
