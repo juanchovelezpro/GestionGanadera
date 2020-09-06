@@ -52,7 +52,7 @@ public class VentanaPrincipal extends JFrame {
 
 			if (UsuarioCRUD.select().size() == 1) {
 				inicio = new InicioPanel(this);
-				ResCRUD.actualizarTipo();
+			//	ResCRUD.actualizarTipo();
 				add(inicio, BorderLayout.CENTER);
 				
 

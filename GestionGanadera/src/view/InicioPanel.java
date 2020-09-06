@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ import model.Res;
 import model.Usuario;
 import tools.FileManager;
 import java.awt.Color;
+import javax.swing.UIManager;
 
 public class InicioPanel extends JPanel {
 
@@ -64,9 +66,26 @@ public class InicioPanel extends JPanel {
 		cargarInfo();
 
 		comprobarEliminar();
+		
+		
 		// System.out.println(comboBoxPotreros.getItemCount() + "<.----");
 
+		
 	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		
+		
+		super.paintComponent(g);
+		
+		
+		g.drawImage(FileManager.imagenes.get("CAMPO"), 0, 0, null);
+		
+		repaint();
+	}
+	
+
 
 	private void setComponents() {
 
@@ -76,6 +95,7 @@ public class InicioPanel extends JPanel {
 		panelderecho.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panelderecho, BorderLayout.EAST);
 		panelderecho.setLayout(new BorderLayout(0, 0));
+		panelderecho.setBackground(new Color(0,0,0,5));
 
 		JLabel derechoespacio1 = new JLabel("    ");
 		panelderecho.add(derechoespacio1, BorderLayout.WEST);
@@ -86,9 +106,13 @@ public class InicioPanel extends JPanel {
 		JPanel panelDerechoinfo = new JPanel();
 		panelderecho.add(panelDerechoinfo, BorderLayout.CENTER);
 		panelDerechoinfo.setLayout(new GridLayout(13, 1));
+		panelDerechoinfo.setBackground(new Color(0,0,0,5));
 
+		
 		JLabel lblNewLabel_5 = new JLabel("POTREROS");
-		lblNewLabel_5.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		lblNewLabel_5.setForeground(Color.WHITE);
+		lblNewLabel_5.setBackground(Color.BLACK);
+		lblNewLabel_5.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDerechoinfo.add(lblNewLabel_5);
 
@@ -96,21 +120,31 @@ public class InicioPanel extends JPanel {
 		panelDerechoinfo.add(lblNewLabel_11);
 
 		comboBoxPotreros = new JComboBox();
+		comboBoxPotreros.setForeground(Color.WHITE);
+		comboBoxPotreros.setBackground(new Color(0,0,0,130));
 		panelDerechoinfo.add(comboBoxPotreros);
 
 		btnAgregar = new JButton(" Agregar potrero ");
+		btnAgregar.setForeground(Color.WHITE);
 		btnAgregar.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnAgregar.setBackground(new Color(0,0,0,130));
 		panelDerechoinfo.add(btnAgregar);
 
 		btnEliminar = new JButton(" Eliminar potrero");
+		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnEliminar.setBackground(new Color(0,0,0,130));
 		panelDerechoinfo.add(btnEliminar);
 
 		btnBuscar = new JButton(" Buscar res");
+		btnBuscar.setForeground(Color.WHITE);
 		btnBuscar.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnBuscar.setBackground(new Color(0,0,0,130));
 		panelDerechoinfo.add(btnBuscar);
 
 		btnEstadistica = new JButton("Estadisticas");
+		btnEstadistica.setForeground(Color.WHITE);
+		btnEstadistica.setBackground(new Color(0,0,0,130));
 		btnEstadistica.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		panelDerechoinfo.add(btnEstadistica);
 
@@ -119,39 +153,52 @@ public class InicioPanel extends JPanel {
 		panelDerechoinfo.add(lblNewLabel_8);
 
 		btnreporteDestete = new JButton(" Reporte Destete ");
+		btnreporteDestete.setForeground(Color.WHITE);
 		btnreporteDestete.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnreporteDestete.setBackground(new Color(0,0,0,130));
 		panelDerechoinfo.add(btnreporteDestete);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 
 		btnreportePartos = new JButton(" Reporte Partos ");
+		btnreportePartos.setForeground(Color.WHITE);
 		btnreportePartos.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnreportePartos.setBackground(new Color(0,0,0,130));
+		
 		panelDerechoinfo.add(btnreportePartos);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 
 		btnreporteVacuna = new JButton(" Reporte Vacunas ");
+		btnreporteVacuna.setForeground(Color.WHITE);
 		btnreporteVacuna.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnreporteVacuna.setBackground(new Color(0,0,0,130));
 		panelDerechoinfo.add(btnreporteVacuna);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 
 		btnreportePurgante = new JButton(" Reporte Purgantes ");
+		btnreportePurgante.setForeground(Color.WHITE);
 		btnreportePurgante.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnreportePurgante.setBackground(new Color(0,0,0,130));
 		panelDerechoinfo.add(btnreportePurgante);
 
 		JPanel panelprincipal = new JPanel();
 		panelprincipal.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panelprincipal, BorderLayout.CENTER);
 		panelprincipal.setLayout(new BorderLayout(0, 0));
+		panelprincipal.setBackground(new Color(0,0,0,5));
 
 		// PANEL BAJO, BOTONES
 		JPanel panelBotones = new JPanel();
 		panelprincipal.add(panelBotones, BorderLayout.SOUTH);
 		panelBotones.setLayout(new GridLayout(2, 1));
+		panelBotones.setBackground(new Color(0,0,0,5));
 
 		JPanel panelBotones3 = new JPanel();
+		panelBotones3.setBackground(new Color(0,0,0,5));
 
 		JPanel panelBotones2 = new JPanel();
 		panelBotones.add(panelBotones2, BorderLayout.SOUTH);
 		panelBotones2.setLayout(new GridLayout(1, 5));
+		panelBotones2.setBackground(new Color(0,0,0,5));
 
 		panelBotones.add(panelBotones3);
 
@@ -159,6 +206,8 @@ public class InicioPanel extends JPanel {
 		panelBotones2.add(labelaux3);
 
 		btnGuardar = new JButton("GUARDAR");
+		btnGuardar.setBackground(new Color(0,0,0,130));
+		btnGuardar.setForeground(Color.WHITE);
 		btnGuardar.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		panelBotones2.add(btnGuardar);
 
@@ -166,6 +215,8 @@ public class InicioPanel extends JPanel {
 		panelBotones2.add(labelaux2);
 
 		btnEditar = new JButton("EDITAR");
+		btnEditar.setForeground(Color.WHITE);
+		btnEditar.setBackground(new Color(0,0,0,130));
 		btnEditar.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		panelBotones2.add(btnEditar);
 
@@ -174,11 +225,12 @@ public class InicioPanel extends JPanel {
 
 		// BANNER
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(59, 59, 59)));
+		panel.setBackground(new Color(0,0,0,100));
 		panelprincipal.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BorderLayout(1, 1));
 
 		nombreFinca = new JLabel("Nombre de la finca");
+		nombreFinca.setForeground(Color.WHITE);
 		nombreFinca.setHorizontalAlignment(SwingConstants.CENTER);
 		nombreFinca.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		panel.add(nombreFinca, BorderLayout.CENTER);
@@ -188,6 +240,7 @@ public class InicioPanel extends JPanel {
 		JPanel panelInfo = new JPanel();
 		panelprincipal.add(panelInfo, BorderLayout.CENTER);
 		panelInfo.setLayout(new BorderLayout(0, 0));
+		panelInfo.setBackground(new Color(0,0,0,100));
 
 		JLabel labelespacio1 = new JLabel("     ");
 		panelInfo.add(labelespacio1, BorderLayout.WEST);
@@ -198,6 +251,7 @@ public class InicioPanel extends JPanel {
 		JPanel panelinformacion = new JPanel();
 		panelInfo.add(panelinformacion, BorderLayout.CENTER);
 		panelinformacion.setLayout(new GridLayout(6, 2));
+		panelinformacion.setBackground(new Color(0,0,0,5));
 
 		// grid de informacion
 		JLabel lblNewLabel_1 = new JLabel("    ");
@@ -207,49 +261,61 @@ public class InicioPanel extends JPanel {
 		panelinformacion.add(lblNewLabel_2);
 
 		JLabel nombreDueno = new JLabel("Propietario de la finca:");
+		nombreDueno.setForeground(Color.WHITE);
 		nombreDueno.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		nombreDueno.setHorizontalAlignment(SwingConstants.CENTER);
 		panelinformacion.add(nombreDueno);
 
 		txtnombreDueno = new JTextField();
+		txtnombreDueno.setForeground(Color.WHITE);
 		txtnombreDueno.setEditable(false);
 		txtnombreDueno.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		txtnombreDueno.setHorizontalAlignment(SwingConstants.CENTER);
 		txtnombreDueno.setText("");
 		panelinformacion.add(txtnombreDueno);
 		txtnombreDueno.setColumns(10);
+		txtnombreDueno.setBackground(new Color(0,0,0,130));
 
 		JLabel nombreUbicacion = new JLabel("Ubicaci\u00F3n:");
 		nombreUbicacion.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		nombreUbicacion.setHorizontalAlignment(SwingConstants.CENTER);
 		panelinformacion.add(nombreUbicacion);
+		nombreUbicacion.setForeground(Color.WHITE);
+
 
 		txtubicacion = new JTextField();
+		txtubicacion.setForeground(Color.white);
 		txtubicacion.setEditable(false);
 		txtubicacion.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		txtubicacion.setHorizontalAlignment(SwingConstants.CENTER);
 		txtubicacion.setText("");
 		panelinformacion.add(txtubicacion);
 		txtubicacion.setColumns(10);
+		txtubicacion.setBackground(new Color(0,0,0,130));
+
 
 		JLabel numeroPotreros = new JLabel(" Cantidad de potreros: ");
 		numeroPotreros.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		numeroPotreros.setHorizontalAlignment(SwingConstants.CENTER);
 		panelinformacion.add(numeroPotreros);
+		numeroPotreros.setForeground(Color.WHITE);
 
 		numeroDepotreros = new JLabel("10 potreros ");
 		numeroDepotreros.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		numeroDepotreros.setHorizontalAlignment(SwingConstants.CENTER);
 		panelinformacion.add(numeroDepotreros);
+		numeroDepotreros.setForeground(Color.WHITE);
 
 		JLabel numeroVacas = new JLabel(" Cantidad de reses: ");
 		numeroVacas.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		numeroVacas.setHorizontalAlignment(SwingConstants.CENTER);
+		numeroVacas.setForeground(Color.WHITE);
 		panelinformacion.add(numeroVacas);
 
 		numeroDevacas = new JLabel(" 1500 vacas ");
 		numeroDevacas.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		numeroDevacas.setHorizontalAlignment(SwingConstants.CENTER);
+		numeroDevacas.setForeground(Color.WHITE);
 		panelinformacion.add(numeroDevacas);
 
 		JLabel lblNewLabel_3 = new JLabel("     ");

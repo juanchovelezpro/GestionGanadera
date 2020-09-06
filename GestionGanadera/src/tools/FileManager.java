@@ -20,6 +20,7 @@ public class FileManager {
 
 		Path from = Paths.get(selectedFile.toURI());
 
+		
 		Path to = Paths.get(target);
 
 		try {
@@ -28,12 +29,14 @@ public class FileManager {
 		} catch (IOException e) {
 
 			e.printStackTrace();
+			
 		}
 
 	}
 
 	public static void cargarRecursos() {
 
+		
 		imagenes.put("ICONO", ImageLoader.cargarImagen("imagenes/icono.png"));
 		imagenes.put("VACA", ImageLoader.cargarImagen("imagenes/vaca.png"));
 		imagenes.put("FINCA", ImageLoader.cargarImagen("imagenes/finca.png"));
@@ -64,6 +67,9 @@ public class FileManager {
 				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/usuario.png"), new Dimension(15, 15)));
 		imagenes.put("STATS",
 				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/presentacion.png"), new Dimension(15, 15)));
+		//imagenes.put("CAMPO",ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/fondocampo.jpg"), new Dimension(1200,400)));
+
+		imagenes.put("CAMPO", ImageLoader.cargarImagen("imagenes/fondocampo.jpg"));
 
 	}
 
