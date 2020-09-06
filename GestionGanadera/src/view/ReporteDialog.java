@@ -10,7 +10,9 @@ import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +21,7 @@ import javax.swing.SwingConstants;
 import db.ResCRUD;
 import model.Peso;
 import model.Res;
+import tools.DocsImporterExporter;
 import tools.FileManager;
 
 public class ReporteDialog extends JDialog {
@@ -37,10 +40,12 @@ public class ReporteDialog extends JDialog {
 	private ModelTable modelVacuna;
 	private JScrollPane scroller;
 	private JPanel panelinfo;
+	private int valor;
 
 	public ReporteDialog(String reporte, int valor) {
 
 		this.reporte = reporte;
+		this.valor =valor;
 		setTitle("Reporte");
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		setSize(647, 396);
@@ -338,6 +343,25 @@ public class ReporteDialog extends JDialog {
 	public void listeners() {
 
 		btnExportar.addActionListener(e -> {
+			
+
+			try {
+
+				JFileChooser fileSaver = new JFileChooser();
+				int op = fileSaver.showSaveDialog(null);
+
+				if (op == JFileChooser.APPROVE_OPTION) {
+
+					DocsImporterExporter.exportarReporte(valor, fileSaver.getSelectedFile().getPath() + ".xlsx");
+
+					JOptionPane.showMessageDialog(null, "Guardado en " + fileSaver.getSelectedFile().getPath(), "Aviso",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			} catch (Exception xd) {
+				xd.printStackTrace();
+			}
+
+			
 
 		});
 

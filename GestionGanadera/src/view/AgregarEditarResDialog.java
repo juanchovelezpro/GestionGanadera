@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -515,6 +517,35 @@ public class AgregarEditarResDialog extends JDialog {
 			transformarPanel();
 
 		}
+		
+		
+
+		tablaPesos.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+				if (e.getButton()== MouseEvent.BUTTON3) {
+				
+				int valor =JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar este peso?");
+				
+				if (valor == JOptionPane.OK_OPTION) {
+					
+				
+					int fila =tablaPesos.getSelectedRow();
+					Peso peso = new Peso(Double.parseDouble(modelPesos.getValueAt(fila, 0).toString()), modelPesos.getValueAt(fila, 1).toString());
+				    ResCRUD.deletePesoFromRes(res.getResID(), peso.getPeso(), peso.getFecha());
+				    refreshTable(1);
+				    cerrarPanel();
+ 
+				}	
+					
+				}
+			}
+		});
+		
+		
 
 	}
 
@@ -706,6 +737,17 @@ public class AgregarEditarResDialog extends JDialog {
 		}
 
 	}
+	
+	public void cerrarPanel() {
+		
+       remove(panelTablaGraficas);
+       setLocationRelativeTo(null);
+       setSize(500, 700);
+       invalidate();
+       revalidate();
+       repaint();
+	}
+	
 
 	public void listeners() {
 
@@ -944,6 +986,7 @@ public class AgregarEditarResDialog extends JDialog {
 				}
 			}
 		});
+		
 
 	}
 

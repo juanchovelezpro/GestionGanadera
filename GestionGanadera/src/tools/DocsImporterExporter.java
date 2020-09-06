@@ -237,6 +237,270 @@ public class DocsImporterExporter {
 
 	}
 
+	private static void exportarPartos(String destino) {
+ 
+		ArrayList<Res> resesPartos = ResCRUD.reportePartos();
+		
+		XSSFWorkbook wb =new XSSFWorkbook();
+		XSSFSheet sh = wb.createSheet("Reporte de partos");
+				
+
+
+		Row firstRow = sh.createRow(0);
+		firstRow.createCell(0).setCellValue("NUMERO");
+		firstRow.createCell(1).setCellValue("FECHA EMBARAZO");
+		firstRow.createCell(2).setCellValue("TIEMPO DE EMBARAZO");
+		firstRow.createCell(3).setCellValue("POTRERO");
+	
+
+		for (int i = 1; i < resesPartos.size(); i++) {
+			Row myRow = sh.createRow(i);
+			for (int j = 0; j < 4; j++) {
+
+				Cell myCell = myRow.createCell(j);
+
+				switch (j) {
+
+				case 0:
+					myCell.setCellValue(resesPartos.get(i).getResID());
+					break;
+
+				case 1:
+					myCell.setCellValue(resesPartos.get(i).getFecha_embarazo());
+					break;
+				case 2:
+					myCell.setCellValue(ResCRUD.calcDate(resesPartos.get(i).getFecha_embarazo()));
+					break;
+				case 3:
+					myCell.setCellValue(resesPartos.get(i).getPotreroNombre());
+					break;
+				
+				}
+			}
+		}
+		
+		try {
+			FileOutputStream output = new FileOutputStream(destino);
+			wb.write(output);
+			wb.close();
+			output.close();
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		
+	}
+
+	private static void exportarDestete(String destino) {
+		
+
+		ArrayList<Res> resesDestete = ResCRUD.reporteDestete();
+		
+		XSSFWorkbook wb =new XSSFWorkbook();
+		XSSFSheet sh = wb.createSheet("Reporte de destete");
+				
+		String[] columns = { "NUMERO", "NACIMIENTO", "TIEMPO DE CRÍA", "MADRE", "POTRERO" };
+
+
+		Row firstRow = sh.createRow(0);
+		firstRow.createCell(0).setCellValue("NUMERO");
+		firstRow.createCell(1).setCellValue("NACIMIENTO");
+		firstRow.createCell(2).setCellValue("TIEMPO DE CRÍA");
+		firstRow.createCell(3).setCellValue("MADRE");
+		firstRow.createCell(4).setCellValue("POTRERO");
+	
+
+		for (int i = 1; i < resesDestete.size(); i++) {
+			Row myRow = sh.createRow(i);
+			for (int j = 0; j < 5; j++) {
+
+				Cell myCell = myRow.createCell(j);
+
+				switch (j) {
+
+				case 0:
+					myCell.setCellValue(resesDestete.get(i).getResID());
+					break;
+
+				case 1:
+					myCell.setCellValue(resesDestete.get(i).getFecha_nacimiento());
+					break;
+				case 2:
+					myCell.setCellValue(ResCRUD.calcDate(resesDestete.get(i).getFecha_nacimiento()));
+					break;
+				case 3:
+					myCell.setCellValue(resesDestete.get(i).getPotreroNombre());
+					break;
+				
+				}
+			}
+		}
+		
+		try {
+			FileOutputStream output = new FileOutputStream(destino);
+			wb.write(output);
+			wb.close();
+			output.close();
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		
+
+	}
+
+	private static void exportarVacunas(String destino) {
+
+		
+	ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
+		
+		XSSFWorkbook wb =new XSSFWorkbook();
+		XSSFSheet sh = wb.createSheet("Reporte de destete");
+				
+		String[] columns = { "NUMERO", "VACUNA", "ULTIMA FECHA", "POTRERO" };
+
+
+		Row firstRow = sh.createRow(0);
+		firstRow.createCell(0).setCellValue("NUMERO");
+		firstRow.createCell(1).setCellValue("VACUNA");
+		firstRow.createCell(2).setCellValue("ULTIMA FECHA");
+		firstRow.createCell(3).setCellValue("POTRERO");
+	
+
+		for (int i = 1; i < resesVacuna.size(); i++) {
+			Row myRow = sh.createRow(i);
+			for (int j = 0; j < 4; j++) {
+
+				Cell myCell = myRow.createCell(j);
+
+				switch (j) {
+
+				case 0:
+					myCell.setCellValue(resesVacuna.get(i).getResID());
+					break;
+
+				case 1:
+					myCell.setCellValue(resesVacuna.get(i).getVacunas().peek().getNombre());
+					break;
+				case 2:
+					myCell.setCellValue(ResCRUD.calcDate(resesVacuna.get(i).getVacunas().peek().getFecha()));
+					break;
+				case 3:
+					myCell.setCellValue(resesVacuna.get(i).getPotreroNombre());
+					break;
+				
+				}
+			}
+		}
+		
+		try {
+			FileOutputStream output = new FileOutputStream(destino);
+			wb.write(output);
+			wb.close();
+			output.close();
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+	}
+
+	private static void exportarPurgantes(String destino) {
+
+		
+		
+		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
+			
+			XSSFWorkbook wb =new XSSFWorkbook();
+			XSSFSheet sh = wb.createSheet("Reporte de destete");
+					
+			String[] columns = { "NUMERO", "VACUNA", "ULTIMA FECHA", "POTRERO" };
+
+
+			Row firstRow = sh.createRow(0);
+			firstRow.createCell(0).setCellValue("NUMERO");
+			firstRow.createCell(1).setCellValue("PURGANTE");
+			firstRow.createCell(2).setCellValue("ULTIMA FECHA");
+			firstRow.createCell(3).setCellValue("POTRERO");
+		
+
+			for (int i = 1; i < resesVacuna.size(); i++) {
+				Row myRow = sh.createRow(i);
+				for (int j = 0; j < 4; j++) {
+
+					Cell myCell = myRow.createCell(j);
+
+					switch (j) {
+
+					case 0:
+						myCell.setCellValue(resesVacuna.get(i).getResID());
+						break;
+
+					case 1:
+						myCell.setCellValue(resesVacuna.get(i).getPurgantes().peek().getNombre());
+						break;
+					case 2:
+						myCell.setCellValue(ResCRUD.calcDate(resesVacuna.get(i).getPurgantes().peek().getFecha()));
+						break;
+					case 3:
+						myCell.setCellValue(resesVacuna.get(i).getPotreroNombre());
+						break;
+					
+					}
+				}
+			}
+			
+			try {
+				FileOutputStream output = new FileOutputStream(destino);
+				wb.write(output);
+				wb.close();
+				output.close();
+			} catch (FileNotFoundException e) {
+
+				e.printStackTrace();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+	}
+
+	// 1 destete - 2 partos 3- purgantes 4-vacuna
+	public static void exportarReporte(int valor, String destino) {
+
+		switch (valor) {
+		case 1:
+			exportarDestete(destino);
+
+			break;
+
+		case 2:
+			exportarPartos(destino);
+
+			break;
+
+		case 3:
+			exportarPurgantes(destino);
+
+
+			break;
+
+		case 4:
+			exportarVacunas(destino);
+
+
+			break;
+
+		}
+	}
+
 	public static void exportarTodo(String destino) {
 
 	}
