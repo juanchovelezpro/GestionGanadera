@@ -398,12 +398,24 @@ public class NotificacionesDialog extends JDialog {
 								  resesSeleccionadas.get(i).setTipo("HL"); ResCRUD.update(resesSeleccionadas.get(i).getResID(), resesSeleccionadas.get(i));
 								  System.out.println("actualizado");
 								  
+								  Res madre =  ResCRUD.selectResByID(resesSeleccionadas.get(i).getMadreID());
+
+								  madre.setTipo("VH");
+								  ResCRUD.update(madre.getResID(), madre);
+								  
+								  
 								  }
 								  
 								  if (resesSeleccionadas.get(i).getGenero().equals("M")) {
 								  
 								  resesSeleccionadas.get(i).setTipo("ML"); ResCRUD.update(resesSeleccionadas.get(i).getResID(), resesSeleccionadas.get(i));
 								  System.out.println("actualizado");
+								  
+								  Res madre =  ResCRUD.selectResByID(resesSeleccionadas.get(i).getMadreID());
+
+								  madre.setTipo("VH");
+								  ResCRUD.update(madre.getResID(), madre);
+								  
 								  
 								  } 
 							

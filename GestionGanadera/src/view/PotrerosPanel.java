@@ -502,9 +502,17 @@ public class PotrerosPanel extends JPanel {
 			eliminar();
 
 		});
+		
+		JMenuItem actualizar =new JMenuItem("Actualizar", null);
+		actualizar.addActionListener(e ->{
+			
+			ResCRUD.actualizarTipo();
+			refreshTable();
+		});
 		edicion.add(limpiar);
 		edicion.add(seleccionarTodo);
 		edicion.add(eliminar);
+		edicion.add(actualizar);
 
 		JMenu ver = new JMenu("Ver");
 		JMenuItem estadisticas = new JMenuItem("Estadisticas", new ImageIcon(FileManager.imagenes.get("STATS")));

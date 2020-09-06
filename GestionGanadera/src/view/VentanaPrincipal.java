@@ -6,6 +6,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import db.ResCRUD;
 import db.SQLConnection;
 import db.UsuarioCRUD;
 import tools.FileManager;
@@ -51,7 +52,9 @@ public class VentanaPrincipal extends JFrame {
 
 			if (UsuarioCRUD.select().size() == 1) {
 				inicio = new InicioPanel(this);
+				ResCRUD.actualizarTipo();
 				add(inicio, BorderLayout.CENTER);
+				
 
 			} else {
 

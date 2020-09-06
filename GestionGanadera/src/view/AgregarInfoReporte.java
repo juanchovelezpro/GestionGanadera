@@ -155,14 +155,57 @@ public class AgregarInfoReporte extends JDialog {
 
 			break;
 
-		case 4:
-
-			break;
 
 		default:
 			break;
 		}
 	}
+	
+	public void partos(String fechaSeleccionada) {
+		
+		double pesoNuevo = Double.parseDouble(textField.getText());
+
+		if (((textField.getText()!=null  && !textField.getText().equalsIgnoreCase("")) && !fechaSeleccionada.equalsIgnoreCase("")) ) {
+
+		ResCRUD.insertPeso(res_ID, pesoNuevo, fechaSeleccionada);
+		agregarEditarPanel.refreshTable(1);
+		agregarEditarPanel.cerrarPanel();
+		
+		}
+	}
+	
+	
+	public void vacuna(String fechaSeleccionada) {
+		
+		if (comboOpciones.getSelectedItem()!=null && !comboOpciones.getSelectedItem().toString().equalsIgnoreCase("") && !fechaSeleccionada.equalsIgnoreCase("")) {
+			
+		
+				
+				ResCRUD.insertVacuna(res_ID, comboOpciones.getSelectedItem().toString(), fechaSeleccionada);
+				agregarEditarPanel.refreshTable(2);
+				
+			
+		
+			
+		}
+		
+	}
+	
+	public void purgante(String fechaSeleccionada) {
+		
+		if (comboOpciones.getSelectedItem()!=null && !comboOpciones.getSelectedItem().toString().equalsIgnoreCase("") && !fechaSeleccionada.equalsIgnoreCase("")) {
+			
+		
+				
+				ResCRUD.insertPurgante(res_ID, comboOpciones.getSelectedItem().toString(), fechaSeleccionada);
+				agregarEditarPanel.refreshTable(3);
+			
+		
+			
+		}
+		
+	}
+	
 
 	public void listeners() {
 
@@ -179,19 +222,16 @@ public class AgregarInfoReporte extends JDialog {
 
 			}
 
-			if ((textField.getText()!=null  && !textField.getText().equalsIgnoreCase("")) && !fechaSeleccionada.equalsIgnoreCase("")) {
 				
 			
 			switch (mensajeMostrar) {
 
 			case 1:
-
+ 
+				
+				
 				try {
-					double pesoNuevo = Double.parseDouble(textField.getText());
-
-					ResCRUD.insertPeso(res_ID, pesoNuevo, fechaSeleccionada);
-					agregarEditarPanel.refreshTable(1);
-					agregarEditarPanel.cerrarPanel();
+					partos(fechaSeleccionada);
 
 				} catch (Exception e2) {
 
@@ -202,23 +242,20 @@ public class AgregarInfoReporte extends JDialog {
 
 			case 2:
 
-				ResCRUD.insertVacuna(res_ID, textField.getText(), fechaSeleccionada);
-				agregarEditarPanel.refreshTable(2);
+			      vacuna(fechaSeleccionada);
 				break;
 
 			case 3:
 
-				ResCRUD.insertPurgante(res_ID, textField.getText(), fechaSeleccionada);
 
-				agregarEditarPanel.refreshTable(3);
-
+				purgante(fechaSeleccionada);
 				break;
 
 			default:
 				break;
 			}
 
-		}
+		
 			dispose();
 
 		});

@@ -760,6 +760,12 @@ public class AgregarEditarResDialog extends JDialog {
 		btnFechaEmbarazo.addActionListener(e -> {
 
 			CalendarioDialog calendar = new CalendarioDialog(btnFechaEmbarazo);
+			
+			if (btnFechaEmbarazo.getText()!=null && !btnFechaEmbarazo.getText().equalsIgnoreCase("") && comboTipo.getSelectedItem().toString().equalsIgnoreCase("VH")) {
+				
+				comboTipo.setSelectedItem("NV");
+				System.out.println(btnFechaEmbarazo.getText());
+			}
 
 		});
 
@@ -842,6 +848,8 @@ public class AgregarEditarResDialog extends JDialog {
 			} else if (selected.equals("HEMBRA")) {
 
 				btnCrias.setEnabled(true);
+				btnFechaEmbarazo.setEnabled(true);
+				comboEmbarazada.setEnabled(true);
 
 			} else {
 
@@ -964,6 +972,8 @@ public class AgregarEditarResDialog extends JDialog {
 
 				btnFechaEmbarazo.setText("dd/mm/AAAA");
 				btnFechaEmbarazo.setEnabled(true);
+				
+				
 
 			}
 
@@ -971,20 +981,7 @@ public class AgregarEditarResDialog extends JDialog {
 
 		comboTipo.addActionListener(e -> {
 
-			String selected = comboTipo.getSelectedItem().toString();
-
-			if (comboGenero.getSelectedItem().equals("HEMBRA")) {
-				if (selected.equalsIgnoreCase("NV")) {
-
-					comboEmbarazada.setSelectedItem("SI");
-
-				} else {
-
-					comboEmbarazada.setSelectedItem("NO");
-					btnFechaEmbarazo.setEnabled(false);
-
-				}
-			}
+	
 		});
 		
 

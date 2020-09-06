@@ -669,7 +669,7 @@ public class ResCRUD {
 
 			System.out.println(res + "primera prueba");
 
-			if (res.getTipo().equals("NV")) {
+			if (res.getTipo().equals("NV") || res.getTipo().equals("VH")) {
 
 				if (res.getEmbarazada() == 1) {
 
@@ -830,61 +830,47 @@ public class ResCRUD {
 		Res cria = null;
 
 		for (int i = 0; i < reses.size(); i++) {
-			for (int j = 0; j < reses.size(); j++) {
+			
+			ArrayList<Res> crias = selectCria(reses.get(i).getResID());
+			res = reses.get(i);
 
-				res = reses.get(i);
-				cria = reses.get(j);
+		
 
-				if (res.getGenero().equalsIgnoreCase("H")) {
-
-					if (res.getTipo().equalsIgnoreCase("VP")) {
-
-						if (cria.getMadreID().equals(res.getResID())) {
-
-							if (cria.getTipo() == "HL") {
-
-								res.setTipo("VH");
-								update(res.getResID(), res);
-							}
-
-						}
-
-					}
-
+					//Aqui se pasa de una vaca tipo HL a NV
 					if (res.getTipo().equalsIgnoreCase("HL")) {
+						
+						String fecha_nacimiento = res.getFecha_nacimiento();
 
-						String fecha_nacimiento = cria.getFecha_nacimiento();
+						System.out.println(fecha_nacimiento + "<-" + res.getResID());
+						
+						if (fecha_nacimiento!=null && !fecha_nacimiento.equalsIgnoreCase("")) {
+							
+							System.out.println("AQUI ES");
+
+
 						long meses = mesesEntreFechas(fecha_nacimiento);
 						long dias = diasEntreFechas(fecha_nacimiento);
 
-						if (meses == 24 && dias < 735) {
+						if (meses >= 24 ) {
 
 							res.setTipo("NV");
 							update(res.getResID(), res);
 						}
 					}
-
-					if (res.getTipo().equalsIgnoreCase("VH")) {
-
-						if (res.getEmbarazada() == 1) {
-							String fecha_nacimiento = cria.getFecha_embarazo();
-							long meses = mesesEntreFechas(fecha_nacimiento);
-							long dias = diasEntreFechas(fecha_nacimiento);
-
-							if (meses <= 9 && dias < 275) {
-
-								res.setTipo("VP");
-								update(res.getResID(), res);
-							}
-						}
 					}
-				}
+
+				
+					
+				
 
 				if (res.getGenero().equalsIgnoreCase("M")) {
 
+					String fecha_nacimiento = res.getFecha_nacimiento();
+
 					if (res.getTipo().equalsIgnoreCase("ML")) {
 
-						String fecha_nacimiento = cria.getFecha_nacimiento();
+						if (fecha_nacimiento!=null && !fecha_nacimiento.equalsIgnoreCase("")) {
+
 						long meses = mesesEntreFechas(fecha_nacimiento);
 						long dias = diasEntreFechas(fecha_nacimiento);
 
@@ -895,9 +881,11 @@ public class ResCRUD {
 						}
 					}
 
+					}
 				}
+			
 
-			}
+			
 		}
 
 	}
