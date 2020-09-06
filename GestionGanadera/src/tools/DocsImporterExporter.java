@@ -162,6 +162,7 @@ public class DocsImporterExporter {
 		firstRow.createCell(6).setCellValue("EMBARAZADA");
 		firstRow.createCell(7).setCellValue("FECHA EMBARAZO");
 		firstRow.createCell(8).setCellValue("MADRE");
+	
 
 		for (int i = 1; i < reses.size(); i++) {
 			Row myRow = sheet.createRow(i);
@@ -205,6 +206,7 @@ public class DocsImporterExporter {
 				case 8:
 					myCell.setCellValue(reses.get(i).getMadreID());
 					break;
+				
 
 				}
 
@@ -231,16 +233,15 @@ public class DocsImporterExporter {
 		ArrayList<Res> resesPartos = ResCRUD.reportePartos();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
-		
 
-        Calendar fechaSystem = new GregorianCalendar();
-		
+		Calendar fechaSystem = new GregorianCalendar();
+
 		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
-		int mes =fechaSystem.get(Calendar.MONTH)+1;
-		int anio =fechaSystem.get(Calendar.YEAR);
-		
-		String fecha_Convertida = dia+"-"+mes+"-"+anio;
-		XSSFSheet sh = wb.createSheet("Reporte de partos  "+ ""+ fecha_Convertida);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		String fecha_Convertida = dia + "-" + mes + "-" + anio;
+		XSSFSheet sh = wb.createSheet("Reporte de partos  " + "" + fecha_Convertida);
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
@@ -294,17 +295,16 @@ public class DocsImporterExporter {
 		ArrayList<Res> resesDestete = ResCRUD.reporteDestete();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
-		
 
-        Calendar fechaSystem = new GregorianCalendar();
-		
+		Calendar fechaSystem = new GregorianCalendar();
+
 		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
-		int mes =fechaSystem.get(Calendar.MONTH)+1;
-		int anio =fechaSystem.get(Calendar.YEAR);
-		
-		String fecha_Convertida = dia+"-"+mes+"-"+anio;
-		
-		XSSFSheet sh = wb.createSheet("Reporte de destete  "+ fecha_Convertida);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		String fecha_Convertida = dia + "-" + mes + "-" + anio;
+
+		XSSFSheet sh = wb.createSheet("Reporte de destete  " + fecha_Convertida);
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
@@ -356,21 +356,19 @@ public class DocsImporterExporter {
 
 	public static void exportarVacunas(String destino) {
 
-		System.out.println("HPTA");
 		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
-		
 
-        Calendar fechaSystem = new GregorianCalendar();
-		
+		Calendar fechaSystem = new GregorianCalendar();
+
 		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
-		int mes =fechaSystem.get(Calendar.MONTH)+1;
-		int anio =fechaSystem.get(Calendar.YEAR);
-		
-		String fecha_Convertida = dia+"-"+mes+"-"+anio;
-		
-		XSSFSheet sh = wb.createSheet("Reporte de vacunas  "+ fecha_Convertida);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		String fecha_Convertida = dia + "-" + mes + "-" + anio;
+
+		XSSFSheet sh = wb.createSheet("Reporte de vacunas  " + fecha_Convertida);
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
@@ -423,16 +421,15 @@ public class DocsImporterExporter {
 		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
-		
 
-        Calendar fechaSystem = new GregorianCalendar();
-		
+		Calendar fechaSystem = new GregorianCalendar();
+
 		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
-		int mes =fechaSystem.get(Calendar.MONTH)+1;
-		int anio =fechaSystem.get(Calendar.YEAR);
-		
-		String fecha_Convertida = dia+"-"+mes+"-"+anio;
-		XSSFSheet sh = wb.createSheet("Reporte de purgantes  "+ fecha_Convertida);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		String fecha_Convertida = dia + "-" + mes + "-" + anio;
+		XSSFSheet sh = wb.createSheet("Reporte de purgantes  " + fecha_Convertida);
 
 		Row firstRow = sh.createRow(0);
 		firstRow.createCell(0).setCellValue("NUMERO");
@@ -485,7 +482,7 @@ public class DocsImporterExporter {
 
 		switch (valor) {
 		case 1:
-			
+
 			exportarDestete(destino);
 
 			break;
@@ -502,9 +499,8 @@ public class DocsImporterExporter {
 			break;
 
 		case 4:
-			
-			exportarPurgantes(destino);
 
+			exportarPurgantes(destino);
 
 			break;
 
