@@ -632,7 +632,7 @@ public class PotrerosPanel extends JPanel {
 							public void run() {
 
 								ArrayList<String> ids = new ArrayList<>();
-								
+
 								for (int i = 0; i < rowsSelected.length; i++) {
 
 									String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
@@ -711,16 +711,19 @@ public class PotrerosPanel extends JPanel {
 							@Override
 							public void run() {
 
+								ArrayList<String> ids = new ArrayList<>();
+
 								for (int i = 0; i < rowsSelected.length; i++) {
 
 									String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
 
-									ResCRUD.insertPurgante(id, resp, fecha);
+									ids.add(id);
 									value++;
 									progreso.getProgreso().setValue(value);
 
 								}
 
+								ResCRUD.insertPurganteMultiple(ids, resp, fecha);
 								progreso.dispose();
 								JOptionPane.showMessageDialog(null, "Se ha realizado con exito el purgado",
 										"Purgado Exitoso", JOptionPane.INFORMATION_MESSAGE);
@@ -991,7 +994,6 @@ public class PotrerosPanel extends JPanel {
 
 	}
 
-	
 	public void irAInicio() {
 
 		int reses = ResCRUD.select().size();
