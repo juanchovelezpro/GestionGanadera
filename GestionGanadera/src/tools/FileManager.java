@@ -70,6 +70,13 @@ public class FileManager {
 		//imagenes.put("CAMPO",ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/fondocampo.jpg"), new Dimension(1200,400)));
 
 		imagenes.put("CAMPO", ImageLoader.cargarImagen("imagenes/fondocampo.jpg"));
+		
+		imagenes.put("CAMPO2", ImageLoader.cargarImagen("imagenes/campo2.jpg"));
+		
+		imagenes.put("CAMPO3", ImageLoader.cargarImagen("imagenes/campo3.jpg"));
+
+
+
 
 	}
 
