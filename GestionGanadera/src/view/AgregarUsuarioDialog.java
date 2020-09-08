@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import db.UsuarioCRUD;
 import model.Usuario;
 import tools.FileManager;
+import java.awt.Color;
 
 public class AgregarUsuarioDialog extends JDialog {
 	private JTextField txtusuario;
@@ -41,20 +42,38 @@ public class AgregarUsuarioDialog extends JDialog {
 
 		// this.ventana = new RegistroPanel(ventana);
 
+		
+		
 	}
+	
+	
+	
 
 	public void Components() {
-		JPanel panel = new JPanel();
+		PanelColor panel = new PanelColor();
+		panel.setBackground(new Color(210, 180, 140,100));
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
+		
+		
+		JPanel panel10 =new JPanel();
+		panel10.setBackground(new Color(210, 180, 140,140));
+		JPanel panel11 =new JPanel();
+		panel11.setBackground(new Color(210, 180, 140,140));
+
 
 		JLabel espacio2 = new JLabel("                             ");
-		panel.add(espacio2, BorderLayout.WEST);
+		espacio2.setBackground(new Color(210, 180, 140,50));
+		panel10.add(espacio2);
+		panel.add(panel10, BorderLayout.WEST);
 
 		JLabel espacio1 = new JLabel("                             ");
-		panel.add(espacio1, BorderLayout.EAST);
+		espacio1.setBackground(new Color(210, 180, 140,50));
+		panel11.add(espacio1);
+		panel.add(panel11, BorderLayout.EAST);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(210, 180, 140,140));
 		panel.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(10, 1));
 
@@ -64,6 +83,7 @@ public class AgregarUsuarioDialog extends JDialog {
 		panel_1.add(txtUsuario);
 
 		txtusuario = new JTextField();
+		txtusuario.setBackground(new Color(230, 230, 250,100));
 		txtusuario.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtusuario.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(txtusuario);
@@ -78,6 +98,7 @@ public class AgregarUsuarioDialog extends JDialog {
 		panel_1.add(espacio3);
 
 		txtpassword = new JPasswordField();
+		txtpassword.setBackground(new Color(230, 230, 250,100));
 		txtpassword.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtpassword.setHorizontalAlignment(SwingConstants.CENTER);
 		txtpassword.setText("");
@@ -93,6 +114,7 @@ public class AgregarUsuarioDialog extends JDialog {
 		panel_1.add(espacio5);
 
 		nombrefinca = new JTextField();
+		nombrefinca.setBackground(new Color(230, 230, 250,100));
 		panel_1.add(nombrefinca);
 		nombrefinca.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		nombrefinca.setHorizontalAlignment(SwingConstants.CENTER);
@@ -103,6 +125,7 @@ public class AgregarUsuarioDialog extends JDialog {
 		panel_1.add(lblNewLabel_2);
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(210, 180, 140,0));
 		panel_1.add(panel_2);
 		panel_2.setLayout(new GridLayout(1, 3));
 
@@ -111,8 +134,8 @@ public class AgregarUsuarioDialog extends JDialog {
 		panel_2.add(lblNewLabel);
 
 		guardar = new JButton("Guardar");
+		guardar.setBackground(new Color(230, 230, 250,100));
 		panel_2.add(guardar);
-
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(lblNewLabel_1);

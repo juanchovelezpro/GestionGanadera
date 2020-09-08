@@ -16,10 +16,9 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class EstadisticaDialog extends JDialog{
-	
-	private JLabel titulo;
 	private JButton btnRegresar;
 	private JLabel lblNewLabel_32;
 	private JLabel lblNewLabel_17;
@@ -48,6 +47,10 @@ public class EstadisticaDialog extends JDialog{
 	private JLabel numeroTP;
 	private JLabel labelPotrero;
 	private String nombrePotrero;
+	private JLabel titulo;
+	private JLabel lblNewLabel;
+	private JPanel panel_3;
+	private JPanel panel_4;
 
 	
 	public EstadisticaDialog(int valor, String nombrePotrero) {
@@ -72,27 +75,23 @@ public class EstadisticaDialog extends JDialog{
 	public void Components() 
 	{
 		
-		titulo = new JLabel("New label");
-		titulo.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		getContentPane().add(titulo, BorderLayout.NORTH);
-		
-		JPanel panel = new JPanel();
+		PanelColorEstadisticas panel = new PanelColorEstadisticas();
+		panel.setBackground(new Color(60, 179, 113,100));
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		ImageIcon icono = new ImageIcon(FileManager.imagenes.get("ESTADISTICA"));
-		JLabel lblNewLabel_1 = new JLabel("        ");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		//lblNewLabel_1.setIcon(icono);
-		panel.add(lblNewLabel_1, BorderLayout.WEST);
-
-		 
-		JLabel lblNewLabel_2 = new JLabel("                ");
-		lblNewLabel_2.setIcon(icono);
-		panel.add(lblNewLabel_2, BorderLayout.EAST);
+		
+		panel_4 = new JPanel();
+		panel_4.setBackground(new Color(245, 245, 220,100));
+		panel.add(panel_4, BorderLayout.NORTH);
+		
+		titulo = new JLabel("");
+		titulo.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		panel_4.add(titulo);
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(245, 245, 220,100));
 		panel.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(15,2));
 		
@@ -213,6 +212,7 @@ public class EstadisticaDialog extends JDialog{
 		panel_1.add(lblNewLabel_14);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(245, 245, 220,100));
 		panel.add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new GridLayout(1, 3));
 		
@@ -220,10 +220,31 @@ public class EstadisticaDialog extends JDialog{
 		panel_2.add(lblNewLabel_40);
 		
 		btnRegresar = new JButton("Regresar");
+		btnRegresar.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		btnRegresar.setBackground(new Color(255, 255, 255,30));
 		panel_2.add(btnRegresar);
 		
 		JLabel lblNewLabel_33 = new JLabel("");
 		panel_2.add(lblNewLabel_33);
+		
+		panel_3 = new JPanel();
+		panel.add(panel_3, BorderLayout.WEST);
+		
+		
+		JLabel lblNewLabel_1 = new JLabel("        ");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblNewLabel_1);
+		
+
+		
+		
+		JPanel panel_20 = new JPanel();
+		panel_20.setBackground(new Color(245, 245, 220,100));
+		panel.add(panel_20, BorderLayout.WEST);
+		
+			
+				JLabel lblNewLabel_2 = new JLabel("                ");
+				panel_20.add(lblNewLabel_2, BorderLayout.EAST);
 		
 		
 	};
@@ -293,9 +314,6 @@ public class EstadisticaDialog extends JDialog{
 	
 	
 	public void refrescar() {
-		
-		
-		titulo.setText("");
 		numeroPotreros.setText("");
 		numeroReses.setText("");
 		numeroHembras.setText("");

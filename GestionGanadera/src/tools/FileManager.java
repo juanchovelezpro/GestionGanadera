@@ -74,6 +74,20 @@ public class FileManager {
 		imagenes.put("CAMPO2", ImageLoader.cargarImagen("imagenes/campo2.jpg"));
 		
 		imagenes.put("CAMPO3", ImageLoader.cargarImagen("imagenes/campo3.jpg"));
+		
+		imagenes.put("VACAS", ImageLoader.cargarImagen("imagenes/vacas.jpg"));
+		
+		imagenes.put("CAMPONO", ImageLoader.cargarImagen("imagenes/campono.jpg"));
+		
+		imagenes.put("RESESREPORTE", ImageLoader.cargarImagen("imagenes/resesreporte.jpg"));
+		
+		imagenes.put("COPY", ImageLoader.cargarImagen("imagenes/copy.jpg"));
+
+		imagenes.put("DEVELOPER", ImageLoader.cargarImagen("imagenes/developer.jpg"));
+
+
+
+
 
 
 

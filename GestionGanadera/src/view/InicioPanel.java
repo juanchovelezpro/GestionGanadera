@@ -66,26 +66,20 @@ public class InicioPanel extends JPanel {
 		cargarInfo();
 
 		comprobarEliminar();
-		
-		
+
 		// System.out.println(comboBoxPotreros.getItemCount() + "<.----");
 
-		
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
-		
-		
+
 		super.paintComponent(g);
-		
-		
+
 		g.drawImage(FileManager.imagenes.get("CAMPO"), 0, 0, null);
-		
+
 		repaint();
 	}
-	
-
 
 	private void setComponents() {
 
@@ -95,7 +89,7 @@ public class InicioPanel extends JPanel {
 		panelderecho.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panelderecho, BorderLayout.EAST);
 		panelderecho.setLayout(new BorderLayout(0, 0));
-		panelderecho.setBackground(new Color(0,0,0,5));
+		panelderecho.setBackground(new Color(0, 0, 0, 5));
 
 		JLabel derechoespacio1 = new JLabel("    ");
 		panelderecho.add(derechoespacio1, BorderLayout.WEST);
@@ -106,9 +100,8 @@ public class InicioPanel extends JPanel {
 		JPanel panelDerechoinfo = new JPanel();
 		panelderecho.add(panelDerechoinfo, BorderLayout.CENTER);
 		panelDerechoinfo.setLayout(new GridLayout(13, 1));
-		panelDerechoinfo.setBackground(new Color(0,0,0,5));
+		panelDerechoinfo.setBackground(new Color(0, 0, 0, 5));
 
-		
 		JLabel lblNewLabel_5 = new JLabel("POTREROS");
 		lblNewLabel_5.setForeground(Color.WHITE);
 		lblNewLabel_5.setBackground(Color.BLACK);
@@ -121,30 +114,30 @@ public class InicioPanel extends JPanel {
 
 		comboBoxPotreros = new JComboBox();
 		comboBoxPotreros.setForeground(Color.WHITE);
-		comboBoxPotreros.setBackground(new Color(0,0,0,130));
+		comboBoxPotreros.setBackground(new Color(0, 0, 0, 130));
 		panelDerechoinfo.add(comboBoxPotreros);
 
 		btnAgregar = new JButton(" Agregar potrero ");
 		btnAgregar.setForeground(Color.WHITE);
 		btnAgregar.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		btnAgregar.setBackground(new Color(0,0,0,130));
+		btnAgregar.setBackground(new Color(0, 0, 0, 130));
 		panelDerechoinfo.add(btnAgregar);
 
 		btnEliminar = new JButton(" Eliminar potrero");
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		btnEliminar.setBackground(new Color(0,0,0,130));
+		btnEliminar.setBackground(new Color(0, 0, 0, 130));
 		panelDerechoinfo.add(btnEliminar);
 
 		btnBuscar = new JButton(" Buscar res");
 		btnBuscar.setForeground(Color.WHITE);
 		btnBuscar.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		btnBuscar.setBackground(new Color(0,0,0,130));
+		btnBuscar.setBackground(new Color(0, 0, 0, 130));
 		panelDerechoinfo.add(btnBuscar);
 
 		btnEstadistica = new JButton("Estadisticas");
 		btnEstadistica.setForeground(Color.WHITE);
-		btnEstadistica.setBackground(new Color(0,0,0,130));
+		btnEstadistica.setBackground(new Color(0, 0, 0, 130));
 		btnEstadistica.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		panelDerechoinfo.add(btnEstadistica);
 
@@ -155,50 +148,50 @@ public class InicioPanel extends JPanel {
 		btnreporteDestete = new JButton(" Reporte Destete ");
 		btnreporteDestete.setForeground(Color.WHITE);
 		btnreporteDestete.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		btnreporteDestete.setBackground(new Color(0,0,0,130));
+		btnreporteDestete.setBackground(new Color(0, 0, 0, 130));
 		panelDerechoinfo.add(btnreporteDestete);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 
 		btnreportePartos = new JButton(" Reporte Partos ");
 		btnreportePartos.setForeground(Color.WHITE);
 		btnreportePartos.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		btnreportePartos.setBackground(new Color(0,0,0,130));
-		
+		btnreportePartos.setBackground(new Color(0, 0, 0, 130));
+
 		panelDerechoinfo.add(btnreportePartos);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 
 		btnreporteVacuna = new JButton(" Reporte Vacunas ");
 		btnreporteVacuna.setForeground(Color.WHITE);
 		btnreporteVacuna.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		btnreporteVacuna.setBackground(new Color(0,0,0,130));
+		btnreporteVacuna.setBackground(new Color(0, 0, 0, 130));
 		panelDerechoinfo.add(btnreporteVacuna);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 
 		btnreportePurgante = new JButton(" Reporte Purgantes ");
 		btnreportePurgante.setForeground(Color.WHITE);
 		btnreportePurgante.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		btnreportePurgante.setBackground(new Color(0,0,0,130));
+		btnreportePurgante.setBackground(new Color(0, 0, 0, 130));
 		panelDerechoinfo.add(btnreportePurgante);
 
 		JPanel panelprincipal = new JPanel();
 		panelprincipal.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panelprincipal, BorderLayout.CENTER);
 		panelprincipal.setLayout(new BorderLayout(0, 0));
-		panelprincipal.setBackground(new Color(0,0,0,5));
+		panelprincipal.setBackground(new Color(0, 0, 0, 5));
 
 		// PANEL BAJO, BOTONES
 		JPanel panelBotones = new JPanel();
 		panelprincipal.add(panelBotones, BorderLayout.SOUTH);
 		panelBotones.setLayout(new GridLayout(2, 1));
-		panelBotones.setBackground(new Color(0,0,0,5));
+		panelBotones.setBackground(new Color(0, 0, 0, 5));
 
 		JPanel panelBotones3 = new JPanel();
-		panelBotones3.setBackground(new Color(0,0,0,5));
+		panelBotones3.setBackground(new Color(0, 0, 0, 5));
 
 		JPanel panelBotones2 = new JPanel();
 		panelBotones.add(panelBotones2, BorderLayout.SOUTH);
 		panelBotones2.setLayout(new GridLayout(1, 5));
-		panelBotones2.setBackground(new Color(0,0,0,5));
+		panelBotones2.setBackground(new Color(0, 0, 0, 5));
 
 		panelBotones.add(panelBotones3);
 
@@ -206,7 +199,7 @@ public class InicioPanel extends JPanel {
 		panelBotones2.add(labelaux3);
 
 		btnGuardar = new JButton("GUARDAR");
-		btnGuardar.setBackground(new Color(0,0,0,130));
+		btnGuardar.setBackground(new Color(0, 0, 0, 130));
 		btnGuardar.setForeground(Color.WHITE);
 		btnGuardar.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		panelBotones2.add(btnGuardar);
@@ -216,7 +209,7 @@ public class InicioPanel extends JPanel {
 
 		btnEditar = new JButton("EDITAR");
 		btnEditar.setForeground(Color.WHITE);
-		btnEditar.setBackground(new Color(0,0,0,130));
+		btnEditar.setBackground(new Color(0, 0, 0, 130));
 		btnEditar.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		panelBotones2.add(btnEditar);
 
@@ -225,7 +218,7 @@ public class InicioPanel extends JPanel {
 
 		// BANNER
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0,0,0,100));
+		panel.setBackground(new Color(0, 0, 0, 100));
 		panelprincipal.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BorderLayout(1, 1));
 
@@ -240,7 +233,7 @@ public class InicioPanel extends JPanel {
 		JPanel panelInfo = new JPanel();
 		panelprincipal.add(panelInfo, BorderLayout.CENTER);
 		panelInfo.setLayout(new BorderLayout(0, 0));
-		panelInfo.setBackground(new Color(0,0,0,100));
+		panelInfo.setBackground(new Color(0, 0, 0, 100));
 
 		JLabel labelespacio1 = new JLabel("     ");
 		panelInfo.add(labelespacio1, BorderLayout.WEST);
@@ -251,7 +244,7 @@ public class InicioPanel extends JPanel {
 		JPanel panelinformacion = new JPanel();
 		panelInfo.add(panelinformacion, BorderLayout.CENTER);
 		panelinformacion.setLayout(new GridLayout(6, 2));
-		panelinformacion.setBackground(new Color(0,0,0,5));
+		panelinformacion.setBackground(new Color(0, 0, 0, 5));
 
 		// grid de informacion
 		JLabel lblNewLabel_1 = new JLabel("    ");
@@ -274,14 +267,13 @@ public class InicioPanel extends JPanel {
 		txtnombreDueno.setText("");
 		panelinformacion.add(txtnombreDueno);
 		txtnombreDueno.setColumns(10);
-		txtnombreDueno.setBackground(new Color(0,0,0,130));
+		txtnombreDueno.setBackground(new Color(0, 0, 0, 130));
 
 		JLabel nombreUbicacion = new JLabel("Ubicaci\u00F3n:");
 		nombreUbicacion.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		nombreUbicacion.setHorizontalAlignment(SwingConstants.CENTER);
 		panelinformacion.add(nombreUbicacion);
 		nombreUbicacion.setForeground(Color.WHITE);
-
 
 		txtubicacion = new JTextField();
 		txtubicacion.setForeground(Color.white);
@@ -291,8 +283,7 @@ public class InicioPanel extends JPanel {
 		txtubicacion.setText("");
 		panelinformacion.add(txtubicacion);
 		txtubicacion.setColumns(10);
-		txtubicacion.setBackground(new Color(0,0,0,130));
-
+		txtubicacion.setBackground(new Color(0, 0, 0, 130));
 
 		JLabel numeroPotreros = new JLabel(" Cantidad de potreros: ");
 		numeroPotreros.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
@@ -521,9 +512,14 @@ public class InicioPanel extends JPanel {
 
 		btnreporteDestete.addActionListener(e -> {
 
-			// ventana.remove(this);
-			// reportes = new ReportePanel(this, "Reporte de Destete");
-			ReporteDialog dialog = new ReporteDialog("Reporte de Destete", 1);
+			if (ResCRUD.reporteDestete().size() == 0) {
+
+				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
+			} else {
+				// ventana.remove(this);
+				// reportes = new ReportePanel(this, "Reporte de Destete");
+				ReporteDialog dialog = new ReporteDialog("Reporte de Destete", 1);
+			}
 
 			// ventana.add(reportes);
 			// ventana.setSize(450, 300);
@@ -535,20 +531,33 @@ public class InicioPanel extends JPanel {
 
 		btnreportePartos.addActionListener(e -> {
 
-			ReporteDialog dialog = new ReporteDialog("Reporte de Partos", 2);
+			if (ResCRUD.reportePartos().size() == 0) {
 
+				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
+			} else {
+				ReporteDialog dialog = new ReporteDialog("Reporte de Partos", 2);
+			}
 		});
 
 		btnreporteVacuna.addActionListener(e -> {
 
-			ReporteDialog dialog = new ReporteDialog("Reporte de Vacuna", 3);
+			if (ResCRUD.reporteVacunaNotificaciones().size() == 0) {
 
+				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
+			} else {
+				ReporteDialog dialog = new ReporteDialog("Reporte de Vacuna", 3);
+
+			}
 		});
 
 		btnreportePurgante.addActionListener(e -> {
 
-			ReporteDialog dialog = new ReporteDialog("Reporte de Purgado", 4);
+			if (ResCRUD.reportePurgado().size() == 0) {
 
+				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
+			} else {
+				ReporteDialog dialog = new ReporteDialog("Reporte de Purgado", 4);
+			}
 		});
 
 		btnEstadistica.addActionListener(e -> {
