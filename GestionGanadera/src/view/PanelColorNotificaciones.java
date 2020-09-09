@@ -6,10 +6,10 @@ import javax.swing.JPanel;
 
 import tools.FileManager;
 
-public class PanelColorEstadisticas extends JPanel {
+public class PanelColorNotificaciones extends JPanel {
 
 	
-	public PanelColorEstadisticas () {
+	public PanelColorNotificaciones () {
 		
 		
 	}
@@ -22,12 +22,8 @@ public class PanelColorEstadisticas extends JPanel {
 		
 		super.paintComponent(g);
 		
-
-		g.drawImage(FileManager.imagenes.get("CAMPONO"), 0, 0, null);
 		
-		g.drawImage(FileManager.imagenes.get("ESTADISTICA"), 385, 140, null);
-		
-
+		g.drawImage(FileManager.imagenes.get("PAISAJE"), 0, 0, null);
 		
 		repaint();
 	}

@@ -35,6 +35,7 @@ import tools.FileManager;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import java.awt.Color;
 
 public class NotificacionesDialog extends JDialog {
 	private PotrerosPanel ventana;
@@ -63,6 +64,7 @@ public class NotificacionesDialog extends JDialog {
 	ModeloTablePurgado modelotablepurgado;
 	ModeloTableParto modelotablepartos;
 	ModeloTableDestete modelotabledestete;
+	private JPanel panel;
 
 	public NotificacionesDialog(PotrerosPanel ventana) {
 
@@ -88,12 +90,9 @@ public class NotificacionesDialog extends JDialog {
 	public void Components() {
 
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		JLabel lblNewLabel_2 = new JLabel("Eventos Proximos");
-		getContentPane().add(lblNewLabel_2, BorderLayout.NORTH);
-		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.RIGHT);
+		tabbedPane.setForeground(Color.WHITE);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
 		listPartos = new JList<Res>();
@@ -129,6 +128,14 @@ public class NotificacionesDialog extends JDialog {
 		tabbedPane.addTab("Destete", null, listScrollerDestete, null);
 		tabbedPane.addTab("Purgado", null, listScrollerPurgado, null);
 		tabbedPane.addTab("Vacunas", null, listScrollerVacuna, null);
+		
+		 PanelColorNotificaciones panel = new PanelColorNotificaciones();
+		getContentPane().add(panel, BorderLayout.NORTH);
+		JLabel lblNewLabel_2 = new JLabel("Eventos Proximos");
+		lblNewLabel_2.setForeground(Color.WHITE);
+		panel.add(lblNewLabel_2);
+		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 
 		crearTablaVacuna();
 		crearTablaDestete();

@@ -84,6 +84,9 @@ public class FileManager {
 		imagenes.put("COPY", ImageLoader.cargarImagen("imagenes/copy.jpg"));
 
 		imagenes.put("DEVELOPER", ImageLoader.cargarImagen("imagenes/developer.jpg"));
+		
+		imagenes.put("PAISAJE", ImageLoader.cargarImagen("imagenes/paisaje.jpg"));
+
 
 
 
