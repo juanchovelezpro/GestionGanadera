@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -95,12 +97,15 @@ public class PotrerosPanel extends JPanel {
 
 		JPanel panelTop = new JPanel();
 		panelTop.setLayout(new GridLayout(2, 1));
+		panelTop.setBackground(new Color(0,0,0,0));
 		panelTop.add(menuBar);
 
 		JPanel panelSuperior = new JPanel();
+		panelSuperior.setBackground(new Color(0,0,0,0));
 		panelSuperior.setLayout(new GridLayout(1, 5));
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(0,0,0,0));
 		panelSuperior.add(panel_2);
 		panel_2.setLayout(new GridLayout(1, 10));
 
@@ -121,6 +126,7 @@ public class PotrerosPanel extends JPanel {
 		panelSuperior.add(lblNombrePotrero);
 
 		panelResTable = new JPanel();
+		panelResTable.setBackground(new Color(0,0,0,0));
 		scroller = new JScrollPane();
 		ganado = PotreroCRUD.selectRes(potrero_elegido);
 
@@ -161,6 +167,7 @@ public class PotrerosPanel extends JPanel {
 
 		JPanel panelInferior = new JPanel();
 		add(panelInferior, BorderLayout.SOUTH);
+		panelInferior.setBackground(new Color(0,0,0,0));
 		panelInferior.setLayout(new GridLayout(1, 6));
 
 		lblNewLabel = new JLabel("");
@@ -189,11 +196,25 @@ public class PotrerosPanel extends JPanel {
 
 	}
 
+	@Override
+	public void paintComponent(Graphics g) {
+
+		super.paintComponent(g);
+
+		g.drawImage(FileManager.imagenes.get("POTREROS"), 0, 90, null);
+		
+		repaint();
+		
+	}
+
 	public void crearTablaRes() {
 
 		fillData();
 
 		tablaRes = new JTable(modelRes);
+		tablaRes.setBackground(new Color(0,0,0,0));
+		tablaRes.setOpaque(false);
+		((DefaultTableCellRenderer)tablaRes.getDefaultRenderer(Object.class)).setOpaque(false);
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		for (int i = 0; i < modelRes.getColumnCount(); i++) {
@@ -206,7 +227,11 @@ public class PotrerosPanel extends JPanel {
 		tablaRes.setShowHorizontalLines(true);
 		tablaRes.setShowVerticalLines(true);
 		tablaRes.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 20));
+		tablaRes.getTableHeader().setOpaque(false);
 		scroller.setViewportView(tablaRes);
+		scroller.setOpaque(false);
+		scroller.setBackground(new Color(0,0,0,0));
+		scroller.getViewport().setOpaque(false);
 		tablaRes.setFillsViewportHeight(true);
 		panelResTable.add(scroller);
 
@@ -502,10 +527,10 @@ public class PotrerosPanel extends JPanel {
 			eliminar();
 
 		});
-		
-		JMenuItem actualizar =new JMenuItem("Actualizar", null);
-		actualizar.addActionListener(e ->{
-			
+
+		JMenuItem actualizar = new JMenuItem("Actualizar", null);
+		actualizar.addActionListener(e -> {
+
 			ResCRUD.actualizarTipo();
 			refreshTable();
 		});

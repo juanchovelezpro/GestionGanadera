@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -54,7 +55,7 @@ public class AgregarEditarResDialog extends JDialog {
 	private JButton btnFechaEmbarazo;
 	private JButton btnVerRegistroPeso;
 	private JButton btnAgregar;
-	private JTable tablaPesos;
+	private JTable tablaPesos; 
 	private ModelTable modelPesos;
 	private JTable tablaVacunas;
 	private ModelTable modelVacunas;
@@ -143,7 +144,8 @@ public class AgregarEditarResDialog extends JDialog {
 
 	public void setComponents() {
 
-		JPanel infoPanel = new JPanel();
+		PanelColorAgregar infoPanel = new PanelColorAgregar();
+		infoPanel.setBackground(new Color(0,0,0,0));
 		getContentPane().add(infoPanel);
 		infoPanel.setLayout(new BorderLayout(0, 0));
 
@@ -160,10 +162,12 @@ public class AgregarEditarResDialog extends JDialog {
 		panelBotones.add(btnGuardarCerrar);
 
 		JPanel panelGeneralInfo = new JPanel();
+		panelGeneralInfo.setBackground(new Color(0,0,0,0));
 		infoPanel.add(panelGeneralInfo, BorderLayout.CENTER);
 		panelGeneralInfo.setLayout(new GridLayout(2, 1));
 
 		JPanel panelAux = new JPanel();
+		panelAux.setBackground(new Color(0,0,0,0));
 		panelAux.setLayout(new GridLayout(10, 2));
 
 		JLabel lblNumero = new JLabel("N\u00FAmero (*)");
@@ -261,65 +265,74 @@ public class AgregarEditarResDialog extends JDialog {
 		panelAux.add(btnVerRegistroPeso);
 
 		JPanel panelObservaciones = new JPanel();
+		panelObservaciones.setBackground(new Color(0,0,0,0));
 		panelGeneralInfo.add(panelObservaciones);
 		panelObservaciones.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_7 = new JPanel();
+		panel_7.setBackground(new Color(0,0,0,0));
 		panelObservaciones.add(panel_7, BorderLayout.CENTER);
 		panel_7.setLayout(new GridLayout(2, 1));
 
-		JPanel lblNewLabel_15 = new JPanel();
-		panel_7.add(lblNewLabel_15);
-		lblNewLabel_15.setLayout(new GridLayout(5, 2));
+		JPanel panelOtro = new JPanel();
+		panelOtro.setBackground(new Color(0,0,0,0));
+		panel_7.add(panelOtro);
+		panelOtro.setLayout(new GridLayout(5, 2));
 
 		JLabel lblRegistroVacunas = new JLabel("Registro Vacunas");
 		lblRegistroVacunas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRegistroVacunas.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_15.add(lblRegistroVacunas);
+		panelOtro.add(lblRegistroVacunas);
 
 		btnRegistroVacunas = new JButton("Ver Registro Vacunas");
 		btnRegistroVacunas.setHorizontalAlignment(SwingConstants.CENTER);
 		btnRegistroVacunas.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_15.add(btnRegistroVacunas);
+		panelOtro.add(btnRegistroVacunas);
 
 		JLabel lblRegistroPurgantes = new JLabel("Registro Purgantes");
 		lblRegistroPurgantes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRegistroPurgantes.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_15.add(lblRegistroPurgantes);
+		panelOtro.add(lblRegistroPurgantes);
 
 		btnRegistroPurgantes = new JButton("Ver Registro Purgantes");
 		btnRegistroPurgantes.setHorizontalAlignment(SwingConstants.CENTER);
 		btnRegistroPurgantes.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_15.add(btnRegistroPurgantes);
+		panelOtro.add(btnRegistroPurgantes);
 
 		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_15.add(lblNewLabel_4);
+		panelOtro.add(lblNewLabel_4);
 
 		JLabel lblNewLabel_4_2 = new JLabel("");
-		lblNewLabel_15.add(lblNewLabel_4_2);
+		panelOtro.add(lblNewLabel_4_2);
 
 		JLabel lblNewLabel_4_1 = new JLabel("");
 		lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_15.add(lblNewLabel_4_1);
+		panelOtro.add(lblNewLabel_4_1);
 
 		checkMuerto = new JCheckBox("\u00BFMUERTO?");
 		checkMuerto.setFont(new Font("Tahoma", Font.BOLD, 12));
 		checkMuerto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_15.add(checkMuerto);
+		panelOtro.add(checkMuerto);
 
 		JLabel lblObservaciones = new JLabel("Observaciones");
 		lblObservaciones.setHorizontalAlignment(SwingConstants.CENTER);
 		lblObservaciones.setFont(new Font("SansSerif", Font.BOLD, 18));
-		lblNewLabel_15.add(lblObservaciones);
+		panelOtro.add(lblObservaciones);
 
 		JLabel lblNewLabel_22_4 = new JLabel("");
-		lblNewLabel_15.add(lblNewLabel_22_4);
+		panelOtro.add(lblNewLabel_22_4);
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setBackground(new Color(0,0,0,0.6f));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panel_7.add(scrollPane);
 
 		txtObservaciones = new JTextArea();
+		txtObservaciones.setFont(new Font("Tahoma", Font.BOLD, 15));
+		txtObservaciones.setForeground(Color.WHITE);
+		txtObservaciones.setBackground(new Color(0,0,0,0.6f));
 		txtObservaciones.setLineWrap(true);
 		scrollPane.setViewportView(txtObservaciones);
 
@@ -328,9 +341,10 @@ public class AgregarEditarResDialog extends JDialog {
 		scroller = new JScrollPane();
 
 		panelTablaGraficas = new JPanel();
+		panelTablaGraficas.setBackground(new Color(0,0,0,0));
 		panelTablaGraficas.setLayout(new GridLayout(2, 1));
 
-		panelGrafica = new JPanel();
+		panelGrafica = new PanelColorGrafica();
 		panelGrafica.setLayout(new GridLayout(1, 1));
 
 		panelTabla = new JPanel();
@@ -344,6 +358,8 @@ public class AgregarEditarResDialog extends JDialog {
 
 	}
 
+	
+	
 	public void cargarInfoRes() {
 
 		if (res != null) {

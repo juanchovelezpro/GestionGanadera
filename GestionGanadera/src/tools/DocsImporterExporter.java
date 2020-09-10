@@ -117,7 +117,6 @@ public class DocsImporterExporter {
 					}
 
 					res.setPotreroNombre(potreroNombre.toUpperCase().trim());
-					System.out.println(res);
 					reses.add(res);
 
 					value++;

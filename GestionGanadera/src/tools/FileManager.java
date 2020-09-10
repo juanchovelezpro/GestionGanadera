@@ -20,7 +20,6 @@ public class FileManager {
 
 		Path from = Paths.get(selectedFile.toURI());
 
-		
 		Path to = Paths.get(target);
 
 		try {
@@ -29,14 +28,13 @@ public class FileManager {
 		} catch (IOException e) {
 
 			e.printStackTrace();
-			
+
 		}
 
 	}
 
 	public static void cargarRecursos() {
 
-		
 		imagenes.put("ICONO", ImageLoader.cargarImagen("imagenes/icono.png"));
 		imagenes.put("VACA", ImageLoader.cargarImagen("imagenes/vaca.png"));
 		imagenes.put("FINCA", ImageLoader.cargarImagen("imagenes/finca.png"));
@@ -67,33 +65,32 @@ public class FileManager {
 				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/usuario.png"), new Dimension(15, 15)));
 		imagenes.put("STATS",
 				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/presentacion.png"), new Dimension(15, 15)));
-		//imagenes.put("CAMPO",ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/fondocampo.jpg"), new Dimension(1200,400)));
+		// imagenes.put("CAMPO",ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/fondocampo.jpg"),
+		// new Dimension(1200,400)));
 
 		imagenes.put("CAMPO", ImageLoader.cargarImagen("imagenes/fondocampo.jpg"));
-		
+
 		imagenes.put("CAMPO2", ImageLoader.cargarImagen("imagenes/campo2.jpg"));
-		
+
 		imagenes.put("CAMPO3", ImageLoader.cargarImagen("imagenes/campo3.jpg"));
-		
+
 		imagenes.put("VACAS", ImageLoader.cargarImagen("imagenes/vacas.jpg"));
-		
+
 		imagenes.put("CAMPONO", ImageLoader.cargarImagen("imagenes/campono.jpg"));
-		
+
 		imagenes.put("RESESREPORTE", ImageLoader.cargarImagen("imagenes/resesreporte.jpg"));
-		
+
 		imagenes.put("COPY", ImageLoader.cargarImagen("imagenes/copy.jpg"));
 
 		imagenes.put("DEVELOPER", ImageLoader.cargarImagen("imagenes/developer.jpg"));
-		
+
 		imagenes.put("PAISAJE", ImageLoader.cargarImagen("imagenes/paisaje.jpg"));
 
+		imagenes.put("POTREROS", ImageLoader.cargarImagen("imagenes/potrerosFondo.jpg"));
 
-
-
-
-
-
-
+		imagenes.put("LLANO", ImageLoader.cargarImagen("imagenes/llanoAgregar.jpg"));
+		
+		imagenes.put("VAQUITA", ImageLoader.cargarImagen("imagenes/vaquita.png"));
 
 	}
 
