@@ -18,7 +18,6 @@ import model.Vacuna;
 
 public class ResCRUD {
 
-	// Agrega una res a la tabla res de la base de datos.
 	public static void insert(Res res) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -41,7 +40,6 @@ public class ResCRUD {
 
 	}
 
-	// Insertar multiples reses
 	public static void insertMultiple(ArrayList<Res> reses) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -56,7 +54,6 @@ public class ResCRUD {
 		}
 	}
 
-	// Selecciona todas las res de la tabla res de la base de datos.
 	public static ArrayList<Res> select() {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -135,8 +132,7 @@ public class ResCRUD {
 		return res;
 	}
 
-	// Actualiza los datos de una res especificada con su id, el id es de la res sin
-	// modificar y la res debe ser la modificada.
+	
 	public static void update(String id, Res res) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -202,7 +198,6 @@ public class ResCRUD {
 
 	}
 
-	// update madreIDencrias
 
 	public static void updateMadreaCria(String idVieja, String idNueva) {
 
@@ -218,7 +213,6 @@ public class ResCRUD {
 
 	}
 
-	// Elimina una res de la base de datos.
 	public static void delete(ArrayList<String> ids) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -237,7 +231,6 @@ public class ResCRUD {
 
 	}
 
-	// Trasladar reses de un potrero a otro
 	public static void trasladar(ArrayList<String> idsRes, String potreroOrigen, String potreroDestino) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -255,7 +248,6 @@ public class ResCRUD {
 
 	}
 
-	// seleccion una cria
 	public static ArrayList<Res> selectCria(String madreID) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -638,10 +630,7 @@ public class ResCRUD {
 
 					if (dias <= 250 && (meses == 8 || meses == 9)) {
 
-						// vacas_destete.add("Es momento de realizar el destete a la res: " +
-						// res.getResID() + " Del potrero: "
-						// + res.getPotreroNombre() + " Con fecha de nacimiento " +
-						// res.getFecha_nacimiento());
+						
 						vacas_destete.add(res);
 
 					}
@@ -667,7 +656,6 @@ public class ResCRUD {
 
 			res = reses.get(i);
 
-			System.out.println(res + "primera prueba");
 
 			if (res.getTipo().equals("NV") || res.getTipo().equals("VH")) {
 
@@ -676,7 +664,6 @@ public class ResCRUD {
 					if (!res.getFecha_embarazo().equals("")
 							&& !res.getFecha_embarazo().equalsIgnoreCase("SIN REGISTRO")) {
 
-						System.out.println(res.getFecha_embarazo() + "fecha");
 						long dias = diasEntreFechas(res.getFecha_embarazo());
 						long meses = mesesEntreFechas(res.getFecha_embarazo());
 
@@ -685,7 +672,6 @@ public class ResCRUD {
 							vacas_partos.add(res);
 
 						}
-						System.out.println(vacas_partos.size());
 					}
 				}
 			}
@@ -747,7 +733,6 @@ public class ResCRUD {
 
 					if (ultimo != null) {
 
-						// if (selectPurgantes(res.getResID()).peek()!=null) {
 
 						if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
 
@@ -759,7 +744,6 @@ public class ResCRUD {
 
 							}
 						}
-						// }
 
 					}
 
@@ -796,7 +780,6 @@ public class ResCRUD {
 
 					if (ultimo != null) {
 
-						// if (selectPurgantes(res.getResID()).peek()!=null) {
 
 						if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
 
@@ -809,7 +792,6 @@ public class ResCRUD {
 
 							}
 						}
-						// }
 
 					}
 
@@ -830,46 +812,36 @@ public class ResCRUD {
 		Res cria = null;
 
 		for (int i = 0; i < reses.size(); i++) {
-			
+
 			ArrayList<Res> crias = selectCria(reses.get(i).getResID());
 			res = reses.get(i);
 
-		
+			if (res.getTipo().equalsIgnoreCase("HL")) {
 
-					//Aqui se pasa de una vaca tipo HL a NV
-					if (res.getTipo().equalsIgnoreCase("HL")) {
-						
-						String fecha_nacimiento = res.getFecha_nacimiento();
-
-						System.out.println(fecha_nacimiento + "<-" + res.getResID());
-						
-						if (fecha_nacimiento!=null && !fecha_nacimiento.equalsIgnoreCase("")) {
-							
-							System.out.println("AQUI ES");
+				String fecha_nacimiento = res.getFecha_nacimiento();
 
 
-						long meses = mesesEntreFechas(fecha_nacimiento);
-						long dias = diasEntreFechas(fecha_nacimiento);
+				if (fecha_nacimiento != null && !fecha_nacimiento.equalsIgnoreCase("")) {
 
-						if (meses >= 24 ) {
 
-							res.setTipo("NV");
-							update(res.getResID(), res);
-						}
+					long meses = mesesEntreFechas(fecha_nacimiento);
+					long dias = diasEntreFechas(fecha_nacimiento);
+
+					if (meses >= 24) {
+
+						res.setTipo("NV");
+						update(res.getResID(), res);
 					}
-					}
+				}
+			}
 
-				
-					
-				
+			if (res.getGenero().equalsIgnoreCase("M")) {
 
-				if (res.getGenero().equalsIgnoreCase("M")) {
+				String fecha_nacimiento = res.getFecha_nacimiento();
 
-					String fecha_nacimiento = res.getFecha_nacimiento();
+				if (res.getTipo().equalsIgnoreCase("ML")) {
 
-					if (res.getTipo().equalsIgnoreCase("ML")) {
-
-						if (fecha_nacimiento!=null && !fecha_nacimiento.equalsIgnoreCase("")) {
+					if (fecha_nacimiento != null && !fecha_nacimiento.equalsIgnoreCase("")) {
 
 						long meses = mesesEntreFechas(fecha_nacimiento);
 						long dias = diasEntreFechas(fecha_nacimiento);
@@ -881,11 +853,9 @@ public class ResCRUD {
 						}
 					}
 
-					}
 				}
-			
+			}
 
-			
 		}
 
 	}
@@ -908,7 +878,6 @@ public class ResCRUD {
 			fin.setTime(new SimpleDateFormat("dd/MM/yyyy").parse(fecha_Convertida));
 			int difA = fin.get(Calendar.YEAR) - inicio.get(Calendar.YEAR);
 			difM = difA * 12 + fin.get(Calendar.MONTH) - inicio.get(Calendar.MONTH);
-			// System.out.println(difM);
 		} catch (ParseException ex) {
 
 		}
@@ -938,23 +907,10 @@ public class ResCRUD {
 
 		dias = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 
-		// float days = (diff / (1000*60*60*24));
 
 		dias_1 = Math.abs(dias);
 
-		// org.joda.time.format.DateTimeFormatter dateStringFormat = DateTimeFormat
-		/// .forPattern("dd/MM/yyyy");
-
-		// DateTime firstTime = dateStringFormat.parseDateTime(fechaIn);
-		/// DateTime secondTime = dateStringFormat.parseDateTime(fecha_Convertida);
-		// long days = Days.daysBetween(new LocalDate(firstTime),
-		// new LocalDate(secondTime)).getDays();
-
-		// long days1 =Days.daysBetween(firstTime, secondTime).getDays();
-
-		// System.out.println(days1 + "esta es la segunda opcion");
-
-		// dias_1 =days;
+		
 
 		return dias_1;
 
@@ -1025,79 +981,6 @@ public class ResCRUD {
 		return fechaDate;
 	}
 
-	public static void main(String[] args) {
-
-//	insert("101","VH", "H", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "povelez");
-//		insert("102","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", null, "povelez");
-//		insert("103","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null, "12/12/2018", "12/12/2018", "101", "povelez");
-		// insert("104","VH", "H", "negro", "12/12/2000", "bonito", 1, 0, null,
-		// "12/12/2018", "12/12/2018", null, "popaz");
-		// insert("105","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null,
-		// "12/12/2018", "12/12/2018", null, "popaz");
-		// insert("106","VH", "M", "negro", "12/12/2000", "bonito", 1, 0, null,
-		// "12/12/2018", "12/12/2018", "104", "popaz");
-
-		/// System.out.println(select().size());
-
-		// Res resita = select().get(1);
-		// resita.setColor("BLANCO");
-
-		// Res resita2 = select().get(4);
-		// resita2.setColor("BLANCO");
-
-		// update("102", resita);
-		// update("105", resita2);
-
-		// delete("105");
-
-		// System.out.println(selectCria("101"));
-
-		// insertPeso("104", 150.6, "12/12/2012");
-		// insertPeso("105", 200.6, "12/06/2013");
-		// insertPeso("106", 200.7, "12/12/2013");
-
-		// insertPeso("106", 250.6, "12/12/2013");
-
-		// System.out.println(selectPesos("102").size());
-
-		// updatePeso("102", "12/12/2013", new Peso(300, "13/12/2015"));
-
-		// PurganteCRUD.insert("purgantebueno");
-		// VacunaCRUD.insert("vacunabuena");
-
-		// insertPurgante("101", "purgantebueno", "15/01/2010");
-		// insertPurgante("102", "purgantebueno", "15/07/2010");
-
-		// insertVacuna("101", "vacunabuena", "01/01/2000");
-		// insertVacuna("102", "vacunabuena", "01/07/2000");
-
-		// insertPurgante("104", "purgantebueno", "15/01/2010");
-		// insertPurgante("105", "purgantebueno", "15/07/2010");
-
-		// insertVacuna("104", "vacunabuena", "01/01/2000");
-		// insertVacuna("105", "vacunabuena", "01/07/2000");
-
-		// System.out.println(selectPurgantes("104").size());
-		// System.out.println(selectPurgantes("103").size());
-		// System.out.println(selectVacunas("104").size());
-
-		// Purgante purgan =new Purgante("purgantemalo");
-		// purgan.setFecha("21/12/2020");
-
-		// Vacuna vacun =new Vacuna("vacunamalo");
-		// vacun.setFecha("22/12/2020");
-
-		// PurganteCRUD.insert("purgantemalo");
-		// VacunaCRUD.insert("vacunamalo");
-
-		// updatePurgante("104", "15/01/2010", purgan);
-		// updateVacuna("104", "01/01/2000", vacun);
-
-		// System.out.println(select().size());
-
-		// delete("104");
-		// delete("102");
-
-	}
+	
 
 }

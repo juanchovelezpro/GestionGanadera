@@ -6,13 +6,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Stack;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -33,9 +32,6 @@ import model.Vacuna;
 import tools.FileManager;
 import tools.GeneradorGrafica;
 
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
-
 public class AgregarEditarResDialog extends JDialog {
 
 	private Res res;
@@ -55,7 +51,7 @@ public class AgregarEditarResDialog extends JDialog {
 	private JButton btnFechaEmbarazo;
 	private JButton btnVerRegistroPeso;
 	private JButton btnAgregar;
-	private JTable tablaPesos; 
+	private JTable tablaPesos;
 	private ModelTable modelPesos;
 	private JTable tablaVacunas;
 	private ModelTable modelVacunas;
@@ -73,9 +69,7 @@ public class AgregarEditarResDialog extends JDialog {
 	private JPanel panelTabla;
 	private JCheckBox checkMuerto;
 
-	/**
-	 * @wbp.parser.constructor
-	 */
+
 	public AgregarEditarResDialog(Res res, PotrerosPanel potrero) {
 
 		this.res = res;
@@ -89,6 +83,8 @@ public class AgregarEditarResDialog extends JDialog {
 		setIconImage(FileManager.imagenes.get("ICONO"));
 		getContentPane().setLayout(new GridLayout(1, 2));
 		setSize(500, 700);
+		setResizable(false);
+
 		setLocationRelativeTo(null);
 		setComponents();
 		listeners();
@@ -145,7 +141,7 @@ public class AgregarEditarResDialog extends JDialog {
 	public void setComponents() {
 
 		PanelColorAgregar infoPanel = new PanelColorAgregar();
-		infoPanel.setBackground(new Color(0,0,0,0));
+		infoPanel.setBackground(new Color(0, 0, 0, 0));
 		getContentPane().add(infoPanel);
 		infoPanel.setLayout(new BorderLayout(0, 0));
 
@@ -162,12 +158,12 @@ public class AgregarEditarResDialog extends JDialog {
 		panelBotones.add(btnGuardarCerrar);
 
 		JPanel panelGeneralInfo = new JPanel();
-		panelGeneralInfo.setBackground(new Color(0,0,0,0));
+		panelGeneralInfo.setBackground(new Color(0, 0, 0, 0));
 		infoPanel.add(panelGeneralInfo, BorderLayout.CENTER);
 		panelGeneralInfo.setLayout(new GridLayout(2, 1));
 
 		JPanel panelAux = new JPanel();
-		panelAux.setBackground(new Color(0,0,0,0));
+		panelAux.setBackground(new Color(0, 0, 0, 0));
 		panelAux.setLayout(new GridLayout(10, 2));
 
 		JLabel lblNumero = new JLabel("N\u00FAmero (*)");
@@ -265,17 +261,17 @@ public class AgregarEditarResDialog extends JDialog {
 		panelAux.add(btnVerRegistroPeso);
 
 		JPanel panelObservaciones = new JPanel();
-		panelObservaciones.setBackground(new Color(0,0,0,0));
+		panelObservaciones.setBackground(new Color(0, 0, 0, 0));
 		panelGeneralInfo.add(panelObservaciones);
 		panelObservaciones.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_7 = new JPanel();
-		panel_7.setBackground(new Color(0,0,0,0));
+		panel_7.setBackground(new Color(0, 0, 0, 0));
 		panelObservaciones.add(panel_7, BorderLayout.CENTER);
 		panel_7.setLayout(new GridLayout(2, 1));
 
 		JPanel panelOtro = new JPanel();
-		panelOtro.setBackground(new Color(0,0,0,0));
+		panelOtro.setBackground(new Color(0, 0, 0, 0));
 		panel_7.add(panelOtro);
 		panelOtro.setLayout(new GridLayout(5, 2));
 
@@ -325,14 +321,14 @@ public class AgregarEditarResDialog extends JDialog {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
-		scrollPane.setBackground(new Color(0,0,0,0.6f));
+		scrollPane.setBackground(new Color(0, 0, 0, 0.6f));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panel_7.add(scrollPane);
 
 		txtObservaciones = new JTextArea();
 		txtObservaciones.setFont(new Font("Tahoma", Font.BOLD, 15));
 		txtObservaciones.setForeground(Color.WHITE);
-		txtObservaciones.setBackground(new Color(0,0,0,0.6f));
+		txtObservaciones.setBackground(new Color(0, 0, 0, 0.6f));
 		txtObservaciones.setLineWrap(true);
 		scrollPane.setViewportView(txtObservaciones);
 
@@ -341,10 +337,11 @@ public class AgregarEditarResDialog extends JDialog {
 		scroller = new JScrollPane();
 
 		panelTablaGraficas = new JPanel();
-		panelTablaGraficas.setBackground(new Color(0,0,0,0));
+		panelTablaGraficas.setBackground(new Color(0, 0, 0));
 		panelTablaGraficas.setLayout(new GridLayout(2, 1));
 
 		panelGrafica = new PanelColorGrafica();
+		panelGrafica.setBackground(new Color(236, 235, 233));
 		panelGrafica.setLayout(new GridLayout(1, 1));
 
 		panelTabla = new JPanel();
@@ -358,8 +355,6 @@ public class AgregarEditarResDialog extends JDialog {
 
 	}
 
-	
-	
 	public void cargarInfoRes() {
 
 		if (res != null) {
@@ -533,35 +528,31 @@ public class AgregarEditarResDialog extends JDialog {
 			transformarPanel();
 
 		}
-		
-		
 
 		tablaPesos.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
-				if (e.getButton()== MouseEvent.BUTTON3) {
-				
-				int valor =JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar este peso?");
-				
-				if (valor == JOptionPane.OK_OPTION) {
-					
-				
-					int fila =tablaPesos.getSelectedRow();
-					Peso peso = new Peso(Double.parseDouble(modelPesos.getValueAt(fila, 0).toString()), modelPesos.getValueAt(fila, 1).toString());
-				    ResCRUD.deletePesoFromRes(res.getResID(), peso.getPeso(), peso.getFecha());
-				    refreshTable(1);
-				    cerrarPanel();
- 
-				}	
-					
+
+				if (e.getButton() == MouseEvent.BUTTON3) {
+
+					int valor = JOptionPane.showConfirmDialog(null, "\u00BFEst\u00E1 seguro de eliminar este peso?");
+
+					if (valor == JOptionPane.OK_OPTION) {
+
+						int fila = tablaPesos.getSelectedRow();
+						Peso peso = new Peso(Double.parseDouble(modelPesos.getValueAt(fila, 0).toString()),
+								modelPesos.getValueAt(fila, 1).toString());
+						ResCRUD.deletePesoFromRes(res.getResID(), peso.getPeso(), peso.getFecha());
+						refreshTable(1);
+						cerrarPanel();
+
+					}
+
 				}
 			}
 		});
-		
-		
 
 	}
 
@@ -678,7 +669,7 @@ public class AgregarEditarResDialog extends JDialog {
 
 	public void crearTablaCrias() {
 
-		String[] columns = { "# Cria", "FECHA NACIMIENTO" };
+		String[] columns = { "# CR\u00CDA", "FECHA NACIMIENTO" };
 
 		if (res != null) {
 
@@ -753,17 +744,16 @@ public class AgregarEditarResDialog extends JDialog {
 		}
 
 	}
-	
+
 	public void cerrarPanel() {
-		
-       remove(panelTablaGraficas);
-       setLocationRelativeTo(null);
-       setSize(500, 700);
-       invalidate();
-       revalidate();
-       repaint();
+
+		remove(panelTablaGraficas);
+		setLocationRelativeTo(null);
+		setSize(500, 700);
+		invalidate();
+		revalidate();
+		repaint();
 	}
-	
 
 	public void listeners() {
 
@@ -776,11 +766,11 @@ public class AgregarEditarResDialog extends JDialog {
 		btnFechaEmbarazo.addActionListener(e -> {
 
 			CalendarioDialog calendar = new CalendarioDialog(btnFechaEmbarazo);
-			
-			if (btnFechaEmbarazo.getText()!=null && !btnFechaEmbarazo.getText().equalsIgnoreCase("") && comboTipo.getSelectedItem().toString().equalsIgnoreCase("VH")) {
-				
+
+			if (btnFechaEmbarazo.getText() != null && !btnFechaEmbarazo.getText().equalsIgnoreCase("")
+					&& comboTipo.getSelectedItem().toString().equalsIgnoreCase("VH")) {
+
 				comboTipo.setSelectedItem("NV");
-				System.out.println(btnFechaEmbarazo.getText());
 			}
 
 		});
@@ -798,7 +788,6 @@ public class AgregarEditarResDialog extends JDialog {
 						try {
 							ResCRUD.update(res.getResID(), obtenerInfoRes(potrero.getPotrero_elegido()));
 							potrero.refreshTable();
-							System.out.println("UPDATED");
 							dispose();
 						} catch (Exception ex) {
 
@@ -811,7 +800,6 @@ public class AgregarEditarResDialog extends JDialog {
 
 						try {
 							ResCRUD.update(res.getResID(), obtenerInfoRes(res.getPotreroNombre()));
-							System.out.println("UPDATED");
 							dispose();
 						} catch (Exception ex) {
 
@@ -833,7 +821,6 @@ public class AgregarEditarResDialog extends JDialog {
 					try {
 						ResCRUD.insert(obtenerInfoRes(potrero.getPotrero_elegido()));
 						potrero.refreshTable();
-						System.out.println("INSERTED");
 						dispose();
 					} catch (Exception ex) {
 
@@ -842,7 +829,7 @@ public class AgregarEditarResDialog extends JDialog {
 
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Ya existe una res con ese numero", "Error",
+					JOptionPane.showMessageDialog(null, "Ya existe una res con ese n\u00FAmero", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -878,7 +865,6 @@ public class AgregarEditarResDialog extends JDialog {
 		btnVerRegistroPeso.addActionListener(e -> {
 
 			tiporeporte = 1;
-			// scroller.removeAll();
 			if (panelTablaGraficas.getParent() != null) {
 
 				getContentPane().remove(panelTablaGraficas);
@@ -899,7 +885,6 @@ public class AgregarEditarResDialog extends JDialog {
 		btnRegistroVacunas.addActionListener(e -> {
 
 			tiporeporte = 2;
-			// scroller.removeAll();
 			if (panelTablaGraficas.getParent() != null) {
 
 				getContentPane().remove(panelTablaGraficas);
@@ -918,7 +903,6 @@ public class AgregarEditarResDialog extends JDialog {
 		btnRegistroPurgantes.addActionListener(e -> {
 
 			tiporeporte = 3;
-			// scroller.removeAll();
 			if (panelTablaGraficas.getParent() != null) {
 
 				getContentPane().remove(panelTablaGraficas);
@@ -938,7 +922,6 @@ public class AgregarEditarResDialog extends JDialog {
 		btnCrias.addActionListener(e -> {
 
 			tiporeporte = 4;
-			// scroller.removeAll();
 			if (panelTablaGraficas.getParent() != null) {
 
 				getContentPane().remove(panelTablaGraficas);
@@ -988,8 +971,6 @@ public class AgregarEditarResDialog extends JDialog {
 
 				btnFechaEmbarazo.setText("dd/mm/AAAA");
 				btnFechaEmbarazo.setEnabled(true);
-				
-				
 
 			}
 
@@ -997,9 +978,7 @@ public class AgregarEditarResDialog extends JDialog {
 
 		comboTipo.addActionListener(e -> {
 
-	
 		});
-		
 
 	}
 
@@ -1021,7 +1000,7 @@ public class AgregarEditarResDialog extends JDialog {
 		panelGrafica.removeAll();
 		panelGrafica.add(GeneradorGrafica.graficaPesos(ResCRUD.selectPesosLista(res.getResID())));
 		pack();
-		setSize(1100,700);
+		setSize(1100, 700);
 
 	}
 

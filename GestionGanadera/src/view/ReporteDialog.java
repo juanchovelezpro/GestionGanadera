@@ -1,12 +1,12 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,12 +19,9 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 import db.ResCRUD;
-import model.Peso;
 import model.Res;
 import tools.DocsImporterExporter;
 import tools.FileManager;
-import java.awt.Color;
-import javax.swing.UIManager;
 
 public class ReporteDialog extends JDialog {
 	private JButton btnExportar;
@@ -44,13 +41,16 @@ public class ReporteDialog extends JDialog {
 	private JPanel panelinfo;
 	private int valor;
 
+	
 	public ReporteDialog(String reporte, int valor) {
 
 		this.reporte = reporte;
-		this.valor =valor;
+		this.valor = valor;
 		setTitle("Reporte");
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		setSize(650, 400);
+		setResizable(false);
+
 		setIconImage(FileManager.imagenes.get("REPORTE"));
 		setLocationRelativeTo(null);
 
@@ -76,70 +76,62 @@ public class ReporteDialog extends JDialog {
 		fecha_Convertida = dia + "/" + mes + "/" + anio;
 
 		scroller = new JScrollPane();
-		
+
 		PanelColorReporte panel_1 = new PanelColorReporte();
-		panel_1.setBackground(new Color(0, 0, 0,120));
+		panel_1.setBackground(new Color(0, 0, 0, 120));
 		panel_1.setLayout(new BorderLayout());
 		getContentPane().add(panel_1, BorderLayout.CENTER);
-		
-				JPanel panelTexto = new JPanel();
-				panelTexto.setBackground(new Color(0, 0, 0,120));
-				panel_1.add(panelTexto,BorderLayout.NORTH);
-				panelTexto.setLayout(new GridLayout(3, 1));
-				
-						JLabel lblNewLabel = new JLabel("     ");
-						panelTexto.add(lblNewLabel);
-						
-								JLabel lblNewLabel_1 = new JLabel(reporte + " - " + fecha_Convertida);
-								lblNewLabel_1.setForeground(Color.WHITE);
-								lblNewLabel_1.setBackground(new Color(0, 0, 0));
-								lblNewLabel_1.setFont(new Font("Lucida Grande", Font.BOLD, 22));
-								lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-								panelTexto.add(lblNewLabel_1);
-								
-										JLabel lblNewLabel_2 = new JLabel("     ");
-										panelTexto.add(lblNewLabel_2);
-										
-												JPanel panelPrincipal = new JPanel();
-												panelPrincipal.setBackground(new Color(0, 0, 0,120));
-												panel_1.add(panelPrincipal, BorderLayout.CENTER);
-												panelPrincipal.setLayout(new BorderLayout(0, 0));
-												
-														JLabel lblNewLabel_3 = new JLabel("     ");
-														panelPrincipal.add(lblNewLabel_3, BorderLayout.WEST);
-														
-																JLabel lblNewLabel_4 = new JLabel("     ");
-																panelPrincipal.add(lblNewLabel_4, BorderLayout.EAST);
-																
-																
 
-																// REPORTE DE INFORMACION
+		JPanel panelTexto = new JPanel();
+		panelTexto.setBackground(new Color(0, 0, 0, 120));
+		panel_1.add(panelTexto, BorderLayout.NORTH);
+		panelTexto.setLayout(new GridLayout(3, 1));
 
-																panelinfo = new JPanel();
-																panelinfo.setBackground(new Color(0, 0, 0,120));
-																panelinfo.setLayout(new GridLayout(1, 1));
-																
-																		JPanel panel = new JPanel();
-																		panel.setBackground(new Color(0, 0, 0,0));
-																		panelPrincipal.add(panel, BorderLayout.SOUTH);
-																		
-																				btnExportar = new JButton(" Exportar ");
-																				btnExportar.setBackground(Color.WHITE);
-																				panel.add(btnExportar);
-																				
-																						btnRegresar = new JButton(" Regresar ");
-																						btnRegresar.setBackground(Color.WHITE);
-																						panel.add(btnRegresar);
-																						
-																								panelPrincipal.add(panelinfo, BorderLayout.CENTER);
+		JLabel lblNewLabel = new JLabel("     ");
+		panelTexto.add(lblNewLabel);
+
+		JLabel lblNewLabel_1 = new JLabel(reporte + " - " + fecha_Convertida);
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setBackground(new Color(0, 0, 0));
+		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.BOLD, 22));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		panelTexto.add(lblNewLabel_1);
+
+		JLabel lblNewLabel_2 = new JLabel("     ");
+		panelTexto.add(lblNewLabel_2);
+
+		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setBackground(new Color(0, 0, 0, 120));
+		panel_1.add(panelPrincipal, BorderLayout.CENTER);
+		panelPrincipal.setLayout(new BorderLayout(0, 0));
+
+		JLabel lblNewLabel_3 = new JLabel("     ");
+		panelPrincipal.add(lblNewLabel_3, BorderLayout.WEST);
+
+		JLabel lblNewLabel_4 = new JLabel("     ");
+		panelPrincipal.add(lblNewLabel_4, BorderLayout.EAST);
+
+		// REPORTE DE INFORMACION
+
+		panelinfo = new JPanel();
+		panelinfo.setBackground(new Color(0, 0, 0, 120));
+		panelinfo.setLayout(new GridLayout(1, 1));
+
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 0, 0, 0));
+		panelPrincipal.add(panel, BorderLayout.SOUTH);
+
+		btnExportar = new JButton(" Exportar ");
+		btnExportar.setBackground(Color.WHITE);
+		panel.add(btnExportar);
+
+		btnRegresar = new JButton(" Regresar ");
+		btnRegresar.setBackground(Color.WHITE);
+		panel.add(btnRegresar);
+
+		panelPrincipal.add(panelinfo, BorderLayout.CENTER);
+
 		
-		
-		//borrar
-		
-		//crearTablaVacuna();
-		//tablaDestete=new JTable();
-		//scroller.add(tablaDestete);
-		//panelinfo.add(scroller);
 
 	}
 
@@ -147,14 +139,12 @@ public class ReporteDialog extends JDialog {
 
 		if (valor == 1) {
 			crearTablaDestete();
-			
+
 		} else if (valor == 2) {
 			crearTablaPartos();
-		}
-		else if (valor==4) {
+		} else if (valor == 4) {
 			crearTablaPurgante();
-		}
-		else if (valor ==3) {
+		} else if (valor == 3) {
 			crearTablaVacuna();
 		}
 
@@ -162,7 +152,7 @@ public class ReporteDialog extends JDialog {
 
 	public void crearTablaPartos() {
 
-		String[] columns = { "NUMERO", "FECHA EMBARAZO", "TIEMPO DE EMBARAZO", "POTRERO" };
+		String[] columns = { "N\u00DAMERO", "FECHA EMBARAZO", "TIEMPO DE EMBARAZO", "POTRERO" };
 
 		modelParto = new ModelTable();
 
@@ -194,11 +184,10 @@ public class ReporteDialog extends JDialog {
 			modelParto.setData(data);
 			modelParto.setColumns(columns);
 			tablaParto = new JTable(modelParto);
-			tablaParto.setBackground(new Color(225,235,239));
+			tablaParto.setBackground(new Color(225, 235, 239));
 
 			tablaParto.getColumnModel().getColumn(2).setPreferredWidth(140);
 			tablaParto.getColumnModel().getColumn(1).setPreferredWidth(120);
-			// tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
 			tablaParto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaParto.setShowHorizontalLines(true);
@@ -214,7 +203,7 @@ public class ReporteDialog extends JDialog {
 
 	public void crearTablaPurgante() {
 
-		String[] columns = { "NUMERO", "PURGANTE", "ULTIMA FECHA", "POTRERO" };
+		String[] columns = { "N\u00DAMERO", "PURGANTE", "ULTIMA FECHA", "POTRERO" };
 
 		modelPurgante = new ModelTable();
 
@@ -242,15 +231,14 @@ public class ReporteDialog extends JDialog {
 					data[i][j] = temp.getPotreroNombre();
 
 			}
-                 
+
 			modelPurgante.setData(data);
 			modelPurgante.setColumns(columns);
 			tablaPurgante = new JTable(modelPurgante);
-			tablaPurgante.setBackground(new Color(225,235,239));
+			tablaPurgante.setBackground(new Color(225, 235, 239));
 
 			tablaPurgante.getColumnModel().getColumn(2).setPreferredWidth(140);
 			tablaPurgante.getColumnModel().getColumn(1).setPreferredWidth(120);
-			// tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
 			tablaPurgante.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaPurgante.setShowHorizontalLines(true);
@@ -266,13 +254,12 @@ public class ReporteDialog extends JDialog {
 
 	public void crearTablaVacuna() {
 
-		String[] columns = { "NUMERO", "VACUNA", "ULTIMA FECHA", "POTRERO" };
+		String[] columns = { "N\u00FDAMERO", "VACUNA", "ULTIMA FECHA", "POTRERO" };
 
 		modelVacuna = new ModelTable();
 
-		
 		ArrayList<Res> reses = ResCRUD.reporteVacunaNotificaciones();
-		
+
 		Object[][] data = new Object[reses.size()][columns.length];
 		Res temp = null;
 		String mensaje = "";
@@ -300,10 +287,9 @@ public class ReporteDialog extends JDialog {
 			modelVacuna.setData(data);
 			modelVacuna.setColumns(columns);
 			tablaVacuna = new JTable(modelVacuna);
-			tablaVacuna.setBackground(new Color(225,235,239));
+			tablaVacuna.setBackground(new Color(225, 235, 239));
 			tablaVacuna.getColumnModel().getColumn(2).setPreferredWidth(140);
 			tablaVacuna.getColumnModel().getColumn(1).setPreferredWidth(120);
-			// tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
 			tablaVacuna.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaVacuna.setShowHorizontalLines(true);
@@ -319,7 +305,7 @@ public class ReporteDialog extends JDialog {
 
 	public void crearTablaDestete() {
 
-		String[] columns = { "NUMERO", "NACIMIENTO", "TIEMPO DE CRÍA", "MADRE", "POTRERO" };
+		String[] columns = { "N\u00DAMERO", "NACIMIENTO", "TIEMPO DE CRÍA", "MADRE", "POTRERO" };
 
 		modelDestete = new ModelTable();
 
@@ -354,10 +340,9 @@ public class ReporteDialog extends JDialog {
 			modelDestete.setData(data);
 			modelDestete.setColumns(columns);
 			tablaDestete = new JTable(modelDestete);
-			tablaDestete.setBackground(new Color(225,235,239));
+			tablaDestete.setBackground(new Color(225, 235, 239));
 			tablaDestete.getColumnModel().getColumn(2).setPreferredWidth(140);
 			tablaDestete.getColumnModel().getColumn(1).setPreferredWidth(120);
-			// tablaDestete.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
 			tablaDestete.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			tablaDestete.setShowHorizontalLines(true);
@@ -374,7 +359,6 @@ public class ReporteDialog extends JDialog {
 	public void listeners() {
 
 		btnExportar.addActionListener(e -> {
-			
 
 			try {
 
@@ -391,8 +375,6 @@ public class ReporteDialog extends JDialog {
 			} catch (Exception xd) {
 				xd.printStackTrace();
 			}
-
-			
 
 		});
 

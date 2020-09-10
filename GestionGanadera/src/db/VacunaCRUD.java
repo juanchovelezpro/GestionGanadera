@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.Purgante;
 import model.Vacuna;
 
 public class VacunaCRUD {
@@ -14,14 +13,14 @@ public class VacunaCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
-			ArrayList<Vacuna> vacunas =select();
-			
-			boolean existe =false;
-			
+			ArrayList<Vacuna> vacunas = select();
+
+			boolean existe = false;
+
 			for (int i = 0; i < vacunas.size(); i++) {
 				if (vacunas.get(i).getNombre().equalsIgnoreCase(nombre)) {
-					
-					existe =true;
+
+					existe = true;
 				}
 			}
 			if (!existe) {
@@ -34,7 +33,6 @@ public class VacunaCRUD {
 		}
 
 	}
-	
 
 	public static ArrayList<Vacuna> select() {
 

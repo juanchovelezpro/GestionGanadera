@@ -8,24 +8,19 @@ import tools.FileManager;
 
 public class PanelColorGrafica extends JPanel {
 
-	
-	public PanelColorGrafica () {
-		
-		
+	public PanelColorGrafica() {
+
 	}
 
-	
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-		
-		
+
 		super.paintComponent(g);
-		
-		
+
 		g.drawImage(FileManager.imagenes.get("VAQUITA"), 0, 0, null);
-		
+
 		repaint();
 	}
-	
+
 }

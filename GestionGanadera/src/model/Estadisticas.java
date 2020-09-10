@@ -48,19 +48,19 @@ public class Estadisticas {
 				switch (res.getTipo()) {
 
 				case "CH":
-					
+
 					ch++;
 
 					break;
 
 				case "HL":
-					
+
 					hl++;
 
 					break;
 
 				case "NV":
-					
+
 					nv++;
 
 					break;
@@ -68,7 +68,7 @@ public class Estadisticas {
 				case "VH":
 
 					vh++;
-					
+
 					break;
 
 				case "VP":
@@ -80,43 +80,40 @@ public class Estadisticas {
 
 			}
 
-			 
-		     if (res.getGenero().equalsIgnoreCase("M")) {
+			if (res.getGenero().equalsIgnoreCase("M")) {
 				machos++;
 
-				 switch (res.getTipo()) {
-					
-					case "CM":
-						
-						cm++;
+				switch (res.getTipo()) {
 
-						break;
+				case "CM":
 
-					case "ML":
-						
-						ml++;
+					cm++;
 
-						break;
+					break;
 
-					case "MC":
-						
-						mc++;
+				case "ML":
 
-						break;
+					ml++;
 
-					case "TP":
+					break;
 
-						tp++;
-						
-						break;
+				case "MC":
 
-					}
+					mc++;
+
+					break;
+
+				case "TP":
+
+					tp++;
+
+					break;
+
+				}
 
 			}
 
 		}
-	
-	
 
 		mensaje.add(potreros);
 		mensaje.add(reses);
@@ -134,7 +131,6 @@ public class Estadisticas {
 
 		return mensaje;
 	}
-
 
 	/**
 	 * Estadisticas por potrero Cantidad de reses totales Cantidad de hembras
@@ -174,19 +170,19 @@ public class Estadisticas {
 				switch (res.getTipo()) {
 
 				case "CH":
-					
+
 					ch++;
 
 					break;
 
 				case "HL":
-					
+
 					hl++;
 
 					break;
 
 				case "NV":
-					
+
 					nv++;
 
 					break;
@@ -194,7 +190,7 @@ public class Estadisticas {
 				case "VH":
 
 					vh++;
-					
+
 					break;
 
 				case "VP":
@@ -205,40 +201,40 @@ public class Estadisticas {
 				}
 
 			}
-			
+
 			if (res.getGenero().equalsIgnoreCase("M")) {
 				machos++;
 
-		   switch (res.getTipo()) {
-			
-			case "CM":
-				
-				cm++;
+				switch (res.getTipo()) {
 
-				break;
+				case "CM":
 
-			case "ML":
-				
-				ml++;
+					cm++;
 
-				break;
+					break;
 
-			case "MC":
-				
-				mc++;
+				case "ML":
 
-				break;
+					ml++;
 
-			case "TP":
+					break;
 
-				tp++;
-				
-				break;
+				case "MC":
+
+					mc++;
+
+					break;
+
+				case "TP":
+
+					tp++;
+
+					break;
+
+				}
 
 			}
 
-		}
-			
 		}
 
 		mensaje.add(reses);

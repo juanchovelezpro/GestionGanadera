@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Purgante;
-import model.Vacuna;
 
 public class PurganteCRUD {
 

@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -17,8 +18,6 @@ import db.UsuarioCRUD;
 import model.Usuario;
 import tools.FileManager;
 
-import java.awt.Color;
-
 public class RegistroPanel extends JPanel {
 
 	private JTextField txtNombreUsuario;
@@ -28,8 +27,6 @@ public class RegistroPanel extends JPanel {
 	private VentanaPrincipal ventana;
 
 	public RegistroPanel(VentanaPrincipal ventana) {
-		
-		
 
 		this.ventana = ventana;
 
@@ -44,20 +41,16 @@ public class RegistroPanel extends JPanel {
 
 	}
 
-	
 	@Override
 	public void paintComponent(Graphics g) {
-		
-		
+
 		super.paintComponent(g);
-		
-		
+
 		g.drawImage(FileManager.imagenes.get("CAMPO2"), 0, 0, null);
-		
+
 		repaint();
 	}
-	
-	
+
 	public VentanaPrincipal getVentana() {
 
 		return ventana;
@@ -67,38 +60,31 @@ public class RegistroPanel extends JPanel {
 	public void setComponents() {
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(222, 184, 135,100));
+		panel.setBackground(new Color(222, 184, 135, 100));
 		add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(1, 3));
-		
-		JPanel panelprueba = new JPanel();
-		panel.setBackground(new Color(222, 184, 135,100));
-		add(panelprueba, BorderLayout.PAGE_END);
-		
 
-		
+		JPanel panelprueba = new JPanel();
+		panel.setBackground(new Color(222, 184, 135, 100));
+		add(panelprueba, BorderLayout.PAGE_END);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(222, 184, 135,100));
+		panel_1.setBackground(new Color(222, 184, 135, 100));
 		panel.add(panel_1);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(222, 184, 135,100));
+		panel_2.setBackground(new Color(222, 184, 135, 100));
 		panel.add(panel_2);
 		panel_2.setLayout(new GridLayout(16, 1));
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		panel_2.add(lblNewLabel_2);
-		
-		
 
-		JLabel lblApp = new JLabel("Gestion Ganadera");
-//   add(lblApp, BorderLayout.NORTH);
+		JLabel lblApp = new JLabel("Gesti\u00F3n Ganadera");
 		lblApp.setFont(new Font("Tahoma", Font.BOLD, 28));
 		lblApp.setHorizontalAlignment(SwingConstants.CENTER);
 		lblApp.setForeground(Color.BLACK);
 		panel_2.add(lblApp);
-		
 
 		JLabel lblNewLabel_3 = new JLabel("");
 		panel_2.add(lblNewLabel_3);
@@ -118,7 +104,7 @@ public class RegistroPanel extends JPanel {
 		panel_2.add(lblNewLabel_1);
 
 		txtNombreUsuario = new JTextField();
-		txtNombreUsuario.setBackground(new Color(176, 224, 230,100));
+		txtNombreUsuario.setBackground(new Color(176, 224, 230, 100));
 		txtNombreUsuario.setForeground(new Color(0, 0, 0));
 		txtNombreUsuario.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		txtNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -131,14 +117,14 @@ public class RegistroPanel extends JPanel {
 		panel_2.add(lblNewLabel_7);
 
 		txtPassword = new JPasswordField();
-		txtPassword.setBackground(new Color(176, 224, 230,100));
+		txtPassword.setBackground(new Color(176, 224, 230, 100));
 		txtPassword.setForeground(new Color(0, 0, 0));
 		txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txtPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(txtPassword);
 
 		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(176, 196, 222,100));
+		panel_4.setBackground(new Color(176, 196, 222, 100));
 		panel_2.add(panel_4);
 		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -157,10 +143,9 @@ public class RegistroPanel extends JPanel {
 		panel_2.add(btnCrearUsuario);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(222, 184, 135,100));
+		panel_3.setBackground(new Color(222, 184, 135, 100));
 		panel.add(panel_3);
 
-			
 	}
 
 	public static void compruebaUser() {
@@ -198,7 +183,7 @@ public class RegistroPanel extends JPanel {
 
 				if (txtNombreUsuario.getText().equals("") || passActual.equals("")) {
 
-					JOptionPane.showMessageDialog(null, "Ingrese un usuario y contraseña");
+					JOptionPane.showMessageDialog(null, "Ingrese un usuario y contrase\u00F1a");
 
 				}
 
@@ -217,7 +202,7 @@ public class RegistroPanel extends JPanel {
 						&& (!txtNombreUsuario.getText().equals(usuarioActual.getNombre())
 								|| !passActual.equals(usuarioActual.getPassword()))) {
 
-					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas");
+					JOptionPane.showMessageDialog(null, "Usuario o contrase\u00F1a incorrectas");
 				}
 
 			}

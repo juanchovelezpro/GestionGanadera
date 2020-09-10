@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -51,8 +53,6 @@ import model.Res;
 import model.Vacuna;
 import tools.DocsImporterExporter;
 import tools.FileManager;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class PotrerosPanel extends JPanel {
 
@@ -97,15 +97,15 @@ public class PotrerosPanel extends JPanel {
 
 		JPanel panelTop = new JPanel();
 		panelTop.setLayout(new GridLayout(2, 1));
-		panelTop.setBackground(new Color(0,0,0,0));
+		panelTop.setBackground(new Color(0, 0, 0, 0));
 		panelTop.add(menuBar);
 
 		JPanel panelSuperior = new JPanel();
-		panelSuperior.setBackground(new Color(0,0,0,0));
+		panelSuperior.setBackground(new Color(0, 0, 0, 0));
 		panelSuperior.setLayout(new GridLayout(1, 5));
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(0,0,0,0));
+		panel_2.setBackground(new Color(0, 0, 0, 0));
 		panelSuperior.add(panel_2);
 		panel_2.setLayout(new GridLayout(1, 10));
 
@@ -126,7 +126,7 @@ public class PotrerosPanel extends JPanel {
 		panelSuperior.add(lblNombrePotrero);
 
 		panelResTable = new JPanel();
-		panelResTable.setBackground(new Color(0,0,0,0));
+		panelResTable.setBackground(new Color(0, 0, 0, 0));
 		scroller = new JScrollPane();
 		ganado = PotreroCRUD.selectRes(potrero_elegido);
 
@@ -167,7 +167,7 @@ public class PotrerosPanel extends JPanel {
 
 		JPanel panelInferior = new JPanel();
 		add(panelInferior, BorderLayout.SOUTH);
-		panelInferior.setBackground(new Color(0,0,0,0));
+		panelInferior.setBackground(new Color(0, 0, 0, 0));
 		panelInferior.setLayout(new GridLayout(1, 6));
 
 		lblNewLabel = new JLabel("");
@@ -202,9 +202,9 @@ public class PotrerosPanel extends JPanel {
 		super.paintComponent(g);
 
 		g.drawImage(FileManager.imagenes.get("POTREROS"), 0, 90, null);
-		
+
 		repaint();
-		
+
 	}
 
 	public void crearTablaRes() {
@@ -212,9 +212,9 @@ public class PotrerosPanel extends JPanel {
 		fillData();
 
 		tablaRes = new JTable(modelRes);
-		tablaRes.setBackground(new Color(0,0,0,0));
+		tablaRes.setBackground(new Color(0, 0, 0, 0));
 		tablaRes.setOpaque(false);
-		((DefaultTableCellRenderer)tablaRes.getDefaultRenderer(Object.class)).setOpaque(false);
+		((DefaultTableCellRenderer) tablaRes.getDefaultRenderer(Object.class)).setOpaque(false);
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		for (int i = 0; i < modelRes.getColumnCount(); i++) {
@@ -230,7 +230,7 @@ public class PotrerosPanel extends JPanel {
 		tablaRes.getTableHeader().setOpaque(false);
 		scroller.setViewportView(tablaRes);
 		scroller.setOpaque(false);
-		scroller.setBackground(new Color(0,0,0,0));
+		scroller.setBackground(new Color(0, 0, 0, 0));
 		scroller.getViewport().setOpaque(false);
 		tablaRes.setFillsViewportHeight(true);
 		panelResTable.add(scroller);
@@ -239,7 +239,7 @@ public class PotrerosPanel extends JPanel {
 
 	public void fillData() {
 
-		String[] columns = { "ID", "TIPO", "GENERO", "COLOR", "FECHA NACIMIENTO", "ESTADO", "MADRE", "OBSERVACIONES" };
+		String[] columns = { "ID", "TIPO", "G\u00C9NERO", "COLOR", "FECHA NACIMIENTO", "ESTADO", "MADRE", "OBSERVACIONES" };
 		Object[][] data = new Object[ganado.size()][columns.length];
 
 		for (int i = 0; i < data.length; i++) {
@@ -322,34 +322,28 @@ public class PotrerosPanel extends JPanel {
 			agregarPurgante();
 		});
 
-		// Filtro
 		comboHembraMacho.addActionListener(e -> {
 			filtrar();
 		});
 
-		// Acciones y eventos con el mouse en la tabla.
 		tablaRes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				// Para editar la res seleccionada.
 				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
 
 					int row = tablaRes.getSelectedRow();
 
-					// Por si se encuentra sortered or filtered la tabla
 					if (tablaRes.getRowSorter() != null)
 						row = tablaRes.getRowSorter().convertRowIndexToModel(row);
 
 					Res res = ResCRUD.selectResByID(modelRes.getValueAt(row, 0).toString());
 
-					// Abre el panel para editar la vaca seleccionada.
 
 					AgregarEditarResDialog agregarEditarDialog = new AgregarEditarResDialog(res, PotrerosPanel.this);
 
 				}
 
-				// Click derecho
 				if (e.getButton() == MouseEvent.BUTTON3) {
 
 					menu.show(e.getComponent(), e.getX(), e.getY());
@@ -376,19 +370,16 @@ public class PotrerosPanel extends JPanel {
 		switch (comboHembraMacho.getSelectedIndex()) {
 
 		case 0:
-			// Mostrar todo - Quitar Filtro
 			tablaRes.setRowSorter(null);
 			break;
 
 		case 1:
-			// Filtrar por hembras
 			sorter = new TableRowSorter<>(modelRes);
 			sorter.setRowFilter(RowFilter.regexFilter("H", 2));
 			tablaRes.setRowSorter(sorter);
 			break;
 
 		case 2:
-			// Filtrar por machos
 			sorter = new TableRowSorter<>(modelRes);
 			sorter.setRowFilter(RowFilter.regexFilter("M", 2));
 			tablaRes.setRowSorter(sorter);
@@ -508,8 +499,8 @@ public class PotrerosPanel extends JPanel {
 		acciones.add(vacunar);
 		acciones.add(purgar);
 
-		JMenu edicion = new JMenu("Edicion");
-		JMenuItem limpiar = new JMenuItem("Limpiar Seleccion");
+		JMenu edicion = new JMenu("Edici\u00F3n");
+		JMenuItem limpiar = new JMenuItem("Limpiar Selecci\u00F3n");
 		limpiar.addActionListener(e -> {
 
 			tablaRes.clearSelection();
@@ -540,13 +531,13 @@ public class PotrerosPanel extends JPanel {
 		edicion.add(actualizar);
 
 		JMenu ver = new JMenu("Ver");
-		JMenuItem estadisticas = new JMenuItem("Estadisticas", new ImageIcon(FileManager.imagenes.get("STATS")));
+		JMenuItem estadisticas = new JMenuItem("Estad\u00EDsticas", new ImageIcon(FileManager.imagenes.get("STATS")));
 		estadisticas.addActionListener(e -> {
 
 			EstadisticaDialog estadisticass = new EstadisticaDialog(2, potrero_elegido);
 
 		});
-		JMenuItem creditos = new JMenuItem("Creditos", new ImageIcon(FileManager.imagenes.get("CREDITOS")));
+		JMenuItem creditos = new JMenuItem("Cr\u00E9ditos", new ImageIcon(FileManager.imagenes.get("CREDITOS")));
 		creditos.addActionListener(e -> {
 
 			CreditosDialog cre = new CreditosDialog();
@@ -619,7 +610,6 @@ public class PotrerosPanel extends JPanel {
 		int[] rowsSelected = tablaRes.getSelectedRows();
 
 		if (rowsSelected.length > 0) {
-			// Por si se encuentra "sorted or filtered" la tabla
 			if (tablaRes.getRowSorter() != null) {
 
 				for (int i = 0; i < rowsSelected.length; i++) {
@@ -650,7 +640,7 @@ public class PotrerosPanel extends JPanel {
 				if (fecha != null && !fecha.equals("")) {
 
 					int option = JOptionPane.showConfirmDialog(this,
-							"\u00BFESTA SEGURO QUE DESEA VACUNAR " + rowsSelected.length + " RESES CON LA VACUNA "
+							"\u00BFEST\u00C1 SEGURO QUE DESEA VACUNAR " + rowsSelected.length + " RESES CON LA VACUNA "
 									+ resp + " CON FECHA " + fecha + "" + "?",
 							"ADVERTENCIA", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
@@ -677,8 +667,8 @@ public class PotrerosPanel extends JPanel {
 
 								ResCRUD.insertVacunaMultiple(ids, resp, fecha);
 								progreso.dispose();
-								JOptionPane.showMessageDialog(null, "Se ha realizado con exito la vacunacion",
-										"Vacunacion Exitosa", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Se ha realizado con \u00E9xito la vacunaci\u00F3n",
+										"Vacunaci\u00F3n Exitosa", JOptionPane.INFORMATION_MESSAGE);
 							}
 						}.start();
 
@@ -687,7 +677,7 @@ public class PotrerosPanel extends JPanel {
 			}
 		} else {
 
-			JOptionPane.showMessageDialog(null, "Selecciona al menos una res para la accion.",
+			JOptionPane.showMessageDialog(null, "Selecciona al menos una res para la acci\u00F3n.",
 					"No hay reses seleccionadas", JOptionPane.INFORMATION_MESSAGE);
 
 		}
@@ -699,7 +689,6 @@ public class PotrerosPanel extends JPanel {
 		int[] rowsSelected = tablaRes.getSelectedRows();
 
 		if (rowsSelected.length > 0) {
-			// Por si se encuentra "sorted or filtered" la tabla
 			if (tablaRes.getRowSorter() != null) {
 
 				for (int i = 0; i < rowsSelected.length; i++) {
@@ -730,7 +719,7 @@ public class PotrerosPanel extends JPanel {
 				if (fecha != null && !fecha.equals("")) {
 
 					int option = JOptionPane.showConfirmDialog(this,
-							"\u00BFESTA SEGURO QUE DESEA PURGAR " + rowsSelected.length + " RESES CON EL PURGANTE "
+							"\u00BFEST\u00C1 SEGURO QUE DESEA PURGAR " + rowsSelected.length + " RESES CON EL PURGANTE "
 									+ resp + " CON FECHA " + fecha + "" + "?",
 							"ADVERTENCIA", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
@@ -758,7 +747,7 @@ public class PotrerosPanel extends JPanel {
 
 								ResCRUD.insertPurganteMultiple(ids, resp, fecha);
 								progreso.dispose();
-								JOptionPane.showMessageDialog(null, "Se ha realizado con exito el purgado",
+								JOptionPane.showMessageDialog(null, "Se ha realizado con \u00E9xito el purgado",
 										"Purgado Exitoso", JOptionPane.INFORMATION_MESSAGE);
 							}
 						}.start();
@@ -767,7 +756,7 @@ public class PotrerosPanel extends JPanel {
 				}
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Selecciona al menos una res para la accion.",
+			JOptionPane.showMessageDialog(null, "Selecciona al menos una res para la acci\u00F3n.",
 					"No hay reses seleccionadas", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
@@ -804,7 +793,7 @@ public class PotrerosPanel extends JPanel {
 			if (resp != null) {
 				int option = JOptionPane
 						.showConfirmDialog(this,
-								"\u00BFEsta seguro que desea trasladar " + rowsSelected.length + " reses al potrero "
+								"\u00BFEst\u00E1 seguro que desea trasladar " + rowsSelected.length + " reses al potrero "
 										+ resp + "?",
 								"Trasladar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
@@ -840,7 +829,7 @@ public class PotrerosPanel extends JPanel {
 			}
 		} else {
 
-			JOptionPane.showMessageDialog(null, "Selecciona al menos una res para la accion.",
+			JOptionPane.showMessageDialog(null, "Selecciona al menos una res para la acci\u00F3n.",
 					"No hay reses seleccionadas", JOptionPane.INFORMATION_MESSAGE);
 		}
 
@@ -851,7 +840,6 @@ public class PotrerosPanel extends JPanel {
 		int[] rowsSelected = tablaRes.getSelectedRows();
 
 		if (rowsSelected.length > 0) {
-			// Por si se encuentra "sorted or filtered" la tabla
 			if (tablaRes.getRowSorter() != null) {
 
 				for (int i = 0; i < rowsSelected.length; i++) {
@@ -863,10 +851,9 @@ public class PotrerosPanel extends JPanel {
 			}
 
 			int option = JOptionPane.showConfirmDialog(this,
-					"\u00BFEsta seguro que desea eliminar " + rowsSelected.length + " reses?", "Eliminar",
+					"\u00BFEst\u00E1 seguro que desea eliminar " + rowsSelected.length + " reses?", "Eliminar",
 					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-			// Si presiona SI
 			if (option == 0) {
 
 				new Thread() {
@@ -899,7 +886,7 @@ public class PotrerosPanel extends JPanel {
 			}
 		} else {
 
-			JOptionPane.showMessageDialog(null, "Selecciona al menos una res para la accion.",
+			JOptionPane.showMessageDialog(null, "Selecciona al menos una res para la acci\u00F3n.",
 					"No hay reses seleccionadas", JOptionPane.INFORMATION_MESSAGE);
 		}
 
@@ -929,7 +916,6 @@ public class PotrerosPanel extends JPanel {
 
 			if (fs != null) {
 
-				// Cargar definitivamente el excel al programa y base de datos.
 
 				String ext = fileChooser.getSelectedFile().getName().split("\\.")[1];
 

@@ -161,7 +161,6 @@ public class DocsImporterExporter {
 		firstRow.createCell(6).setCellValue("EMBARAZADA");
 		firstRow.createCell(7).setCellValue("FECHA EMBARAZO");
 		firstRow.createCell(8).setCellValue("MADRE");
-	
 
 		for (int i = 1; i < reses.size(); i++) {
 			Row myRow = sheet.createRow(i);
@@ -205,7 +204,6 @@ public class DocsImporterExporter {
 				case 8:
 					myCell.setCellValue(reses.get(i).getMadreID());
 					break;
-				
 
 				}
 

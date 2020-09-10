@@ -150,25 +150,5 @@ public class PotreroCRUD {
 
 	}
 
-	public static void main(String[] args) {
-
-		// insert("popaz");
-		// insert("povelez");
-
-		// System.out.println(select());
-
-		// update("povelez", "povelez2");
-
-		// select
-
-		// seleccionar vacas de un potrero
-
-		// System.out.println(selectRes("popaz").size());
-
-		// System.out.println(selectRes("potreritovelez").size());
-
-		// delete("povelez");
-
-	}
-
+	
 }

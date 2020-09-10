@@ -8,24 +8,19 @@ import tools.FileManager;
 
 public class PanelColor extends JPanel {
 
-	
-	public PanelColor () {
-		
-		
+	public PanelColor() {
+
 	}
 
-	
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-		
-		
+
 		super.paintComponent(g);
-		
-		
+
 		g.drawImage(FileManager.imagenes.get("CAMPO3"), 0, 0, null);
-		
+
 		repaint();
 	}
-	
+
 }

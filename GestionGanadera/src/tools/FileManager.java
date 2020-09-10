@@ -89,7 +89,7 @@ public class FileManager {
 		imagenes.put("POTREROS", ImageLoader.cargarImagen("imagenes/potrerosFondo.jpg"));
 
 		imagenes.put("LLANO", ImageLoader.cargarImagen("imagenes/llanoAgregar.jpg"));
-		
+
 		imagenes.put("VAQUITA", ImageLoader.cargarImagen("imagenes/vaquita.png"));
 
 	}

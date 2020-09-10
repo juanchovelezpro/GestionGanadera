@@ -8,24 +8,19 @@ import tools.FileManager;
 
 public class PanelColorCopy extends JPanel {
 
-	
-	public PanelColorCopy () {
-		
-		
+	public PanelColorCopy() {
+
 	}
 
-	
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-		
-		
+
 		super.paintComponent(g);
-		
-		
+
 		g.drawImage(FileManager.imagenes.get("COPY"), 8, -24, null);
-		
+
 		repaint();
 	}
-	
+
 }

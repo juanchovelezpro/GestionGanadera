@@ -35,18 +35,18 @@ public class AgregarInfoReporte extends JDialog {
 	private AgregarEditarResDialog agregarEditarPanel;
 	private JComboBox<String> comboOpciones;
 	JPanel panel;
-	private int pintar;
 
 	public AgregarInfoReporte(int mensaje2, String resID, AgregarEditarResDialog agregarEditarPanel) {
 
 		this.agregarEditarPanel = agregarEditarPanel;
 		this.mensajeMostrar = mensaje2;
 		res_ID = resID;
-		this.pintar = pintar;
 
 		setTitle("Agregar");
 
 		getContentPane().setLayout(new BorderLayout(0, 0));
+
+		setResizable(false);
 
 		setIconImage(FileManager.imagenes.get("ICONO"));
 
@@ -155,57 +155,48 @@ public class AgregarInfoReporte extends JDialog {
 
 			break;
 
-
 		default:
 			break;
 		}
 	}
-	
+
 	public void partos(String fechaSeleccionada) {
-		
+
 		double pesoNuevo = Double.parseDouble(textField.getText());
 
-		if (((textField.getText()!=null  && !textField.getText().equalsIgnoreCase("")) && !fechaSeleccionada.equalsIgnoreCase("")) ) {
+		if (((textField.getText() != null && !textField.getText().equalsIgnoreCase(""))
+				&& !fechaSeleccionada.equalsIgnoreCase(""))) {
 
-		ResCRUD.insertPeso(res_ID, pesoNuevo, fechaSeleccionada);
-		agregarEditarPanel.refreshTable(1);
-		agregarEditarPanel.cerrarPanel();
-		
+			ResCRUD.insertPeso(res_ID, pesoNuevo, fechaSeleccionada);
+			agregarEditarPanel.refreshTable(1);
+			agregarEditarPanel.cerrarPanel();
+
 		}
 	}
-	
-	
+
 	public void vacuna(String fechaSeleccionada) {
-		
-		if (comboOpciones.getSelectedItem()!=null && !comboOpciones.getSelectedItem().toString().equalsIgnoreCase("") && !fechaSeleccionada.equalsIgnoreCase("")) {
-			
-		
-				
-				ResCRUD.insertVacuna(res_ID, comboOpciones.getSelectedItem().toString(), fechaSeleccionada);
-				agregarEditarPanel.refreshTable(2);
-				
-			
-		
-			
+
+		if (comboOpciones.getSelectedItem() != null && !comboOpciones.getSelectedItem().toString().equalsIgnoreCase("")
+				&& !fechaSeleccionada.equalsIgnoreCase("")) {
+
+			ResCRUD.insertVacuna(res_ID, comboOpciones.getSelectedItem().toString(), fechaSeleccionada);
+			agregarEditarPanel.refreshTable(2);
+
 		}
-		
+
 	}
-	
+
 	public void purgante(String fechaSeleccionada) {
-		
-		if (comboOpciones.getSelectedItem()!=null && !comboOpciones.getSelectedItem().toString().equalsIgnoreCase("") && !fechaSeleccionada.equalsIgnoreCase("")) {
-			
-		
-				
-				ResCRUD.insertPurgante(res_ID, comboOpciones.getSelectedItem().toString(), fechaSeleccionada);
-				agregarEditarPanel.refreshTable(3);
-			
-		
-			
+
+		if (comboOpciones.getSelectedItem() != null && !comboOpciones.getSelectedItem().toString().equalsIgnoreCase("")
+				&& !fechaSeleccionada.equalsIgnoreCase("")) {
+
+			ResCRUD.insertPurgante(res_ID, comboOpciones.getSelectedItem().toString(), fechaSeleccionada);
+			agregarEditarPanel.refreshTable(3);
+
 		}
-		
+
 	}
-	
 
 	public void listeners() {
 
@@ -216,20 +207,15 @@ public class AgregarInfoReporte extends JDialog {
 
 			Date fechaSelected = calendar.getDate();
 
-			
 			if (fechaSelected != null) {
 				fechaSeleccionada = format.format(fechaSelected);
 
 			}
 
-				
-			
 			switch (mensajeMostrar) {
 
 			case 1:
- 
-				
-				
+
 				try {
 					partos(fechaSeleccionada);
 
@@ -242,11 +228,10 @@ public class AgregarInfoReporte extends JDialog {
 
 			case 2:
 
-			      vacuna(fechaSeleccionada);
+				vacuna(fechaSeleccionada);
 				break;
 
 			case 3:
-
 
 				purgante(fechaSeleccionada);
 				break;
@@ -255,7 +240,6 @@ public class AgregarInfoReporte extends JDialog {
 				break;
 			}
 
-		
 			dispose();
 
 		});

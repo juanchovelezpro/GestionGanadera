@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -11,7 +12,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,13 +26,10 @@ import model.Potrero;
 import model.Res;
 import model.Usuario;
 import tools.FileManager;
-import java.awt.Color;
-import javax.swing.UIManager;
 
 public class InicioPanel extends JPanel {
 
 	private PotrerosPanel potreros;
-	private ReporteDialog reportes;
 	private JTextField txtnombreDueno;
 	private JTextField txtubicacion;
 	private JLabel nombreFinca;
@@ -48,7 +45,6 @@ public class InicioPanel extends JPanel {
 	private JButton btnreporteDestete;
 	private JButton btnreportePartos;
 	private Icon icono;
-	private String potreroElegido;
 	private JButton btnreporteVacuna;
 	private JButton btnreportePurgante;
 	private JButton btnEstadistica;
@@ -67,7 +63,6 @@ public class InicioPanel extends JPanel {
 
 		comprobarEliminar();
 
-		// System.out.println(comboBoxPotreros.getItemCount() + "<.----");
 
 	}
 
@@ -83,7 +78,6 @@ public class InicioPanel extends JPanel {
 
 	private void setComponents() {
 
-		// panel derecho
 
 		JPanel panelderecho = new JPanel();
 		panelderecho.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -135,7 +129,7 @@ public class InicioPanel extends JPanel {
 		btnBuscar.setBackground(new Color(0, 0, 0, 130));
 		panelDerechoinfo.add(btnBuscar);
 
-		btnEstadistica = new JButton("Estadisticas");
+		btnEstadistica = new JButton("Estad\u00EDsticas");
 		btnEstadistica.setForeground(Color.WHITE);
 		btnEstadistica.setBackground(new Color(0, 0, 0, 130));
 		btnEstadistica.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -179,7 +173,6 @@ public class InicioPanel extends JPanel {
 		panelprincipal.setLayout(new BorderLayout(0, 0));
 		panelprincipal.setBackground(new Color(0, 0, 0, 5));
 
-		// PANEL BAJO, BOTONES
 		JPanel panelBotones = new JPanel();
 		panelprincipal.add(panelBotones, BorderLayout.SOUTH);
 		panelBotones.setLayout(new GridLayout(2, 1));
@@ -216,7 +209,6 @@ public class InicioPanel extends JPanel {
 		JLabel labelaux1 = new JLabel("");
 		panelBotones2.add(labelaux1);
 
-		// BANNER
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 0, 0, 100));
 		panelprincipal.add(panel, BorderLayout.NORTH);
@@ -228,7 +220,6 @@ public class InicioPanel extends JPanel {
 		nombreFinca.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		panel.add(nombreFinca, BorderLayout.CENTER);
 
-		// PANEL PRINCIPAL - INFORMACION
 
 		JPanel panelInfo = new JPanel();
 		panelprincipal.add(panelInfo, BorderLayout.CENTER);
@@ -246,7 +237,6 @@ public class InicioPanel extends JPanel {
 		panelinformacion.setLayout(new GridLayout(6, 2));
 		panelinformacion.setBackground(new Color(0, 0, 0, 5));
 
-		// grid de informacion
 		JLabel lblNewLabel_1 = new JLabel("    ");
 		panelinformacion.add(lblNewLabel_1);
 
@@ -362,9 +352,7 @@ public class InicioPanel extends JPanel {
 
 	public void listeners() {
 
-		// btnAgregar.addActionListener(e -> {
-
-		// });
+		
 
 		comboBoxPotreros.addActionListener(e -> {
 
@@ -467,7 +455,7 @@ public class InicioPanel extends JPanel {
 
 			icono = new ImageIcon(FileManager.imagenes.get("BUSCAR"));
 
-			String nombreVaca = (String) JOptionPane.showInputDialog(null, "Ingrese el numero de la Res", "Buscar Vaca",
+			String nombreVaca = (String) JOptionPane.showInputDialog(null, "Ingrese el n\u00FAmero de la res", "Buscar res",
 					0, icono, null, null);
 
 			if (nombreVaca != null && !nombreVaca.equals(null)) {
@@ -481,7 +469,7 @@ public class InicioPanel extends JPanel {
 					AgregarEditarResDialog dialog = new AgregarEditarResDialog(resita, this);
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Numero de vaca no encontrado");
+					JOptionPane.showMessageDialog(null, "N\u00FAmero de res no encontrado");
 				}
 			}
 
@@ -516,17 +504,11 @@ public class InicioPanel extends JPanel {
 
 				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
 			} else {
-				// ventana.remove(this);
-				// reportes = new ReportePanel(this, "Reporte de Destete");
+				
 				ReporteDialog dialog = new ReporteDialog("Reporte de Destete", 1);
 			}
 
-			// ventana.add(reportes);
-			// ventana.setSize(450, 300);
-			// ventana.setResizable(false);
-			// ventana.setLocationRelativeTo(null);
-			// ventana.refresh();
-
+		
 		});
 
 		btnreportePartos.addActionListener(e -> {

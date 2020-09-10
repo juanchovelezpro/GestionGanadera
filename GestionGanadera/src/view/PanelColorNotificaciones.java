@@ -8,24 +8,19 @@ import tools.FileManager;
 
 public class PanelColorNotificaciones extends JPanel {
 
-	
-	public PanelColorNotificaciones () {
-		
-		
+	public PanelColorNotificaciones() {
+
 	}
 
-	
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-		
-		
+
 		super.paintComponent(g);
-		
-		
+
 		g.drawImage(FileManager.imagenes.get("PAISAJE"), 0, 0, null);
-		
+
 		repaint();
 	}
-	
+
 }

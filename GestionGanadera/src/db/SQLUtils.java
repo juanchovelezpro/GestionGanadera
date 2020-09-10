@@ -2,9 +2,7 @@ package db;
 
 import java.util.ArrayList;
 
-import model.Purgante;
 import model.Res;
-import model.Vacuna;
 
 public class SQLUtils {
 

@@ -206,27 +206,24 @@ public class Res {
 		return "Atento al parto de la res: " + resID + " del potrero: " + potreroNombre + " con fecha de embarazo "
 				+ fecha_embarazo;
 	}
-	
+
 	public String toVacunas() {
-		return " Aplique la vacuna: "
-				+ vacunas.get(vacunas.size() - 1).getNombre() + " con dosis anterior el día "
+		return " Aplique la vacuna: " + vacunas.get(vacunas.size() - 1).getNombre() + " con dosis anterior el día "
 				+ vacunas.get(vacunas.size() - 1).getFecha() + " a la res " + resID;
 
 	}
 
 	public String toDestete() {
 
-		return "Realice el destete a la res: " + resID + " del potrero: " + potreroNombre
-				+ " Con fecha de nacimiento " + fecha_nacimiento;
+		return "Realice el destete a la res: " + resID + " del potrero: " + potreroNombre + " Con fecha de nacimiento "
+				+ fecha_nacimiento;
 	}
 
-	
 	public String toPurgado() {
 
 		if (purgantes.size() > 0) {
-			return " Aplique el purgante: "
-					+ purgantes.get(purgantes.size() - 1).getNombre() + " con dosis anterior el "
-					+ purgantes.get(purgantes.size() - 1).getFecha() + " a la res " + resID;
+			return " Aplique el purgante: " + purgantes.get(purgantes.size() - 1).getNombre()
+					+ " con dosis anterior el " + purgantes.get(purgantes.size() - 1).getFecha() + " a la res " + resID;
 
 		} else {
 			return "hay un problemilla";

@@ -8,25 +8,19 @@ import tools.FileManager;
 
 public class PanelColorDeveloper extends JPanel {
 
-	
-	public PanelColorDeveloper () {
-		
-		
+	public PanelColorDeveloper() {
+
 	}
 
-	
-	
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-		
-		
+
 		super.paintComponent(g);
-		
-		
+
 		g.drawImage(FileManager.imagenes.get("DEVELOPER"), 0, 0, null);
-		
+
 		repaint();
 	}
-	
+
 }

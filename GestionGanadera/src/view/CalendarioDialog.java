@@ -21,7 +21,6 @@ public class CalendarioDialog extends JDialog {
 	private JButton btnSeleccionarFecha;
 	private String fechaSeleccionada;
 
-	// El boton al que se le mandara la fecha que se seleccione.
 	private JButton boton;
 
 	public CalendarioDialog(JButton boton) {
