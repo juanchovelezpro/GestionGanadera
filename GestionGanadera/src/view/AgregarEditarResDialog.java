@@ -69,7 +69,6 @@ public class AgregarEditarResDialog extends JDialog {
 	private JPanel panelTabla;
 	private JCheckBox checkMuerto;
 
-
 	public AgregarEditarResDialog(Res res, PotrerosPanel potrero) {
 
 		this.res = res;
@@ -119,6 +118,7 @@ public class AgregarEditarResDialog extends JDialog {
 		getContentPane().setLayout(new GridLayout(1, 2));
 		setSize(500, 700);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		setComponents();
 		listeners();
 

@@ -64,11 +64,9 @@ public class NotificacionesDialog extends JDialog {
 		setLocationRelativeTo(null);
 		setResizable(false);
 
-
 		setIconImage(FileManager.imagenes.get("ICONO"));
 		Components();
 		listeners();
-
 
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
@@ -208,8 +206,6 @@ public class NotificacionesDialog extends JDialog {
 
 	}
 
-	
-
 	public void listeners() {
 
 		tablaVacuna.addMouseListener(new MouseAdapter() {
@@ -223,7 +219,8 @@ public class NotificacionesDialog extends JDialog {
 				// TODO Auto-generated method stub
 				if (e.getButton() == MouseEvent.BUTTON3) {
 
-					int valor = JOptionPane.showConfirmDialog(null, "\u00BFEst\u00E1 seguro de eliminar esta notificaci\u00F3n?");
+					int valor = JOptionPane.showConfirmDialog(null,
+							"\u00BFEst\u00E1 seguro de eliminar esta notificaci\u00F3n?");
 
 					if (valor == JOptionPane.YES_OPTION) {
 
@@ -259,7 +256,8 @@ public class NotificacionesDialog extends JDialog {
 				ArrayList<Res> resesSeleccionadas = new ArrayList<>();
 				if (e.getButton() == MouseEvent.BUTTON3) {
 
-					int valor = JOptionPane.showConfirmDialog(null, "\u00BFEst\u00E1 seguro de eliminar esta notificaci\u00F3n?");
+					int valor = JOptionPane.showConfirmDialog(null,
+							"\u00BFEst\u00E1 seguro de eliminar esta notificaci\u00F3n?");
 
 					if (valor == JOptionPane.YES_OPTION) {
 
@@ -296,7 +294,8 @@ public class NotificacionesDialog extends JDialog {
 				// TODO Auto-generated method stub
 				if (e.getButton() == MouseEvent.BUTTON3) {
 
-					int valor = JOptionPane.showConfirmDialog(null, "\u00BFEst\u00E1 seguro de eliminar esta notificaci\u00F3n?");
+					int valor = JOptionPane.showConfirmDialog(null,
+							"\u00BFEst\u00E1 seguro de eliminar esta notificaci\u00F3n?");
 
 					if (valor == JOptionPane.YES_OPTION) {
 
@@ -335,7 +334,8 @@ public class NotificacionesDialog extends JDialog {
 				// TODO Auto-generated method stub
 				if (e.getButton() == MouseEvent.BUTTON3) {
 
-					int valor = JOptionPane.showConfirmDialog(null, "¿Est\u00E1 seguro de eliminar esta notificaci\u00F3n?");
+					int valor = JOptionPane.showConfirmDialog(null,
+							"¿Est\u00E1 seguro de eliminar esta notificaci\u00F3n?");
 
 					if (valor == JOptionPane.YES_OPTION) {
 
@@ -418,7 +418,5 @@ public class NotificacionesDialog extends JDialog {
 		modelotablevacuna.fireTableDataChanged();
 
 	}
-
-	
 
 }

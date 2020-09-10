@@ -239,7 +239,8 @@ public class PotrerosPanel extends JPanel {
 
 	public void fillData() {
 
-		String[] columns = { "ID", "TIPO", "G\u00C9NERO", "COLOR", "FECHA NACIMIENTO", "ESTADO", "MADRE", "OBSERVACIONES" };
+		String[] columns = { "ID", "TIPO", "G\u00C9NERO", "COLOR", "FECHA NACIMIENTO", "ESTADO", "MADRE",
+				"OBSERVACIONES" };
 		Object[][] data = new Object[ganado.size()][columns.length];
 
 		for (int i = 0; i < data.length; i++) {
@@ -338,7 +339,6 @@ public class PotrerosPanel extends JPanel {
 						row = tablaRes.getRowSorter().convertRowIndexToModel(row);
 
 					Res res = ResCRUD.selectResByID(modelRes.getValueAt(row, 0).toString());
-
 
 					AgregarEditarResDialog agregarEditarDialog = new AgregarEditarResDialog(res, PotrerosPanel.this);
 
@@ -793,8 +793,8 @@ public class PotrerosPanel extends JPanel {
 			if (resp != null) {
 				int option = JOptionPane
 						.showConfirmDialog(this,
-								"\u00BFEst\u00E1 seguro que desea trasladar " + rowsSelected.length + " reses al potrero "
-										+ resp + "?",
+								"\u00BFEst\u00E1 seguro que desea trasladar " + rowsSelected.length
+										+ " reses al potrero " + resp + "?",
 								"Trasladar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
 				if (option == 0) {
@@ -915,7 +915,6 @@ public class PotrerosPanel extends JPanel {
 			}
 
 			if (fs != null) {
-
 
 				String ext = fileChooser.getSelectedFile().getName().split("\\.")[1];
 

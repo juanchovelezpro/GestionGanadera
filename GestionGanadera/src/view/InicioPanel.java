@@ -63,7 +63,6 @@ public class InicioPanel extends JPanel {
 
 		comprobarEliminar();
 
-
 	}
 
 	@Override
@@ -77,7 +76,6 @@ public class InicioPanel extends JPanel {
 	}
 
 	private void setComponents() {
-
 
 		JPanel panelderecho = new JPanel();
 		panelderecho.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -220,7 +218,6 @@ public class InicioPanel extends JPanel {
 		nombreFinca.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		panel.add(nombreFinca, BorderLayout.CENTER);
 
-
 		JPanel panelInfo = new JPanel();
 		panelprincipal.add(panelInfo, BorderLayout.CENTER);
 		panelInfo.setLayout(new BorderLayout(0, 0));
@@ -352,8 +349,6 @@ public class InicioPanel extends JPanel {
 
 	public void listeners() {
 
-		
-
 		comboBoxPotreros.addActionListener(e -> {
 
 			String potreroelegido = (String) comboBoxPotreros.getSelectedItem();
@@ -383,7 +378,7 @@ public class InicioPanel extends JPanel {
 
 			{
 
-				if (PotreroCRUD.selectPotreroByID(nombre_potrero) == null) {
+				if (PotreroCRUD.selectPotreroByID(nombre_potrero.toUpperCase()) == null) {
 
 					PotreroCRUD.insert(nombre_potrero.toUpperCase());
 
@@ -455,8 +450,8 @@ public class InicioPanel extends JPanel {
 
 			icono = new ImageIcon(FileManager.imagenes.get("BUSCAR"));
 
-			String nombreVaca = (String) JOptionPane.showInputDialog(null, "Ingrese el n\u00FAmero de la res", "Buscar res",
-					0, icono, null, null);
+			String nombreVaca = (String) JOptionPane.showInputDialog(null, "Ingrese el n\u00FAmero de la res",
+					"Buscar res", 0, icono, null, null);
 
 			if (nombreVaca != null && !nombreVaca.equals(null)) {
 
@@ -504,11 +499,10 @@ public class InicioPanel extends JPanel {
 
 				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
 			} else {
-				
+
 				ReporteDialog dialog = new ReporteDialog("Reporte de Destete", 1);
 			}
 
-		
 		});
 
 		btnreportePartos.addActionListener(e -> {

@@ -132,7 +132,6 @@ public class ResCRUD {
 		return res;
 	}
 
-	
 	public static void update(String id, Res res) {
 
 		SQLConnection sql = SQLConnection.getInstance();
@@ -197,7 +196,6 @@ public class ResCRUD {
 		return vacas;
 
 	}
-
 
 	public static void updateMadreaCria(String idVieja, String idNueva) {
 
@@ -630,7 +628,6 @@ public class ResCRUD {
 
 					if (dias <= 250 && (meses == 8 || meses == 9)) {
 
-						
 						vacas_destete.add(res);
 
 					}
@@ -655,7 +652,6 @@ public class ResCRUD {
 		for (int i = 0; i < reses.size(); i++) {
 
 			res = reses.get(i);
-
 
 			if (res.getTipo().equals("NV") || res.getTipo().equals("VH")) {
 
@@ -733,7 +729,6 @@ public class ResCRUD {
 
 					if (ultimo != null) {
 
-
 						if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
 
 							long dias = diasEntreFechas(ultimo.getFecha());
@@ -780,7 +775,6 @@ public class ResCRUD {
 
 					if (ultimo != null) {
 
-
 						if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
 
 							long dias = diasEntreFechas(ultimo.getFecha());
@@ -820,9 +814,7 @@ public class ResCRUD {
 
 				String fecha_nacimiento = res.getFecha_nacimiento();
 
-
 				if (fecha_nacimiento != null && !fecha_nacimiento.equalsIgnoreCase("")) {
-
 
 					long meses = mesesEntreFechas(fecha_nacimiento);
 					long dias = diasEntreFechas(fecha_nacimiento);
@@ -907,10 +899,7 @@ public class ResCRUD {
 
 		dias = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 
-
 		dias_1 = Math.abs(dias);
-
-		
 
 		return dias_1;
 
@@ -980,7 +969,5 @@ public class ResCRUD {
 		}
 		return fechaDate;
 	}
-
-	
 
 }

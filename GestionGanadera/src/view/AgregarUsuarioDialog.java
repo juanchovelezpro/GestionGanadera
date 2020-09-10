@@ -41,7 +41,6 @@ public class AgregarUsuarioDialog extends JDialog {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setVisible(true);
 
-
 	}
 
 	public void Components() {

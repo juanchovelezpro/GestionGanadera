@@ -19,7 +19,6 @@ public class PanelColorAgregar extends JPanel {
 
 		super.paintComponent(g);
 
-		
 		g.drawImage(FileManager.imagenes.get("LLANO"), 0, 0, null);
 
 		repaint();
