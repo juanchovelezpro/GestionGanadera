@@ -156,7 +156,7 @@ public class ReporteDialog extends JDialog {
 
 		modelParto = new ModelTable();
 
-		ArrayList<Res> reses = ResCRUD.reportePartos();
+		ArrayList<Res> reses = ResCRUD.reportePartos1();
 		Object[][] data = new Object[reses.size()][columns.length];
 		Res temp = null;
 		String mensaje = "";
@@ -207,7 +207,7 @@ public class ReporteDialog extends JDialog {
 
 		modelPurgante = new ModelTable();
 
-		ArrayList<Res> reses = ResCRUD.reportePurgado();
+		ArrayList<Res> reses = ResCRUD.reportePurgado1();
 		Object[][] data = new Object[reses.size()][columns.length];
 		Res temp = null;
 		String mensaje = "";
@@ -258,7 +258,7 @@ public class ReporteDialog extends JDialog {
 
 		modelVacuna = new ModelTable();
 
-		ArrayList<Res> reses = ResCRUD.reporteVacunaNotificaciones();
+		ArrayList<Res> reses = ResCRUD.reporteVacunaNotificaciones1();
 
 		Object[][] data = new Object[reses.size()][columns.length];
 		Res temp = null;
@@ -309,7 +309,7 @@ public class ReporteDialog extends JDialog {
 
 		modelDestete = new ModelTable();
 
-		ArrayList<Res> reses = ResCRUD.reporteDestete();
+		ArrayList<Res> reses = ResCRUD.reporteDestete1();
 		Object[][] data = new Object[reses.size()][columns.length];
 		Res temp = null;
 		String mensaje = "";

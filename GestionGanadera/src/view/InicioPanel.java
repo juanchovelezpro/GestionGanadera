@@ -61,6 +61,7 @@ public class InicioPanel extends JPanel {
 
 		cargarInfo();
 
+		ResCRUD.actualizarTipo();
 		comprobarEliminar();
 
 	}
@@ -495,7 +496,7 @@ public class InicioPanel extends JPanel {
 
 		btnreporteDestete.addActionListener(e -> {
 
-			if (ResCRUD.reporteDestete().size() == 0) {
+			if (ResCRUD.reporteDestete1().size() == 0) {
 
 				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
 			} else {
@@ -507,7 +508,7 @@ public class InicioPanel extends JPanel {
 
 		btnreportePartos.addActionListener(e -> {
 
-			if (ResCRUD.reportePartos().size() == 0) {
+			if (ResCRUD.reportePartos1().size() == 0) {
 
 				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
 			} else {
@@ -517,7 +518,7 @@ public class InicioPanel extends JPanel {
 
 		btnreporteVacuna.addActionListener(e -> {
 
-			if (ResCRUD.reporteVacunaNotificaciones().size() == 0) {
+			if (ResCRUD.reporteVacunaNotificaciones1().size() == 0) {
 
 				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
 			} else {
@@ -528,7 +529,7 @@ public class InicioPanel extends JPanel {
 
 		btnreportePurgante.addActionListener(e -> {
 
-			if (ResCRUD.reportePurgado().size() == 0) {
+			if (ResCRUD.reportePurgado1().size() == 0) {
 
 				JOptionPane.showMessageDialog(null, "No hay reses que cumplan con este reporte");
 			} else {

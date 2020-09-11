@@ -606,8 +606,174 @@ public class ResCRUD {
 		}
 
 	}
+	
+	public static ArrayList<Res> reporteDestete(String potrero) {
 
-	public static ArrayList<Res> reporteDestete() {
+		ArrayList<Res> vacas_destete = new ArrayList<>();
+
+		Res res = null;
+
+		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			res = reses.get(i);
+			if (res.getFecha_nacimiento() != null && !res.getFecha_nacimiento().equals("")
+					&& !res.getFecha_nacimiento().equalsIgnoreCase("SIN REGISTRO")) {
+
+				long dias = diasEntreFechas(res.getFecha_nacimiento());
+				long meses = mesesEntreFechas(res.getFecha_nacimiento());
+
+				if (res.getTipo().equals("CH") || res.getTipo().equals("CM")) {
+
+					if (dias <= 250 && dias>=220) {
+
+						vacas_destete.add(res);
+
+					}
+
+				}
+
+			}
+		}
+
+		return vacas_destete;
+
+	}
+
+	public static ArrayList<Res> reportePartos(String potrero) {
+
+		ArrayList<Res> vacas_partos = new ArrayList<>();
+
+		Res res = null;
+
+		ArrayList<Res> reses =  PotreroCRUD.selectRes(potrero);
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			res = reses.get(i);
+
+			if (res.getTipo().equals("NV") || res.getTipo().equals("VH")) {
+
+				if (res.getEmbarazada() == 1) {
+
+					if (!res.getFecha_embarazo().equals("")
+							&& !res.getFecha_embarazo().equalsIgnoreCase("SIN REGISTRO")) {
+
+						long dias = diasEntreFechas(res.getFecha_embarazo());
+						long meses = mesesEntreFechas(res.getFecha_embarazo());
+
+						if (dias <= 280 && dias>=230) {
+
+							vacas_partos.add(res);
+
+						}
+					}
+				}
+			}
+		}
+
+		return vacas_partos;
+
+	}
+
+	
+
+	
+
+	public static ArrayList<Res> reportePurgado(String potrero) {
+
+		ArrayList<Res> reses_purgado = new ArrayList<>();
+
+		ArrayList<Res> reses =  PotreroCRUD.selectRes(potrero);
+
+		Res res = null;
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			res = reses.get(i);
+
+			Stack<Purgante> resess = selectPurgantes(res.getResID());
+			res.setPurgantes(resess);
+
+			if (resess != null) {
+
+				int tamanio = resess.size();
+
+				if (tamanio > 0) {
+					Purgante ultimo = resess.peek();
+
+					if (ultimo != null) {
+
+						if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
+
+							long dias = diasEntreFechas(ultimo.getFecha());
+
+							if (dias > 10 && resess.size() % 2 != 0) {
+
+								reses_purgado.add(res);
+
+							}
+						}
+
+					}
+
+				}
+			}
+
+		}
+
+		return reses_purgado;
+
+	}
+
+	public static ArrayList<Res> reporteVacunaNotificaciones(String potrero) {
+
+		ArrayList<Res> reses_vacuna = new ArrayList<>();
+
+		ArrayList<Res> reses =  PotreroCRUD.selectRes(potrero);
+		Res res = null;
+
+		for (int i = 0; i < reses.size(); i++) {
+
+			res = reses.get(i);
+
+			Stack<Vacuna> resess = selectVacunas(res.getResID());
+			res.setVacunas(resess);
+
+			if (resess != null) {
+
+				int tamanio = resess.size();
+
+				if (tamanio > 0) {
+					Vacuna ultimo = resess.peek();
+
+					if (ultimo != null) {
+
+						if (ultimo.getFecha() != null && ultimo.getNombre() != null) {
+
+							long dias = diasEntreFechas(ultimo.getFecha());
+							long meses = mesesEntreFechas(ultimo.getFecha());
+
+							if (dias < 195 && dias>160) {
+
+								reses_vacuna.add(res);
+
+							}
+						}
+
+					}
+
+				}
+			}
+
+		}
+
+		return reses_vacuna;
+
+	}
+
+	public static ArrayList<Res> reporteDestete1() {
 
 		ArrayList<Res> vacas_destete = new ArrayList<>();
 
@@ -626,7 +792,7 @@ public class ResCRUD {
 
 				if (res.getTipo().equals("CH") || res.getTipo().equals("CM")) {
 
-					if (dias <= 250 && (meses == 8 || meses == 9)) {
+					if (dias <= 250 && dias>=220) {
 
 						vacas_destete.add(res);
 
@@ -641,7 +807,7 @@ public class ResCRUD {
 
 	}
 
-	public static ArrayList<Res> reportePartos() {
+	public static ArrayList<Res> reportePartos1() {
 
 		ArrayList<Res> vacas_partos = new ArrayList<>();
 
@@ -663,7 +829,7 @@ public class ResCRUD {
 						long dias = diasEntreFechas(res.getFecha_embarazo());
 						long meses = mesesEntreFechas(res.getFecha_embarazo());
 
-						if (dias <= 280 && (meses == 9 || meses == 10)) {
+						if (dias <= 280 && dias>=230) {
 
 							vacas_partos.add(res);
 
@@ -677,35 +843,11 @@ public class ResCRUD {
 
 	}
 
-	public static ArrayList<Res> reportePeso() {
+	
 
-		ArrayList<Res> vacas_pesos = new ArrayList<>();
+	
 
-		Res res = null;
-
-		ArrayList<Res> reses = select();
-
-		for (int i = 0; i < reses.size(); i++) {
-
-			res = reses.get(i);
-
-			Peso peso_actual = selectPesos(res.getResID()).pop();
-
-			long dias = diasEntreFechas(peso_actual.getFecha());
-			long meses = mesesEntreFechas(peso_actual.getFecha());
-
-			if (dias <= 182 && meses == 6) {
-
-				vacas_pesos.add(res);
-			}
-
-		}
-
-		return vacas_pesos;
-
-	}
-
-	public static ArrayList<Res> reportePurgado() {
+	public static ArrayList<Res> reportePurgado1() {
 
 		ArrayList<Res> reses_purgado = new ArrayList<>();
 
@@ -751,7 +893,7 @@ public class ResCRUD {
 
 	}
 
-	public static ArrayList<Res> reporteVacunaNotificaciones() {
+	public static ArrayList<Res> reporteVacunaNotificaciones1() {
 
 		ArrayList<Res> reses_vacuna = new ArrayList<>();
 
@@ -780,7 +922,7 @@ public class ResCRUD {
 							long dias = diasEntreFechas(ultimo.getFecha());
 							long meses = mesesEntreFechas(ultimo.getFecha());
 
-							if (dias < 195 && meses == 6) {
+							if (dias < 195 && dias>160) {
 
 								reses_vacuna.add(res);
 

@@ -134,7 +134,7 @@ public class NotificacionesDialog extends JDialog {
 
 		String[] columns = { "NOTIFICACION" };
 
-		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
+		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones(ventana.getPotrero_elegido());
 
 		modelotablevacuna = new ModeloTableVacuna(resesVacuna);
 
@@ -153,7 +153,7 @@ public class NotificacionesDialog extends JDialog {
 
 		String[] columns = { "NOTIFICACION" };
 
-		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
+		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado(ventana.getPotrero_elegido());
 
 		modelotablepurgado = new ModeloTablePurgado(resesVacuna);
 
@@ -172,7 +172,7 @@ public class NotificacionesDialog extends JDialog {
 
 		String[] columns = { "NOTIFICACION" };
 
-		ArrayList<Res> resesVacuna = ResCRUD.reportePartos();
+		ArrayList<Res> resesVacuna = ResCRUD.reportePartos(ventana.getPotrero_elegido());
 
 		modelotablepartos = new ModeloTableParto(resesVacuna);
 
@@ -191,7 +191,7 @@ public class NotificacionesDialog extends JDialog {
 
 		String[] columns = { "NOTIFICACION" };
 
-		ArrayList<Res> resesVacuna = ResCRUD.reporteDestete();
+		ArrayList<Res> resesVacuna = ResCRUD.reporteDestete(ventana.getPotrero_elegido());
 
 		modelotabledestete = new ModeloTableDestete(resesVacuna);
 
@@ -385,7 +385,7 @@ public class NotificacionesDialog extends JDialog {
 
 	public void refreshTablePurgado() {
 
-		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
+		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado(ventana.getPotrero_elegido());
 
 		modelotablepurgado.setReses(resesVacuna);
 		modelotablepurgado.fireTableDataChanged();
@@ -394,7 +394,7 @@ public class NotificacionesDialog extends JDialog {
 
 	public void refreshTablePartos() {
 
-		ArrayList<Res> resesVacuna = ResCRUD.reportePartos();
+		ArrayList<Res> resesVacuna = ResCRUD.reportePartos(ventana.getPotrero_elegido());
 
 		modelotablepartos.setReses(resesVacuna);
 		modelotablepartos.fireTableDataChanged();
@@ -403,7 +403,7 @@ public class NotificacionesDialog extends JDialog {
 
 	public void refreshTableDestete() {
 
-		ArrayList<Res> resesVacuna = ResCRUD.reporteDestete();
+		ArrayList<Res> resesVacuna = ResCRUD.reporteDestete(ventana.getPotrero_elegido());
 
 		modelotabledestete.setReses(resesVacuna);
 		modelotabledestete.fireTableDataChanged();
@@ -412,7 +412,7 @@ public class NotificacionesDialog extends JDialog {
 
 	public void refreshTableVacuna() {
 
-		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
+		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones(ventana.getPotrero_elegido());
 
 		modelotablevacuna.setReses(resesVacuna);
 		modelotablevacuna.fireTableDataChanged();

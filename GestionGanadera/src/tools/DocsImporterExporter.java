@@ -227,7 +227,7 @@ public class DocsImporterExporter {
 
 	public static void exportarPartos(String destino) {
 
-		ArrayList<Res> resesPartos = ResCRUD.reportePartos();
+		ArrayList<Res> resesPartos = ResCRUD.reportePartos1();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 
@@ -289,7 +289,7 @@ public class DocsImporterExporter {
 
 	public static void exportarDestete(String destino) {
 
-		ArrayList<Res> resesDestete = ResCRUD.reporteDestete();
+		ArrayList<Res> resesDestete = ResCRUD.reporteDestete1();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 
@@ -353,7 +353,7 @@ public class DocsImporterExporter {
 
 	public static void exportarVacunas(String destino) {
 
-		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
+		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones1();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 
@@ -415,7 +415,7 @@ public class DocsImporterExporter {
 
 	public static void exportarPurgantes(String destino) {
 
-		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
+		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado1();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 
