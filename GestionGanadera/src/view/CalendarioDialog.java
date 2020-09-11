@@ -33,6 +33,7 @@ public class CalendarioDialog extends JDialog {
 		setIconImage(FileManager.imagenes.get("CALENDAR"));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		fechaSeleccionada = "";
 

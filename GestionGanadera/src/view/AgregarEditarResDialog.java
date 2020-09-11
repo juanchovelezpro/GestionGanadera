@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,6 +30,7 @@ import model.Peso;
 import model.Purgante;
 import model.Res;
 import model.Vacuna;
+import tools.DocsImporterExporter;
 import tools.FileManager;
 import tools.GeneradorGrafica;
 
@@ -68,7 +70,11 @@ public class AgregarEditarResDialog extends JDialog {
 	private JPanel panelGrafica;
 	private JPanel panelTabla;
 	private JCheckBox checkMuerto;
+	private JButton btnExportar;
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public AgregarEditarResDialog(Res res, PotrerosPanel potrero) {
 
 		this.res = res;
@@ -333,6 +339,7 @@ public class AgregarEditarResDialog extends JDialog {
 		scrollPane.setViewportView(txtObservaciones);
 
 		btnAgregar = new JButton("Agregar");
+		btnExportar =new JButton("Exportar");
 
 		scroller = new JScrollPane();
 
@@ -348,7 +355,15 @@ public class AgregarEditarResDialog extends JDialog {
 		panelTabla.setLayout(new BorderLayout());
 		panelTabla.add(scroller, BorderLayout.CENTER);
 
-		panelTabla.add(btnAgregar, BorderLayout.SOUTH);
+		JPanel panelBotonesPeso =new JPanel();
+		panelBotonesPeso.setLayout(new GridLayout(1,2));
+		
+		panelBotonesPeso.add(btnAgregar);
+		panelBotonesPeso.add(btnExportar);
+		
+		panelTabla.add(panelBotonesPeso, BorderLayout.SOUTH);
+		
+		
 
 		panelTablaGraficas.add(panelGrafica);
 		panelTablaGraficas.add(panelTabla);
@@ -897,6 +912,8 @@ public class AgregarEditarResDialog extends JDialog {
 			crearTablaVacunas();
 
 			btnAgregar.setEnabled(true);
+			btnExportar.setEnabled(false);
+
 
 		});
 
@@ -916,6 +933,8 @@ public class AgregarEditarResDialog extends JDialog {
 			crearTablaPurgantes();
 
 			btnAgregar.setEnabled(true);
+			btnExportar.setEnabled(false);
+
 
 		});
 
@@ -935,6 +954,7 @@ public class AgregarEditarResDialog extends JDialog {
 			crearTablaCrias();
 
 			btnAgregar.setEnabled(false);
+			btnExportar.setEnabled(false);
 
 		});
 
@@ -942,6 +962,25 @@ public class AgregarEditarResDialog extends JDialog {
 
 			AgregarInfoReporte inforeporte = new AgregarInfoReporte(tiporeporte, res.getResID(), this);
 
+		});
+		
+		btnExportar.addActionListener(e ->{
+			
+			try {
+
+				JFileChooser fileSaver = new JFileChooser();
+				int op = fileSaver.showSaveDialog(null);
+
+				if (op == JFileChooser.APPROVE_OPTION) {
+
+					DocsImporterExporter.exportarPesos(fileSaver.getSelectedFile().getPath() + ".xlsx", res.getResID());
+
+					JOptionPane.showMessageDialog(null, "Guardado en " + fileSaver.getSelectedFile().getPath(), "Aviso",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			} catch (Exception xd) {
+				xd.printStackTrace();
+			}
 		});
 
 		comboGenero.addActionListener(e -> {

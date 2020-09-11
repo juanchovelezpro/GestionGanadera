@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import db.PotreroCRUD;
 import db.ResCRUD;
+import model.Peso;
 import model.Res;
 import view.BarraProgresoDialog;
 import view.PotrerosPanel;
@@ -224,10 +226,68 @@ public class DocsImporterExporter {
 		}
 
 	}
+	
+	public static void exportarPesos(String destino, String resID) {
+		
+		ArrayList<Peso> resesPartos = ResCRUD.selectPesosLista(resID);
+
+		XSSFWorkbook wb = new XSSFWorkbook();
+
+		Calendar fechaSystem = new GregorianCalendar();
+
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		String fecha_Convertida = dia + "-" + mes + "-" + anio;
+		XSSFSheet sh = wb.createSheet("Reporte de pesos  " + "" + fecha_Convertida);
+
+		Row firstRow = sh.createRow(0);
+		firstRow.createCell(0).setCellValue("NUMERO");
+		firstRow.createCell(1).setCellValue("FECHA");
+		firstRow.createCell(2).setCellValue("PESO");
+
+		for (int i = 1; i < resesPartos.size(); i++) {
+			Row myRow = sh.createRow(i);
+			for (int j = 0; j < 3; j++) {
+
+				Cell myCell = myRow.createCell(j);
+
+				switch (j) {
+
+				case 0:
+					myCell.setCellValue(resID);
+					break;
+
+				case 1:
+					myCell.setCellValue(resesPartos.get(i).getFecha());
+					break;
+				case 2:
+					myCell.setCellValue(resesPartos.get(i).getPeso());
+			
+				}
+			}
+		}
+
+		try {
+			FileOutputStream output = new FileOutputStream(destino);
+			wb.write(output);
+			wb.close();
+			output.close();
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		
+	}
 
 	public static void exportarPartos(String destino) {
 
-		ArrayList<Res> resesPartos = ResCRUD.reportePartos();
+		ArrayList<Res> resesPartos = ResCRUD.reportePartos1();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 
@@ -289,7 +349,7 @@ public class DocsImporterExporter {
 
 	public static void exportarDestete(String destino) {
 
-		ArrayList<Res> resesDestete = ResCRUD.reporteDestete();
+		ArrayList<Res> resesDestete = ResCRUD.reporteDestete1();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 
@@ -353,7 +413,7 @@ public class DocsImporterExporter {
 
 	public static void exportarVacunas(String destino) {
 
-		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones();
+		ArrayList<Res> resesVacuna = ResCRUD.reporteVacunaNotificaciones1();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 
@@ -415,7 +475,7 @@ public class DocsImporterExporter {
 
 	public static void exportarPurgantes(String destino) {
 
-		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado();
+		ArrayList<Res> resesVacuna = ResCRUD.reportePurgado1();
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 
