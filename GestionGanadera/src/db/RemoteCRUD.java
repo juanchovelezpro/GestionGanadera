@@ -13,12 +13,12 @@ import tools.SystemMotherBoardNumber;
 public class RemoteCRUD implements OnResponseListener {
 
 	private HTTPSUtils utils;
-	private boolean existeLicencia;
+	private Usuario user;
+	
 
-	public RemoteCRUD() {
+	public RemoteCRUD(Usuario user) {
 
-		existeLicencia = false;
-
+		this.user = user;
 		utils = new HTTPSUtils();
 
 		utils.setListener(this);
@@ -60,7 +60,7 @@ public class RemoteCRUD implements OnResponseListener {
 
 					lic.setUsuario(SystemMotherBoardNumber.getSystemMotherBoard_SerialNumber());
 					lic.setUsada("SI");
-
+					UsuarioCRUD.insert(user);
 					utils.PUTrequest(0,
 							"https://gestionganadera-e6024.firebaseio.com/licencias/" + lic.getValor() + ".json",
 							lic.toJson());

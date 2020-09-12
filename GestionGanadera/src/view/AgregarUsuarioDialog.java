@@ -50,7 +50,6 @@ public class AgregarUsuarioDialog extends JDialog {
 
 		setLocationRelativeTo(null);
 
-		remote = new RemoteCRUD();
 		Components();
 		listeners();
 
@@ -142,18 +141,14 @@ public class AgregarUsuarioDialog extends JDialog {
 		nombrefinca.setHorizontalAlignment(SwingConstants.CENTER);
 		nombrefinca.setText("");
 		nombrefinca.setColumns(10);
-	
-			
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		panel_1.add(lblNewLabel_2);
-		
-		
+
 		JLabel lblNewLabel_10 = new JLabel("Ingrese la licencia");
 		lblNewLabel_10.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_1.add(lblNewLabel_10);
-		
 
 		licencia = new JTextField();
 		licencia.setHorizontalAlignment(SwingConstants.CENTER);
@@ -162,14 +157,9 @@ public class AgregarUsuarioDialog extends JDialog {
 		licencia.setToolTipText("Numero de licencia");
 		licencia.setBackground(new Color(230, 230, 250, 100));
 
-
-		
 		JLabel labele = new JLabel("");
 		panel_1.add(labele);
-		
 
-		
-		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(210, 180, 140, 0));
 		panel_1.add(panel_2);
@@ -182,7 +172,7 @@ public class AgregarUsuarioDialog extends JDialog {
 		guardar = new JButton("Guardar");
 		guardar.setBackground(new Color(230, 230, 250, 100));
 		panel_2.add(guardar);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(lblNewLabel_1);
@@ -201,26 +191,30 @@ public class AgregarUsuarioDialog extends JDialog {
 				pass += letras[i];
 
 			}
+			
+			
 
 			Usuario user = new Usuario(txtusuario.getText(), "", "", pass, correo.getText(),
 					SystemMotherBoardNumber.getSystemMotherBoard_SerialNumber(), fechalimite());
+			
+			remote = new RemoteCRUD(user);
 
 			try {
 				if (InternetAvailabilityChecker.isInternetAvailable()) {
-					
-					if(licencia.getText() != null && !licencia.getText().equals("")) {
-					remote.registrarUsuario(user, licencia.getText());
-					UsuarioCRUD.insert(user);
-					}else {
+
+					if (licencia.getText() != null && !licencia.getText().equals("")) {
+						remote.registrarUsuario(user, licencia.getText());
 						
+					} else {
+
 						JOptionPane.showMessageDialog(null, "Error con la licencia");
-						
+
 					}
 				} else {
 
 					JOptionPane.showMessageDialog(null, "No tienes una conexion a internet", "Error conexion",
 							JOptionPane.ERROR_MESSAGE);
-					
+
 					System.exit(0);
 
 				}
