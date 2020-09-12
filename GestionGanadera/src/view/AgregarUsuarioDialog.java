@@ -202,8 +202,8 @@ public class AgregarUsuarioDialog extends JDialog {
 
 			}
 
-			Usuario user = new Usuario(txtusuario.getText(), "", "", pass,
-					SystemMotherBoardNumber.getSystemMotherBoard_SerialNumber(), correo.getText(), fechalimite());
+			Usuario user = new Usuario(txtusuario.getText(), "", "", pass, correo.getText(),
+					SystemMotherBoardNumber.getSystemMotherBoard_SerialNumber(), fechalimite());
 
 			try {
 				if (InternetAvailabilityChecker.isInternetAvailable()) {

@@ -60,7 +60,7 @@ public class VentanaPrincipal extends JFrame {
 				}else {
 					
 					JOptionPane.showMessageDialog(null, "Esta licencia no esta habilitada para esta equipo","Error", JOptionPane.ERROR_MESSAGE);
-					
+					System.exit(0);
 				}
 				
 				
