@@ -207,8 +207,15 @@ public class AgregarUsuarioDialog extends JDialog {
 
 			try {
 				if (InternetAvailabilityChecker.isInternetAvailable()) {
-					remote.registrarUsuario(user);
+					
+					if(licencia.getText() != null && !licencia.getText().equals("")) {
+					remote.registrarUsuario(user, licencia.getText());
 					UsuarioCRUD.insert(user);
+					}else {
+						
+						JOptionPane.showMessageDialog(null, "Error con la licencia");
+						
+					}
 				} else {
 
 					JOptionPane.showMessageDialog(null, "No tienes una conexion a internet", "Error conexion",

@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="src/lib/xmlbeans-3.1.0.jar"/>
 	<classpathentry kind="lib" path="src/lib/jfreechart-1.5.0.jar"/>
 	<classpathentry kind="lib" path="src/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="src/lib/gson-2.8.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

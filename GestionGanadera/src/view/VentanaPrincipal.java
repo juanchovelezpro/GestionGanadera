@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import db.SQLConnection;
@@ -52,9 +53,17 @@ public class VentanaPrincipal extends JFrame {
 		if (FileManager.directoryProjectExists()) {
 
 			if (UsuarioCRUD.select().size() == 1) {
+				
+				if(comprobarSerial()) {
 				inicio = new InicioPanel(this);
 				add(inicio, BorderLayout.CENTER);
-
+				}else {
+					
+					JOptionPane.showMessageDialog(null, "Esta licencia no esta habilitada para esta equipo","Error", JOptionPane.ERROR_MESSAGE);
+					
+				}
+				
+				
 			} else {
 
 				registro = new RegistroPanel(this);

@@ -2,52 +2,52 @@ package model;
 
 public class Licencia {
 
-	private String email;
-	private String serialNumber;
-	private String fechaLimite;
+	private String valor;
+	private String usada;
+	private String usuario;
 
 	public Licencia() {
 		super();
 	}
 
-	public Licencia(String email, String serialNumber, String fechaLimite) {
+	public Licencia(String valor, String usada, String usuario) {
 		super();
-		this.email = email;
-		this.serialNumber = serialNumber;
-		this.fechaLimite = fechaLimite;
+		this.valor = valor;
+		this.usada = usada;
+		this.usuario = usuario;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSerialNumber() {
-		return serialNumber;
-	}
-
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
-	}
-
-	public String getFechaLimite() {
-		return fechaLimite;
-	}
-
-	public void setFechaLimite(String fechaLimite) {
-		this.fechaLimite = fechaLimite;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public String toJson() {
 
-		String json = "{" + "\"email\": \"" + email + "\"," + "\"serialNumber\": \"" + serialNumber + "\","
-				+ "\"fechaLimite\": \"" + fechaLimite + "\"" + "}";
+		String json = "{" + "\"usada\": \"" + usada + "\"," + "\"usuario\": \"" + usuario + "\"," + "\"valor\": \""
+				+ valor + "\"" + "}";
 
 		return json;
 
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	public String getUsada() {
+		return usada;
+	}
+
+	public void setUsada(String usada) {
+		this.usada = usada;
 	}
 
 }
