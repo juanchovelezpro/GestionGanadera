@@ -22,6 +22,7 @@ public class AgregarUsuarioDialog extends JDialog {
 	private JPasswordField txtpassword;
 	private JButton guardar;
 	private JTextField nombrefinca;
+	private JTextField correo;
 
 	public AgregarUsuarioDialog() {
 
@@ -67,7 +68,7 @@ public class AgregarUsuarioDialog extends JDialog {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(210, 180, 140, 140));
 		panel.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new GridLayout(10, 1));
+		panel_1.setLayout(new GridLayout(13, 1));
 
 		JLabel txtUsuario = new JLabel("Digite su nombre de usuario");
 		txtUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -83,6 +84,19 @@ public class AgregarUsuarioDialog extends JDialog {
 
 		JLabel password = new JLabel("");
 		panel_1.add(password);
+		
+		JLabel lblNewLabel_3 = new JLabel("Digite su correo electr\u00f3nico");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 16));
+		panel_1.add(lblNewLabel_3);
+		
+		correo = new JTextField();
+		correo.setBackground(new Color(230, 230, 250, 100));
+		panel_1.add(correo);
+		correo.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("");
+		panel_1.add(lblNewLabel_4);
 
 		JLabel espacio3 = new JLabel("Digite su contrase\u00F1a");
 		espacio3.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -156,6 +170,24 @@ public class AgregarUsuarioDialog extends JDialog {
 
 		});
 
+	}
+	
+	
+
+	public JTextField getNombrefinca() {
+		return nombrefinca;
+	}
+
+	public void setNombrefinca(JTextField nombrefinca) {
+		this.nombrefinca = nombrefinca;
+	}
+
+	public JTextField getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(JTextField correo) {
+		this.correo = correo;
 	}
 
 	public JTextField getTxtusuario() {

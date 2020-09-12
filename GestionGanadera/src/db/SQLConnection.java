@@ -20,6 +20,9 @@ public class SQLConnection {
 			FileManager.createDirectoryProject();
 			connection = DriverManager.getConnection("jdbc:sqlite:" + FileManager.PATH + "database.db");
 			statement = connection.createStatement();
+			
+		
+			
 
 		} catch (SQLException e) {
 
@@ -31,6 +34,7 @@ public class SQLConnection {
 	public static synchronized SQLConnection getInstance() {
 		if (instance == null) {
 			instance = new SQLConnection();
+		
 		}
 		return instance;
 	}
