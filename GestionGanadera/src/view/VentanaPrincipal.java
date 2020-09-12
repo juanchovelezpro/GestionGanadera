@@ -88,6 +88,10 @@ public class VentanaPrincipal extends JFrame {
 		
 		String serie = SystemMotherBoardNumber.getSystemMotherBoard_SerialNumber();
 		
+		System.out.println(serie);
+		System.out.println(user.toString());
+		
+		
 		if(user.getSerialNumber().equalsIgnoreCase(serie)) {
 			
 			comprobar = true;

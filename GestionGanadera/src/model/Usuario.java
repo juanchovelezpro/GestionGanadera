@@ -14,8 +14,8 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(String nombre, String ubicacion, String nombreFinca, String password, String serialNumber,
-			String email, String fechaLimite) {
+	public Usuario(String nombre, String ubicacion, String nombreFinca, String password, String email,
+			String serialNumber, String fechaLimite) {
 
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
@@ -85,7 +85,8 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [nombre=" + nombre + ", ubicacion=" + ubicacion + ", nombreFinca=" + nombreFinca + ", password="
-				+ password + "]";
+				+ password + ", serialNumber=" + serialNumber + ", email=" + email + ", fechaLimite=" + fechaLimite
+				+ "]";
 	}
 
 	public String toJson() {
