@@ -63,9 +63,9 @@ public class SQLConnection {
 
 		try {
 			statement.executeUpdate(
-					"CREATE TABLE \"potreros\" ( \"nombre\" TEXT NOT NULL UNIQUE, PRIMARY KEY(\"nombre\") )");
+					"CREATE TABLE \"usuarios\" ( \"nombre\" TEXT, \"password\" TEXT, \"ubicacion\" TEXT, \"nombreFinca\" TEXT, \"email\" TEXT, \"serialNumber\" TEXT, \"fechaLimite\" TEXT )");
 			statement.executeUpdate(
-					"CREATE TABLE \"usuarios\" ( \"nombre\" TEXT, \"password\" TEXT, \"ubicacion\" TEXT, \"nombreFinca\" TEXT )");
+					"CREATE TABLE \"potreros\" ( \"nombre\" TEXT NOT NULL UNIQUE, PRIMARY KEY(\"nombre\") )");
 			statement.executeUpdate(
 					"CREATE TABLE \"res\" ( \"numero\" TEXT NOT NULL UNIQUE, \"tipo\" TEXT, \"genero\" TEXT NOT NULL, \"color\" TEXT NOT NULL, \"fecha_nacimiento\" TEXT, \"observaciones\" TEXT, \"vivo\" INTEGER NOT NULL, \"embarazada\" INTEGER NOT NULL, \"fecha_embarazo\" TEXT, \"fecha_ultima_purgado\" TEXT, \"fecha_ultima_vacunado\" TEXT, \"madreID\" TEXT, \"potreroNombre\" TEXT, FOREIGN KEY(\"potreroNombre\") REFERENCES \"potreros\"(\"nombre\"), PRIMARY KEY(\"numero\") )");
 			statement.executeUpdate("CREATE TABLE \"vacunas\" ( \"nombre\" TEXT NOT NULL, PRIMARY KEY(\"nombre\") )");

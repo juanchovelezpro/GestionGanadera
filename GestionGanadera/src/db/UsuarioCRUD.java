@@ -13,11 +13,13 @@ public class UsuarioCRUD {
 		SQLConnection sql = SQLConnection.getInstance();
 
 		String values = "'" + user.getNombre() + "','" + user.getPassword() + "','" + user.getUbicacion() + "','"
-				+ user.getNombreFinca() + "'";
+				+ user.getNombreFinca() + "','" + user.getEmail() + "','" + user.getSerialNumber() + "','"
+				+ user.getFechaLimite() + "'";
 
 		try {
 			sql.getStatement().executeUpdate(
-					"INSERT INTO usuarios (nombre,password,ubicacion,nombreFinca) " + "VALUES (" + values + ")");
+					"INSERT INTO usuarios (nombre,password,ubicacion,nombreFinca,email,serialNumber,fechaLimite) "
+							+ "VALUES (" + values + ")");
 
 		} catch (SQLException e) {
 
@@ -40,8 +42,11 @@ public class UsuarioCRUD {
 				String password = result.getString(2);
 				String ubicacion = result.getString(3);
 				String nombreFinca = result.getString(4);
+				String email = result.getString(5);
+				String serialNumber = result.getString(6);
+				String fechaLimite = result.getString(7);
 
-				Usuario user = new Usuario(nombre, ubicacion, nombreFinca, password);
+				Usuario user = new Usuario(nombre, ubicacion, nombreFinca, password, email, serialNumber, fechaLimite);
 
 				usuarios.add(user);
 			}
@@ -63,23 +68,13 @@ public class UsuarioCRUD {
 			sql.getStatement()
 					.executeUpdate("UPDATE usuarios SET nombre ='" + user.getNombre() + "', password='"
 							+ user.getPassword() + "', ubicacion='" + user.getUbicacion() + "', nombreFinca='"
-							+ user.getNombreFinca() + "' WHERE nombre='" + nombreUser + "'");
+							+ user.getNombreFinca() + "', email='" + user.getEmail() + "', serialNumber='"
+							+ user.getSerialNumber() + "', fechaLimite='" + user.getFechaLimite() + "' WHERE nombre='"
+							+ nombreUser + "'");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-	}
-
-	public static void main(String[] args) {
-
-		// Usuario user1 =new Usuario("juan david", "vereda la palomera", "GANADOMIO",
-		// "12345");
-		// insert(user1);
-
-		// update("juan david", user1);
-
-		System.out.println(select());
 
 	}
 

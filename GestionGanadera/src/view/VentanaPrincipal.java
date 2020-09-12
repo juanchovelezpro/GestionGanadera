@@ -8,7 +8,9 @@ import javax.swing.UIManager;
 
 import db.SQLConnection;
 import db.UsuarioCRUD;
+import model.Usuario;
 import tools.FileManager;
+import tools.SystemMotherBoardNumber;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -51,7 +53,6 @@ public class VentanaPrincipal extends JFrame {
 
 			if (UsuarioCRUD.select().size() == 1) {
 				inicio = new InicioPanel(this);
-				// ResCRUD.actualizarTipo();
 				add(inicio, BorderLayout.CENTER);
 
 			} else {
@@ -68,6 +69,31 @@ public class VentanaPrincipal extends JFrame {
 			add(registro, BorderLayout.CENTER);
 
 		}
+	}
+	
+	public boolean comprobarSerial() {
+		
+		boolean comprobar = false;
+		
+		Usuario user = UsuarioCRUD.select().get(0);
+		
+		String serie = SystemMotherBoardNumber.getSystemMotherBoard_SerialNumber();
+		
+		if(user.getSerialNumber().equalsIgnoreCase(serie)) {
+			
+			comprobar = true;
+			
+		}
+		
+		return comprobar;
+		
+	}
+	
+	public void comprobarLicencia() {
+		
+		
+		
+		
 	}
 
 	public RegistroPanel getRegistro() {

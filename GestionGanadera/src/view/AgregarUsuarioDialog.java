@@ -4,20 +4,33 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
+import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import db.RemoteCRUD;
 import db.UsuarioCRUD;
 import model.Usuario;
 import tools.FileManager;
+import tools.InternetAvailabilityChecker;
+import tools.SystemMotherBoardNumber;
 
 public class AgregarUsuarioDialog extends JDialog {
+
+	private RemoteCRUD remote;
 	private JTextField txtusuario;
 	private JPasswordField txtpassword;
 	private JButton guardar;
@@ -36,6 +49,7 @@ public class AgregarUsuarioDialog extends JDialog {
 
 		setLocationRelativeTo(null);
 
+		remote = new RemoteCRUD();
 		Components();
 		listeners();
 
@@ -84,17 +98,17 @@ public class AgregarUsuarioDialog extends JDialog {
 
 		JLabel password = new JLabel("");
 		panel_1.add(password);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("Digite su correo electr\u00f3nico");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_1.add(lblNewLabel_3);
-		
+
 		correo = new JTextField();
 		correo.setBackground(new Color(230, 230, 250, 100));
 		panel_1.add(correo);
 		correo.setColumns(10);
-		
+
 		JLabel lblNewLabel_4 = new JLabel("");
 		panel_1.add(lblNewLabel_4);
 
@@ -161,8 +175,28 @@ public class AgregarUsuarioDialog extends JDialog {
 
 			}
 
-			Usuario user = new Usuario(txtusuario.getText(), "", nombrefinca.getText(), pass);
-			UsuarioCRUD.insert(user);
+			Usuario user = new Usuario(txtusuario.getText(), "", "", pass,
+					SystemMotherBoardNumber.getSystemMotherBoard_SerialNumber(), correo.getText(), fechalimite());
+
+			try {
+				if (InternetAvailabilityChecker.isInternetAvailable()) {
+					remote.registrarUsuario(user);
+					UsuarioCRUD.insert(user);
+				} else {
+
+					JOptionPane.showMessageDialog(null, "No tienes una conexion a internet", "Error conexion",
+							JOptionPane.ERROR_MESSAGE);
+					
+					System.exit(0);
+
+				}
+			} catch (HeadlessException e1) {
+
+				e1.printStackTrace();
+			} catch (IOException e1) {
+
+				e1.printStackTrace();
+			}
 
 			dispose();
 
@@ -171,8 +205,25 @@ public class AgregarUsuarioDialog extends JDialog {
 		});
 
 	}
-	
-	
+
+	public static String fechalimite() {
+
+		String fechaLimite = "";
+
+		Calendar fechaSystem = new GregorianCalendar();
+
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		int nuevoanio = anio + 1;
+
+		String fecha_Convertida = dia + "/" + mes + "/" + nuevoanio;
+
+		fechaLimite = fecha_Convertida;
+
+		return fechaLimite;
+	}
 
 	public JTextField getNombrefinca() {
 		return nombrefinca;
