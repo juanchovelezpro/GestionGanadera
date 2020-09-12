@@ -894,6 +894,8 @@ public class AgregarEditarResDialog extends JDialog {
 			crearTablaPesos();
 
 			btnAgregar.setEnabled(true);
+			btnExportar.setEnabled(true);
+
 
 		});
 
