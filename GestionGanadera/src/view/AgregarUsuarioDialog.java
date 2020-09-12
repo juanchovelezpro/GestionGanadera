@@ -36,6 +36,7 @@ public class AgregarUsuarioDialog extends JDialog {
 	private JButton guardar;
 	private JTextField nombrefinca;
 	private JTextField correo;
+	private JTextField licencia;
 
 	public AgregarUsuarioDialog() {
 
@@ -43,7 +44,7 @@ public class AgregarUsuarioDialog extends JDialog {
 
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
-		setSize(530, 330);
+		setSize(540, 415);
 		setIconImage(FileManager.imagenes.get("USUARIO"));
 		setResizable(false);
 
@@ -82,7 +83,7 @@ public class AgregarUsuarioDialog extends JDialog {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(210, 180, 140, 140));
 		panel.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new GridLayout(13, 1));
+		panel_1.setLayout(new GridLayout(17, 1));
 
 		JLabel txtUsuario = new JLabel("Digite su nombre de usuario");
 		txtUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -105,6 +106,7 @@ public class AgregarUsuarioDialog extends JDialog {
 		panel_1.add(lblNewLabel_3);
 
 		correo = new JTextField();
+		correo.setHorizontalAlignment(SwingConstants.CENTER);
 		correo.setBackground(new Color(230, 230, 250, 100));
 		panel_1.add(correo);
 		correo.setColumns(10);
@@ -140,10 +142,34 @@ public class AgregarUsuarioDialog extends JDialog {
 		nombrefinca.setHorizontalAlignment(SwingConstants.CENTER);
 		nombrefinca.setText("");
 		nombrefinca.setColumns(10);
+	
+			
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		panel_1.add(lblNewLabel_2);
+		
+		
+		JLabel lblNewLabel_10 = new JLabel("Ingrese la licencia");
+		lblNewLabel_10.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_10.setFont(new Font("Tahoma", Font.BOLD, 16));
+		panel_1.add(lblNewLabel_10);
+		
 
+		licencia = new JTextField();
+		licencia.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_1.add(licencia);
+		licencia.setColumns(10);
+		licencia.setToolTipText("Numero de licencia");
+		licencia.setBackground(new Color(230, 230, 250, 100));
+
+
+		
+		JLabel labele = new JLabel("");
+		panel_1.add(labele);
+		
+
+		
+		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(210, 180, 140, 0));
 		panel_1.add(panel_2);
@@ -156,6 +182,7 @@ public class AgregarUsuarioDialog extends JDialog {
 		guardar = new JButton("Guardar");
 		guardar.setBackground(new Color(230, 230, 250, 100));
 		panel_2.add(guardar);
+		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(lblNewLabel_1);
