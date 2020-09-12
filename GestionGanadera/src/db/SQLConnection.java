@@ -20,6 +20,9 @@ public class SQLConnection {
 			FileManager.createDirectoryProject();
 			connection = DriverManager.getConnection("jdbc:sqlite:" + FileManager.PATH + "database.db","","jKeP$)s>\\ThyV~R_$Ej<Xuc;+DUnW8zVjz@+X(>-!,DH/m>@kYh#-'=L#x6n:yJCa}<q[n_\"WJ/Pc&!S;R]AYm4:v5\"CTcXa;::Q");
 			statement = connection.createStatement();
+			
+		
+			
 
 		} catch (SQLException e) {
 
@@ -30,6 +33,7 @@ public class SQLConnection {
 	public static synchronized SQLConnection getInstance() {
 		if (instance == null) {
 			instance = new SQLConnection();
+		
 		}
 		return instance;
 	}
