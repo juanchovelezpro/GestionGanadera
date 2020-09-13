@@ -2,6 +2,9 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -12,6 +15,7 @@ import db.UsuarioCRUD;
 import model.Usuario;
 import tools.FileManager;
 import tools.SystemMotherBoardNumber;
+import tools.Utils;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -53,17 +57,18 @@ public class VentanaPrincipal extends JFrame {
 		if (FileManager.directoryProjectExists()) {
 
 			if (UsuarioCRUD.select().size() == 1) {
-				
-				if(comprobarSerial()) {
-				inicio = new InicioPanel(this);
-				add(inicio, BorderLayout.CENTER);
-				}else {
-					
-					JOptionPane.showMessageDialog(null, "Esta licencia no esta habilitada para esta equipo","Error", JOptionPane.ERROR_MESSAGE);
-					System.exit(0);
+
+				if (comprobarLicencia()) {
+					if (comprobarSerial()) {
+						inicio = new InicioPanel(this);
+						add(inicio, BorderLayout.CENTER);
+					} else {
+
+						JOptionPane.showMessageDialog(null, "Esta licencia no esta habilitada para esta equipo",
+								"Error", JOptionPane.ERROR_MESSAGE);
+						System.exit(0);
+					}
 				}
-				
-				
 			} else {
 
 				registro = new RegistroPanel(this);
@@ -79,34 +84,64 @@ public class VentanaPrincipal extends JFrame {
 
 		}
 	}
-	
+
 	public boolean comprobarSerial() {
-		
+
 		boolean comprobar = false;
-		
+
 		Usuario user = UsuarioCRUD.select().get(0);
-		
+
 		String serie = SystemMotherBoardNumber.getSystemMotherBoard_SerialNumber();
-		
+
 		System.out.println(serie);
 		System.out.println(user.toString());
-		
-		
-		if(user.getSerialNumber().equalsIgnoreCase(serie)) {
-			
+
+		if (user.getSerialNumber().equalsIgnoreCase(serie)) {
+
 			comprobar = true;
-			
+
 		}
-		
+
 		return comprobar;
-		
+
 	}
-	
-	public void comprobarLicencia() {
-		
-		
-		
-		
+
+	public boolean comprobarLicencia() {
+
+		boolean vigente = false;
+
+		Usuario user = UsuarioCRUD.select().get(0);
+
+		Date fechaLimite = Utils.convertDateToLong(user.getFechaLimite());
+		Date fechaActual = Utils.convertDateToLong(fecha_sistema());
+
+		if (fechaActual.compareTo(fechaLimite) >= 0) {
+
+			JOptionPane.showMessageDialog(null, "Tu licencia se ha vencido\nComuniquese con el administrador",
+					"Licencia Vencida", JOptionPane.WARNING_MESSAGE);
+			System.exit(0);
+
+		} else {
+
+			vigente = true;
+
+		}
+
+		return vigente;
+
+	}
+
+	public static String fecha_sistema() {
+
+		Calendar fechaSystem = new GregorianCalendar();
+
+		int dia = fechaSystem.get(Calendar.DAY_OF_MONTH);
+		int mes = fechaSystem.get(Calendar.MONTH) + 1;
+		int anio = fechaSystem.get(Calendar.YEAR);
+
+		String fecha_Convertida = dia + "/" + mes + "/" + anio;
+
+		return fecha_Convertida;
 	}
 
 	public RegistroPanel getRegistro() {
