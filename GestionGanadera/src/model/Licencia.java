@@ -1,9 +1,14 @@
 package model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Licencia {
 
+	@SerializedName("valor")
 	private String valor;
+	@SerializedName("usada")
 	private String usada;
+	@SerializedName("usuario")
 	private String usuario;
 
 	public Licencia() {
@@ -48,6 +53,10 @@ public class Licencia {
 
 	public void setUsada(String usada) {
 		this.usada = usada;
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 
 }

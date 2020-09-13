@@ -120,12 +120,5 @@ public class SystemMotherBoardNumber {
         }
         return sNum; 
     }
-    
-    public static void main(String[] args) {
-        String motherBoard_SerialNumber = getSystemMotherBoard_SerialNumber();
-        System.out.println("MotherBoard Serial Number : "+motherBoard_SerialNumber);
-        
-       
-    }
    
 }
