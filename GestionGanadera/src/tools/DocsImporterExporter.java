@@ -164,9 +164,9 @@ public class DocsImporterExporter {
 		firstRow.createCell(7).setCellValue("FECHA EMBARAZO");
 		firstRow.createCell(8).setCellValue("MADRE");
 
-		for (int i = 1; i < reses.size(); i++) {
-			Row myRow = sheet.createRow(i);
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < reses.size(); i++) {
+			Row myRow = sheet.createRow(i+1);
+			for (int j = 0; j < 9; j++) {
 
 				Cell myCell = myRow.createCell(j);
 
