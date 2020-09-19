@@ -15,6 +15,7 @@ import model.Peso;
 import model.Purgante;
 import model.Res;
 import model.Vacuna;
+import model.Vitamina;
 
 public class ResCRUD {
 
@@ -357,6 +358,48 @@ public class ResCRUD {
 
 	}
 
+	public static void deletePesosRes(ArrayList<String> idsRes) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate(
+					"DELETE FROM res_tiene_pesos WHERE resID IN (" + SQLUtils.concatenarValores(idsRes) + ")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void deletePesoFromRes(String resID, double peso, String fecha) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate("DELETE FROM res_tiene_pesos WHERE resID=\"" + resID + "\" AND peso="
+					+ peso + " AND fecha=\"" + fecha + "\"");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void updatePesosRes(String resIdViejo, String resIdNuevo) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+			sql.getStatement().executeUpdate(
+					"UPDATE res_tiene_pesos SET resID='" + resIdNuevo + "' WHERE resID='" + resIdViejo + "'");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
 	// actualizar peso
 	public static void updatePeso(String resID, String fechaVieja, Peso peso) {
 
@@ -396,7 +439,7 @@ public class ResCRUD {
 		try {
 
 			sql.getStatement().executeUpdate("INSERT INTO res_tiene_vacunas (resID,vacunaNombre,fecha) VALUES "
-					+ SQLUtils.concatenarAplicarVacunas(ids, vacuna, fecha));
+					+ SQLUtils.concatenarAplicar(ids, vacuna, fecha));
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -493,7 +536,7 @@ public class ResCRUD {
 		try {
 
 			sql.getStatement().executeUpdate("INSERT INTO res_tiene_purgantes (resID,purganteNombre,fecha) VALUES "
-					+ SQLUtils.concatenarAplicarPurgantes(ids, purgante, fecha));
+					+ SQLUtils.concatenarAplicar(ids, purgante, fecha));
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -565,48 +608,86 @@ public class ResCRUD {
 
 	}
 
-	public static void deletePesosRes(ArrayList<String> idsRes) {
+	// insert vitamina
+	public static void insertVitamina(String resID, String vitaminaNombre, String fecha) {
 
 		SQLConnection sql = SQLConnection.getInstance();
 
 		try {
 
-			sql.getStatement().executeUpdate(
-					"DELETE FROM res_tiene_pesos WHERE resID IN (" + SQLUtils.concatenarValores(idsRes) + ")");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			VitaminaCRUD.insert(vitaminaNombre);
+			sql.getStatement().executeUpdate("INSERT INTO res_tiene_vitaminas (resID,vitaminaNombre,fecha) VALUES ('"
+					+ resID + "','" + vitaminaNombre + "','" + fecha + "')");
 
-	}
-
-	public static void deletePesoFromRes(String resID, double peso, String fecha) {
-
-		SQLConnection sql = SQLConnection.getInstance();
-
-		try {
-
-			sql.getStatement().executeUpdate("DELETE FROM res_tiene_pesos WHERE resID=\"" + resID + "\" AND peso="
-					+ peso + " AND fecha=\"" + fecha + "\"");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void updatePesosRes(String resIdViejo, String resIdNuevo) {
-
-		SQLConnection sql = SQLConnection.getInstance();
-
-		try {
-			sql.getStatement().executeUpdate(
-					"UPDATE res_tiene_pesos SET resID='" + resIdNuevo + "' WHERE resID='" + resIdViejo + "'");
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 
 	}
-	
+
+	public static void insertVitaminaMultiple(ArrayList<String> ids, String vitamina, String fecha) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+
+			sql.getStatement().executeUpdate("INSERT INTO res_tiene_vitaminas (resID,vitaminaNombre,fecha) VALUES "
+					+ SQLUtils.concatenarAplicar(ids, vitamina, fecha));
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	// seleccionar
+	public static ArrayList<Vitamina> selectVitaminas(String resID) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+		ArrayList<Vitamina> vitaminas = new ArrayList<Vitamina>();
+
+		try {
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT * FROM res_tiene_vitaminas WHERE resID='" + resID + "'");
+
+			while (result.next()) {
+
+				String vitamina_Nombre = result.getString(3);
+				String fecha = result.getString(4);
+
+				Vitamina vitamina_Actual = new Vitamina(vitamina_Nombre);
+				vitamina_Actual.setFecha(fecha);
+				vitaminas.add(vitamina_Actual);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return vitaminas;
+
+	}
+
+	// actualizar purgante
+	public static void updateVitamina(String resID, String fechaVieja, Vitamina vitamina) {
+
+		SQLConnection sql = SQLConnection.getInstance();
+
+		try {
+			sql.getStatement()
+					.executeUpdate("UPDATE res_tiene_vitaminas SET vitaminaNombre='" + vitamina.getNombre()
+							+ "', fecha='" + vitamina.getFecha() + "' WHERE resID='" + resID + "' AND fecha='"
+							+ fechaVieja + "'");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
 	public static ArrayList<Res> reporteDestete(String potrero) {
 
 		ArrayList<Res> vacas_destete = new ArrayList<>();
@@ -626,7 +707,7 @@ public class ResCRUD {
 
 				if (res.getTipo().equals("CH") || res.getTipo().equals("CM")) {
 
-					if (dias <= 250 && dias>=220) {
+					if (dias <= 250 && dias >= 220) {
 
 						vacas_destete.add(res);
 
@@ -647,7 +728,7 @@ public class ResCRUD {
 
 		Res res = null;
 
-		ArrayList<Res> reses =  PotreroCRUD.selectRes(potrero);
+		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
 
 		for (int i = 0; i < reses.size(); i++) {
 
@@ -663,7 +744,7 @@ public class ResCRUD {
 						long dias = diasEntreFechas(res.getFecha_embarazo());
 						long meses = mesesEntreFechas(res.getFecha_embarazo());
 
-						if (dias <= 280 && dias>=230) {
+						if (dias <= 280 && dias >= 230) {
 
 							vacas_partos.add(res);
 
@@ -677,15 +758,11 @@ public class ResCRUD {
 
 	}
 
-	
-
-	
-
 	public static ArrayList<Res> reportePurgado(String potrero) {
 
 		ArrayList<Res> reses_purgado = new ArrayList<>();
 
-		ArrayList<Res> reses =  PotreroCRUD.selectRes(potrero);
+		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
 
 		Res res = null;
 
@@ -731,7 +808,7 @@ public class ResCRUD {
 
 		ArrayList<Res> reses_vacuna = new ArrayList<>();
 
-		ArrayList<Res> reses =  PotreroCRUD.selectRes(potrero);
+		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
 		Res res = null;
 
 		for (int i = 0; i < reses.size(); i++) {
@@ -755,7 +832,7 @@ public class ResCRUD {
 							long dias = diasEntreFechas(ultimo.getFecha());
 							long meses = mesesEntreFechas(ultimo.getFecha());
 
-							if (dias < 195 && dias>160) {
+							if (dias < 195 && dias > 160) {
 
 								reses_vacuna.add(res);
 
@@ -792,7 +869,7 @@ public class ResCRUD {
 
 				if (res.getTipo().equals("CH") || res.getTipo().equals("CM")) {
 
-					if (dias <= 250 && dias>=220) {
+					if (dias <= 250 && dias >= 220) {
 
 						vacas_destete.add(res);
 
@@ -829,7 +906,7 @@ public class ResCRUD {
 						long dias = diasEntreFechas(res.getFecha_embarazo());
 						long meses = mesesEntreFechas(res.getFecha_embarazo());
 
-						if (dias <= 280 && dias>=230) {
+						if (dias <= 280 && dias >= 230) {
 
 							vacas_partos.add(res);
 
@@ -842,10 +919,6 @@ public class ResCRUD {
 		return vacas_partos;
 
 	}
-
-	
-
-	
 
 	public static ArrayList<Res> reportePurgado1() {
 
@@ -922,7 +995,7 @@ public class ResCRUD {
 							long dias = diasEntreFechas(ultimo.getFecha());
 							long meses = mesesEntreFechas(ultimo.getFecha());
 
-							if (dias < 195 && dias>160) {
+							if (dias < 195 && dias > 160) {
 
 								reses_vacuna.add(res);
 

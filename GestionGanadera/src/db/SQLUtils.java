@@ -66,16 +66,16 @@ public class SQLUtils {
 
 	}
 
-	public static String concatenarAplicarVacunas(ArrayList<String> ids, String vacuna, String fecha) {
+	public static String concatenarAplicar(ArrayList<String> ids, String dosis, String fecha) {
 
 		String resultado = "";
 
 		for (int i = 0; i < ids.size(); i++) {
 
 			if (i < ids.size() - 1)
-				resultado += "(\"" + ids.get(i) + "\",\"" + vacuna + "\",\"" + fecha + "\"),";
+				resultado += "(\"" + ids.get(i) + "\",\"" + dosis + "\",\"" + fecha + "\"),";
 			else
-				resultado += "(\"" + ids.get(i) + "\",\"" + vacuna + "\",\"" + fecha + "\")";
+				resultado += "(\"" + ids.get(i) + "\",\"" + dosis + "\",\"" + fecha + "\")";
 
 		}
 
@@ -98,23 +98,6 @@ public class SQLUtils {
 			else
 				resultado += "(\"" + resita.getResID() + "\",\""
 						+ resita.getVacunas().get(resita.getVacunas().size() - 1).getNombre() + "\",\"" + fecha + "\")";
-
-		}
-
-		return resultado;
-
-	}
-
-	public static String concatenarAplicarPurgantes(ArrayList<String> ids, String purgante, String fecha) {
-
-		String resultado = "";
-
-		for (int i = 0; i < ids.size(); i++) {
-
-			if (i < ids.size() - 1)
-				resultado += "(\"" + ids.get(i) + "\",\"" + purgante + "\",\"" + fecha + "\"),";
-			else
-				resultado += "(\"" + ids.get(i) + "\",\"" + purgante + "\",\"" + fecha + "\")";
 
 		}
 
@@ -145,4 +128,5 @@ public class SQLUtils {
 
 	}
 
+	
 }
