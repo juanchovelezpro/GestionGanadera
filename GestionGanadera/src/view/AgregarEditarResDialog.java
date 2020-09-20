@@ -447,12 +447,25 @@ public class AgregarEditarResDialog extends JDialog {
 
 				String fechaEmba = btnFechaEmbarazo.getText();
 
-				if (fechaEmba != null && !fechaEmba.equals("") && !fechaEmba.equals("dd/mm/AAAA")) {
+				if (embarazo == 1 && fechaEmba != null && !fechaEmba.equals("") && !fechaEmba.equals("dd/mm/AAAA")) {
+										
 					res.setFecha_UltimoEmbarazo(fechaEmba);
 					res.setFecha_embarazo(fechaEmba);
-				} else {
-					res.setFecha_embarazo("");
+				}else {
+					
+					if(this.res!=null && this.res.getFecha_UltimoEmbarazo()!=null)
+						res.setFecha_UltimoEmbarazo(this.res.getFecha_UltimoEmbarazo());
+					
 				}
+				
+
+				System.out.println("Fecha emba: "+fechaEmba);
+				if(embarazo == 1 && (fechaEmba==null || fechaEmba.equals("") || fechaEmba.equals("dd/mm/AAAA"))) {
+					
+					throw new Exception("Introduzca la fecha de embarazo si indica que se encuentra embarazada");
+					
+				}
+				
 
 			} else {
 
