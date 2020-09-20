@@ -78,8 +78,7 @@ public class AgregarEditarResDialog extends JDialog {
 	private JButton btnExportar;
 	public static final String ANSI_RED = "\u001B[31m";
 	public static final String ANSI_RESET = "\u001B[0m";
-
-
+	private JButton btnRegistroVitaminas;
 
 	/**
 	 * @wbp.parser.constructor
@@ -111,6 +110,8 @@ public class AgregarEditarResDialog extends JDialog {
 			btnCrias.setEnabled(false);
 			btnRegistroPurgantes.setEnabled(false);
 			btnRegistroVacunas.setEnabled(false);
+			btnRegistroVitaminas.setEnabled(false);
+		
 
 		}
 
@@ -145,6 +146,7 @@ public class AgregarEditarResDialog extends JDialog {
 			btnCrias.setEnabled(false);
 			btnRegistroPurgantes.setEnabled(false);
 			btnRegistroVacunas.setEnabled(false);
+			btnRegistroVitaminas.setEnabled(false);
 
 		}
 
@@ -266,14 +268,10 @@ public class AgregarEditarResDialog extends JDialog {
 		btnCrias.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelAux.add(btnCrias);
 
-		JLabel lblRegistroPeso = new JLabel("Registro Peso");
-		lblRegistroPeso.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRegistroPeso.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelAux.add(lblRegistroPeso);
-
-		btnVerRegistroPeso = new JButton("Ver Registro Peso");
-		btnVerRegistroPeso.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelAux.add(btnVerRegistroPeso);
+		JLabel lblNewLabel_1 = new JLabel("Registros");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		panelAux.add(lblNewLabel_1);
 
 		JPanel panelObservaciones = new JPanel();
 		panelObservaciones.setBackground(new Color(0, 0, 0, 0));
@@ -290,25 +288,23 @@ public class AgregarEditarResDialog extends JDialog {
 		panel_7.add(panelOtro);
 		panelOtro.setLayout(new GridLayout(5, 2));
 
-		JLabel lblRegistroVacunas = new JLabel("Registro Vacunas");
-		lblRegistroVacunas.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRegistroVacunas.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelOtro.add(lblRegistroVacunas);
+		btnVerRegistroPeso = new JButton("Ver Registro Peso");
+		panelOtro.add(btnVerRegistroPeso);
+		btnVerRegistroPeso.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		btnRegistroVacunas = new JButton("Ver Registro Vacunas");
 		btnRegistroVacunas.setHorizontalAlignment(SwingConstants.CENTER);
 		btnRegistroVacunas.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelOtro.add(btnRegistroVacunas);
 
-		JLabel lblRegistroPurgantes = new JLabel("Registro Purgantes");
-		lblRegistroPurgantes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRegistroPurgantes.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelOtro.add(lblRegistroPurgantes);
-
 		btnRegistroPurgantes = new JButton("Ver Registro Purgantes");
 		btnRegistroPurgantes.setHorizontalAlignment(SwingConstants.CENTER);
 		btnRegistroPurgantes.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelOtro.add(btnRegistroPurgantes);
+
+		btnRegistroVitaminas = new JButton("Ver Registro Vitaminas");
+		panelOtro.add(btnRegistroVitaminas);
+		btnRegistroVitaminas.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		JLabel lblNewLabel_4 = new JLabel("");
 		panelOtro.add(lblNewLabel_4);
@@ -348,7 +344,7 @@ public class AgregarEditarResDialog extends JDialog {
 		scrollPane.setViewportView(txtObservaciones);
 
 		btnAgregar = new JButton("Agregar");
-		btnExportar =new JButton("Exportar");
+		btnExportar = new JButton("Exportar");
 
 		scroller = new JScrollPane();
 
@@ -364,15 +360,13 @@ public class AgregarEditarResDialog extends JDialog {
 		panelTabla.setLayout(new BorderLayout());
 		panelTabla.add(scroller, BorderLayout.CENTER);
 
-		JPanel panelBotonesPeso =new JPanel();
-		panelBotonesPeso.setLayout(new GridLayout(1,2));
-		
+		JPanel panelBotonesPeso = new JPanel();
+		panelBotonesPeso.setLayout(new GridLayout(1, 2));
+
 		panelBotonesPeso.add(btnAgregar);
 		panelBotonesPeso.add(btnExportar);
-		
+
 		panelTabla.add(panelBotonesPeso, BorderLayout.SOUTH);
-		
-		
 
 		panelTablaGraficas.add(panelGrafica);
 		panelTablaGraficas.add(panelTabla);
@@ -448,24 +442,22 @@ public class AgregarEditarResDialog extends JDialog {
 				String fechaEmba = btnFechaEmbarazo.getText();
 
 				if (embarazo == 1 && fechaEmba != null && !fechaEmba.equals("") && !fechaEmba.equals("dd/mm/AAAA")) {
-										
+
 					res.setFecha_UltimoEmbarazo(fechaEmba);
 					res.setFecha_embarazo(fechaEmba);
-				}else {
-					
-					if(this.res!=null && this.res.getFecha_UltimoEmbarazo()!=null)
-						res.setFecha_UltimoEmbarazo(this.res.getFecha_UltimoEmbarazo());
-					
-				}
-				
+				} else {
 
-				System.out.println("Fecha emba: "+fechaEmba);
-				if(embarazo == 1 && (fechaEmba==null || fechaEmba.equals("") || fechaEmba.equals("dd/mm/AAAA"))) {
-					
-					throw new Exception("Introduzca la fecha de embarazo si indica que se encuentra embarazada");
-					
+					if (this.res != null && this.res.getFecha_UltimoEmbarazo() != null)
+						res.setFecha_UltimoEmbarazo(this.res.getFecha_UltimoEmbarazo());
+
 				}
-				
+
+				System.out.println("Fecha emba: " + fechaEmba);
+				if (embarazo == 1 && (fechaEmba == null || fechaEmba.equals("") || fechaEmba.equals("dd/mm/AAAA"))) {
+
+					throw new Exception("Introduzca la fecha de embarazo si indica que se encuentra embarazada");
+
+				}
 
 			} else {
 
@@ -509,26 +501,22 @@ public class AgregarEditarResDialog extends JDialog {
 		setLocationRelativeTo(null);
 
 	}
-	
+
 	public double calcularBalance(ArrayList<Peso> pesos, int posicion) {
-		
+
 		double balance = 0;
 
-		
-		if (posicion==pesos.size()-1) {
-			
-			balance= 0;
-		}else {
-			
-			balance= pesos.get(posicion).getPeso()-pesos.get(posicion+1).getPeso();
-			
+		if (posicion == pesos.size() - 1) {
+
+			balance = 0;
+		} else {
+
+			balance = pesos.get(posicion).getPeso() - pesos.get(posicion + 1).getPeso();
+
 		}
-		
 
 		return balance;
-		
-		
-		
+
 	}
 
 	public void crearTablaPesos() {
@@ -540,7 +528,7 @@ public class AgregarEditarResDialog extends JDialog {
 			ArrayList<Peso> pesos = ResCRUD.selectPesosLista(res.getResID());
 			Collections.sort(pesos);
 			Collections.reverse(pesos);
-		
+
 			Object[][] data = new Object[pesos.size()][columns.length];
 			Peso temp = null;
 
@@ -555,48 +543,42 @@ public class AgregarEditarResDialog extends JDialog {
 
 					if (j == 1)
 						data[i][j] = temp.getFecha();
-					
+
 					if (j == 2)
 						data[i][j] = calcularBalance(pesos, i);
-					    
 
 				}
 
 			}
-			
-			
-           
+
 			modelPesos = new ModelTable();
 			modelPesos.setData(data);
 			modelPesos.setColumns(columns);
 			tablaPesos = new JTable(modelPesos);
-			
-		
+
 			/**
-			for (int i = 0; i < pesos.size(); i++) {
-				
-				double valor = Double.parseDouble(tablaPesos.getValueAt(i, 2).toString());
-				
-				if (valor<0) {
-                    tablaPesos.getCellRenderer(i, 2).getTableCellRendererComponent(tablaPesos, valor, true, true, i, 2).setForeground(Color.RED);
-				}else if (valor>0) {
+			 * for (int i = 0; i < pesos.size(); i++) {
+			 * 
+			 * double valor = Double.parseDouble(tablaPesos.getValueAt(i, 2).toString());
+			 * 
+			 * if (valor<0) { tablaPesos.getCellRenderer(i,
+			 * 2).getTableCellRendererComponent(tablaPesos, valor, true, true, i,
+			 * 2).setForeground(Color.RED); }else if (valor>0) {
+			 * 
+			 * tablaPesos.getCellRenderer(i, 2).getTableCellRendererComponent(tablaPesos,
+			 * valor, true, true, i, 2).setForeground(Color.GREEN);
+			 * 
+			 * }
+			 * 
+			 * }
+			 **/
 
-                    tablaPesos.getCellRenderer(i, 2).getTableCellRendererComponent(tablaPesos, valor, true, true, i, 2).setForeground(Color.GREEN);
-
-				}
-
-			}
-			**/
-			
-			
 			tablaPesos.setFont(new Font("Tahoma", Font.BOLD, 14));
 			tablaPesos.setShowHorizontalLines(true);
 			tablaPesos.setShowVerticalLines(true);
 			tablaPesos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
 			scroller.setViewportView(tablaPesos);
 			tablaPesos.setFillsViewportHeight(true);
-			
-			
 
 			transformarPanel();
 
@@ -970,7 +952,6 @@ public class AgregarEditarResDialog extends JDialog {
 			btnAgregar.setEnabled(true);
 			btnExportar.setEnabled(true);
 
-
 		});
 
 		btnRegistroVacunas.addActionListener(e -> {
@@ -989,7 +970,6 @@ public class AgregarEditarResDialog extends JDialog {
 
 			btnAgregar.setEnabled(true);
 			btnExportar.setEnabled(false);
-
 
 		});
 
@@ -1010,7 +990,6 @@ public class AgregarEditarResDialog extends JDialog {
 
 			btnAgregar.setEnabled(true);
 			btnExportar.setEnabled(false);
-
 
 		});
 
@@ -1039,9 +1018,9 @@ public class AgregarEditarResDialog extends JDialog {
 			AgregarInfoReporte inforeporte = new AgregarInfoReporte(tiporeporte, res.getResID(), this);
 
 		});
-		
-		btnExportar.addActionListener(e ->{
-			
+
+		btnExportar.addActionListener(e -> {
+
 			try {
 
 				JFileChooser fileSaver = new JFileChooser();
@@ -1209,5 +1188,8 @@ public class AgregarEditarResDialog extends JDialog {
 
 	public JCheckBox getCheckMuerto() {
 		return checkMuerto;
+	}
+	public JButton getBtnRegistroVitaminas() {
+		return btnRegistroVitaminas;
 	}
 }
