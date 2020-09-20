@@ -34,6 +34,7 @@ import model.Peso;
 import model.Purgante;
 import model.Res;
 import model.Vacuna;
+import model.Vitamina;
 import sun.swing.table.DefaultTableCellHeaderRenderer;
 import tools.DocsImporterExporter;
 import tools.FileManager;
@@ -66,6 +67,8 @@ public class AgregarEditarResDialog extends JDialog {
 	private ModelTable modelCrias;
 	private JTable tablaPurgantes;
 	private ModelTable modelPurgantes;
+	private JTable tablaVitamina;
+	private ModelTable modelVitamina;
 	private JScrollPane scroller;
 	// 1= peso , 2= vacuna, 3= purgante 4=crias
 	private int tiporeporte;
@@ -111,6 +114,7 @@ public class AgregarEditarResDialog extends JDialog {
 			btnRegistroPurgantes.setEnabled(false);
 			btnRegistroVacunas.setEnabled(false);
 			btnRegistroVitaminas.setEnabled(false);
+		
 		
 
 		}
@@ -626,6 +630,62 @@ public class AgregarEditarResDialog extends JDialog {
 		});
 
 	}
+	
+	public void crearTablaVitaminas() {
+
+		String[] columns = { "VITAMINA", "FECHA" };
+
+		if (res != null) {
+
+			ArrayList<Vitamina> vacunas = ResCRUD.selectVitaminas(res.getResID());
+			Object[][] data = new Object[vacunas.size()][columns.length];
+
+			for (int i = 0; i < data.length; i++) {
+
+				for (int j = 0; j < data[0].length; j++) {
+
+					if (j == 0)
+						data[i][j] = vacunas.get(i).getNombre();
+
+					if (j == 1)
+						data[i][j] = vacunas.get(i).getFecha();
+
+				}
+
+			}
+
+			modelVitamina = new ModelTable();
+			modelVitamina.setData(data);
+			modelVitamina.setColumns(columns);
+			tablaVitamina = new JTable(modelVitamina);
+			tablaVitamina.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaVitamina.setShowHorizontalLines(true);
+			tablaVitamina.setShowVerticalLines(true);
+			tablaVitamina.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+			scroller.setViewportView(tablaVitamina);
+			tablaVitamina.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		} else {
+
+			Object[][] data = new Object[0][columns.length];
+			modelVitamina = new ModelTable();
+			modelVitamina.setData(data);
+			modelVitamina.setColumns(columns);
+			tablaVitamina = new JTable(modelVitamina);
+			tablaVitamina.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tablaVitamina.setShowHorizontalLines(true);
+			tablaVitamina.setShowVerticalLines(true);
+			tablaVitamina.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+			scroller.setViewportView(tablaVitamina);
+			tablaVitamina.setFillsViewportHeight(true);
+
+			transformarPanel();
+
+		}
+
+	}
 
 	public void crearTablaVacunas() {
 
@@ -811,6 +871,10 @@ public class AgregarEditarResDialog extends JDialog {
 			scroller.getViewport().removeAll();
 			crearTablaPurgantes();
 			break;
+		
+		case 4:
+			scroller.getViewport().removeAll();
+			crearTablaVitaminas();
 
 		}
 
@@ -992,6 +1056,26 @@ public class AgregarEditarResDialog extends JDialog {
 			btnExportar.setEnabled(false);
 
 		});
+		
+		btnRegistroVitaminas.addActionListener(e -> {
+
+			tiporeporte = 4;
+			if (panelTablaGraficas.getParent() != null) {
+
+				getContentPane().remove(panelTablaGraficas);
+			}
+
+			panelGrafica.removeAll();
+			panelGrafica.invalidate();
+			panelGrafica.revalidate();
+			panelGrafica.repaint();
+			pack();
+			crearTablaVitaminas();
+
+			btnAgregar.setEnabled(true);
+			btnExportar.setEnabled(false);
+
+		});
 
 		btnCrias.addActionListener(e -> {
 
@@ -1097,6 +1181,8 @@ public class AgregarEditarResDialog extends JDialog {
 		setSize(1100, 700);
 
 	}
+	
+	
 
 	public JTable getTablaPesos() {
 		return tablaPesos;

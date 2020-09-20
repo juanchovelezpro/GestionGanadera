@@ -2,6 +2,8 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
+import java.awt.HeadlessException;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -10,10 +12,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import db.RemoteCRUD;
 import db.SQLConnection;
 import db.UsuarioCRUD;
 import model.Usuario;
 import tools.FileManager;
+import tools.InternetAvailabilityChecker;
 import tools.SystemMotherBoardNumber;
 import tools.Utils;
 
@@ -59,7 +63,9 @@ public class VentanaPrincipal extends JFrame {
 			if (UsuarioCRUD.select().size() == 1) {
 
 				if (comprobarLicencia()) {
+					System.out.println("aqui comprueba");
 					if (comprobarSerial()) {
+						System.out.println("aqui comprueba2");
 						inicio = new InicioPanel(this);
 						add(inicio, BorderLayout.CENTER);
 					} else {
@@ -111,25 +117,52 @@ public class VentanaPrincipal extends JFrame {
 		boolean vigente = false;
 
 		Usuario user = UsuarioCRUD.select().get(0);
+        RemoteCRUD remote= new RemoteCRUD(user);
 
 		Date fechaLimite = Utils.convertDateToLong(user.getFechaLimite());
 		Date fechaActual = Utils.convertDateToLong(fecha_sistema());
 
 		if (fechaActual.compareTo(fechaLimite) >= 0) {
 
-			JOptionPane.showMessageDialog(null, "Tu licencia se ha vencido\nComuniquese con el administrador",
-					"Licencia Vencida", JOptionPane.WARNING_MESSAGE);
-			System.exit(0);
+            String licencia= JOptionPane.showInputDialog(null, "Tu licencia se ha vencido\nComuniquese con el administrador", "Licencia vencida", JOptionPane.WARNING_MESSAGE);
+			
+            try {
+				if (InternetAvailabilityChecker.isInternetAvailable()) {
 
-		} else {
+					if (licencia != null && !licencia.equals("")) {
+						remote.renovarLicenciaFinal(licencia);
+						
+						
+					} else {
 
-			vigente = true;
+						JOptionPane.showMessageDialog(null, "Error con la licencia");
 
+					}
+				} else {
+
+					JOptionPane.showMessageDialog(null, "No tienes una conexion a internet", "Error conexion",
+							JOptionPane.ERROR_MESSAGE);
+
+					System.exit(0);
+
+				}
+			} catch (HeadlessException e1) {
+
+				e1.printStackTrace();
+			} catch (IOException e1) {
+
+				e1.printStackTrace();
+			}
+		}else {
+			vigente=true;
 		}
 
 		return vigente;
+		
+		
 
 	}
+
 
 	public static String fecha_sistema() {
 

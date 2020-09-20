@@ -698,23 +698,23 @@ public class ResCRUD {
 			res = reses.get(i);
 			
 			
-			if (res.getEmbarazada() == 1) {
 
 				
 			if (res.getFecha_UltimoEmbarazo()!=null) {
 
-			if(!res.getFecha_UltimoEmbarazo().equalsIgnoreCase("") && !res.getFecha_UltimoEmbarazo().equalsIgnoreCase("SIN REGISTRO")) {
+			if(!res.getFecha_UltimoEmbarazo().equalsIgnoreCase("") && !res.getFecha_UltimoEmbarazo().equalsIgnoreCase("null")) {
 			
 				long dias = diasEntreFechas(res.getFecha_UltimoEmbarazo());
 				long meses = mesesEntreFechas(res.getFecha_UltimoEmbarazo());
+			
 				
 			 if(dias>810) {
 				 vacas_alertas.add(res);
 			 }	
 			
 			}
+		
 			
-			}
 			}
 		}
 		

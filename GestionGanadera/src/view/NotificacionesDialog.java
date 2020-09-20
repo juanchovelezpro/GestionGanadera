@@ -279,6 +279,7 @@ public class NotificacionesDialog extends JDialog {
 
 		});
 		
+		
 		tablaAlertas.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -287,6 +288,7 @@ public class NotificacionesDialog extends JDialog {
 				int[] rowsSelected = tablaAlertas.getSelectedRows();
 
 				ArrayList<Res> resesSeleccionadas = new ArrayList<>();
+				// TODO Auto-generated method stub
 				if (e.getButton() == MouseEvent.BUTTON3) {
 
 					int valor = JOptionPane.showConfirmDialog(null,
@@ -296,20 +298,27 @@ public class NotificacionesDialog extends JDialog {
 
 						for (int i = 0; i < rowsSelected.length; i++) {
 
-							resesSeleccionadas.add(modelotablealertas.getReses().get(rowsSelected[i]));
+							Res res =modelotablealertas.getReses().get(rowsSelected[i]);
+							
+							res.setFecha_UltimoEmbarazo("");
+							res.setFecha_embarazo("");
+							ResCRUD.update(res.getResID(), res);
+							
 
+							
+							
 						}
 
-						
-						refreshTableAlertas();
-						ventana.refreshTable();
-
 					}
+					refreshTableAlertas();
+					ventana.refreshTable();
 
 				}
+
 			}
 
 		});
+		
 
 
 		tablaPurgado.addMouseListener(new MouseAdapter() {

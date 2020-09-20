@@ -20,8 +20,10 @@ import com.toedter.calendar.JDateChooser;
 import db.PurganteCRUD;
 import db.ResCRUD;
 import db.VacunaCRUD;
+import db.VitaminaCRUD;
 import model.Purgante;
 import model.Vacuna;
+import model.Vitamina;
 import tools.FileManager;
 
 public class AgregarInfoReporte extends JDialog {
@@ -132,6 +134,18 @@ public class AgregarInfoReporte extends JDialog {
 			}
 			panel.add(comboOpciones);
 		}
+		
+		if (valor == 4) {
+
+			ArrayList<Vitamina> vitaminas = VitaminaCRUD.select();
+
+			for (int i = 0; i < vitaminas.size(); i++) {
+
+				comboOpciones.addItem(vitaminas.get(i).getNombre());
+
+			}
+			panel.add(comboOpciones);
+		}
 
 	}
 
@@ -147,16 +161,18 @@ public class AgregarInfoReporte extends JDialog {
 		case 2:
 
 			mensaje.setText("Ingrese el nombre de la vacuna");
-
 			break;
+			
 		case 3:
 
 			mensaje.setText("Ingrese el nombre del purgante");
-
 			break;
+			
+		case 4:
 
-		default:
+			mensaje.setText("Ingrese el nombre de la vitamina");
 			break;
+		
 		}
 	}
 
@@ -193,6 +209,18 @@ public class AgregarInfoReporte extends JDialog {
 
 			ResCRUD.insertPurgante(res_ID, comboOpciones.getSelectedItem().toString(), fechaSeleccionada);
 			agregarEditarPanel.refreshTable(3);
+
+		}
+
+	}
+	
+	public void vitamina(String fechaSeleccionada) {
+
+		if (comboOpciones.getSelectedItem() != null && !comboOpciones.getSelectedItem().toString().equalsIgnoreCase("")
+				&& !fechaSeleccionada.equalsIgnoreCase("")) {
+
+			ResCRUD.insertVitamina(res_ID, comboOpciones.getSelectedItem().toString(), fechaSeleccionada);
+			agregarEditarPanel.refreshTable(4);
 
 		}
 
@@ -236,7 +264,8 @@ public class AgregarInfoReporte extends JDialog {
 				purgante(fechaSeleccionada);
 				break;
 
-			default:
+			case 4:
+				vitamina(fechaSeleccionada);
 				break;
 			}
 
