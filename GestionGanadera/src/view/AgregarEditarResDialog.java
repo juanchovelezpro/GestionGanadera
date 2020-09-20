@@ -114,8 +114,6 @@ public class AgregarEditarResDialog extends JDialog {
 			btnRegistroPurgantes.setEnabled(false);
 			btnRegistroVacunas.setEnabled(false);
 			btnRegistroVitaminas.setEnabled(false);
-		
-		
 
 		}
 
@@ -558,24 +556,44 @@ public class AgregarEditarResDialog extends JDialog {
 			modelPesos = new ModelTable();
 			modelPesos.setData(data);
 			modelPesos.setColumns(columns);
-			tablaPesos = new JTable(modelPesos);
+			tablaPesos = new JTable(modelPesos) {
 
-			/**
-			 * for (int i = 0; i < pesos.size(); i++) {
-			 * 
-			 * double valor = Double.parseDouble(tablaPesos.getValueAt(i, 2).toString());
-			 * 
-			 * if (valor<0) { tablaPesos.getCellRenderer(i,
-			 * 2).getTableCellRendererComponent(tablaPesos, valor, true, true, i,
-			 * 2).setForeground(Color.RED); }else if (valor>0) {
-			 * 
-			 * tablaPesos.getCellRenderer(i, 2).getTableCellRendererComponent(tablaPesos,
-			 * valor, true, true, i, 2).setForeground(Color.GREEN);
-			 * 
-			 * }
-			 * 
-			 * }
-			 **/
+				@Override
+				public Class<?> getColumnClass(int column) {
+					if (convertColumnIndexToModel(column) == 2)
+						return Double.class;
+					return super.getColumnClass(column);
+				}
+			};
+			
+			tablaPesos.setDefaultRenderer(Double.class, new DefaultTableCellRenderer(){
+	            @Override
+	            public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
+	                Component c = super.getTableCellRendererComponent(table,value,isSelected,hasFocus,row,column);
+	                if(column==2)
+	                c.setForeground((Double.parseDouble(value.toString()))>0 ? Color.GREEN.darker() : Color.RED);
+	                else
+	                c.setForeground(Color.BLACK);	
+	                return c;
+	            }
+	        });
+			
+
+//			for (int i = 0; i < pesos.size(); i++) {
+//
+//				double valor = Double.parseDouble(tablaPesos.getValueAt(i, 2).toString());
+//
+//				if (valor < 0) {
+//					tablaPesos.getCellRenderer(i, 2).getTableCellRendererComponent(tablaPesos, valor, true, true, i, 2)
+//							.setForeground(Color.RED);
+//				} else if (valor > 0) {
+//
+//					tablaPesos.getCellRenderer(i, 2).getTableCellRendererComponent(tablaPesos, valor, true, true, i, 2)
+//							.setForeground(Color.GREEN);
+//
+//				}
+//
+//			}
 
 			tablaPesos.setFont(new Font("Tahoma", Font.BOLD, 14));
 			tablaPesos.setShowHorizontalLines(true);
@@ -630,7 +648,7 @@ public class AgregarEditarResDialog extends JDialog {
 		});
 
 	}
-	
+
 	public void crearTablaVitaminas() {
 
 		String[] columns = { "VITAMINA", "FECHA" };
@@ -871,7 +889,7 @@ public class AgregarEditarResDialog extends JDialog {
 			scroller.getViewport().removeAll();
 			crearTablaPurgantes();
 			break;
-		
+
 		case 4:
 			scroller.getViewport().removeAll();
 			crearTablaVitaminas();
@@ -1056,7 +1074,7 @@ public class AgregarEditarResDialog extends JDialog {
 			btnExportar.setEnabled(false);
 
 		});
-		
+
 		btnRegistroVitaminas.addActionListener(e -> {
 
 			tiporeporte = 4;
@@ -1181,8 +1199,6 @@ public class AgregarEditarResDialog extends JDialog {
 		setSize(1100, 700);
 
 	}
-	
-	
 
 	public JTable getTablaPesos() {
 		return tablaPesos;
@@ -1275,6 +1291,7 @@ public class AgregarEditarResDialog extends JDialog {
 	public JCheckBox getCheckMuerto() {
 		return checkMuerto;
 	}
+
 	public JButton getBtnRegistroVitaminas() {
 		return btnRegistroVitaminas;
 	}
