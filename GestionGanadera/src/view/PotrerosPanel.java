@@ -47,10 +47,12 @@ import db.PurganteCRUD;
 import db.ResCRUD;
 import db.SQLConnection;
 import db.VacunaCRUD;
+import db.VitaminaCRUD;
 import model.Potrero;
 import model.Purgante;
 import model.Res;
 import model.Vacuna;
+import model.Vitamina;
 import tools.DocsImporterExporter;
 import tools.FileManager;
 
@@ -76,6 +78,7 @@ public class PotrerosPanel extends JPanel {
 	private JButton btnAgregarVacuna;
 	private JMenuBar menuBar;
 	private JLabel lblCantVacas;
+	private JButton btnAgregarVitamina;
 
 	public PotrerosPanel(InicioPanel inicio, String potreroelegido) {
 
@@ -172,24 +175,28 @@ public class PotrerosPanel extends JPanel {
 
 		lblNewLabel = new JLabel("");
 		panelInferior.add(lblNewLabel);
+		
+				btnAgregar = new JButton("Agregar Res", new ImageIcon(FileManager.imagenes.get("RES")));
+				btnAgregar.setVerticalTextPosition(AbstractButton.CENTER);
+				btnAgregar.setHorizontalTextPosition(AbstractButton.RIGHT);
+				btnAgregar.setFont(new Font("Tahoma", Font.BOLD, 20));
+				panelInferior.add(btnAgregar);
 
 		btnAgregarPurgante = new JButton("Agregar Purgante", new ImageIcon(FileManager.imagenes.get("PURGANTICO")));
 		btnAgregarPurgante.setVerticalTextPosition(AbstractButton.CENTER);
 		btnAgregarPurgante.setHorizontalTextPosition(AbstractButton.RIGHT);
-		btnAgregarPurgante.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnAgregarPurgante.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panelInferior.add(btnAgregarPurgante);
-
-		btnAgregar = new JButton("Agregar Res", new ImageIcon(FileManager.imagenes.get("RES")));
-		btnAgregar.setVerticalTextPosition(AbstractButton.CENTER);
-		btnAgregar.setHorizontalTextPosition(AbstractButton.RIGHT);
-		btnAgregar.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panelInferior.add(btnAgregar);
 
 		btnAgregarVacuna = new JButton("Agregar Vacuna", new ImageIcon(FileManager.imagenes.get("VACUNITA")));
 		btnAgregarVacuna.setVerticalTextPosition(AbstractButton.CENTER);
 		btnAgregarVacuna.setHorizontalTextPosition(AbstractButton.RIGHT);
-		btnAgregarVacuna.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnAgregarVacuna.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panelInferior.add(btnAgregarVacuna);
+		
+		btnAgregarVitamina = new JButton("Agregar Vitamina");
+		btnAgregarVitamina.setFont(new Font("Tahoma", Font.BOLD, 20));
+		panelInferior.add(btnAgregarVitamina);
 
 		lblNewLabel_2 = new JLabel("");
 		panelInferior.add(lblNewLabel_2);
@@ -410,6 +417,27 @@ public class PotrerosPanel extends JPanel {
 
 	}
 
+	public void agregarVitamina() {
+
+		String vitamina = JOptionPane.showInputDialog(null, "Ingrese el nombre de la vitamina", "Agregar Vitamina",
+				JOptionPane.INFORMATION_MESSAGE);
+
+		if (vitamina != null && !vitamina.equals("")) {
+			if (VitaminaCRUD.selectVitaminaByNombre(vitamina) == null) {
+				VitaminaCRUD.insert(vitamina);
+			} else {
+				JOptionPane.showMessageDialog(null, "La vitamina " + vitamina + " ya se encuentra agregada",
+						"Vitamina ya agregada", JOptionPane.ERROR_MESSAGE);
+			}
+		} else {
+
+			JOptionPane.showMessageDialog(null, "Debe ingresar un nombre a la vitamina", "No agregada",
+					JOptionPane.ERROR_MESSAGE);
+
+		}
+
+	}
+	
 	public void agregarVacuna() {
 
 		String vacuna = JOptionPane.showInputDialog(null, "Ingrese el nombre de la vacuna", "Agregar Vacuna",
@@ -470,9 +498,14 @@ public class PotrerosPanel extends JPanel {
 		newPurgante.addActionListener(e -> {
 			agregarPurgante();
 		});
+		JMenuItem newVitamina = new JMenuItem("Vitamina", new ImageIcon(FileManager.imagenes.get("VITAMINITA")));
+		newVitamina.addActionListener(e ->{
+			agregarVitamina();
+		});
 		nuevo.add(newRes);
 		nuevo.add(newVacuna);
 		nuevo.add(newPurgante);
+		nuevo.add(newVitamina);
 		archivo.add(nuevo);
 		archivo.addSeparator();
 		archivo.add(plantilla);
@@ -495,9 +528,14 @@ public class PotrerosPanel extends JPanel {
 		purgar.addActionListener(e -> {
 			purgar();
 		});
+		JMenuItem vitaminizar = new JMenuItem("Vitaminizar", new ImageIcon(FileManager.imagenes.get("VITAMINITA")));
+		vitaminizar.addActionListener(e ->{
+			vitaminizar();
+		});
 		acciones.add(trasladar);
 		acciones.add(vacunar);
 		acciones.add(purgar);
+		acciones.add(vitaminizar);
 
 		JMenu edicion = new JMenu("Edici\u00F3n");
 		JMenuItem limpiar = new JMenuItem("Limpiar Selecci\u00F3n");
@@ -564,6 +602,11 @@ public class PotrerosPanel extends JPanel {
 		purgar.addActionListener(a -> {
 			purgar();
 		});
+		
+		JMenuItem vitaminizar = new JMenuItem("Vitaminizar");
+		vitaminizar.addActionListener(a ->{
+			vitaminizar();
+		});
 
 		JMenuItem trasladar = new JMenuItem("Trasladar");
 		trasladar.addActionListener(a -> {
@@ -582,6 +625,8 @@ public class PotrerosPanel extends JPanel {
 		menu.add(vacunar);
 		menu.addSeparator();
 		menu.add(purgar);
+		menu.addSeparator();
+		menu.add(vitaminizar);
 		menu.addSeparator();
 		menu.add(trasladar);
 		menu.addSeparator();
@@ -761,6 +806,85 @@ public class PotrerosPanel extends JPanel {
 		}
 	}
 
+	public void vitaminizar() {
+
+		int[] rowsSelected = tablaRes.getSelectedRows();
+
+		if (rowsSelected.length > 0) {
+			if (tablaRes.getRowSorter() != null) {
+
+				for (int i = 0; i < rowsSelected.length; i++) {
+
+					rowsSelected[i] = tablaRes.getRowSorter().convertRowIndexToModel(rowsSelected[i]);
+
+				}
+
+			}
+
+			ArrayList<Vitamina> vitaminas = VitaminaCRUD.select();
+			String[] vitaminitas = new String[vitaminas.size()];
+
+			for (int i = 0; i < vitaminitas.length; i++) {
+				vitaminitas[i] = vitaminas.get(i).getNombre();
+			}
+
+			Icon icon = new ImageIcon(FileManager.imagenes.get("VITAMINA"));
+
+			String resp = (String) JOptionPane.showInputDialog(null,
+					"Seleccione la vitamina que desea aplicar a las reses", "Vitaminizar ganado", JOptionPane.DEFAULT_OPTION,
+					icon, vitaminitas, null);
+
+			if (resp != null) {
+				CalendarioDialog cal = new CalendarioDialog(null);
+				String fecha = cal.getFechaSeleccionada();
+
+				if (fecha != null && !fecha.equals("")) {
+
+					int option = JOptionPane.showConfirmDialog(this,
+							"\u00BFEST\u00C1 SEGURO QUE DESEA VITAMINIZAR " + rowsSelected.length + " RESES CON LA VITAMINA "
+									+ resp + " CON FECHA " + fecha + "" + "?",
+							"ADVERTENCIA", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+					if (option == 0) {
+
+						new Thread() {
+							BarraProgresoDialog progreso = new BarraProgresoDialog(rowsSelected.length);
+
+							int value = 0;
+
+							@Override
+							public void run() {
+
+								ArrayList<String> ids = new ArrayList<>();
+
+								for (int i = 0; i < rowsSelected.length; i++) {
+
+									String id = modelRes.getValueAt(rowsSelected[i], 0).toString();
+									ids.add(id);
+									value++;
+									progreso.getProgreso().setValue(value);
+
+								}
+
+								ResCRUD.insertVitaminaMultiple(ids, resp, fecha);
+								progreso.dispose();
+								JOptionPane.showMessageDialog(null, "Se ha aplicado con \u00E9xito la vitamina",
+										"Vitamina Aplicada", JOptionPane.INFORMATION_MESSAGE);
+							}
+						}.start();
+
+					}
+				}
+			}
+		} else {
+
+			JOptionPane.showMessageDialog(null, "Selecciona al menos una res para la acci\u00F3n.",
+					"No hay reses seleccionadas", JOptionPane.INFORMATION_MESSAGE);
+
+		}
+
+	}
+	
 	public void trasladar() {
 
 		int[] rowsSelected = tablaRes.getSelectedRows();
@@ -1022,7 +1146,7 @@ public class PotrerosPanel extends JPanel {
 		inicio.getVentana().setSize(800, 400);
 		inicio.getVentana().setResizable(false);
 		inicio.getVentana().setLocationRelativeTo(null);
-		inicio.getVentana().add(inicio);
+		inicio.getVentana().getContentPane().add(inicio);
 		inicio.getVentana().refresh();
 
 	}
@@ -1077,5 +1201,8 @@ public class PotrerosPanel extends JPanel {
 
 	public JLabel getLblCantVacas() {
 		return lblCantVacas;
+	}
+	public JButton getBtnAgregarVitamina() {
+		return btnAgregarVitamina;
 	}
 }
