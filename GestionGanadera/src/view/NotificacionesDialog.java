@@ -31,8 +31,11 @@ public class NotificacionesDialog extends JDialog {
 	private JList<Res> listDestete;
 	private JList<Res> listPurgado;
 	private JList<Res> listVacuna;
+	private JList<Res> listAlertas;
 	private JScrollPane listScrollerPartos;
 	DefaultListModel<Res> modeloPartos;
+	private JScrollPane listScrollerAlertas;
+	DefaultListModel<Res> modeloAlertas;
 	private JScrollPane listScrollerDestete;
 	DefaultListModel<Res> modeloDestete;
 	private JScrollPane listScrollerPurgado;
@@ -44,13 +47,16 @@ public class NotificacionesDialog extends JDialog {
 	JTable tablaDestete;
 	JTable tablaPurgado;
 	JTable tablaVacuna;
+	JTable tablaAlertas;
 	ModelTable modeloPartosP;
 	ModelTable modeloDesteteP;
 	ModelTable modeloPurgadoP;
 	ModelTable modeloVacunaP;
+	ModelTable modeloAlertasP;
 	ModeloTableVacuna modelotablevacuna;
 	ModeloTablePurgado modelotablepurgado;
 	ModeloTableParto modelotablepartos;
+	ModeloTableAlertas modelotablealertas;
 	ModeloTableDestete modelotabledestete;
 	private JPanel panel;
 
@@ -96,6 +102,10 @@ public class NotificacionesDialog extends JDialog {
 		listVacuna = new JList<Res>();
 		modeloVacuna = new DefaultListModel<Res>();
 		listVacuna.setModel(modeloVacuna);
+		
+		listAlertas = new JList<Res>();
+		modeloAlertas = new DefaultListModel<Res>();
+		listAlertas.setModel(modeloAlertas);
 
 		listScrollerPartos = new JScrollPane(listPartos);
 		listScrollerPartos.setPreferredSize(new Dimension(450, 300));
@@ -107,13 +117,16 @@ public class NotificacionesDialog extends JDialog {
 		listScrollerPurgado.setPreferredSize(new Dimension(450, 300));
 
 		listScrollerVacuna = new JScrollPane(listVacuna);
-		listScrollerVacuna.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		listScrollerVacuna.setPreferredSize(new Dimension(450, 300));
+		
+		listScrollerAlertas = new JScrollPane(listAlertas);
+		listScrollerAlertas.setPreferredSize(new Dimension(450, 300));
 
 		tabbedPane.addTab("Partos", null, listScrollerPartos, null);
 		tabbedPane.addTab("Destete", null, listScrollerDestete, null);
 		tabbedPane.addTab("Purgado", null, listScrollerPurgado, null);
 		tabbedPane.addTab("Vacunas", null, listScrollerVacuna, null);
+		tabbedPane.addTab("Alertas", null, listScrollerAlertas, null);
 
 		PanelColorNotificaciones panel = new PanelColorNotificaciones();
 		getContentPane().add(panel, BorderLayout.NORTH);
@@ -127,6 +140,7 @@ public class NotificacionesDialog extends JDialog {
 		crearTablaDestete();
 		crearTablaParto();
 		crearTablaPurgado();
+		crearTablaAlertas();
 
 	}
 
@@ -205,6 +219,25 @@ public class NotificacionesDialog extends JDialog {
 		tablaDestete.setFillsViewportHeight(true);
 
 	}
+	
+	public void crearTablaAlertas() {
+
+		String[] columns = { "NOTIFICACION" };
+
+		ArrayList<Res> resesVacuna = ResCRUD.reporteAlertas(ventana.getPotrero_elegido());
+
+		modelotablealertas = new ModeloTableAlertas(resesVacuna);
+
+		modelotablealertas.setColumna(columns);
+		tablaAlertas = new JTable(modelotablealertas);
+		tablaAlertas.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tablaAlertas.setShowHorizontalLines(true);
+		tablaAlertas.setShowVerticalLines(true);
+		tablaAlertas.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
+		listScrollerAlertas.setViewportView(tablaAlertas);
+		tablaAlertas.setFillsViewportHeight(true);
+
+	}
 
 	public void listeners() {
 
@@ -245,6 +278,39 @@ public class NotificacionesDialog extends JDialog {
 			}
 
 		});
+		
+		tablaAlertas.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				int[] rowsSelected = tablaAlertas.getSelectedRows();
+
+				ArrayList<Res> resesSeleccionadas = new ArrayList<>();
+				if (e.getButton() == MouseEvent.BUTTON3) {
+
+					int valor = JOptionPane.showConfirmDialog(null,
+							"\u00BFEst\u00E1 seguro de eliminar esta notificaci\u00F3n?");
+
+					if (valor == JOptionPane.YES_OPTION) {
+
+						for (int i = 0; i < rowsSelected.length; i++) {
+
+							resesSeleccionadas.add(modelotablealertas.getReses().get(rowsSelected[i]));
+
+						}
+
+						
+						refreshTableAlertas();
+						ventana.refreshTable();
+
+					}
+
+				}
+			}
+
+		});
+
 
 		tablaPurgado.addMouseListener(new MouseAdapter() {
 
@@ -276,10 +342,14 @@ public class NotificacionesDialog extends JDialog {
 						ResCRUD.insertPurganteMultipleSegunda(resesSeleccionadas, fecha);
 
 						refreshTablePurgado();
+						ventana.refreshTable();
+
+						
 					}
 
 				}
 			}
+			
 
 		});
 
@@ -389,6 +459,15 @@ public class NotificacionesDialog extends JDialog {
 
 		modelotablepurgado.setReses(resesVacuna);
 		modelotablepurgado.fireTableDataChanged();
+
+	}
+	
+	public void refreshTableAlertas() {
+
+		ArrayList<Res> resesVacuna = ResCRUD.reporteAlertas(ventana.getPotrero_elegido());
+
+		modelotablealertas.setReses(resesVacuna);
+		modelotablealertas.fireTableDataChanged();
 
 	}
 

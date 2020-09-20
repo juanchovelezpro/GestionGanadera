@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Stack;
@@ -227,9 +228,33 @@ public class DocsImporterExporter {
 
 	}
 	
+	
+public static double calcularBalance(ArrayList<Peso> pesos, int posicion) {
+		
+		double balance = 0;
+
+		
+		if (posicion==pesos.size()-1) {
+			
+			balance= 0;
+		}else {
+			
+			balance= pesos.get(posicion).getPeso()-pesos.get(posicion+1).getPeso();
+			
+		}
+		
+
+		return balance;
+		
+		
+		
+	}
+	
 	public static void exportarPesos(String destino, String resID) {
 		
 		ArrayList<Peso> resesPartos = ResCRUD.selectPesosLista(resID);
+		Collections.sort(resesPartos);
+		Collections.reverse(resesPartos);
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 
@@ -246,10 +271,11 @@ public class DocsImporterExporter {
 		firstRow.createCell(0).setCellValue("NUMERO");
 		firstRow.createCell(1).setCellValue("FECHA");
 		firstRow.createCell(2).setCellValue("PESO");
+		firstRow.createCell(3).setCellValue("BALANCE");
 
-		for (int i = 1; i < resesPartos.size(); i++) {
-			Row myRow = sh.createRow(i);
-			for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < resesPartos.size(); i++) {
+			Row myRow = sh.createRow(i+1);
+			for (int j = 0; j < 4; j++) {
 
 				Cell myCell = myRow.createCell(j);
 
@@ -264,6 +290,10 @@ public class DocsImporterExporter {
 					break;
 				case 2:
 					myCell.setCellValue(resesPartos.get(i).getPeso());
+					break;
+				case 3:
+					myCell.setCellValue(calcularBalance(resesPartos, i));
+					break;
 			
 				}
 			}

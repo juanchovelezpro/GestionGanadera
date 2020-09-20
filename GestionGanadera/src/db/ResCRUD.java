@@ -25,12 +25,12 @@ public class ResCRUD {
 
 		String values = "'" + res.getResID() + "','" + res.getTipo() + "','" + res.getGenero() + "','" + res.getColor()
 				+ "','" + res.getFecha_nacimiento() + "','" + res.getObservaciones() + "'," + res.getVivo() + ","
-				+ res.getEmbarazada() + ",'" + res.getFecha_embarazo() + "','" + res.getFecha_ultimo_purgado() + "','"
+				+ res.getEmbarazada() + ",'" + res.getFecha_embarazo() + "','" + res.getFecha_UltimoEmbarazo() + "','"
 				+ res.getFecha_ultimo_vacunado() + "','" + res.getMadreID() + "','" + res.getPotreroNombre() + "'";
 
 		try {
 			sql.getStatement().executeUpdate(
-					"INSERT INTO res (numero,tipo,genero,color,fecha_nacimiento,observaciones,vivo,embarazada,fecha_embarazo,fecha_ultima_purgado,fecha_ultima_vacunado,madreID,potreroNombre) "
+					"INSERT INTO res (numero,tipo,genero,color,fecha_nacimiento,observaciones,vivo,embarazada,fecha_embarazo,fecha_UltimoEmbarazo,fecha_ultima_vacunado,madreID,potreroNombre) "
 							+ "VALUES (" + values + ")");
 
 		} catch (SQLException e) {
@@ -115,13 +115,13 @@ public class ResCRUD {
 				int vivo = result.getInt(7);
 				int embarazada = result.getInt(8);
 				String fecha_embarazo = result.getString(9);
-				String fecha_ultimo_purgado = result.getString(10);
+				String fecha_UltimoEmbarazo = result.getString(10);
 				String fecha_ultimo_vacunado = result.getString(11);
 				String madreID = result.getString(12);
 				String potreroNombre = result.getString(13);
 
 				res = new Res(res_ID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
-						fecha_embarazo, madreID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potreroNombre);
+						fecha_embarazo, madreID, fecha_UltimoEmbarazo, fecha_ultimo_vacunado, potreroNombre);
 
 			}
 
@@ -142,8 +142,8 @@ public class ResCRUD {
 					+ res.getGenero() + "', tipo='" + res.getTipo() + "', color='" + res.getColor() + "',vivo="
 					+ res.getVivo() + ", fecha_nacimiento='" + res.getFecha_nacimiento() + "', observaciones='"
 					+ res.getObservaciones() + "', embarazada =" + res.getEmbarazada() + ", fecha_embarazo='"
-					+ res.getFecha_embarazo() + "',madreID='" + res.getMadreID() + "',fecha_ultima_purgado='"
-					+ res.getFecha_ultimo_purgado() + "', fecha_ultima_vacunado='" + res.getFecha_ultimo_vacunado()
+					+ res.getFecha_embarazo() + "',madreID='" + res.getMadreID() + "',fecha_UltimoEmbarazo='"
+					+ res.getFecha_UltimoEmbarazo() + "', fecha_ultima_vacunado='" + res.getFecha_ultimo_vacunado()
 					+ "', potreroNombre='" + res.getPotreroNombre() + "' WHERE numero='" + id + "'");
 
 			updatePesosRes(id, res.getResID());
@@ -157,46 +157,7 @@ public class ResCRUD {
 
 	}
 
-	public static ArrayList<Res> selectCustom(String criteria) {
-
-		SQLConnection sql = SQLConnection.getInstance();
-		ArrayList<Res> vacas = new ArrayList<>();
-
-		try {
-
-			ResultSet result = sql.getStatement().executeQuery("SELECT * FROM res WHERE " + criteria);
-
-			while (result.next()) {
-
-				String resID = result.getString(1);
-				String tipo = result.getString(2);
-				String genero = result.getString(3);
-				String color = result.getString(4);
-				String fecha_nacimiento = result.getString(5);
-				String observaciones = result.getString(6);
-				int vivo = result.getInt(7);
-				int embarazada = result.getInt(8);
-				String fecha_embarazo = result.getString(9);
-				String fecha_ultimo_purgado = result.getString(10);
-				String fecha_ultimo_vacunado = result.getString(11);
-				String madreID = result.getString(12);
-				String potreroNombre = result.getString(13);
-
-				Res res = new Res(resID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
-						fecha_embarazo, madreID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potreroNombre);
-				vacas.add(res);
-
-			}
-
-		} catch (SQLException ex) {
-
-			ex.printStackTrace();
-
-		}
-
-		return vacas;
-
-	}
+	
 
 	public static void updateMadreaCria(String idVieja, String idNueva) {
 
@@ -720,6 +681,45 @@ public class ResCRUD {
 
 		return vacas_destete;
 
+	}
+	
+	public static ArrayList<Res> reporteAlertas(String potrero){
+		
+		ArrayList<Res> vacas_alertas =new ArrayList<>();
+		
+		Res res = null;
+		
+		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
+		
+		
+		for (int i = 0; i < reses.size(); i++) {
+			
+			
+			res = reses.get(i);
+			
+			
+			if (res.getEmbarazada() == 1) {
+
+				
+			if (res.getFecha_UltimoEmbarazo()!=null) {
+
+			if(!res.getFecha_UltimoEmbarazo().equalsIgnoreCase("") && !res.getFecha_UltimoEmbarazo().equalsIgnoreCase("SIN REGISTRO")) {
+			
+				long dias = diasEntreFechas(res.getFecha_UltimoEmbarazo());
+				long meses = mesesEntreFechas(res.getFecha_UltimoEmbarazo());
+				
+			 if(dias>810) {
+				 vacas_alertas.add(res);
+			 }	
+			
+			}
+			
+			}
+			}
+		}
+		
+		return vacas_alertas;
+		
 	}
 
 	public static ArrayList<Res> reportePartos(String potrero) {

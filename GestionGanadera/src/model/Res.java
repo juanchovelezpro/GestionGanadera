@@ -19,12 +19,12 @@ public class Res {
 	private Stack<Vacuna> vacunas;
 	private Stack<Purgante> purgantes;
 	private ArrayList<Peso> pesos;
-	private String fecha_ultimo_purgado;
+	private String fecha_UltimoEmbarazo;
 	private String fecha_ultimo_vacunado;
 	private String potreroNombre;
 
 	public Res(String resID, String genero, String tipo, String color, int vivo, String fecha_nacimiento,
-			String observaciones, int embarazada, String fecha_embarazo, String madreID, String fecha_ultimo_purgado,
+			String observaciones, int embarazada, String fecha_embarazo, String madreID, String fecha_UltimoEmbarazo,
 			String fecha_ultimo_vacunado, String potreroNombre) {
 		super();
 		this.resID = resID;
@@ -37,7 +37,7 @@ public class Res {
 		this.embarazada = embarazada;
 		this.fecha_embarazo = fecha_embarazo;
 		this.madreID = madreID;
-		this.fecha_ultimo_purgado = fecha_ultimo_purgado;
+		this.fecha_UltimoEmbarazo = fecha_UltimoEmbarazo;
 		this.fecha_ultimo_vacunado = fecha_ultimo_vacunado;
 		this.potreroNombre = potreroNombre;
 
@@ -176,12 +176,12 @@ public class Res {
 		this.pesos = pesos;
 	}
 
-	public String getFecha_ultimo_purgado() {
-		return fecha_ultimo_purgado;
+	public String getFecha_UltimoEmbarazo() {
+		return fecha_UltimoEmbarazo;
 	}
 
-	public void setFecha_ultimo_purgado(String fecha_ultimo_purgado) {
-		this.fecha_ultimo_purgado = fecha_ultimo_purgado;
+	public void setFecha_UltimoEmbarazo(String fecha_UltimoEmbarazo) {
+		this.fecha_UltimoEmbarazo = fecha_UltimoEmbarazo;
 	}
 
 	public String getFecha_ultimo_vacunado() {
@@ -197,8 +197,8 @@ public class Res {
 		return "Res [resID=" + resID + ", genero=" + genero + ", tipo=" + tipo + ", color=" + color + ", vivo=" + vivo
 				+ ", fecha_nacimiento=" + fecha_nacimiento + ", observaciones=" + observaciones + ", embarazada="
 				+ embarazada + ", fecha_embarazo=" + fecha_embarazo + ", madreID=" + madreID + ", crias=" + crias
-				+ ", vacunas=" + vacunas + ", purgantes=" + purgantes + ", pesos=" + pesos + ", fecha_ultimo_purgado="
-				+ fecha_ultimo_purgado + ", fecha_ultimo_vacunado=" + fecha_ultimo_vacunado + ", potreroNombre="
+				+ ", vacunas=" + vacunas + ", purgantes=" + purgantes + ", pesos=" + pesos + ", fecha_UltimoEmbarazo="
+				+ fecha_UltimoEmbarazo + ", fecha_ultimo_vacunado=" + fecha_ultimo_vacunado + ", potreroNombre="
 				+ potreroNombre + "]";
 	}
 
@@ -218,6 +218,11 @@ public class Res {
 		return "Realice el destete a la res: " + resID + " del potrero: " + potreroNombre + " Con fecha de nacimiento "
 				+ fecha_nacimiento;
 	}
+	
+	public String toAlertas() {
+
+		return "Atención a la res: " + resID + " del potrero: " + potreroNombre +"" + " Lleva mas de un año y medio sin tener una cría ";
+	}
 
 	public String toPurgado() {
 
@@ -229,5 +234,7 @@ public class Res {
 			return "hay un problemilla";
 		}
 	}
+
+	
 
 }

@@ -40,7 +40,7 @@ public class SQLUtils {
 			int embarazada = resita.getEmbarazada();
 			String fechaEmbarazo = resita.getFecha_embarazo();
 			String madre = resita.getMadreID();
-			String fechaPurgado = resita.getFecha_ultimo_purgado();
+			String fechaUltimoEmbarazo = resita.getFecha_UltimoEmbarazo();
 			String fechaVacunado = resita.getFecha_ultimo_vacunado();
 			String potrero = resita.getPotreroNombre();
 
@@ -48,14 +48,14 @@ public class SQLUtils {
 
 				resultado += "(\"" + numero + "\"," + "\"" + tipo + "\"," + "\"" + genero + "\"," + "\"" + color + "\","
 						+ "\"" + fecha_nac + "\"," + "\"" + observaciones + "\"," + vivo + "," + embarazada + "," + "\""
-						+ fechaEmbarazo + "\"," + "\"" + fechaPurgado + "\"," + "\"" + fechaVacunado + "\"," + "\""
+						+ fechaEmbarazo + "\"," + "\"" + fechaUltimoEmbarazo + "\"," + "\"" + fechaVacunado + "\"," + "\""
 						+ madre + "\"," + "\"" + potrero + "\"),";
 
 			} else {
 
 				resultado += "(\"" + numero + "\"," + "\"" + tipo + "\"," + "\"" + genero + "\"," + "\"" + color + "\","
 						+ "\"" + fecha_nac + "\"," + "\"" + observaciones + "\"," + vivo + "," + embarazada + "," + "\""
-						+ fechaEmbarazo + "\"," + "\"" + fechaPurgado + "\"," + "\"" + fechaVacunado + "\"," + "\""
+						+ fechaEmbarazo + "\"," + "\"" + fechaUltimoEmbarazo + "\"," + "\"" + fechaVacunado + "\"," + "\""
 						+ madre + "\"," + "\"" + potrero + "\")";
 
 			}

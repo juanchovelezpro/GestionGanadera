@@ -2,11 +2,14 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Stack;
 
 import javax.swing.DefaultComboBoxModel;
@@ -24,12 +27,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import db.ResCRUD;
 import model.Peso;
 import model.Purgante;
 import model.Res;
 import model.Vacuna;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
 import tools.DocsImporterExporter;
 import tools.FileManager;
 import tools.GeneradorGrafica;
@@ -71,6 +76,10 @@ public class AgregarEditarResDialog extends JDialog {
 	private JPanel panelTabla;
 	private JCheckBox checkMuerto;
 	private JButton btnExportar;
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_RESET = "\u001B[0m";
+
+
 
 	/**
 	 * @wbp.parser.constructor
@@ -439,6 +448,7 @@ public class AgregarEditarResDialog extends JDialog {
 				String fechaEmba = btnFechaEmbarazo.getText();
 
 				if (fechaEmba != null && !fechaEmba.equals("") && !fechaEmba.equals("dd/mm/AAAA")) {
+					res.setFecha_UltimoEmbarazo(fechaEmba);
 					res.setFecha_embarazo(fechaEmba);
 				} else {
 					res.setFecha_embarazo("");
@@ -486,20 +496,44 @@ public class AgregarEditarResDialog extends JDialog {
 		setLocationRelativeTo(null);
 
 	}
+	
+	public double calcularBalance(ArrayList<Peso> pesos, int posicion) {
+		
+		double balance = 0;
+
+		
+		if (posicion==pesos.size()-1) {
+			
+			balance= 0;
+		}else {
+			
+			balance= pesos.get(posicion).getPeso()-pesos.get(posicion+1).getPeso();
+			
+		}
+		
+
+		return balance;
+		
+		
+		
+	}
 
 	public void crearTablaPesos() {
 
-		String[] columns = { "PESO", "FECHA" };
+		String[] columns = { "PESO", "FECHA", "BALANCE" };
 
 		if (res != null) {
 
-			Stack<Peso> pesos = ResCRUD.selectPesos(res.getResID());
+			ArrayList<Peso> pesos = ResCRUD.selectPesosLista(res.getResID());
+			Collections.sort(pesos);
+			Collections.reverse(pesos);
+		
 			Object[][] data = new Object[pesos.size()][columns.length];
 			Peso temp = null;
 
 			for (int i = 0; i < data.length; i++) {
 
-				temp = pesos.pop();
+				temp = pesos.get(i);
 
 				for (int j = 0; j < data[0].length; j++) {
 
@@ -508,21 +542,48 @@ public class AgregarEditarResDialog extends JDialog {
 
 					if (j == 1)
 						data[i][j] = temp.getFecha();
+					
+					if (j == 2)
+						data[i][j] = calcularBalance(pesos, i);
+					    
 
 				}
 
 			}
-
+			
+			
+           
 			modelPesos = new ModelTable();
 			modelPesos.setData(data);
 			modelPesos.setColumns(columns);
 			tablaPesos = new JTable(modelPesos);
-			tablaPesos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			
+		
+			/**
+			for (int i = 0; i < pesos.size(); i++) {
+				
+				double valor = Double.parseDouble(tablaPesos.getValueAt(i, 2).toString());
+				
+				if (valor<0) {
+                    tablaPesos.getCellRenderer(i, 2).getTableCellRendererComponent(tablaPesos, valor, true, true, i, 2).setForeground(Color.RED);
+				}else if (valor>0) {
+
+                    tablaPesos.getCellRenderer(i, 2).getTableCellRendererComponent(tablaPesos, valor, true, true, i, 2).setForeground(Color.GREEN);
+
+				}
+
+			}
+			**/
+			
+			
+			tablaPesos.setFont(new Font("Tahoma", Font.BOLD, 14));
 			tablaPesos.setShowHorizontalLines(true);
 			tablaPesos.setShowVerticalLines(true);
 			tablaPesos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 16));
 			scroller.setViewportView(tablaPesos);
 			tablaPesos.setFillsViewportHeight(true);
+			
+			
 
 			transformarPanel();
 
