@@ -430,9 +430,12 @@ public class NotificacionesDialog extends JDialog {
 
 								Res madre = ResCRUD.selectResByID(resesSeleccionadas.get(i).getMadreID());
 
+								if(madre != null) {
 								madre.setTipo("VH");
 								ResCRUD.update(madre.getResID(), madre);
-
+								}
+								
+								
 							}
 
 							if (resesSeleccionadas.get(i).getGenero().equals("M")) {
@@ -443,9 +446,10 @@ public class NotificacionesDialog extends JDialog {
 
 								Res madre = ResCRUD.selectResByID(resesSeleccionadas.get(i).getMadreID());
 
+								if(madre!=null) {
 								madre.setTipo("VH");
 								ResCRUD.update(madre.getResID(), madre);
-
+								}
 							}
 
 						}

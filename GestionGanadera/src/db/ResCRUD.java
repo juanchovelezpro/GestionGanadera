@@ -668,7 +668,7 @@ public class ResCRUD {
 
 				if (res.getTipo().equals("CH") || res.getTipo().equals("CM")) {
 
-					if (dias <= 250 && dias >= 220) {
+					if (dias <= 255 && dias >= 220) {
 
 						vacas_destete.add(res);
 
