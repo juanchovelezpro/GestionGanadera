@@ -147,12 +147,11 @@ public class DocsImporterExporter {
 
 	}
 
-	public static void exportPotrero(String potreroNombre, String destino) {
+	public static void exportPotrero(String potreroNombre,ArrayList<Res> reses, String destino) {
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 		XSSFSheet sheet = wb.createSheet(potreroNombre);
 
-		ArrayList<Res> reses = PotreroCRUD.selectRes(potreroNombre);
 
 		Row firstRow = sheet.createRow(0);
 		firstRow.createCell(0).setCellValue("No");

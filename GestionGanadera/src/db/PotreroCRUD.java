@@ -129,13 +129,13 @@ public class PotreroCRUD {
 				int vivo = result.getInt(7);
 				int embarazada = result.getInt(8);
 				String fecha_embarazo = result.getString(9);
-				String fecha_ultimo_purgado = result.getString(10);
+				String fecha_UltimoEmbarazo = result.getString(10);
 				String fecha_ultimo_vacunado = result.getString(11);
 				String madreID = result.getString(12);
 				String potrero_Nombre = result.getString(13);
 
 				Res res = new Res(resID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
-						fecha_embarazo, madreID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potrero_Nombre);
+						fecha_embarazo, madreID, fecha_UltimoEmbarazo, fecha_ultimo_vacunado, potrero_Nombre);
 
 				vacas.add(res);
 
@@ -148,6 +148,89 @@ public class PotreroCRUD {
 
 		return vacas;
 
+	}
+	
+	public static ArrayList<Res> selectResesNormales(String potreroNombre) {
+		
+		SQLConnection sql = SQLConnection.getInstance();
+		ArrayList<Res> vacas = new ArrayList<Res>();
+
+		try {
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT * FROM res WHERE potreroNombre='" + potreroNombre + "' AND vivo=1" );
+
+			while (result.next()) {
+
+				String resID = result.getString(1);
+				String tipo = result.getString(2);
+				String genero = result.getString(3);
+				String color = result.getString(4);
+				String fecha_nacimiento = result.getString(5);
+				String observaciones = result.getString(6);
+				int vivo = result.getInt(7);
+				int embarazada = result.getInt(8);
+				String fecha_embarazo = result.getString(9);
+				String fecha_UltimoEmbarazo = result.getString(10);
+				String fecha_ultimo_vacunado = result.getString(11);
+				String madreID = result.getString(12);
+				String potrero_Nombre = result.getString(13);
+
+				Res res = new Res(resID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
+						fecha_embarazo, madreID, fecha_UltimoEmbarazo, fecha_ultimo_vacunado, potrero_Nombre);
+
+				vacas.add(res);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return vacas;
+		
+	}
+	
+	public static ArrayList<Res> selectResesRetiradas(String potreroNombre) {
+		
+		SQLConnection sql = SQLConnection.getInstance();
+		ArrayList<Res> vacas = new ArrayList<Res>();
+
+		try {
+			ResultSet result = sql.getStatement()
+					.executeQuery("SELECT * FROM res WHERE potreroNombre='" + potreroNombre + "' AND vivo=0" );
+
+			while (result.next()) {
+
+				String resID = result.getString(1);
+				String tipo = result.getString(2);
+				String genero = result.getString(3);
+				String color = result.getString(4);
+				String fecha_nacimiento = result.getString(5);
+				String observaciones = result.getString(6);
+				int vivo = result.getInt(7);
+				int embarazada = result.getInt(8);
+				String fecha_embarazo = result.getString(9);
+				String fecha_UltimoEmbarazo = result.getString(10);
+				String fecha_ultimo_vacunado = result.getString(11);
+				String madreID = result.getString(12);
+				String potrero_Nombre = result.getString(13);
+
+				Res res = new Res(resID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
+						fecha_embarazo, madreID, fecha_UltimoEmbarazo, fecha_ultimo_vacunado, potrero_Nombre);
+
+				vacas.add(res);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return vacas;
+		
+		
 	}
 
 }

@@ -144,7 +144,7 @@ public class PotrerosPanel extends JPanel {
 
 		popUpMenu();
 
-		lblCantVacas = new JLabel("Cantidad Reses: " + modelRes.getData().length);
+		lblCantVacas = new JLabel("Cantidad Reses: " + PotreroCRUD.selectResesNormales(potrero_elegido).size());
 		lblCantVacas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCantVacas.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panelSuperior.add(lblCantVacas);
@@ -241,6 +241,11 @@ public class PotrerosPanel extends JPanel {
 		scroller.getViewport().setOpaque(false);
 		tablaRes.setFillsViewportHeight(true);
 		panelResTable.add(scroller);
+		
+		sorter = new TableRowSorter<>(modelRes); 
+		sorter.setRowFilter(RowFilter.regexFilter("VIVO", 5));
+		tablaRes.setRowSorter(sorter);
+		
 
 	}
 
@@ -298,7 +303,7 @@ public class PotrerosPanel extends JPanel {
 		ganado = PotreroCRUD.selectRes(potrero_elegido);
 		fillData();
 		modelRes.fireTableDataChanged();
-		lblCantVacas.setText("Cantidad Reses: " + modelRes.getData().length);
+		lblCantVacas.setText("Cantidad Reses: " + PotreroCRUD.selectResesNormales(potrero_elegido).size());
 
 	}
 
@@ -1154,7 +1159,11 @@ public class PotrerosPanel extends JPanel {
 
 			if (op == JFileChooser.APPROVE_OPTION) {
 
-				DocsImporterExporter.exportPotrero(potrero_elegido, fileSaver.getSelectedFile().getPath() + ".xlsx");
+				if(btnToggleResesRetiradas.isSelected())
+				DocsImporterExporter.exportPotrero(potrero_elegido,PotreroCRUD.selectResesRetiradas(potrero_elegido) ,fileSaver.getSelectedFile().getPath() + ".xlsx");
+				else
+				DocsImporterExporter.exportPotrero(potrero_elegido,PotreroCRUD.selectResesNormales(potrero_elegido) ,fileSaver.getSelectedFile().getPath() + ".xlsx");
+
 
 				JOptionPane.showMessageDialog(null, "Guardado en " + fileSaver.getSelectedFile().getPath(), "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);

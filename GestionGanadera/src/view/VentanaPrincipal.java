@@ -63,9 +63,9 @@ public class VentanaPrincipal extends JFrame {
 			if (UsuarioCRUD.select().size() == 1) {
 
 				if (comprobarLicencia()) {
-					System.out.println("aqui comprueba");
+					System.out.println("Aqui comprueba Licencia");
 					if (comprobarSerial()) {
-						System.out.println("aqui comprueba2");
+						System.out.println("Aqui comprueba Serial");
 						inicio = new InicioPanel(this);
 						add(inicio, BorderLayout.CENTER);
 					} else {

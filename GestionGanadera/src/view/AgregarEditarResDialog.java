@@ -320,7 +320,7 @@ public class AgregarEditarResDialog extends JDialog {
 		lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		panelOtro.add(lblNewLabel_4_1);
 
-		checkMuerto = new JCheckBox("\u00BFMUERTO?");
+		checkMuerto = new JCheckBox("\u00BFRETIRAR?");
 		checkMuerto.setFont(new Font("Tahoma", Font.BOLD, 12));
 		checkMuerto.setHorizontalAlignment(SwingConstants.CENTER);
 		panelOtro.add(checkMuerto);
