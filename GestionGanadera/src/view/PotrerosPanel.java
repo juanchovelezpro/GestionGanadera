@@ -175,26 +175,28 @@ public class PotrerosPanel extends JPanel {
 
 		lblNewLabel = new JLabel("");
 		panelInferior.add(lblNewLabel);
-		
-				btnAgregar = new JButton("Agregar Res", new ImageIcon(FileManager.imagenes.get("RES")));
-				btnAgregar.setVerticalTextPosition(AbstractButton.CENTER);
-				btnAgregar.setHorizontalTextPosition(AbstractButton.RIGHT);
-				btnAgregar.setFont(new Font("Tahoma", Font.BOLD, 20));
-				panelInferior.add(btnAgregar);
 
-		btnAgregarPurgante = new JButton("Agregar Purgante", new ImageIcon(FileManager.imagenes.get("PURGANTICO")));
+		btnAgregar = new JButton("Agregar Res", new ImageIcon(FileManager.imagenes.get("RES2")));
+		btnAgregar.setVerticalTextPosition(AbstractButton.CENTER);
+		btnAgregar.setHorizontalTextPosition(AbstractButton.RIGHT);
+		btnAgregar.setFont(new Font("Tahoma", Font.BOLD, 20));
+		panelInferior.add(btnAgregar);
+
+		btnAgregarPurgante = new JButton("Agregar Purgante", new ImageIcon(FileManager.imagenes.get("PURGANTICO2")));
 		btnAgregarPurgante.setVerticalTextPosition(AbstractButton.CENTER);
 		btnAgregarPurgante.setHorizontalTextPosition(AbstractButton.RIGHT);
 		btnAgregarPurgante.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panelInferior.add(btnAgregarPurgante);
 
-		btnAgregarVacuna = new JButton("Agregar Vacuna", new ImageIcon(FileManager.imagenes.get("VACUNITA")));
+		btnAgregarVacuna = new JButton("Agregar Vacuna", new ImageIcon(FileManager.imagenes.get("VACUNITA2")));
 		btnAgregarVacuna.setVerticalTextPosition(AbstractButton.CENTER);
 		btnAgregarVacuna.setHorizontalTextPosition(AbstractButton.RIGHT);
 		btnAgregarVacuna.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panelInferior.add(btnAgregarVacuna);
-		
-		btnAgregarVitamina = new JButton("Agregar Vitamina");
+
+		btnAgregarVitamina = new JButton("Agregar Vitamina", new ImageIcon(FileManager.imagenes.get("VITAMINITA2")));
+		btnAgregarVitamina.setVerticalTextPosition(AbstractButton.CENTER);
+		btnAgregarVitamina.setHorizontalTextPosition(AbstractButton.RIGHT);
 		btnAgregarVitamina.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panelInferior.add(btnAgregarVitamina);
 
@@ -329,6 +331,10 @@ public class PotrerosPanel extends JPanel {
 		btnAgregarPurgante.addActionListener(e -> {
 			agregarPurgante();
 		});
+		
+		btnAgregarVitamina.addActionListener(e ->{
+			agregarVitamina();
+		});
 
 		comboHembraMacho.addActionListener(e -> {
 			filtrar();
@@ -437,7 +443,7 @@ public class PotrerosPanel extends JPanel {
 		}
 
 	}
-	
+
 	public void agregarVacuna() {
 
 		String vacuna = JOptionPane.showInputDialog(null, "Ingrese el nombre de la vacuna", "Agregar Vacuna",
@@ -499,7 +505,7 @@ public class PotrerosPanel extends JPanel {
 			agregarPurgante();
 		});
 		JMenuItem newVitamina = new JMenuItem("Vitamina", new ImageIcon(FileManager.imagenes.get("VITAMINITA")));
-		newVitamina.addActionListener(e ->{
+		newVitamina.addActionListener(e -> {
 			agregarVitamina();
 		});
 		nuevo.add(newRes);
@@ -529,7 +535,7 @@ public class PotrerosPanel extends JPanel {
 			purgar();
 		});
 		JMenuItem vitaminizar = new JMenuItem("Vitaminizar", new ImageIcon(FileManager.imagenes.get("VITAMINITA")));
-		vitaminizar.addActionListener(e ->{
+		vitaminizar.addActionListener(e -> {
 			vitaminizar();
 		});
 		acciones.add(trasladar);
@@ -602,9 +608,9 @@ public class PotrerosPanel extends JPanel {
 		purgar.addActionListener(a -> {
 			purgar();
 		});
-		
+
 		JMenuItem vitaminizar = new JMenuItem("Vitaminizar");
-		vitaminizar.addActionListener(a ->{
+		vitaminizar.addActionListener(a -> {
 			vitaminizar();
 		});
 
@@ -831,8 +837,8 @@ public class PotrerosPanel extends JPanel {
 			Icon icon = new ImageIcon(FileManager.imagenes.get("VITAMINA"));
 
 			String resp = (String) JOptionPane.showInputDialog(null,
-					"Seleccione la vitamina que desea aplicar a las reses", "Vitaminizar ganado", JOptionPane.DEFAULT_OPTION,
-					icon, vitaminitas, null);
+					"Seleccione la vitamina que desea aplicar a las reses", "Vitaminizar ganado",
+					JOptionPane.DEFAULT_OPTION, icon, vitaminitas, null);
 
 			if (resp != null) {
 				CalendarioDialog cal = new CalendarioDialog(null);
@@ -841,8 +847,8 @@ public class PotrerosPanel extends JPanel {
 				if (fecha != null && !fecha.equals("")) {
 
 					int option = JOptionPane.showConfirmDialog(this,
-							"\u00BFEST\u00C1 SEGURO QUE DESEA VITAMINIZAR " + rowsSelected.length + " RESES CON LA VITAMINA "
-									+ resp + " CON FECHA " + fecha + "" + "?",
+							"\u00BFEST\u00C1 SEGURO QUE DESEA VITAMINIZAR " + rowsSelected.length
+									+ " RESES CON LA VITAMINA " + resp + " CON FECHA " + fecha + "" + "?",
 							"ADVERTENCIA", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
 					if (option == 0) {
@@ -884,7 +890,7 @@ public class PotrerosPanel extends JPanel {
 		}
 
 	}
-	
+
 	public void trasladar() {
 
 		int[] rowsSelected = tablaRes.getSelectedRows();
@@ -1202,6 +1208,7 @@ public class PotrerosPanel extends JPanel {
 	public JLabel getLblCantVacas() {
 		return lblCantVacas;
 	}
+
 	public JButton getBtnAgregarVitamina() {
 		return btnAgregarVitamina;
 	}

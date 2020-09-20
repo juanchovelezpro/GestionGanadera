@@ -36,6 +36,7 @@ public class FileManager {
 	public static void cargarRecursos() {
 		
 		Dimension minDim = new Dimension(15,15);
+		Dimension minBtn = new Dimension(30,30);
 
 		imagenes.put("ICONO", ImageLoader.cargarImagen("imagenes/icono.png"));
 		imagenes.put("VACA", ImageLoader.cargarImagen("imagenes/vaca.png"));
@@ -70,6 +71,14 @@ public class FileManager {
 				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/presentacion.png"), minDim));
 
 		imagenes.put("VITAMINITA", ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/vitamina.png"), minDim));
+		
+		imagenes.put("RES2",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/icono.png"), minBtn));
+		imagenes.put("VACUNITA2",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/vacuna.png"), minBtn));
+		imagenes.put("PURGANTICO2",
+				ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/purgante.png"), minBtn));
+		imagenes.put("VITAMINITA2", ImageLoader.resizeToFit(ImageLoader.cargarSprites("imagenes/vitamina.png"), minBtn));
 
 		imagenes.put("CAMPO", ImageLoader.cargarImagen("imagenes/fondocampo.jpg"));
 
