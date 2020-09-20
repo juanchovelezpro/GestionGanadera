@@ -55,6 +55,7 @@ import model.Vacuna;
 import model.Vitamina;
 import tools.DocsImporterExporter;
 import tools.FileManager;
+import javax.swing.JToggleButton;
 
 public class PotrerosPanel extends JPanel {
 
@@ -79,6 +80,7 @@ public class PotrerosPanel extends JPanel {
 	private JMenuBar menuBar;
 	private JLabel lblCantVacas;
 	private JButton btnAgregarVitamina;
+	private JToggleButton btnToggleResesRetiradas;
 
 	public PotrerosPanel(InicioPanel inicio, String potreroelegido) {
 
@@ -124,8 +126,9 @@ public class PotrerosPanel extends JPanel {
 		panel_2.add(lblNewLabel_4);
 
 		lblNombrePotrero = new JLabel(potrero_elegido);
-		lblNombrePotrero.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNombrePotrero.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNombrePotrero.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombrePotrero.setToolTipText(potrero_elegido);
 		panelSuperior.add(lblNombrePotrero);
 
 		panelResTable = new JPanel();
@@ -154,15 +157,10 @@ public class PotrerosPanel extends JPanel {
 		comboHembraMacho = new JComboBox();
 		comboHembraMacho.setModel(new DefaultComboBoxModel(new String[] { "VER TODO", "HEMBRAS", "MACHOS" }));
 		panelSuperior.add(comboHembraMacho);
-
-		JLabel lblNewLabel_3 = new JLabel("");
-		panelSuperior.add(lblNewLabel_3);
-
-		JLabel lblNewLabel_5 = new JLabel("");
-		panelSuperior.add(lblNewLabel_5);
-
-		JLabel lblNewLabel_6 = new JLabel("");
-		panelSuperior.add(lblNewLabel_6);
+		
+		btnToggleResesRetiradas = new JToggleButton("Reses Retiradas");
+		btnToggleResesRetiradas.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panelSuperior.add(btnToggleResesRetiradas);
 
 		btnNotificaciones = new JButton("Notificaciones");
 		btnNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -316,6 +314,29 @@ public class PotrerosPanel extends JPanel {
 		btnRegresar.addActionListener(e -> {
 			irAInicio();
 		});
+		
+		
+		btnToggleResesRetiradas.addActionListener(e ->{
+			
+			if(btnToggleResesRetiradas.isSelected()) {
+				
+				sorter = new TableRowSorter<>(modelRes); 
+				sorter.setRowFilter(RowFilter.regexFilter("MUERTO", 5));
+				tablaRes.setRowSorter(sorter);
+				comboHembraMacho.setEnabled(false);
+				
+			}else {
+				
+
+				sorter = new TableRowSorter<>(modelRes); 
+				sorter.setRowFilter(RowFilter.regexFilter("VIVO", 5));
+				tablaRes.setRowSorter(sorter);
+				comboHembraMacho.setEnabled(true);
+				
+			}
+			
+		});
+		
 
 		// Abrir panel de notificaciones
 		btnNotificaciones.addActionListener(e -> {
@@ -383,7 +404,9 @@ public class PotrerosPanel extends JPanel {
 		switch (comboHembraMacho.getSelectedIndex()) {
 
 		case 0:
-			tablaRes.setRowSorter(null);
+			sorter = new TableRowSorter<>(modelRes); 
+			sorter.setRowFilter(RowFilter.regexFilter("VIVO", 5));
+			tablaRes.setRowSorter(sorter);
 			break;
 
 		case 1:
@@ -1211,5 +1234,9 @@ public class PotrerosPanel extends JPanel {
 
 	public JButton getBtnAgregarVitamina() {
 		return btnAgregarVitamina;
+	}
+
+	public JToggleButton getBtnToggleResesRetiradas() {
+		return btnToggleResesRetiradas;
 	}
 }
