@@ -655,7 +655,7 @@ public class ResCRUD {
 
 		Res res = null;
 
-		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
+		ArrayList<Res> reses = PotreroCRUD.selectResesNormales(potrero);
 
 		for (int i = 0; i < reses.size(); i++) {
 
@@ -689,7 +689,7 @@ public class ResCRUD {
 		
 		Res res = null;
 		
-		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
+		ArrayList<Res> reses = PotreroCRUD.selectResesNormales(potrero);
 		
 		
 		for (int i = 0; i < reses.size(); i++) {
@@ -728,7 +728,7 @@ public class ResCRUD {
 
 		Res res = null;
 
-		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
+		ArrayList<Res> reses =PotreroCRUD.selectResesNormales(potrero);
 
 		for (int i = 0; i < reses.size(); i++) {
 
@@ -762,7 +762,7 @@ public class ResCRUD {
 
 		ArrayList<Res> reses_purgado = new ArrayList<>();
 
-		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
+		ArrayList<Res> reses = PotreroCRUD.selectResesNormales(potrero);
 
 		Res res = null;
 
@@ -808,7 +808,7 @@ public class ResCRUD {
 
 		ArrayList<Res> reses_vacuna = new ArrayList<>();
 
-		ArrayList<Res> reses = PotreroCRUD.selectRes(potrero);
+		ArrayList<Res> reses = PotreroCRUD.selectResesNormales(potrero);
 		Res res = null;
 
 		for (int i = 0; i < reses.size(); i++) {
@@ -855,8 +855,19 @@ public class ResCRUD {
 		ArrayList<Res> vacas_destete = new ArrayList<>();
 
 		Res res = null;
+		
+		ArrayList<Res> resesAntes = select();
+		ArrayList<Res> reses = new ArrayList<>();
 
-		ArrayList<Res> reses = select();
+		
+		for (int i = 0; i < resesAntes.size(); i++) {
+			
+			if (resesAntes.get(i).getVivo()==1) {
+				
+				reses.add(resesAntes.get(i));
+			}
+		}
+
 
 		for (int i = 0; i < reses.size(); i++) {
 
@@ -890,8 +901,17 @@ public class ResCRUD {
 
 		Res res = null;
 
-		ArrayList<Res> reses = select();
+		ArrayList<Res> resesAntes = select();
+		ArrayList<Res> reses = new ArrayList<>();
 
+		
+		for (int i = 0; i < resesAntes.size(); i++) {
+			
+			if (resesAntes.get(i).getVivo()==1) {
+				
+				reses.add(resesAntes.get(i));
+			}
+		}
 		for (int i = 0; i < reses.size(); i++) {
 
 			res = reses.get(i);
@@ -924,8 +944,17 @@ public class ResCRUD {
 
 		ArrayList<Res> reses_purgado = new ArrayList<>();
 
-		ArrayList<Res> reses = select();
+		ArrayList<Res> resesAntes = select();
+		ArrayList<Res> reses = new ArrayList<>();
 
+		
+		for (int i = 0; i < resesAntes.size(); i++) {
+			
+			if (resesAntes.get(i).getVivo()==1) {
+				
+				reses.add(resesAntes.get(i));
+			}
+		}
 		Res res = null;
 
 		for (int i = 0; i < reses.size(); i++) {
@@ -970,8 +999,17 @@ public class ResCRUD {
 
 		ArrayList<Res> reses_vacuna = new ArrayList<>();
 
-		ArrayList<Res> reses = select();
+		ArrayList<Res> resesAntes = select();
+		ArrayList<Res> reses = new ArrayList<>();
 
+		
+		for (int i = 0; i < resesAntes.size(); i++) {
+			
+			if (resesAntes.get(i).getVivo()==1) {
+				
+				reses.add(resesAntes.get(i));
+			}
+		}
 		Res res = null;
 
 		for (int i = 0; i < reses.size(); i++) {

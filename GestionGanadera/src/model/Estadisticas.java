@@ -18,7 +18,17 @@ public class Estadisticas {
 
 		ArrayList<Integer> mensaje = new ArrayList<>();
 
-		ArrayList<Res> resess = ResCRUD.select();
+		ArrayList<Res> resesAntes = ResCRUD.select();
+		ArrayList<Res> resess = new ArrayList<>();
+
+		
+		for (int i = 0; i < resesAntes.size(); i++) {
+			
+			if (resesAntes.get(i).getVivo()==1) {
+				
+				resess.add(resesAntes.get(i));
+			}
+		}		
 
 		ArrayList<Potrero> potrero = PotreroCRUD.select();
 
@@ -143,7 +153,7 @@ public class Estadisticas {
 
 		ArrayList<Integer> mensaje = new ArrayList<>();
 
-		ArrayList<Res> resess = PotreroCRUD.selectRes(nombrePotrero);
+		ArrayList<Res> resess = PotreroCRUD.selectResesNormales(nombrePotrero);
 
 		Res res = null;
 
