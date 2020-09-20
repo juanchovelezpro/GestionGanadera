@@ -48,7 +48,7 @@ public class ResCRUD {
 		try {
 
 			sql.getStatement().executeUpdate(
-					"INSERT INTO res (numero,tipo,genero,color,fecha_nacimiento,observaciones,vivo,embarazada,fecha_embarazo,fecha_ultima_purgado,fecha_ultima_vacunado,madreID,potreroNombre) "
+					"INSERT INTO res (numero,tipo,genero,color,fecha_nacimiento,observaciones,vivo,embarazada,fecha_embarazo,fecha_UltimoEmbarazo,fecha_ultima_vacunado,madreID,potreroNombre) "
 							+ "VALUES " + SQLUtils.concatenarReses(reses));
 		} catch (SQLException e) {
 
@@ -75,13 +75,13 @@ public class ResCRUD {
 				int vivo = result.getInt(7);
 				int embarazada = result.getInt(8);
 				String fecha_embarazo = result.getString(9);
-				String fecha_ultimo_purgado = result.getString(10);
+				String fecha_UltimoEmbarazo = result.getString(10);
 				String fecha_ultimo_vacunado = result.getString(11);
 				String madreID = result.getString(12);
 				String potreroNombre = result.getString(13);
 
 				Res res = new Res(resID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
-						fecha_embarazo, madreID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potreroNombre);
+						fecha_embarazo, madreID, fecha_UltimoEmbarazo, fecha_ultimo_vacunado, potreroNombre);
 				vacas.add(res);
 
 			}
@@ -227,13 +227,13 @@ public class ResCRUD {
 				int vivo = result.getInt(7);
 				int embarazada = result.getInt(8);
 				String fecha_embarazo = result.getString(9);
-				String fecha_ultimo_purgado = result.getString(10);
+				String fecha_UltimoEmbarazo = result.getString(10);
 				String fecha_ultimo_vacunado = result.getString(11);
 				String madre_ID = result.getString(12);
 				String potreroNombre = result.getString(13);
 
 				Res res = new Res(resID, genero, tipo, color, vivo, fecha_nacimiento, observaciones, embarazada,
-						fecha_embarazo, madre_ID, fecha_ultimo_purgado, fecha_ultimo_vacunado, potreroNombre);
+						fecha_embarazo, madre_ID, fecha_UltimoEmbarazo, fecha_ultimo_vacunado, potreroNombre);
 				crias.add(res);
 			}
 
