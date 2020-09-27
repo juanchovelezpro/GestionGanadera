@@ -277,7 +277,7 @@ public class PotrerosPanel extends JPanel {
 
 					int vivo = ganado.get(i).getVivo();
 
-					String is = vivo == 0 ? "MUERTO" : "VIVO";
+					String is = vivo == 0 ? "EXPULSADA" : "VIVO";
 
 					data[i][j] = is;
 
@@ -326,7 +326,7 @@ public class PotrerosPanel extends JPanel {
 			if(btnToggleResesRetiradas.isSelected()) {
 				
 				sorter = new TableRowSorter<>(modelRes); 
-				sorter.setRowFilter(RowFilter.regexFilter("MUERTO", 5));
+				sorter.setRowFilter(RowFilter.regexFilter("EXPULSADA", 5));
 				tablaRes.setRowSorter(sorter);
 				comboHembraMacho.setEnabled(false);
 				
