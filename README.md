@@ -1,6 +1,6 @@
 # Gestión Ganadera - Cattle Management
 
-This project allows cattlement to manage their cattle in a easier way!
+This project allows cattlemen to manage their cattle in a easier way!
 
 
 ![Login](./ReadmeFiles/login.png)
